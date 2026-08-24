@@ -1,0 +1,2006 @@
+﻿
+F:\Project\07_Androd\08_FanQie>if "Windows_NT" == "Windows_NT" setlocal
+
+F:\Project\07_Androd\08_FanQie>set DIRNAME=F:\Android\Sdk\cmdline-tools\latest\bin\ 
+
+F:\Project\07_Androd\08_FanQie>if "F:\Android\Sdk\cmdline-tools\latest\bin\" == "" set DIRNAME=. 
+
+F:\Project\07_Androd\08_FanQie>set APP_BASE_NAME=apkanalyzer 
+
+F:\Project\07_Androd\08_FanQie>set APP_HOME=F:\Android\Sdk\cmdline-tools\latest\bin\.. 
+
+F:\Project\07_Androd\08_FanQie>set DEFAULT_JVM_OPTS=-Dcom.android.sdklib.toolsdir=F:\Android\Sdk\cmdline-tools\latest\bin\\.. 
+
+F:\Project\07_Androd\08_FanQie>if defined JAVA_HOME goto findJavaFromJavaHome 
+
+F:\Project\07_Androd\08_FanQie>set JAVA_HOME=F:\Programer\Java\jdk-21 
+
+F:\Project\07_Androd\08_FanQie>set JAVA_EXE=F:\Programer\Java\jdk-21/bin/java.exe 
+
+F:\Project\07_Androd\08_FanQie>if exist "F:\Programer\Java\jdk-21/bin/java.exe" goto init 
+
+F:\Project\07_Androd\08_FanQie>if not "Windows_NT" == "Windows_NT" goto win9xME_args 
+
+F:\Project\07_Androd\08_FanQie>set CMD_LINE_ARGS= 
+
+F:\Project\07_Androd\08_FanQie>set _SKIP=2 
+
+F:\Project\07_Androd\08_FanQie>if "xdex" == "x" goto execute 
+
+F:\Project\07_Androd\08_FanQie>set CMD_LINE_ARGS=dex code --class com.ss.android.update.UpdateProgressActivity F:\Project\07_Androd\08_FanQie\番茄小说oppo定制.apk 
+
+F:\Project\07_Androd\08_FanQie>setlocal enabledelayedexpansion 
+
+F:\Project\07_Androd\08_FanQie>for /F "tokens=3" %a in ('""F:\Programer\Java\jdk-21/bin/java.exe" -version 2>&1 |findstr "version""') do (for /F "tokens=1,2 delims=." %b in ('echo %a') do (set versionWithQ=%b%c ) ) 
+
+F:\Project\07_Androd\08_FanQie>(for /F "tokens=1,2 delims=." %b in ('echo "21.0.10"') do (set versionWithQ=%b%c ) ) 
+
+F:\Project\07_Androd\08_FanQie>(set versionWithQ="210 ) 
+
+F:\Project\07_Androd\08_FanQie>set version=!versionWithQ:"=! 
+
+F:\Project\07_Androd\08_FanQie>if !version! LSS 170 if "" == "" (
+echo Java version 17 or higher is required.  
+ echo To override this check set SKIP_JDK_VERSION_CHECK  
+ goto :eof 
+) 
+
+F:\Project\07_Androd\08_FanQie>set CLASSPATH=F:\Android\Sdk\cmdline-tools\latest\bin\..\lib\apkanalyzer-classpath.jar 
+
+F:\Project\07_Androd\08_FanQie>"F:\Programer\Java\jdk-21/bin/java.exe" -Dcom.android.sdklib.toolsdir=F:\Android\Sdk\cmdline-tools\latest\bin\\..    -classpath "F:\Android\Sdk\cmdline-tools\latest\bin\..\lib\apkanalyzer-classpath.jar" com.android.tools.apk.analyzer.ApkAnalyzerCli dex code --class com.ss.android.update.UpdateProgressActivity F:\Project\07_Androd\08_FanQie\番茄小说oppo定制.apk 
+.class public Lcom/ss/android/update/UpdateProgressActivity;
+.super Landroid/support/v7/app/AppCompatActivity;
+.source "SourceFile"
+
+# interfaces
+.implements Lcom/bytedance/common/utility/collection/WeakHandler$IHandler;
+.implements Lcom/ss/android/update/c;
+
+
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/ss/android/update/UpdateProgressActivity$a;,
+        Lcom/ss/android/update/t;
+    }
+.end annotation
+
+
+# instance fields
+.field a:Lcom/ss/android/update/UpdateService;
+
+.field b:Landroid/os/Handler;
+
+.field c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+.field d:Ljava/lang/String;
+
+.field e:Landroid/widget/Button;
+
+.field f:Landroid/widget/Button;
+
+.field g:Landroid/widget/Button;
+
+.field h:Landroid/widget/Button;
+
+.field i:Landroid/widget/Button;
+
+.field j:Landroid/widget/TextView;
+
+.field k:Landroid/view/View;
+
+.field l:Landroid/widget/ProgressBar;
+
+.field m:Landroid/widget/TextView;
+
+.field n:Landroid/view/View;
+
+.field o:Landroid/view/View;
+
+.field p:Landroid/widget/TextView;
+
+.field q:Ljava/lang/String;
+
+.field private r:Z
+
+
+# direct methods
+.method public constructor <init>()V
+    .registers 2
+
+    .prologue
+    .line 131072
+    invoke-direct {p0}, Landroid/support/v7/app/AppCompatActivity;-><init>()V
+
+    .line 131073
+    .line 131074
+    .line 131075
+    const/4 v0, 0x0
+
+    .line 131076
+    iput-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 131077
+    .line 131078
+    const-string v0, ""
+
+    .line 131079
+    .line 131080
+    iput-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->q:Ljava/lang/String;
+
+    .line 131081
+    .line 131082
+    const/4 v0, 0x0
+
+    .line 131083
+    iput-boolean v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->r:Z
+
+    .line 131084
+    .line 131085
+    return-void
+.end method
+
+.method private j()Z
+    .registers 2
+
+    .prologue
+    .line 65536
+    iget-boolean v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->r:Z
+
+    .line 65537
+    .line 65538
+    xor-int/lit8 v0, v0, 0x1
+
+    .line 65539
+    .line 65540
+    return v0
+.end method
+
+
+# virtual methods
+.method a(I)Ljava/lang/String;
+    .registers 5
+
+    .prologue
+    .line 17039360
+    const/4 v0, 0x0
+
+    .line 17039361
+    const/4 v1, 0x1
+
+    .line 17039362
+    const/high16 v2, 0x100000
+
+    .line 17039363
+    .line 17039364
+    if-lt p1, v2, :cond_19
+
+    .line 17039365
+    .line 17039366
+    new-array v1, v1, [Ljava/lang/Object;
+
+    .line 17039367
+    .line 17039368
+    int-to-float p1, p1
+
+    .line 17039369
+    const/high16 v2, 0x49800000    # 1048576.0f
+
+    .line 17039370
+    .line 17039371
+    div-float/2addr p1, v2
+
+    .line 17039372
+    invoke-static {p1}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;
+
+    .line 17039373
+    .line 17039374
+    .line 17039375
+    move-result-object p1
+
+    .line 17039376
+    aput-object p1, v1, v0
+
+    .line 17039377
+    .line 17039378
+    const-string p1, "%.2f MB"
+
+    .line 17039379
+    .line 17039380
+    invoke-static {p1, v1}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    .line 17039381
+    .line 17039382
+    .line 17039383
+    move-result-object p1
+
+    .line 17039384
+    return-object p1
+
+    .line 17039385
+    :cond_19
+    const/16 v2, 0x400
+
+    .line 17039386
+    .line 17039387
+    if-lt p1, v2, :cond_30
+
+    .line 17039388
+    .line 17039389
+    new-array v1, v1, [Ljava/lang/Object;
+
+    .line 17039390
+    .line 17039391
+    int-to-float p1, p1
+
+    .line 17039392
+    const/high16 v2, 0x44800000    # 1024.0f
+
+    .line 17039393
+    .line 17039394
+    div-float/2addr p1, v2
+
+    .line 17039395
+    invoke-static {p1}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;
+
+    .line 17039396
+    .line 17039397
+    .line 17039398
+    move-result-object p1
+
+    .line 17039399
+    aput-object p1, v1, v0
+
+    .line 17039400
+    .line 17039401
+    const-string p1, "%.2f KB"
+
+    .line 17039402
+    .line 17039403
+    invoke-static {p1, v1}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    .line 17039404
+    .line 17039405
+    .line 17039406
+    move-result-object p1
+
+    .line 17039407
+    return-object p1
+
+    .line 17039408
+    :cond_30
+    new-array v1, v1, [Ljava/lang/Object;
+
+    .line 17039409
+    .line 17039410
+    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    .line 17039411
+    .line 17039412
+    .line 17039413
+    move-result-object p1
+
+    .line 17039414
+    aput-object p1, v1, v0
+
+    .line 17039415
+    .line 17039416
+    const-string p1, "%d B"
+
+    .line 17039417
+    .line 17039418
+    invoke-static {p1, v1}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    .line 17039419
+    .line 17039420
+    .line 17039421
+    move-result-object p1
+
+    .line 17039422
+    return-object p1
+.end method
+
+.method a()V
+    .registers 2
+
+    .prologue
+    .line 327680
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327681
+    .line 327682
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->isUpdating()Z
+
+    .line 327683
+    .line 327684
+    .line 327685
+    move-result v0
+
+    .line 327686
+    if-eqz v0, :cond_1f
+
+    .line 327687
+    .line 327688
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327689
+    .line 327690
+    if-eqz v0, :cond_f
+
+    .line 327691
+    .line 327692
+    invoke-virtual {v0}, Lcom/ss/android/update/UpdateProgressActivity$a;->a()V
+
+    .line 327693
+    .line 327694
+    .line 327695
+    :cond_f
+    new-instance v0, Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327696
+    .line 327697
+    invoke-direct {v0, p0}, Lcom/ss/android/update/UpdateProgressActivity$a;-><init>(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    .line 327698
+    .line 327699
+    .line 327700
+    iput-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327701
+    .line 327702
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327703
+    .line 327704
+    invoke-virtual {v0}, Lcom/ss/android/update/UpdateProgressActivity$a;->start()V
+
+    .line 327705
+    .line 327706
+    .line 327707
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->h()V
+
+    .line 327708
+    .line 327709
+    .line 327710
+    goto :goto_3a
+
+    .line 327711
+    :cond_1f
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327712
+    .line 327713
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->isRealCurrentVersionOut()Z
+
+    .line 327714
+    .line 327715
+    .line 327716
+    move-result v0
+
+    .line 327717
+    if-nez v0, :cond_2b
+
+    .line 327718
+    .line 327719
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->f()V
+
+    .line 327720
+    .line 327721
+    .line 327722
+    goto :goto_3a
+
+    .line 327723
+    :cond_2b
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327724
+    .line 327725
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->getUpdateReadyApk()Ljava/io/File;
+
+    .line 327726
+    .line 327727
+    .line 327728
+    move-result-object v0
+
+    .line 327729
+    if-eqz v0, :cond_37
+
+    .line 327730
+    .line 327731
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->g()V
+
+    .line 327732
+    .line 327733
+    .line 327734
+    goto :goto_3a
+
+    .line 327735
+    :cond_37
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->e()V
+
+    .line 327736
+    .line 327737
+    .line 327738
+    :goto_3a
+    return-void
+.end method
+
+.method a(II)V
+    .registers 10
+
+    .prologue
+    .line 33947648
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->q:Ljava/lang/String;
+
+    .line 33947649
+    .line 33947650
+    if-lez p1, :cond_7
+
+    .line 33947651
+    .line 33947652
+    const-wide/16 v1, 0xa
+
+    .line 33947653
+    .line 33947654
+    goto :goto_9
+
+    .line 33947655
+    :cond_7
+    const-wide/16 v1, 0x0
+
+    .line 33947656
+    .line 33947657
+    :goto_9
+    const-wide/16 v3, 0x63
+
+    .line 33947658
+    .line 33947659
+    if-lez p2, :cond_1d
+
+    .line 33947660
+    .line 33947661
+    invoke-virtual {p0, p2}, Lcom/ss/android/update/UpdateProgressActivity;->a(I)Ljava/lang/String;
+
+    .line 33947662
+    .line 33947663
+    .line 33947664
+    move-result-object v0
+
+    .line 33947665
+    int-to-long v1, p1
+
+    .line 33947666
+    const-wide/16 v5, 0x64
+
+    .line 33947667
+    .line 33947668
+    mul-long v1, v1, v5
+
+    .line 33947669
+    .line 33947670
+    int-to-long v5, p2
+
+    .line 33947671
+    div-long/2addr v1, v5
+
+    .line 33947672
+    cmp-long p2, v1, v3
+
+    .line 33947673
+    .line 33947674
+    if-lez p2, :cond_1d
+
+    .line 33947675
+    .line 33947676
+    move-wide v1, v3
+
+    .line 33947677
+    :cond_1d
+    new-instance p2, Ljava/lang/StringBuilder;
+
+    .line 33947678
+    .line 33947679
+    invoke-direct {p2}, Ljava/lang/StringBuilder;-><init>()V
+
+    .line 33947680
+    .line 33947681
+    .line 33947682
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->a(I)Ljava/lang/String;
+
+    .line 33947683
+    .line 33947684
+    .line 33947685
+    move-result-object p1
+
+    .line 33947686
+    invoke-virtual {p2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 33947687
+    .line 33947688
+    .line 33947689
+    const-string p1, " / "
+
+    .line 33947690
+    .line 33947691
+    invoke-virtual {p2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 33947692
+    .line 33947693
+    .line 33947694
+    invoke-virtual {p2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 33947695
+    .line 33947696
+    .line 33947697
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->l:Landroid/widget/ProgressBar;
+
+    .line 33947698
+    .line 33947699
+    long-to-int v0, v1
+
+    .line 33947700
+    invoke-virtual {p1, v0}, Landroid/widget/ProgressBar;->setProgress(I)V
+
+    .line 33947701
+    .line 33947702
+    .line 33947703
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->m:Landroid/widget/TextView;
+
+    .line 33947704
+    .line 33947705
+    invoke-virtual {p2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    .line 33947706
+    .line 33947707
+    .line 33947708
+    move-result-object p2
+
+    .line 33947709
+    invoke-virtual {p1, p2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 33947710
+    .line 33947711
+    .line 33947712
+    return-void
+.end method
+
+.method b()V
+    .registers 3
+
+    .prologue
+    .line 327680
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327681
+    .line 327682
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->isRealCurrentVersionOut()Z
+
+    .line 327683
+    .line 327684
+    .line 327685
+    move-result v0
+
+    .line 327686
+    if-nez v0, :cond_c
+
+    .line 327687
+    .line 327688
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->f()V
+
+    .line 327689
+    .line 327690
+    .line 327691
+    return-void
+
+    .line 327692
+    :cond_c
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327693
+    .line 327694
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->cancelNotifyAvai()V
+
+    .line 327695
+    .line 327696
+    .line 327697
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327698
+    .line 327699
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->getUpdateReadyApk()Ljava/io/File;
+
+    .line 327700
+    .line 327701
+    .line 327702
+    move-result-object v0
+
+    .line 327703
+    if-eqz v0, :cond_25
+
+    .line 327704
+    .line 327705
+    iget-object v1, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327706
+    .line 327707
+    invoke-interface {v1}, Lcom/ss/android/update/UpdateService;->cancelNotifyReady()V
+
+    .line 327708
+    .line 327709
+    .line 327710
+    invoke-static {p0, v0}, Lcom/ss/android/update/p;->a(Landroid/content/Context;Ljava/io/File;)V
+
+    .line 327711
+    .line 327712
+    .line 327713
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->finish()V
+
+    .line 327714
+    .line 327715
+    .line 327716
+    goto :goto_40
+
+    .line 327717
+    :cond_25
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327718
+    .line 327719
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->startDownload()V
+
+    .line 327720
+    .line 327721
+    .line 327722
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327723
+    .line 327724
+    if-eqz v0, :cond_31
+
+    .line 327725
+    .line 327726
+    invoke-virtual {v0}, Lcom/ss/android/update/UpdateProgressActivity$a;->a()V
+
+    .line 327727
+    .line 327728
+    .line 327729
+    :cond_31
+    new-instance v0, Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327730
+    .line 327731
+    invoke-direct {v0, p0}, Lcom/ss/android/update/UpdateProgressActivity$a;-><init>(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    .line 327732
+    .line 327733
+    .line 327734
+    iput-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327735
+    .line 327736
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 327737
+    .line 327738
+    invoke-virtual {v0}, Lcom/ss/android/update/UpdateProgressActivity$a;->start()V
+
+    .line 327739
+    .line 327740
+    .line 327741
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->h()V
+
+    .line 327742
+    .line 327743
+    .line 327744
+    :goto_40
+    return-void
+.end method
+
+.method c()V
+    .registers 3
+
+    .prologue
+    .line 196608
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->g:Landroid/widget/Button;
+
+    .line 196609
+    .line 196610
+    const/16 v1, 0x8
+
+    .line 196611
+    .line 196612
+    invoke-virtual {v0, v1}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 196613
+    .line 196614
+    .line 196615
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->h:Landroid/widget/Button;
+
+    .line 196616
+    .line 196617
+    invoke-virtual {v0, v1}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 196618
+    .line 196619
+    .line 196620
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->i:Landroid/widget/Button;
+
+    .line 196621
+    .line 196622
+    invoke-virtual {v0, v1}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 196623
+    .line 196624
+    .line 196625
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->f:Landroid/widget/Button;
+
+    .line 196626
+    .line 196627
+    invoke-virtual {v0, v1}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 196628
+    .line 196629
+    .line 196630
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->e:Landroid/widget/Button;
+
+    .line 196631
+    .line 196632
+    invoke-virtual {v0, v1}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 196633
+    .line 196634
+    .line 196635
+    return-void
+.end method
+
+.method d()V
+    .registers 3
+
+    .prologue
+    .line 196608
+    invoke-static {}, Lcom/ss/android/update/r;->a()Lcom/ss/android/update/r;
+
+    .line 196609
+    .line 196610
+    .line 196611
+    move-result-object v0
+
+    .line 196612
+    iget-object v1, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 196613
+    .line 196614
+    invoke-interface {v1}, Lcom/ss/android/update/UpdateService;->getWhatsNew()Ljava/lang/String;
+
+    .line 196615
+    .line 196616
+    .line 196617
+    move-result-object v1
+
+    .line 196618
+    invoke-virtual {v0, v1}, Lcom/ss/android/update/r;->a(Ljava/lang/String;)Ljava/lang/String;
+
+    .line 196619
+    .line 196620
+    .line 196621
+    move-result-object v0
+
+    .line 196622
+    if-nez v0, :cond_12
+
+    .line 196623
+    .line 196624
+    const-string v0, ""
+
+    .line 196625
+    .line 196626
+    :cond_12
+    iget-object v1, p0, Lcom/ss/android/update/UpdateProgressActivity;->p:Landroid/widget/TextView;
+
+    .line 196627
+    .line 196628
+    invoke-virtual {v1, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 196629
+    .line 196630
+    .line 196631
+    return-void
+.end method
+
+.method e()V
+    .registers 7
+
+    .prologue
+    .line 327680
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327681
+    .line 327682
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->getLastVersion()Ljava/lang/String;
+
+    .line 327683
+    .line 327684
+    .line 327685
+    move-result-object v0
+
+    .line 327686
+    if-nez v0, :cond_a
+
+    .line 327687
+    .line 327688
+    const-string v0, ""
+
+    .line 327689
+    .line 327690
+    :cond_a
+    const v1, 0x7f0605e1
+
+    .line 327691
+    .line 327692
+    .line 327693
+    invoke-virtual {p0, v1}, Lcom/ss/android/update/UpdateProgressActivity;->getString(I)Ljava/lang/String;
+
+    .line 327694
+    .line 327695
+    .line 327696
+    move-result-object v1
+
+    .line 327697
+    iget-object v2, p0, Lcom/ss/android/update/UpdateProgressActivity;->j:Landroid/widget/TextView;
+
+    .line 327698
+    .line 327699
+    const/4 v3, 0x2
+
+    .line 327700
+    new-array v3, v3, [Ljava/lang/Object;
+
+    .line 327701
+    .line 327702
+    iget-object v4, p0, Lcom/ss/android/update/UpdateProgressActivity;->d:Ljava/lang/String;
+
+    .line 327703
+    .line 327704
+    const/4 v5, 0x0
+
+    .line 327705
+    aput-object v4, v3, v5
+
+    .line 327706
+    .line 327707
+    const/4 v4, 0x1
+
+    .line 327708
+    aput-object v0, v3, v4
+
+    .line 327709
+    .line 327710
+    invoke-static {v1, v3}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    .line 327711
+    .line 327712
+    .line 327713
+    move-result-object v0
+
+    .line 327714
+    invoke-virtual {v2, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 327715
+    .line 327716
+    .line 327717
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->n:Landroid/view/View;
+
+    .line 327718
+    .line 327719
+    invoke-virtual {v0, v5}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327720
+    .line 327721
+    .line 327722
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->k:Landroid/view/View;
+
+    .line 327723
+    .line 327724
+    const/16 v1, 0x8
+
+    .line 327725
+    .line 327726
+    invoke-virtual {v0, v1}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327727
+    .line 327728
+    .line 327729
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->o:Landroid/view/View;
+
+    .line 327730
+    .line 327731
+    invoke-virtual {v0, v5}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327732
+    .line 327733
+    .line 327734
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->d()V
+
+    .line 327735
+    .line 327736
+    .line 327737
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->c()V
+
+    .line 327738
+    .line 327739
+    .line 327740
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->g:Landroid/widget/Button;
+
+    .line 327741
+    .line 327742
+    invoke-virtual {v0, v5}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 327743
+    .line 327744
+    .line 327745
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->f:Landroid/widget/Button;
+
+    .line 327746
+    .line 327747
+    invoke-virtual {v0, v5}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 327748
+    .line 327749
+    .line 327750
+    return-void
+.end method
+
+.method f()V
+    .registers 6
+
+    .prologue
+    .line 262144
+    const v0, 0x7f0605e4
+
+    .line 262145
+    .line 262146
+    .line 262147
+    invoke-virtual {p0, v0}, Lcom/ss/android/update/UpdateProgressActivity;->getString(I)Ljava/lang/String;
+
+    .line 262148
+    .line 262149
+    .line 262150
+    move-result-object v0
+
+    .line 262151
+    iget-object v1, p0, Lcom/ss/android/update/UpdateProgressActivity;->j:Landroid/widget/TextView;
+
+    .line 262152
+    .line 262153
+    const/4 v2, 0x1
+
+    .line 262154
+    new-array v2, v2, [Ljava/lang/Object;
+
+    .line 262155
+    .line 262156
+    iget-object v3, p0, Lcom/ss/android/update/UpdateProgressActivity;->d:Ljava/lang/String;
+
+    .line 262157
+    .line 262158
+    const/4 v4, 0x0
+
+    .line 262159
+    aput-object v3, v2, v4
+
+    .line 262160
+    .line 262161
+    invoke-static {v0, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    .line 262162
+    .line 262163
+    .line 262164
+    move-result-object v0
+
+    .line 262165
+    invoke-virtual {v1, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 262166
+    .line 262167
+    .line 262168
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->n:Landroid/view/View;
+
+    .line 262169
+    .line 262170
+    const/16 v1, 0x8
+
+    .line 262171
+    .line 262172
+    invoke-virtual {v0, v1}, Landroid/view/View;->setVisibility(I)V
+
+    .line 262173
+    .line 262174
+    .line 262175
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->k:Landroid/view/View;
+
+    .line 262176
+    .line 262177
+    invoke-virtual {v0, v1}, Landroid/view/View;->setVisibility(I)V
+
+    .line 262178
+    .line 262179
+    .line 262180
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->o:Landroid/view/View;
+
+    .line 262181
+    .line 262182
+    const/4 v1, 0x4
+
+    .line 262183
+    invoke-virtual {v0, v1}, Landroid/view/View;->setVisibility(I)V
+
+    .line 262184
+    .line 262185
+    .line 262186
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->c()V
+
+    .line 262187
+    .line 262188
+    .line 262189
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->e:Landroid/widget/Button;
+
+    .line 262190
+    .line 262191
+    invoke-virtual {v0, v4}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 262192
+    .line 262193
+    .line 262194
+    return-void
+.end method
+
+.method g()V
+    .registers 7
+
+    .prologue
+    .line 327680
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327681
+    .line 327682
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->getLastVersion()Ljava/lang/String;
+
+    .line 327683
+    .line 327684
+    .line 327685
+    move-result-object v0
+
+    .line 327686
+    const v1, 0x7f0605e5
+
+    .line 327687
+    .line 327688
+    .line 327689
+    invoke-virtual {p0, v1}, Lcom/ss/android/update/UpdateProgressActivity;->getString(I)Ljava/lang/String;
+
+    .line 327690
+    .line 327691
+    .line 327692
+    move-result-object v1
+
+    .line 327693
+    iget-object v2, p0, Lcom/ss/android/update/UpdateProgressActivity;->j:Landroid/widget/TextView;
+
+    .line 327694
+    .line 327695
+    const/4 v3, 0x2
+
+    .line 327696
+    new-array v3, v3, [Ljava/lang/Object;
+
+    .line 327697
+    .line 327698
+    iget-object v4, p0, Lcom/ss/android/update/UpdateProgressActivity;->d:Ljava/lang/String;
+
+    .line 327699
+    .line 327700
+    const/4 v5, 0x0
+
+    .line 327701
+    aput-object v4, v3, v5
+
+    .line 327702
+    .line 327703
+    const/4 v4, 0x1
+
+    .line 327704
+    aput-object v0, v3, v4
+
+    .line 327705
+    .line 327706
+    invoke-static {v1, v3}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    .line 327707
+    .line 327708
+    .line 327709
+    move-result-object v0
+
+    .line 327710
+    invoke-virtual {v2, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 327711
+    .line 327712
+    .line 327713
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->n:Landroid/view/View;
+
+    .line 327714
+    .line 327715
+    invoke-virtual {v0, v5}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327716
+    .line 327717
+    .line 327718
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->k:Landroid/view/View;
+
+    .line 327719
+    .line 327720
+    const/16 v1, 0x8
+
+    .line 327721
+    .line 327722
+    invoke-virtual {v0, v1}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327723
+    .line 327724
+    .line 327725
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->o:Landroid/view/View;
+
+    .line 327726
+    .line 327727
+    invoke-virtual {v0, v5}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327728
+    .line 327729
+    .line 327730
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->d()V
+
+    .line 327731
+    .line 327732
+    .line 327733
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->c()V
+
+    .line 327734
+    .line 327735
+    .line 327736
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->h:Landroid/widget/Button;
+
+    .line 327737
+    .line 327738
+    invoke-virtual {v0, v5}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 327739
+    .line 327740
+    .line 327741
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->f:Landroid/widget/Button;
+
+    .line 327742
+    .line 327743
+    invoke-virtual {v0, v5}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 327744
+    .line 327745
+    .line 327746
+    return-void
+.end method
+
+.method h()V
+    .registers 7
+
+    .prologue
+    .line 327680
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 327681
+    .line 327682
+    invoke-interface {v0}, Lcom/ss/android/update/UpdateService;->getLastVersion()Ljava/lang/String;
+
+    .line 327683
+    .line 327684
+    .line 327685
+    move-result-object v0
+
+    .line 327686
+    const v1, 0x7f0605e1
+
+    .line 327687
+    .line 327688
+    .line 327689
+    invoke-virtual {p0, v1}, Lcom/ss/android/update/UpdateProgressActivity;->getString(I)Ljava/lang/String;
+
+    .line 327690
+    .line 327691
+    .line 327692
+    move-result-object v1
+
+    .line 327693
+    iget-object v2, p0, Lcom/ss/android/update/UpdateProgressActivity;->j:Landroid/widget/TextView;
+
+    .line 327694
+    .line 327695
+    const/4 v3, 0x2
+
+    .line 327696
+    new-array v3, v3, [Ljava/lang/Object;
+
+    .line 327697
+    .line 327698
+    iget-object v4, p0, Lcom/ss/android/update/UpdateProgressActivity;->d:Ljava/lang/String;
+
+    .line 327699
+    .line 327700
+    const/4 v5, 0x0
+
+    .line 327701
+    aput-object v4, v3, v5
+
+    .line 327702
+    .line 327703
+    const/4 v4, 0x1
+
+    .line 327704
+    aput-object v0, v3, v4
+
+    .line 327705
+    .line 327706
+    invoke-static {v1, v3}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    .line 327707
+    .line 327708
+    .line 327709
+    move-result-object v0
+
+    .line 327710
+    invoke-virtual {v2, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 327711
+    .line 327712
+    .line 327713
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->o:Landroid/view/View;
+
+    .line 327714
+    .line 327715
+    invoke-virtual {v0, v5}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327716
+    .line 327717
+    .line 327718
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->d()V
+
+    .line 327719
+    .line 327720
+    .line 327721
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->c()V
+
+    .line 327722
+    .line 327723
+    .line 327724
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->i:Landroid/widget/Button;
+
+    .line 327725
+    .line 327726
+    invoke-virtual {v0, v5}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 327727
+    .line 327728
+    .line 327729
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->e:Landroid/widget/Button;
+
+    .line 327730
+    .line 327731
+    invoke-virtual {v0, v5}, Landroid/widget/Button;->setVisibility(I)V
+
+    .line 327732
+    .line 327733
+    .line 327734
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->n:Landroid/view/View;
+
+    .line 327735
+    .line 327736
+    invoke-virtual {v0, v5}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327737
+    .line 327738
+    .line 327739
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->k:Landroid/view/View;
+
+    .line 327740
+    .line 327741
+    invoke-virtual {v0, v5}, Landroid/view/View;->setVisibility(I)V
+
+    .line 327742
+    .line 327743
+    .line 327744
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->l:Landroid/widget/ProgressBar;
+
+    .line 327745
+    .line 327746
+    invoke-virtual {v0, v5}, Landroid/widget/ProgressBar;->setProgress(I)V
+
+    .line 327747
+    .line 327748
+    .line 327749
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->m:Landroid/widget/TextView;
+
+    .line 327750
+    .line 327751
+    const-string v1, " "
+
+    .line 327752
+    .line 327753
+    invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 327754
+    .line 327755
+    .line 327756
+    return-void
+.end method
+
+.method public handleMsg(Landroid/os/Message;)V
+    .registers 4
+
+    .prologue
+    .line 16973824
+    invoke-direct {p0}, Lcom/ss/android/update/UpdateProgressActivity;->j()Z
+
+    .line 16973825
+    .line 16973826
+    .line 16973827
+    move-result v0
+
+    .line 16973828
+    if-nez v0, :cond_7
+
+    .line 16973829
+    .line 16973830
+    return-void
+
+    .line 16973831
+    :cond_7
+    iget v0, p1, Landroid/os/Message;->what:I
+
+    .line 16973832
+    .line 16973833
+    const/4 v1, 0x1
+
+    .line 16973834
+    if-eq v0, v1, :cond_14
+
+    .line 16973835
+    .line 16973836
+    const/4 p1, 0x2
+
+    .line 16973837
+    if-eq v0, p1, :cond_10
+
+    .line 16973838
+    .line 16973839
+    goto :goto_1b
+
+    .line 16973840
+    :cond_10
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->a()V
+
+    .line 16973841
+    .line 16973842
+    .line 16973843
+    goto :goto_1b
+
+    .line 16973844
+    :cond_14
+    iget v0, p1, Landroid/os/Message;->arg1:I
+
+    .line 16973845
+    .line 16973846
+    iget p1, p1, Landroid/os/Message;->arg2:I
+
+    .line 16973847
+    .line 16973848
+    invoke-virtual {p0, v0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->a(II)V
+
+    .line 16973849
+    .line 16973850
+    .line 16973851
+    :goto_1b
+    return-void
+.end method
+
+.method public i()V
+    .registers 1
+
+    invoke-super {p0}, Landroid/support/v7/app/AppCompatActivity;->onStop()V
+
+    return-void
+.end method
+
+.method public isDestroyed()Z
+    .registers 3
+
+    .prologue
+    .line 196608
+    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    .line 196609
+    .line 196610
+    const/16 v1, 0x11
+
+    .line 196611
+    .line 196612
+    if-ge v0, v1, :cond_9
+
+    .line 196613
+    .line 196614
+    iget-boolean v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->r:Z
+
+    .line 196615
+    .line 196616
+    return v0
+
+    .line 196617
+    :cond_9
+    :try_start_9
+    invoke-super {p0}, Landroid/support/v7/app/AppCompatActivity;->isDestroyed()Z
+
+    .line 196618
+    .line 196619
+    .line 196620
+    move-result v0
+    :try_end_d
+    .catch Ljava/lang/Throwable; {:try_start_9 .. :try_end_d} :catch_e
+
+    .line 196621
+    return v0
+
+    .line 196622
+    :catch_e
+    iget-boolean v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->r:Z
+
+    .line 196623
+    .line 196624
+    return v0
+.end method
+
+.method protected onCreate(Landroid/os/Bundle;)V
+    .registers 4
+
+    .prologue
+    .line 17235968
+    invoke-super {p0, p1}, Landroid/support/v7/app/AppCompatActivity;->onCreate(Landroid/os/Bundle;)V
+
+    .line 17235969
+    .line 17235970
+    .line 17235971
+    const p1, 0x7f050424
+
+    .line 17235972
+    .line 17235973
+    .line 17235974
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->setContentView(I)V
+
+    .line 17235975
+    .line 17235976
+    .line 17235977
+    invoke-static {}, Lcom/ss/android/update/r;->a()Lcom/ss/android/update/r;
+
+    .line 17235978
+    .line 17235979
+    .line 17235980
+    move-result-object p1
+
+    .line 17235981
+    iget-object p1, p1, Lcom/ss/android/update/r;->b:Lcom/ss/android/update/UpdateService;
+
+    .line 17235982
+    .line 17235983
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 17235984
+    .line 17235985
+    new-instance p1, Lcom/bytedance/common/utility/collection/WeakHandler;
+
+    .line 17235986
+    .line 17235987
+    invoke-direct {p1, p0}, Lcom/bytedance/common/utility/collection/WeakHandler;-><init>(Lcom/bytedance/common/utility/collection/WeakHandler$IHandler;)V
+
+    .line 17235988
+    .line 17235989
+    .line 17235990
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->b:Landroid/os/Handler;
+
+    .line 17235991
+    .line 17235992
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->a:Lcom/ss/android/update/UpdateService;
+
+    .line 17235993
+    .line 17235994
+    invoke-interface {p1}, Lcom/ss/android/update/UpdateService;->getVerboseAppName()Ljava/lang/String;
+
+    .line 17235995
+    .line 17235996
+    .line 17235997
+    move-result-object p1
+
+    .line 17235998
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->d:Ljava/lang/String;
+
+    .line 17235999
+    .line 17236000
+    const p1, 0x7f0605e8
+
+    .line 17236001
+    .line 17236002
+    .line 17236003
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->getString(I)Ljava/lang/String;
+
+    .line 17236004
+    .line 17236005
+    .line 17236006
+    move-result-object p1
+
+    .line 17236007
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->q:Ljava/lang/String;
+
+    .line 17236008
+    .line 17236009
+    const p1, 0x7f110dcb
+
+    .line 17236010
+    .line 17236011
+    .line 17236012
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236013
+    .line 17236014
+    .line 17236015
+    move-result-object p1
+
+    .line 17236016
+    check-cast p1, Landroid/widget/TextView;
+
+    .line 17236017
+    .line 17236018
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->j:Landroid/widget/TextView;
+
+    .line 17236019
+    .line 17236020
+    const p1, 0x7f1107cc
+
+    .line 17236021
+    .line 17236022
+    .line 17236023
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236024
+    .line 17236025
+    .line 17236026
+    move-result-object p1
+
+    .line 17236027
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->n:Landroid/view/View;
+
+    .line 17236028
+    .line 17236029
+    const p1, 0x7f110851
+
+    .line 17236030
+    .line 17236031
+    .line 17236032
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236033
+    .line 17236034
+    .line 17236035
+    move-result-object p1
+
+    .line 17236036
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->k:Landroid/view/View;
+
+    .line 17236037
+    .line 17236038
+    const p1, 0x7f11084e
+
+    .line 17236039
+    .line 17236040
+    .line 17236041
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236042
+    .line 17236043
+    .line 17236044
+    move-result-object p1
+
+    .line 17236045
+    check-cast p1, Landroid/widget/ProgressBar;
+
+    .line 17236046
+    .line 17236047
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->l:Landroid/widget/ProgressBar;
+
+    .line 17236048
+    .line 17236049
+    const p1, 0x7f110854
+
+    .line 17236050
+    .line 17236051
+    .line 17236052
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236053
+    .line 17236054
+    .line 17236055
+    move-result-object p1
+
+    .line 17236056
+    check-cast p1, Landroid/widget/TextView;
+
+    .line 17236057
+    .line 17236058
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->m:Landroid/widget/TextView;
+
+    .line 17236059
+    .line 17236060
+    const p1, 0x7f110e81
+
+    .line 17236061
+    .line 17236062
+    .line 17236063
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236064
+    .line 17236065
+    .line 17236066
+    move-result-object p1
+
+    .line 17236067
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->o:Landroid/view/View;
+
+    .line 17236068
+    .line 17236069
+    const p1, 0x7f110e80
+
+    .line 17236070
+    .line 17236071
+    .line 17236072
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236073
+    .line 17236074
+    .line 17236075
+    move-result-object p1
+
+    .line 17236076
+    check-cast p1, Landroid/widget/TextView;
+
+    .line 17236077
+    .line 17236078
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->p:Landroid/widget/TextView;
+
+    .line 17236079
+    .line 17236080
+    const p1, 0x7f1100c5
+
+    .line 17236081
+    .line 17236082
+    .line 17236083
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236084
+    .line 17236085
+    .line 17236086
+    move-result-object p1
+
+    .line 17236087
+    check-cast p1, Landroid/widget/Button;
+
+    .line 17236088
+    .line 17236089
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->e:Landroid/widget/Button;
+
+    .line 17236090
+    .line 17236091
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->e:Landroid/widget/Button;
+
+    .line 17236092
+    .line 17236093
+    new-instance v0, Lcom/ss/android/update/UpdateProgressActivity$1;
+
+    .line 17236094
+    .line 17236095
+    invoke-direct {v0, p0}, Lcom/ss/android/update/UpdateProgressActivity$1;-><init>(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    .line 17236096
+    .line 17236097
+    .line 17236098
+    invoke-virtual {p1, v0}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
+    .line 17236099
+    .line 17236100
+    .line 17236101
+    const p1, 0x7f1101c7
+
+    .line 17236102
+    .line 17236103
+    .line 17236104
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236105
+    .line 17236106
+    .line 17236107
+    move-result-object p1
+
+    .line 17236108
+    check-cast p1, Landroid/widget/Button;
+
+    .line 17236109
+    .line 17236110
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->f:Landroid/widget/Button;
+
+    .line 17236111
+    .line 17236112
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->f:Landroid/widget/Button;
+
+    .line 17236113
+    .line 17236114
+    new-instance v0, Lcom/ss/android/update/UpdateProgressActivity$2;
+
+    .line 17236115
+    .line 17236116
+    invoke-direct {v0, p0}, Lcom/ss/android/update/UpdateProgressActivity$2;-><init>(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    .line 17236117
+    .line 17236118
+    .line 17236119
+    invoke-virtual {p1, v0}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
+    .line 17236120
+    .line 17236121
+    .line 17236122
+    const p1, 0x7f110dbe
+
+    .line 17236123
+    .line 17236124
+    .line 17236125
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236126
+    .line 17236127
+    .line 17236128
+    move-result-object p1
+
+    .line 17236129
+    check-cast p1, Landroid/widget/Button;
+
+    .line 17236130
+    .line 17236131
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->g:Landroid/widget/Button;
+
+    .line 17236132
+    .line 17236133
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->g:Landroid/widget/Button;
+
+    .line 17236134
+    .line 17236135
+    new-instance v0, Lcom/ss/android/update/UpdateProgressActivity$3;
+
+    .line 17236136
+    .line 17236137
+    invoke-direct {v0, p0}, Lcom/ss/android/update/UpdateProgressActivity$3;-><init>(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    .line 17236138
+    .line 17236139
+    .line 17236140
+    invoke-virtual {p1, v0}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
+    .line 17236141
+    .line 17236142
+    .line 17236143
+    const p1, 0x7f110a09
+
+    .line 17236144
+    .line 17236145
+    .line 17236146
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236147
+    .line 17236148
+    .line 17236149
+    move-result-object p1
+
+    .line 17236150
+    check-cast p1, Landroid/widget/Button;
+
+    .line 17236151
+    .line 17236152
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->i:Landroid/widget/Button;
+
+    .line 17236153
+    .line 17236154
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->i:Landroid/widget/Button;
+
+    .line 17236155
+    .line 17236156
+    new-instance v0, Lcom/ss/android/update/UpdateProgressActivity$4;
+
+    .line 17236157
+    .line 17236158
+    invoke-direct {v0, p0}, Lcom/ss/android/update/UpdateProgressActivity$4;-><init>(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    .line 17236159
+    .line 17236160
+    .line 17236161
+    invoke-virtual {p1, v0}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
+    .line 17236162
+    .line 17236163
+    .line 17236164
+    const p1, 0x7f110522
+
+    .line 17236165
+    .line 17236166
+    .line 17236167
+    invoke-virtual {p0, p1}, Lcom/ss/android/update/UpdateProgressActivity;->findViewById(I)Landroid/view/View;
+
+    .line 17236168
+    .line 17236169
+    .line 17236170
+    move-result-object p1
+
+    .line 17236171
+    check-cast p1, Landroid/widget/Button;
+
+    .line 17236172
+    .line 17236173
+    iput-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->h:Landroid/widget/Button;
+
+    .line 17236174
+    .line 17236175
+    iget-object p1, p0, Lcom/ss/android/update/UpdateProgressActivity;->h:Landroid/widget/Button;
+
+    .line 17236176
+    .line 17236177
+    new-instance v0, Lcom/ss/android/update/UpdateProgressActivity$5;
+
+    .line 17236178
+    .line 17236179
+    invoke-direct {v0, p0}, Lcom/ss/android/update/UpdateProgressActivity$5;-><init>(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    .line 17236180
+    .line 17236181
+    .line 17236182
+    invoke-virtual {p1, v0}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
+    .line 17236183
+    .line 17236184
+    .line 17236185
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->a()V
+
+    .line 17236186
+    .line 17236187
+    .line 17236188
+    invoke-virtual {p0}, Lcom/ss/android/update/UpdateProgressActivity;->getIntent()Landroid/content/Intent;
+
+    .line 17236189
+    .line 17236190
+    .line 17236191
+    move-result-object p1
+
+    .line 17236192
+    if-eqz p1, :cond_101
+
+    .line 17236193
+    .line 17236194
+    invoke-virtual {p1}, Landroid/content/Intent;->getExtras()Landroid/os/Bundle;
+
+    .line 17236195
+    .line 17236196
+    .line 17236197
+    move-result-object p1
+
+    .line 17236198
+    const-class v0, Lcom/service/middleware/applog/ApplogService;
+
+    .line 17236199
+    .line 17236200
+    invoke-static {v0}, Lcom/bytedance/news/common/service/manager/ServiceManager;->getService(Ljava/lang/Class;)Ljava/lang/Object;
+
+    .line 17236201
+    .line 17236202
+    .line 17236203
+    move-result-object v0
+
+    .line 17236204
+    check-cast v0, Lcom/service/middleware/applog/ApplogService;
+
+    .line 17236205
+    .line 17236206
+    if-eqz v0, :cond_101
+
+    .line 17236207
+    .line 17236208
+    if-eqz p1, :cond_101
+
+    .line 17236209
+    .line 17236210
+    const-string v1, "from_update_avail"
+
+    .line 17236211
+    .line 17236212
+    invoke-virtual {p1, v1}, Landroid/os/Bundle;->getBoolean(Ljava/lang/String;)Z
+
+    .line 17236213
+    .line 17236214
+    .line 17236215
+    move-result p1
+
+    .line 17236216
+    if-eqz p1, :cond_101
+
+    .line 17236217
+    .line 17236218
+    const-string p1, "more_tab"
+
+    .line 17236219
+    .line 17236220
+    const-string v1, "notify_version_click"
+
+    .line 17236221
+    .line 17236222
+    invoke-interface {v0, p0, p1, v1}, Lcom/service/middleware/applog/ApplogService;->onEvent(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 17236223
+    .line 17236224
+    .line 17236225
+    :cond_101
+    return-void
+.end method
+
+.method protected onDestroy()V
+    .registers 2
+
+    .prologue
+    .line 131072
+    invoke-super {p0}, Landroid/support/v7/app/AppCompatActivity;->onDestroy()V
+
+    .line 131073
+    .line 131074
+    .line 131075
+    iget-object v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->c:Lcom/ss/android/update/UpdateProgressActivity$a;
+
+    .line 131076
+    .line 131077
+    if-eqz v0, :cond_a
+
+    .line 131078
+    .line 131079
+    invoke-virtual {v0}, Lcom/ss/android/update/UpdateProgressActivity$a;->a()V
+
+    .line 131080
+    .line 131081
+    .line 131082
+    :cond_a
+    const/4 v0, 0x1
+
+    .line 131083
+    iput-boolean v0, p0, Lcom/ss/android/update/UpdateProgressActivity;->r:Z
+
+    .line 131084
+    .line 131085
+    return-void
+.end method
+
+.method protected onStop()V
+    .registers 1
+
+    invoke-static {p0}, Lcom/ss/android/update/t;->a(Lcom/ss/android/update/UpdateProgressActivity;)V
+
+    return-void
+.end method
+
+
+F:\Project\07_Androd\08_FanQie>if "0" == "0" goto mainEnd 
+
+F:\Project\07_Androd\08_FanQie>if "Windows_NT" == "Windows_NT" endlocal

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.fanqie.blocker" android:versionCode="200" android:versionName="2.0.0">
+  <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="35" />
+  <application android:label="Fanqie Update Video Blocker" android:allowBackup="false" android:hasCode="true">
+    <meta-data android:name="xposedmodule" android:value="true" />
+    <meta-data android:name="xposeddescription" android:value="Fanqie Update Video BlockerFanqie Update Video Blocker??" />
+    <meta-data android:name="xposedminversion" android:value="82" />
+    <meta-data android:name="xposedscope" android:value="com.dragon.read" />
+  </application>
+</manifest>
