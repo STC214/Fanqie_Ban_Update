@@ -1,0 +1,3167 @@
+﻿
+F:\Project\07_Androd\08_FanQie>if "Windows_NT" == "Windows_NT" setlocal
+
+F:\Project\07_Androd\08_FanQie>set DIRNAME=F:\Android\Sdk\cmdline-tools\latest\bin\ 
+
+F:\Project\07_Androd\08_FanQie>if "F:\Android\Sdk\cmdline-tools\latest\bin\" == "" set DIRNAME=. 
+
+F:\Project\07_Androd\08_FanQie>set APP_BASE_NAME=apkanalyzer 
+
+F:\Project\07_Androd\08_FanQie>set APP_HOME=F:\Android\Sdk\cmdline-tools\latest\bin\.. 
+
+F:\Project\07_Androd\08_FanQie>set DEFAULT_JVM_OPTS=-Dcom.android.sdklib.toolsdir=F:\Android\Sdk\cmdline-tools\latest\bin\\.. 
+
+F:\Project\07_Androd\08_FanQie>if defined JAVA_HOME goto findJavaFromJavaHome 
+
+F:\Project\07_Androd\08_FanQie>set JAVA_HOME=F:\Programer\Java\jdk-21 
+
+F:\Project\07_Androd\08_FanQie>set JAVA_EXE=F:\Programer\Java\jdk-21/bin/java.exe 
+
+F:\Project\07_Androd\08_FanQie>if exist "F:\Programer\Java\jdk-21/bin/java.exe" goto init 
+
+F:\Project\07_Androd\08_FanQie>if not "Windows_NT" == "Windows_NT" goto win9xME_args 
+
+F:\Project\07_Androd\08_FanQie>set CMD_LINE_ARGS= 
+
+F:\Project\07_Androd\08_FanQie>set _SKIP=2 
+
+F:\Project\07_Androd\08_FanQie>if "xdex" == "x" goto execute 
+
+F:\Project\07_Androd\08_FanQie>set CMD_LINE_ARGS=dex code --class com.dragon.read.pages.minigame.c F:\Project\07_Androd\08_FanQie\番茄小说oppo定制.apk 
+
+F:\Project\07_Androd\08_FanQie>setlocal enabledelayedexpansion 
+
+F:\Project\07_Androd\08_FanQie>for /F "tokens=3" %a in ('""F:\Programer\Java\jdk-21/bin/java.exe" -version 2>&1 |findstr "version""') do (for /F "tokens=1,2 delims=." %b in ('echo %a') do (set versionWithQ=%b%c ) ) 
+
+F:\Project\07_Androd\08_FanQie>(for /F "tokens=1,2 delims=." %b in ('echo "21.0.10"') do (set versionWithQ=%b%c ) ) 
+
+F:\Project\07_Androd\08_FanQie>(set versionWithQ="210 ) 
+
+F:\Project\07_Androd\08_FanQie>set version=!versionWithQ:"=! 
+
+F:\Project\07_Androd\08_FanQie>if !version! LSS 170 if "" == "" (
+echo Java version 17 or higher is required.  
+ echo To override this check set SKIP_JDK_VERSION_CHECK  
+ goto :eof 
+) 
+
+F:\Project\07_Androd\08_FanQie>set CLASSPATH=F:\Android\Sdk\cmdline-tools\latest\bin\..\lib\apkanalyzer-classpath.jar 
+
+F:\Project\07_Androd\08_FanQie>"F:\Programer\Java\jdk-21/bin/java.exe" -Dcom.android.sdklib.toolsdir=F:\Android\Sdk\cmdline-tools\latest\bin\\..    -classpath "F:\Android\Sdk\cmdline-tools\latest\bin\..\lib\apkanalyzer-classpath.jar" com.android.tools.apk.analyzer.ApkAnalyzerCli dex code --class com.dragon.read.pages.minigame.c F:\Project\07_Androd\08_FanQie\番茄小说oppo定制.apk 
+.class public Lcom/dragon/read/pages/minigame/c;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+
+# static fields
+.field public static a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+.field private static volatile d:Lcom/dragon/read/pages/minigame/c;
+
+
+# instance fields
+.field public volatile b:Z
+
+.field public c:Ljava/lang/String;
+
+.field private e:J
+
+.field private f:Z
+
+.field private g:Ljava/lang/String;
+
+
+# direct methods
+.method private constructor <init>()V
+    .registers 5
+
+    .prologue
+    .line 262144
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 262145
+    .line 262146
+    .line 262147
+    const-wide/16 v0, -0x1
+
+    .line 262148
+    .line 262149
+    iput-wide v0, p0, Lcom/dragon/read/pages/minigame/c;->e:J
+
+    .line 262150
+    .line 262151
+    const-string v0, ""
+
+    .line 262152
+    .line 262153
+    iput-object v0, p0, Lcom/dragon/read/pages/minigame/c;->g:Ljava/lang/String;
+
+    .line 262154
+    .line 262155
+    new-instance v0, Lcom/dragon/read/pages/minigame/c$1;
+
+    .line 262156
+    .line 262157
+    invoke-direct {v0, p0}, Lcom/dragon/read/pages/minigame/c$1;-><init>(Lcom/dragon/read/pages/minigame/c;)V
+
+    .line 262158
+    .line 262159
+    .line 262160
+    const/4 v1, 0x3
+
+    .line 262161
+    new-array v1, v1, [Ljava/lang/String;
+
+    .line 262162
+    .line 262163
+    const/4 v2, 0x0
+
+    .line 262164
+    const-string v3, "action_reading_user_login"
+
+    .line 262165
+    .line 262166
+    aput-object v3, v1, v2
+
+    .line 262167
+    .line 262168
+    const/4 v2, 0x1
+
+    .line 262169
+    const-string v3, "game_lifecycle_callback"
+
+    .line 262170
+    .line 262171
+    aput-object v3, v1, v2
+
+    .line 262172
+    .line 262173
+    const/4 v2, 0x2
+
+    .line 262174
+    const-string v3, "game_center_on_resume"
+
+    .line 262175
+    .line 262176
+    aput-object v3, v1, v2
+
+    .line 262177
+    .line 262178
+    invoke-virtual {v0, v1}, Lcom/dragon/read/pages/minigame/c$1;->a([Ljava/lang/String;)V
+
+    .line 262179
+    .line 262180
+    .line 262181
+    invoke-static {}, Lcom/dragon/read/b/a;->a()Lcom/dragon/read/b/a;
+
+    .line 262182
+    .line 262183
+    .line 262184
+    move-result-object v0
+
+    .line 262185
+    invoke-virtual {v0}, Lcom/dragon/read/b/a;->b()V
+
+    .line 262186
+    .line 262187
+    .line 262188
+    return-void
+.end method
+
+.method private a(Lcom/dragon/read/polaris/model/SingleTaskModel;)J
+    .registers 8
+
+    .prologue
+    .line 17104896
+    const/4 v0, 0x1
+
+    .line 17104897
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 17104898
+    .line 17104899
+    const/4 v2, 0x0
+
+    .line 17104900
+    aput-object p1, v1, v2
+
+    .line 17104901
+    .line 17104902
+    sget-object v3, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 17104903
+    .line 17104904
+    const/16 v4, 0x3572
+
+    .line 17104905
+    .line 17104906
+    invoke-static {v1, p0, v3, v2, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 17104907
+    .line 17104908
+    .line 17104909
+    move-result-object v1
+
+    .line 17104910
+    iget-boolean v3, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 17104911
+    .line 17104912
+    if-eqz v3, :cond_1b
+
+    .line 17104913
+    .line 17104914
+    iget-object p1, v1, Lcom/meituan/robust/PatchProxyResult;->result:Ljava/lang/Object;
+
+    .line 17104915
+    .line 17104916
+    check-cast p1, Ljava/lang/Long;
+
+    .line 17104917
+    .line 17104918
+    invoke-virtual {p1}, Ljava/lang/Long;->longValue()J
+
+    .line 17104919
+    .line 17104920
+    .line 17104921
+    move-result-wide v0
+
+    .line 17104922
+    return-wide v0
+
+    .line 17104923
+    :cond_1b
+    invoke-virtual {p1}, Lcom/dragon/read/polaris/model/SingleTaskModel;->getStatusExtra()Lorg/json/JSONObject;
+
+    .line 17104924
+    .line 17104925
+    .line 17104926
+    move-result-object p1
+
+    .line 17104927
+    const/4 v1, -0x1
+
+    .line 17104928
+    const-string v3, "second"
+
+    .line 17104929
+    .line 17104930
+    invoke-virtual {p1, v3}, Lorg/json/JSONObject;->isNull(Ljava/lang/String;)Z
+
+    .line 17104931
+    .line 17104932
+    .line 17104933
+    move-result v4
+
+    .line 17104934
+    const-string v5, "PolarisMiniGameManager"
+
+    .line 17104935
+    .line 17104936
+    if-nez v4, :cond_40
+
+    .line 17104937
+    .line 17104938
+    :try_start_2a
+    invoke-virtual {p1, v3}, Lorg/json/JSONObject;->getInt(Ljava/lang/String;)I
+
+    .line 17104939
+    .line 17104940
+    .line 17104941
+    move-result v1
+    :try_end_2e
+    .catch Lorg/json/JSONException; {:try_start_2a .. :try_end_2e} :catch_2f
+
+    .line 17104942
+    goto :goto_40
+
+    .line 17104943
+    :catch_2f
+    move-exception p1
+
+    .line 17104944
+    new-array v3, v0, [Ljava/lang/Object;
+
+    .line 17104945
+    .line 17104946
+    invoke-static {p1}, Landroid/util/Log;->getStackTraceString(Ljava/lang/Throwable;)Ljava/lang/String;
+
+    .line 17104947
+    .line 17104948
+    .line 17104949
+    move-result-object v4
+
+    .line 17104950
+    aput-object v4, v3, v2
+
+    .line 17104951
+    .line 17104952
+    const-string v4, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u798f\u5229\u9875\u6e38\u620f\u65f6\u957f\u914d\u7f6e error=%s"
+
+    .line 17104953
+    .line 17104954
+    invoke-static {v5, v4, v3}, Lcom/dragon/read/base/util/LogWrapper;->error(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17104955
+    .line 17104956
+    .line 17104957
+    invoke-virtual {p1}, Lorg/json/JSONException;->printStackTrace()V
+
+    .line 17104958
+    .line 17104959
+    .line 17104960
+    :cond_40
+    :goto_40
+    new-array p1, v0, [Ljava/lang/Object;
+
+    .line 17104961
+    .line 17104962
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    .line 17104963
+    .line 17104964
+    .line 17104965
+    move-result-object v0
+
+    .line 17104966
+    aput-object v0, p1, v2
+
+    .line 17104967
+    .line 17104968
+    const-string v0, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u798f\u5229\u9875\u6e38\u620f\u65f6\u957f\u914d\u7f6e->%d"
+
+    .line 17104969
+    .line 17104970
+    invoke-static {v5, v0, p1}, Lcom/dragon/read/base/util/LogWrapper;->info(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17104971
+    .line 17104972
+    .line 17104973
+    int-to-long v0, v1
+
+    .line 17104974
+    return-wide v0
+.end method
+
+.method public static a()Lcom/dragon/read/pages/minigame/c;
+    .registers 5
+
+    .prologue
+    .line 262144
+    const/4 v0, 0x0
+
+    .line 262145
+    new-array v0, v0, [Ljava/lang/Object;
+
+    .line 262146
+    .line 262147
+    sget-object v1, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 262148
+    .line 262149
+    const/4 v2, 0x0
+
+    .line 262150
+    const/4 v3, 0x1
+
+    .line 262151
+    const/16 v4, 0x3567
+
+    .line 262152
+    .line 262153
+    invoke-static {v0, v2, v1, v3, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 262154
+    .line 262155
+    .line 262156
+    move-result-object v0
+
+    .line 262157
+    iget-boolean v1, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 262158
+    .line 262159
+    if-eqz v1, :cond_16
+
+    .line 262160
+    .line 262161
+    iget-object v0, v0, Lcom/meituan/robust/PatchProxyResult;->result:Ljava/lang/Object;
+
+    .line 262162
+    .line 262163
+    check-cast v0, Lcom/dragon/read/pages/minigame/c;
+
+    .line 262164
+    .line 262165
+    return-object v0
+
+    .line 262166
+    :cond_16
+    sget-object v0, Lcom/dragon/read/pages/minigame/c;->d:Lcom/dragon/read/pages/minigame/c;
+
+    .line 262167
+    .line 262168
+    if-nez v0, :cond_2d
+
+    .line 262169
+    .line 262170
+    const-class v0, Lcom/dragon/read/pages/minigame/c;
+
+    .line 262171
+    .line 262172
+    monitor-enter v0
+
+    .line 262173
+    :try_start_1d
+    sget-object v1, Lcom/dragon/read/pages/minigame/c;->d:Lcom/dragon/read/pages/minigame/c;
+
+    .line 262174
+    .line 262175
+    if-nez v1, :cond_28
+
+    .line 262176
+    .line 262177
+    new-instance v1, Lcom/dragon/read/pages/minigame/c;
+
+    .line 262178
+    .line 262179
+    invoke-direct {v1}, Lcom/dragon/read/pages/minigame/c;-><init>()V
+
+    .line 262180
+    .line 262181
+    .line 262182
+    sput-object v1, Lcom/dragon/read/pages/minigame/c;->d:Lcom/dragon/read/pages/minigame/c;
+
+    .line 262183
+    .line 262184
+    :cond_28
+    monitor-exit v0
+
+    .line 262185
+    goto :goto_2d
+
+    .line 262186
+    :catchall_2a
+    move-exception v1
+
+    .line 262187
+    monitor-exit v0
+    :try_end_2c
+    .catchall {:try_start_1d .. :try_end_2c} :catchall_2a
+
+    .line 262188
+    throw v1
+
+    .line 262189
+    :cond_2d
+    :goto_2d
+    sget-object v0, Lcom/dragon/read/pages/minigame/c;->d:Lcom/dragon/read/pages/minigame/c;
+
+    .line 262190
+    .line 262191
+    return-object v0
+.end method
+
+.method private a(ILjava/lang/String;)V
+    .registers 8
+
+    .prologue
+    .line 33947648
+    const/4 v0, 0x2
+
+    .line 33947649
+    new-array v0, v0, [Ljava/lang/Object;
+
+    .line 33947650
+    .line 33947651
+    new-instance v1, Ljava/lang/Integer;
+
+    .line 33947652
+    .line 33947653
+    invoke-direct {v1, p1}, Ljava/lang/Integer;-><init>(I)V
+
+    .line 33947654
+    .line 33947655
+    .line 33947656
+    const/4 v2, 0x0
+
+    .line 33947657
+    aput-object v1, v0, v2
+
+    .line 33947658
+    .line 33947659
+    const/4 v1, 0x1
+
+    .line 33947660
+    aput-object p2, v0, v1
+
+    .line 33947661
+    .line 33947662
+    sget-object v3, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 33947663
+    .line 33947664
+    const/16 v4, 0x356d
+
+    .line 33947665
+    .line 33947666
+    invoke-static {v0, p0, v3, v2, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 33947667
+    .line 33947668
+    .line 33947669
+    move-result-object v0
+
+    .line 33947670
+    iget-boolean v0, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 33947671
+    .line 33947672
+    if-eqz v0, :cond_1b
+
+    .line 33947673
+    .line 33947674
+    return-void
+
+    .line 33947675
+    :cond_1b
+    new-instance v0, Lorg/json/JSONObject;
+
+    .line 33947676
+    .line 33947677
+    invoke-direct {v0}, Lorg/json/JSONObject;-><init>()V
+
+    .line 33947678
+    .line 33947679
+    .line 33947680
+    :try_start_20
+    const-string v3, "status_msg"
+
+    .line 33947681
+    .line 33947682
+    invoke-virtual {v0, v3, p2}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
+    :try_end_25
+    .catch Ljava/lang/Exception; {:try_start_20 .. :try_end_25} :catch_26
+
+    .line 33947683
+    .line 33947684
+    .line 33947685
+    goto :goto_2a
+
+    .line 33947686
+    :catch_26
+    move-exception p2
+
+    .line 33947687
+    invoke-virtual {p2}, Ljava/lang/Exception;->printStackTrace()V
+
+    .line 33947688
+    .line 33947689
+    .line 33947690
+    :goto_2a
+    :try_start_2a
+    const-string p2, "mini_game_monitor"
+
+    .line 33947691
+    .line 33947692
+    const/4 v3, 0x0
+
+    .line 33947693
+    invoke-static {p2, p1, v0, v3, v3}, Lcom/bytedance/apm/ApmAgent;->a(Ljava/lang/String;ILorg/json/JSONObject;Lorg/json/JSONObject;Lorg/json/JSONObject;)V
+    :try_end_30
+    .catch Ljava/lang/Throwable; {:try_start_2a .. :try_end_30} :catch_31
+
+    .line 33947694
+    .line 33947695
+    .line 33947696
+    goto :goto_4c
+
+    .line 33947697
+    :catch_31
+    move-exception p1
+
+    .line 33947698
+    new-array p2, v1, [Ljava/lang/Object;
+
+    .line 33947699
+    .line 33947700
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    .line 33947701
+    .line 33947702
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    .line 33947703
+    .line 33947704
+    .line 33947705
+    const-string v1, "\u798f\u5229\u9875\u5c0f\u6e38\u620f monitorStatusRate case exception: "
+
+    .line 33947706
+    .line 33947707
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 33947708
+    .line 33947709
+    .line 33947710
+    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    .line 33947711
+    .line 33947712
+    .line 33947713
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    .line 33947714
+    .line 33947715
+    .line 33947716
+    move-result-object p1
+
+    .line 33947717
+    aput-object p1, p2, v2
+
+    .line 33947718
+    .line 33947719
+    const-string p1, "PolarisMiniGameManager"
+
+    .line 33947720
+    .line 33947721
+    invoke-static {p1, p2}, Lcom/dragon/read/base/util/LogWrapper;->e(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 33947722
+    .line 33947723
+    .line 33947724
+    :goto_4c
+    return-void
+.end method
+
+.method private a(Landroid/content/Intent;)V
+    .registers 10
+
+    .prologue
+    .line 17235968
+    const/4 v0, 0x1
+
+    .line 17235969
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 17235970
+    .line 17235971
+    const/4 v2, 0x0
+
+    .line 17235972
+    aput-object p1, v1, v2
+
+    .line 17235973
+    .line 17235974
+    sget-object v3, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 17235975
+    .line 17235976
+    const/16 v4, 0x3566
+
+    .line 17235977
+    .line 17235978
+    invoke-static {v1, p0, v3, v2, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 17235979
+    .line 17235980
+    .line 17235981
+    move-result-object v1
+
+    .line 17235982
+    iget-boolean v1, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 17235983
+    .line 17235984
+    if-eqz v1, :cond_13
+
+    .line 17235985
+    .line 17235986
+    return-void
+
+    .line 17235987
+    :cond_13
+    invoke-static {}, Lcom/dragon/read/base/ssconfig/a;->bJ()Lcom/dragon/read/base/ssconfig/model/bq;
+
+    .line 17235988
+    .line 17235989
+    .line 17235990
+    move-result-object v1
+
+    .line 17235991
+    iget-boolean v1, v1, Lcom/dragon/read/base/ssconfig/model/bq;->o:Z
+
+    .line 17235992
+    .line 17235993
+    const-string v3, "PolarisMiniGameManager"
+
+    .line 17235994
+    .line 17235995
+    if-nez v1, :cond_27
+
+    .line 17235996
+    .line 17235997
+    new-array p1, v0, [Ljava/lang/Object;
+
+    .line 17235998
+    .line 17235999
+    const-string v0, "\u798f\u5229\u9875\u5c0f\u6e38\u620f settings\u5f00\u5173\uff1apolaris_timor_switch\u672a\u6253\u5f00"
+
+    .line 17236000
+    .line 17236001
+    aput-object v0, p1, v2
+
+    .line 17236002
+    .line 17236003
+    invoke-static {v3, p1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17236004
+    .line 17236005
+    .line 17236006
+    return-void
+
+    .line 17236007
+    :cond_27
+    const-string v1, "mini_game_lifecycle"
+
+    .line 17236008
+    .line 17236009
+    invoke-virtual {p1, v1}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
+
+    .line 17236010
+    .line 17236011
+    .line 17236012
+    move-result-object p1
+
+    .line 17236013
+    invoke-static {}, Lcom/dragon/read/polaris/PolarisTaskMgr;->a()Lcom/dragon/read/polaris/PolarisTaskMgr;
+
+    .line 17236014
+    .line 17236015
+    .line 17236016
+    move-result-object v1
+
+    .line 17236017
+    const-string v4, "newbie_play_game"
+
+    .line 17236018
+    .line 17236019
+    invoke-virtual {v1, v4}, Lcom/dragon/read/polaris/PolarisTaskMgr;->a(Ljava/lang/String;)Lcom/dragon/read/polaris/model/SingleTaskModel;
+
+    .line 17236020
+    .line 17236021
+    .line 17236022
+    move-result-object v1
+
+    .line 17236023
+    if-nez v1, :cond_43
+
+    .line 17236024
+    .line 17236025
+    new-array p1, v0, [Ljava/lang/Object;
+
+    .line 17236026
+    .line 17236027
+    const-string v0, "\u798f\u5229\u9875\u5c0f\u6e38\u620f\uff0c\u4efb\u52a1\u4e3a\u7a7a\uff1ataskInMemory == null"
+
+    .line 17236028
+    .line 17236029
+    aput-object v0, p1, v2
+
+    .line 17236030
+    .line 17236031
+    invoke-static {v3, p1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17236032
+    .line 17236033
+    .line 17236034
+    return-void
+
+    .line 17236035
+    :cond_43
+    invoke-static {}, Lcom/dragon/read/app/d;->a()Landroid/app/Application;
+
+    .line 17236036
+    .line 17236037
+    .line 17236038
+    move-result-object v4
+
+    .line 17236039
+    new-instance v5, Ljava/lang/StringBuilder;
+
+    .line 17236040
+    .line 17236041
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
+    .line 17236042
+    .line 17236043
+    .line 17236044
+    const-string v6, "Timor_"
+
+    .line 17236045
+    .line 17236046
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 17236047
+    .line 17236048
+    .line 17236049
+    invoke-static {}, Lcom/dragon/read/user/a;->a()Lcom/dragon/read/user/a;
+
+    .line 17236050
+    .line 17236051
+    .line 17236052
+    move-result-object v6
+
+    .line 17236053
+    invoke-virtual {v6}, Lcom/dragon/read/user/a;->C()Ljava/lang/String;
+
+    .line 17236054
+    .line 17236055
+    .line 17236056
+    move-result-object v6
+
+    .line 17236057
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 17236058
+    .line 17236059
+    .line 17236060
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    .line 17236061
+    .line 17236062
+    .line 17236063
+    move-result-object v5
+
+    .line 17236064
+    invoke-static {v4, v5}, Lcom/dragon/read/local/d;->a(Landroid/content/Context;Ljava/lang/String;)Landroid/content/SharedPreferences;
+
+    .line 17236065
+    .line 17236066
+    .line 17236067
+    move-result-object v4
+
+    .line 17236068
+    const-string v5, "has_timor_first_award"
+
+    .line 17236069
+    .line 17236070
+    invoke-interface {v4, v5, v2}, Landroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z
+
+    .line 17236071
+    .line 17236072
+    .line 17236073
+    move-result v5
+
+    .line 17236074
+    invoke-virtual {v1}, Lcom/dragon/read/polaris/model/SingleTaskModel;->getDonePercent()I
+
+    .line 17236075
+    .line 17236076
+    .line 17236077
+    move-result v6
+
+    .line 17236078
+    if-nez v6, :cond_98
+
+    .line 17236079
+    .line 17236080
+    if-nez v5, :cond_98
+
+    .line 17236081
+    .line 17236082
+    const-string v5, "open"
+
+    .line 17236083
+    .line 17236084
+    invoke-static {v5, p1}, Landroid/text/TextUtils;->equals(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z
+
+    .line 17236085
+    .line 17236086
+    .line 17236087
+    move-result v5
+
+    .line 17236088
+    if-eqz v5, :cond_98
+
+    .line 17236089
+    .line 17236090
+    const-string p1, "MiniGameManager \u798f\u5229\u9875\u5c0f\u6e38\u620f \u9996\u6b21\u73a9\u5c0f\u6e38\u620f\u5956\u52b1"
+
+    .line 17236091
+    .line 17236092
+    invoke-direct {p0, v0, p1}, Lcom/dragon/read/pages/minigame/c;->a(ILjava/lang/String;)V
+
+    .line 17236093
+    .line 17236094
+    .line 17236095
+    new-array p1, v0, [Ljava/lang/Object;
+
+    .line 17236096
+    .line 17236097
+    const-string v0, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u9996\u6b21\u73a9\u5c0f\u6e38\u620f\u5956\u52b1"
+
+    .line 17236098
+    .line 17236099
+    aput-object v0, p1, v2
+
+    .line 17236100
+    .line 17236101
+    invoke-static {v3, p1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17236102
+    .line 17236103
+    .line 17236104
+    new-instance p1, Lorg/json/JSONObject;
+
+    .line 17236105
+    .line 17236106
+    invoke-direct {p1}, Lorg/json/JSONObject;-><init>()V
+
+    .line 17236107
+    .line 17236108
+    .line 17236109
+    new-instance v0, Lcom/dragon/read/pages/minigame/c$2;
+
+    .line 17236110
+    .line 17236111
+    invoke-direct {v0, p0}, Lcom/dragon/read/pages/minigame/c$2;-><init>(Lcom/dragon/read/pages/minigame/c;)V
+
+    .line 17236112
+    .line 17236113
+    .line 17236114
+    const-string v1, "play_game"
+
+    .line 17236115
+    .line 17236116
+    invoke-static {v1, p1, v0}, Lcom/bytedance/ug/sdk/luckycat/api/LuckyCatSDK;->a(Ljava/lang/String;Lorg/json/JSONObject;Lcom/bytedance/ug/sdk/luckycat/api/a/e;)V
+
+    .line 17236117
+    .line 17236118
+    .line 17236119
+    return-void
+
+    .line 17236120
+    :cond_98
+    const-string v5, "has_timor_time_award"
+
+    .line 17236121
+    .line 17236122
+    invoke-interface {v4, v5, v2}, Landroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z
+
+    .line 17236123
+    .line 17236124
+    .line 17236125
+    move-result v4
+
+    .line 17236126
+    invoke-virtual {v1}, Lcom/dragon/read/polaris/model/SingleTaskModel;->getDonePercent()I
+
+    .line 17236127
+    .line 17236128
+    .line 17236129
+    move-result v1
+
+    .line 17236130
+    const/4 v5, 0x3
+
+    .line 17236131
+    new-array v5, v5, [Ljava/lang/Object;
+
+    .line 17236132
+    .line 17236133
+    const-string v6, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1 donePercent = %d, hasTimorTimeAward=%b"
+
+    .line 17236134
+    .line 17236135
+    aput-object v6, v5, v2
+
+    .line 17236136
+    .line 17236137
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    .line 17236138
+    .line 17236139
+    .line 17236140
+    move-result-object v6
+
+    .line 17236141
+    aput-object v6, v5, v0
+
+    .line 17236142
+    .line 17236143
+    const/4 v6, 0x2
+
+    .line 17236144
+    invoke-static {v4}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    .line 17236145
+    .line 17236146
+    .line 17236147
+    move-result-object v7
+
+    .line 17236148
+    aput-object v7, v5, v6
+
+    .line 17236149
+    .line 17236150
+    invoke-static {v3, v5}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17236151
+    .line 17236152
+    .line 17236153
+    const/16 v5, 0x21
+
+    .line 17236154
+    .line 17236155
+    if-ne v1, v5, :cond_d8
+
+    .line 17236156
+    .line 17236157
+    if-nez v4, :cond_d8
+
+    .line 17236158
+    .line 17236159
+    const-string v1, "close"
+
+    .line 17236160
+    .line 17236161
+    invoke-static {v1, p1}, Landroid/text/TextUtils;->equals(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z
+
+    .line 17236162
+    .line 17236163
+    .line 17236164
+    move-result p1
+
+    .line 17236165
+    if-eqz p1, :cond_d8
+
+    .line 17236166
+    .line 17236167
+    const/4 p1, 0x4
+
+    .line 17236168
+    const-string v1, "MiniGameManager \u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1"
+
+    .line 17236169
+    .line 17236170
+    invoke-direct {p0, p1, v1}, Lcom/dragon/read/pages/minigame/c;->a(ILjava/lang/String;)V
+
+    .line 17236171
+    .line 17236172
+    .line 17236173
+    new-array p1, v0, [Ljava/lang/Object;
+
+    .line 17236174
+    .line 17236175
+    const-string v1, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1 requestTimeAwardAvailable = true"
+
+    .line 17236176
+    .line 17236177
+    aput-object v1, p1, v2
+
+    .line 17236178
+    .line 17236179
+    invoke-static {v3, p1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17236180
+    .line 17236181
+    .line 17236182
+    iput-boolean v0, p0, Lcom/dragon/read/pages/minigame/c;->b:Z
+
+    .line 17236183
+    .line 17236184
+    :cond_d8
+    return-void
+.end method
+
+.method static synthetic a(Lcom/dragon/read/pages/minigame/c;)V
+    .registers 6
+
+    .prologue
+    .line 16973824
+    const/4 v0, 0x1
+
+    .line 16973825
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 16973826
+    .line 16973827
+    const/4 v2, 0x0
+
+    .line 16973828
+    aput-object p0, v1, v2
+
+    .line 16973829
+    .line 16973830
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 16973831
+    .line 16973832
+    const/4 v3, 0x0
+
+    .line 16973833
+    const/16 v4, 0x3565
+
+    .line 16973834
+    .line 16973835
+    invoke-static {v1, v3, v2, v0, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 16973836
+    .line 16973837
+    .line 16973838
+    move-result-object v0
+
+    .line 16973839
+    iget-boolean v0, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 16973840
+    .line 16973841
+    if-eqz v0, :cond_14
+
+    .line 16973842
+    .line 16973843
+    return-void
+
+    .line 16973844
+    :cond_14
+    invoke-direct {p0}, Lcom/dragon/read/pages/minigame/c;->g()V
+
+    .line 16973845
+    .line 16973846
+    .line 16973847
+    return-void
+.end method
+
+.method static synthetic a(Lcom/dragon/read/pages/minigame/c;ILjava/lang/String;)V
+    .registers 8
+
+    .prologue
+    .line 50855936
+    const/4 v0, 0x3
+
+    .line 50855937
+    new-array v0, v0, [Ljava/lang/Object;
+
+    .line 50855938
+    .line 50855939
+    const/4 v1, 0x0
+
+    .line 50855940
+    aput-object p0, v0, v1
+
+    .line 50855941
+    .line 50855942
+    new-instance v1, Ljava/lang/Integer;
+
+    .line 50855943
+    .line 50855944
+    invoke-direct {v1, p1}, Ljava/lang/Integer;-><init>(I)V
+
+    .line 50855945
+    .line 50855946
+    .line 50855947
+    const/4 v2, 0x1
+
+    .line 50855948
+    aput-object v1, v0, v2
+
+    .line 50855949
+    .line 50855950
+    const/4 v1, 0x2
+
+    .line 50855951
+    aput-object p2, v0, v1
+
+    .line 50855952
+    .line 50855953
+    sget-object v1, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 50855954
+    .line 50855955
+    const/4 v3, 0x0
+
+    .line 50855956
+    const/16 v4, 0x3571
+
+    .line 50855957
+    .line 50855958
+    invoke-static {v0, v3, v1, v2, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 50855959
+    .line 50855960
+    .line 50855961
+    move-result-object v0
+
+    .line 50855962
+    iget-boolean v0, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 50855963
+    .line 50855964
+    if-eqz v0, :cond_1f
+
+    .line 50855965
+    .line 50855966
+    return-void
+
+    .line 50855967
+    :cond_1f
+    invoke-direct {p0, p1, p2}, Lcom/dragon/read/pages/minigame/c;->a(ILjava/lang/String;)V
+
+    .line 50855968
+    .line 50855969
+    .line 50855970
+    return-void
+.end method
+
+.method static synthetic a(Lcom/dragon/read/pages/minigame/c;Landroid/content/Intent;)V
+    .registers 7
+
+    .prologue
+    .line 34144256
+    const/4 v0, 0x2
+
+    .line 34144257
+    new-array v0, v0, [Ljava/lang/Object;
+
+    .line 34144258
+    .line 34144259
+    const/4 v1, 0x0
+
+    .line 34144260
+    aput-object p0, v0, v1
+
+    .line 34144261
+    .line 34144262
+    const/4 v1, 0x1
+
+    .line 34144263
+    aput-object p1, v0, v1
+
+    .line 34144264
+    .line 34144265
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 34144266
+    .line 34144267
+    const/4 v3, 0x0
+
+    .line 34144268
+    const/16 v4, 0x356f
+
+    .line 34144269
+    .line 34144270
+    invoke-static {v0, v3, v2, v1, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 34144271
+    .line 34144272
+    .line 34144273
+    move-result-object v0
+
+    .line 34144274
+    iget-boolean v0, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 34144275
+    .line 34144276
+    if-eqz v0, :cond_17
+
+    .line 34144277
+    .line 34144278
+    return-void
+
+    .line 34144279
+    :cond_17
+    invoke-direct {p0, p1}, Lcom/dragon/read/pages/minigame/c;->a(Landroid/content/Intent;)V
+
+    .line 34144280
+    .line 34144281
+    .line 34144282
+    return-void
+.end method
+
+.method private synthetic a(Lcom/dragon/read/rpc/model/SSTimorTimeResponse;)V
+    .registers 9
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/Exception;
+        }
+    .end annotation
+
+    .prologue
+    .line 17432576
+    const/4 v0, 0x1
+
+    .line 17432577
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 17432578
+    .line 17432579
+    const/4 v2, 0x0
+
+    .line 17432580
+    aput-object p1, v1, v2
+
+    .line 17432581
+    .line 17432582
+    sget-object v3, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 17432583
+    .line 17432584
+    const/16 v4, 0x3570
+
+    .line 17432585
+    .line 17432586
+    invoke-static {v1, p0, v3, v2, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 17432587
+    .line 17432588
+    .line 17432589
+    move-result-object v1
+
+    .line 17432590
+    iget-boolean v1, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 17432591
+    .line 17432592
+    if-eqz v1, :cond_13
+
+    .line 17432593
+    .line 17432594
+    return-void
+
+    .line 17432595
+    :cond_13
+    iput-boolean v2, p0, Lcom/dragon/read/pages/minigame/c;->f:Z
+
+    .line 17432596
+    .line 17432597
+    iget-object v1, p1, Lcom/dragon/read/rpc/model/SSTimorTimeResponse;->code:Lcom/dragon/read/rpc/model/BookApiERR;
+
+    .line 17432598
+    .line 17432599
+    sget-object v3, Lcom/dragon/read/rpc/model/BookApiERR;->SUCCESS:Lcom/dragon/read/rpc/model/BookApiERR;
+
+    .line 17432600
+    .line 17432601
+    const-string v4, "PolarisMiniGameManager"
+
+    .line 17432602
+    .line 17432603
+    if-ne v1, v3, :cond_59
+
+    .line 17432604
+    .line 17432605
+    const/4 v1, 0x5
+
+    .line 17432606
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    .line 17432607
+    .line 17432608
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    .line 17432609
+    .line 17432610
+    .line 17432611
+    const-string v5, "MiniGameManager \u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u6e38\u620f\u5956\u52b1\u65f6\u957f\u6210\u529f->"
+
+    .line 17432612
+    .line 17432613
+    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 17432614
+    .line 17432615
+    .line 17432616
+    iget-wide v5, p0, Lcom/dragon/read/pages/minigame/c;->e:J
+
+    .line 17432617
+    .line 17432618
+    invoke-virtual {v3, v5, v6}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 17432619
+    .line 17432620
+    .line 17432621
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    .line 17432622
+    .line 17432623
+    .line 17432624
+    move-result-object v3
+
+    .line 17432625
+    invoke-direct {p0, v1, v3}, Lcom/dragon/read/pages/minigame/c;->a(ILjava/lang/String;)V
+
+    .line 17432626
+    .line 17432627
+    .line 17432628
+    iget-object v1, p1, Lcom/dragon/read/rpc/model/SSTimorTimeResponse;->data:Lcom/dragon/read/rpc/model/SSTimorTimeInfo;
+
+    .line 17432629
+    .line 17432630
+    if-eqz v1, :cond_51
+
+    .line 17432631
+    .line 17432632
+    iget-object p1, p1, Lcom/dragon/read/rpc/model/SSTimorTimeResponse;->data:Lcom/dragon/read/rpc/model/SSTimorTimeInfo;
+
+    .line 17432633
+    .line 17432634
+    iget-wide v5, p1, Lcom/dragon/read/rpc/model/SSTimorTimeInfo;->playTime:J
+
+    .line 17432635
+    .line 17432636
+    iput-wide v5, p0, Lcom/dragon/read/pages/minigame/c;->e:J
+
+    .line 17432637
+    .line 17432638
+    new-array p1, v0, [Ljava/lang/Object;
+
+    .line 17432639
+    .line 17432640
+    iget-wide v0, p0, Lcom/dragon/read/pages/minigame/c;->e:J
+
+    .line 17432641
+    .line 17432642
+    invoke-static {v0, v1}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
+
+    .line 17432643
+    .line 17432644
+    .line 17432645
+    move-result-object v0
+
+    .line 17432646
+    aput-object v0, p1, v2
+
+    .line 17432647
+    .line 17432648
+    const-string v0, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u6e38\u620f\u5956\u52b1\u65f6\u957f\u4e3a->%s"
+
+    .line 17432649
+    .line 17432650
+    invoke-static {v4, v0, p1}, Lcom/dragon/read/base/util/LogWrapper;->info(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17432651
+    .line 17432652
+    .line 17432653
+    invoke-direct {p0}, Lcom/dragon/read/pages/minigame/c;->h()V
+
+    .line 17432654
+    .line 17432655
+    .line 17432656
+    goto :goto_7b
+
+    .line 17432657
+    :cond_51
+    new-array p1, v2, [Ljava/lang/Object;
+
+    .line 17432658
+    .line 17432659
+    const-string v0, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u6e38\u620f\u5956\u52b1\u65f6\u957f\u4e3a->response.data == null"
+
+    .line 17432660
+    .line 17432661
+    invoke-static {v4, v0, p1}, Lcom/dragon/read/base/util/LogWrapper;->info(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17432662
+    .line 17432663
+    .line 17432664
+    goto :goto_7b
+
+    .line 17432665
+    :cond_59
+    const/4 v1, 0x6
+
+    .line 17432666
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    .line 17432667
+    .line 17432668
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    .line 17432669
+    .line 17432670
+    .line 17432671
+    const-string v5, "MiniGameManager \u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u6e38\u620f\u5956\u52b1\u65f6\u957f->response.code == "
+
+    .line 17432672
+    .line 17432673
+    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 17432674
+    .line 17432675
+    .line 17432676
+    iget-object v5, p1, Lcom/dragon/read/rpc/model/SSTimorTimeResponse;->code:Lcom/dragon/read/rpc/model/BookApiERR;
+
+    .line 17432677
+    .line 17432678
+    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    .line 17432679
+    .line 17432680
+    .line 17432681
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    .line 17432682
+    .line 17432683
+    .line 17432684
+    move-result-object v3
+
+    .line 17432685
+    invoke-direct {p0, v1, v3}, Lcom/dragon/read/pages/minigame/c;->a(ILjava/lang/String;)V
+
+    .line 17432686
+    .line 17432687
+    .line 17432688
+    new-array v0, v0, [Ljava/lang/Object;
+
+    .line 17432689
+    .line 17432690
+    iget-object p1, p1, Lcom/dragon/read/rpc/model/SSTimorTimeResponse;->code:Lcom/dragon/read/rpc/model/BookApiERR;
+
+    .line 17432691
+    .line 17432692
+    aput-object p1, v0, v2
+
+    .line 17432693
+    .line 17432694
+    const-string p1, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u6e38\u620f\u5956\u52b1\u65f6\u957fresponse.code == %s"
+
+    .line 17432695
+    .line 17432696
+    invoke-static {v4, p1, v0}, Lcom/dragon/read/base/util/LogWrapper;->info(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 17432697
+    .line 17432698
+    .line 17432699
+    :goto_7b
+    return-void
+.end method
+
+.method private synthetic a(Ljava/lang/Throwable;)V
+    .registers 7
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/lang/Exception;
+        }
+    .end annotation
+
+    const/4 v0, 0x1
+
+    new-array v1, v0, [Ljava/lang/Object;
+
+    const/4 v2, 0x0
+
+    aput-object p1, v1, v2
+
+    sget-object v3, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    const/16 v4, 0x356b
+
+    invoke-static {v1, p0, v3, v2, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    move-result-object v1
+
+    iget-boolean v1, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    if-eqz v1, :cond_13
+
+    return-void
+
+    .line 242
+    :cond_13
+    iput-boolean v2, p0, Lcom/dragon/read/pages/minigame/c;->f:Z
+
+    const/4 v1, 0x6
+
+    .line 243
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "MiniGameManager \u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u6e38\u620f\u5956\u52b1\u65f6\u957f\u5931\u8d25 error msg = "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 244
+    invoke-virtual {p1}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    .line 243
+    invoke-direct {p0, v1, v3}, Lcom/dragon/read/pages/minigame/c;->a(ILjava/lang/String;)V
+
+    .line 245
+    new-array v0, v0, [Ljava/lang/Object;
+
+    invoke-static {p1}, Landroid/util/Log;->getStackTraceString(Ljava/lang/Throwable;)Ljava/lang/String;
+
+    move-result-object p1
+
+    aput-object p1, v0, v2
+
+    const-string p1, "PolarisMiniGameManager"
+
+    const-string v1, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u83b7\u53d6\u6e38\u620f\u5956\u52b1\u65f6\u957f\u5931\u8d25 error=%s"
+
+    invoke-static {p1, v1, v0}, Lcom/dragon/read/base/util/LogWrapper;->error(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    return-void
+.end method
+
+.method private g()V
+    .registers 5
+
+    .prologue
+    .line 262144
+    const/4 v0, 0x0
+
+    .line 262145
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 262146
+    .line 262147
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 262148
+    .line 262149
+    const/16 v3, 0x3569
+
+    .line 262150
+    .line 262151
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 262152
+    .line 262153
+    .line 262154
+    move-result-object v0
+
+    .line 262155
+    iget-boolean v0, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 262156
+    .line 262157
+    if-eqz v0, :cond_10
+
+    .line 262158
+    .line 262159
+    return-void
+
+    .line 262160
+    :cond_10
+    invoke-static {}, Lcom/dragon/read/app/c;->a()Lcom/dragon/read/app/c;
+
+    .line 262161
+    .line 262162
+    .line 262163
+    move-result-object v0
+
+    .line 262164
+    invoke-virtual {v0}, Lcom/dragon/read/app/c;->d()Landroid/app/Activity;
+
+    .line 262165
+    .line 262166
+    .line 262167
+    move-result-object v0
+
+    .line 262168
+    if-nez v0, :cond_1b
+
+    .line 262169
+    .line 262170
+    return-void
+
+    .line 262171
+    :cond_1b
+    invoke-virtual {v0}, Landroid/app/Activity;->getWindow()Landroid/view/Window;
+
+    .line 262172
+    .line 262173
+    .line 262174
+    move-result-object v0
+
+    .line 262175
+    invoke-static {v0}, Lcom/dragon/read/util/aa;->a(Landroid/view/Window;)V
+
+    .line 262176
+    .line 262177
+    .line 262178
+    return-void
+.end method
+
+.method private h()V
+    .registers 11
+
+    .prologue
+    .line 327680
+    const/4 v0, 0x0
+
+    .line 327681
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 327682
+    .line 327683
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 327684
+    .line 327685
+    const/16 v3, 0x356c
+
+    .line 327686
+    .line 327687
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 327688
+    .line 327689
+    .line 327690
+    move-result-object v1
+
+    .line 327691
+    iget-boolean v1, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 327692
+    .line 327693
+    if-eqz v1, :cond_10
+
+    .line 327694
+    .line 327695
+    return-void
+
+    .line 327696
+    :cond_10
+    invoke-static {}, Lcom/dragon/read/polaris/PolarisTaskMgr;->a()Lcom/dragon/read/polaris/PolarisTaskMgr;
+
+    .line 327697
+    .line 327698
+    .line 327699
+    move-result-object v1
+
+    .line 327700
+    const-string v2, "newbie_play_game"
+
+    .line 327701
+    .line 327702
+    invoke-virtual {v1, v2}, Lcom/dragon/read/polaris/PolarisTaskMgr;->a(Ljava/lang/String;)Lcom/dragon/read/polaris/model/SingleTaskModel;
+
+    .line 327703
+    .line 327704
+    .line 327705
+    move-result-object v1
+
+    .line 327706
+    const/4 v2, 0x1
+
+    .line 327707
+    const-string v3, "PolarisMiniGameManager"
+
+    .line 327708
+    .line 327709
+    if-nez v1, :cond_29
+
+    .line 327710
+    .line 327711
+    new-array v1, v2, [Ljava/lang/Object;
+
+    .line 327712
+    .line 327713
+    const-string v2, "\u798f\u5229\u9875\u5c0f\u6e38\u620f\uff0c\u4efb\u52a1\u4e3a\u7a7a\uff1ataskInMemory == null"
+
+    .line 327714
+    .line 327715
+    aput-object v2, v1, v0
+
+    .line 327716
+    .line 327717
+    invoke-static {v3, v1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 327718
+    .line 327719
+    .line 327720
+    return-void
+
+    .line 327721
+    :cond_29
+    invoke-direct {p0, v1}, Lcom/dragon/read/pages/minigame/c;->a(Lcom/dragon/read/polaris/model/SingleTaskModel;)J
+
+    .line 327722
+    .line 327723
+    .line 327724
+    move-result-wide v4
+
+    .line 327725
+    const-wide/16 v6, 0x0
+
+    .line 327726
+    .line 327727
+    cmp-long v1, v4, v6
+
+    .line 327728
+    .line 327729
+    if-lez v1, :cond_57
+
+    .line 327730
+    .line 327731
+    iget-wide v8, p0, Lcom/dragon/read/pages/minigame/c;->e:J
+
+    .line 327732
+    .line 327733
+    cmp-long v1, v8, v6
+
+    .line 327734
+    .line 327735
+    if-lez v1, :cond_57
+
+    .line 327736
+    .line 327737
+    cmp-long v1, v8, v4
+
+    .line 327738
+    .line 327739
+    if-gez v1, :cond_3e
+
+    .line 327740
+    .line 327741
+    goto :goto_57
+
+    .line 327742
+    :cond_3e
+    new-array v1, v2, [Ljava/lang/Object;
+
+    .line 327743
+    .line 327744
+    const-string v2, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1"
+
+    .line 327745
+    .line 327746
+    aput-object v2, v1, v0
+
+    .line 327747
+    .line 327748
+    invoke-static {v3, v1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 327749
+    .line 327750
+    .line 327751
+    new-instance v0, Lorg/json/JSONObject;
+
+    .line 327752
+    .line 327753
+    invoke-direct {v0}, Lorg/json/JSONObject;-><init>()V
+
+    .line 327754
+    .line 327755
+    .line 327756
+    new-instance v1, Lcom/dragon/read/pages/minigame/c$3;
+
+    .line 327757
+    .line 327758
+    invoke-direct {v1, p0}, Lcom/dragon/read/pages/minigame/c$3;-><init>(Lcom/dragon/read/pages/minigame/c;)V
+
+    .line 327759
+    .line 327760
+    .line 327761
+    const-string v2, "play_game"
+
+    .line 327762
+    .line 327763
+    invoke-static {v2, v0, v1}, Lcom/bytedance/ug/sdk/luckycat/api/LuckyCatSDK;->a(Ljava/lang/String;Lorg/json/JSONObject;Lcom/bytedance/ug/sdk/luckycat/api/a/e;)V
+
+    .line 327764
+    .line 327765
+    .line 327766
+    return-void
+
+    .line 327767
+    :cond_57
+    :goto_57
+    const/4 v1, 0x3
+
+    .line 327768
+    new-array v1, v1, [Ljava/lang/Object;
+
+    .line 327769
+    .line 327770
+    const-string v6, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1 timorPlayTimeConf=%d, ssTimorTime=%d"
+
+    .line 327771
+    .line 327772
+    aput-object v6, v1, v0
+
+    .line 327773
+    .line 327774
+    invoke-static {v4, v5}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
+
+    .line 327775
+    .line 327776
+    .line 327777
+    move-result-object v0
+
+    .line 327778
+    aput-object v0, v1, v2
+
+    .line 327779
+    .line 327780
+    const/4 v0, 0x2
+
+    .line 327781
+    iget-wide v4, p0, Lcom/dragon/read/pages/minigame/c;->e:J
+
+    .line 327782
+    .line 327783
+    invoke-static {v4, v5}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
+
+    .line 327784
+    .line 327785
+    .line 327786
+    move-result-object v2
+
+    .line 327787
+    aput-object v2, v1, v0
+
+    .line 327788
+    .line 327789
+    invoke-static {v3, v1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 327790
+    .line 327791
+    .line 327792
+    return-void
+.end method
+
+.method private i()Ljava/lang/String;
+    .registers 5
+
+    .prologue
+    .line 262144
+    const/4 v0, 0x0
+
+    .line 262145
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 262146
+    .line 262147
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 262148
+    .line 262149
+    const/16 v3, 0x3578
+
+    .line 262150
+    .line 262151
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 262152
+    .line 262153
+    .line 262154
+    move-result-object v0
+
+    .line 262155
+    iget-boolean v1, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 262156
+    .line 262157
+    if-eqz v1, :cond_14
+
+    .line 262158
+    .line 262159
+    iget-object v0, v0, Lcom/meituan/robust/PatchProxyResult;->result:Ljava/lang/Object;
+
+    .line 262160
+    .line 262161
+    check-cast v0, Ljava/lang/String;
+
+    .line 262162
+    .line 262163
+    return-object v0
+
+    .line 262164
+    :cond_14
+    iget-object v0, p0, Lcom/dragon/read/pages/minigame/c;->g:Ljava/lang/String;
+
+    .line 262165
+    .line 262166
+    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    .line 262167
+    .line 262168
+    .line 262169
+    move-result v0
+
+    .line 262170
+    if-eqz v0, :cond_1f
+
+    .line 262171
+    .line 262172
+    const-string v0, ""
+
+    .line 262173
+    .line 262174
+    return-object v0
+
+    .line 262175
+    :cond_1f
+    iget-object v0, p0, Lcom/dragon/read/pages/minigame/c;->g:Ljava/lang/String;
+
+    .line 262176
+    .line 262177
+    const-string v1, "benefit_page"
+
+    .line 262178
+    .line 262179
+    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    .line 262180
+    .line 262181
+    .line 262182
+    move-result v0
+
+    .line 262183
+    if-eqz v0, :cond_2c
+
+    .line 262184
+    .line 262185
+    const-string v0, "goldcoin"
+
+    .line 262186
+    .line 262187
+    return-object v0
+
+    .line 262188
+    :cond_2c
+    iget-object v0, p0, Lcom/dragon/read/pages/minigame/c;->g:Ljava/lang/String;
+
+    .line 262189
+    .line 262190
+    return-object v0
+.end method
+
+.method private synthetic j()V
+    .registers 5
+
+    .prologue
+    .line 327680
+    const/4 v0, 0x0
+
+    .line 327681
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 327682
+    .line 327683
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 327684
+    .line 327685
+    const/16 v3, 0x3573
+
+    .line 327686
+    .line 327687
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 327688
+    .line 327689
+    .line 327690
+    move-result-object v1
+
+    .line 327691
+    iget-boolean v1, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 327692
+    .line 327693
+    if-eqz v1, :cond_10
+
+    .line 327694
+    .line 327695
+    return-void
+
+    .line 327696
+    :cond_10
+    iget-boolean v1, p0, Lcom/dragon/read/pages/minigame/c;->b:Z
+
+    .line 327697
+    .line 327698
+    if-nez v1, :cond_23
+
+    .line 327699
+    .line 327700
+    iput-boolean v0, p0, Lcom/dragon/read/pages/minigame/c;->f:Z
+
+    .line 327701
+    .line 327702
+    const/4 v1, 0x1
+
+    .line 327703
+    new-array v1, v1, [Ljava/lang/Object;
+
+    .line 327704
+    .line 327705
+    const-string v2, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1 requestTimeAwardAvailable=false"
+
+    .line 327706
+    .line 327707
+    aput-object v2, v1, v0
+
+    .line 327708
+    .line 327709
+    const-string v0, "PolarisMiniGameManager"
+
+    .line 327710
+    .line 327711
+    invoke-static {v0, v1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 327712
+    .line 327713
+    .line 327714
+    return-void
+
+    .line 327715
+    :cond_23
+    new-instance v0, Lcom/dragon/read/rpc/model/SSTimorTimeRequest;
+
+    .line 327716
+    .line 327717
+    invoke-direct {v0}, Lcom/dragon/read/rpc/model/SSTimorTimeRequest;-><init>()V
+
+    .line 327718
+    .line 327719
+    .line 327720
+    invoke-static {v0}, Lcom/dragon/read/rpc/a/a;->a(Lcom/dragon/read/rpc/model/SSTimorTimeRequest;)Lio/reactivex/Observable;
+
+    .line 327721
+    .line 327722
+    .line 327723
+    move-result-object v0
+
+    .line 327724
+    invoke-static {}, Lio/reactivex/schedulers/Schedulers;->io()Lio/reactivex/Scheduler;
+
+    .line 327725
+    .line 327726
+    .line 327727
+    move-result-object v1
+
+    .line 327728
+    invoke-virtual {v0, v1}, Lio/reactivex/Observable;->subscribeOn(Lio/reactivex/Scheduler;)Lio/reactivex/Observable;
+
+    .line 327729
+    .line 327730
+    .line 327731
+    move-result-object v0
+
+    .line 327732
+    invoke-static {}, Lio/reactivex/android/schedulers/AndroidSchedulers;->mainThread()Lio/reactivex/Scheduler;
+
+    .line 327733
+    .line 327734
+    .line 327735
+    move-result-object v1
+
+    .line 327736
+    invoke-virtual {v0, v1}, Lio/reactivex/Observable;->observeOn(Lio/reactivex/Scheduler;)Lio/reactivex/Observable;
+
+    .line 327737
+    .line 327738
+    .line 327739
+    move-result-object v0
+
+    .line 327740
+    new-instance v1, Lcom/dragon/read/pages/minigame/-$$Lambda$c$XKP98wOINRiPpzBFNDY9KP8tpvQ;
+
+    .line 327741
+    .line 327742
+    invoke-direct {v1, p0}, Lcom/dragon/read/pages/minigame/-$$Lambda$c$XKP98wOINRiPpzBFNDY9KP8tpvQ;-><init>(Lcom/dragon/read/pages/minigame/c;)V
+
+    .line 327743
+    .line 327744
+    .line 327745
+    new-instance v2, Lcom/dragon/read/pages/minigame/-$$Lambda$c$Z1TlufDUxNW4IhtPWGGTxdyZ-sg;
+
+    .line 327746
+    .line 327747
+    invoke-direct {v2, p0}, Lcom/dragon/read/pages/minigame/-$$Lambda$c$Z1TlufDUxNW4IhtPWGGTxdyZ-sg;-><init>(Lcom/dragon/read/pages/minigame/c;)V
+
+    .line 327748
+    .line 327749
+    .line 327750
+    invoke-virtual {v0, v1, v2}, Lio/reactivex/Observable;->subscribe(Lio/reactivex/functions/Consumer;Lio/reactivex/functions/Consumer;)Lio/reactivex/disposables/Disposable;
+
+    .line 327751
+    .line 327752
+    .line 327753
+    return-void
+.end method
+
+.method public static synthetic lambda$8Cs-LVJHKzo8ZbE-5QEbYoTWlHo(Lcom/dragon/read/pages/minigame/c;)V
+    .registers 1
+
+    invoke-direct {p0}, Lcom/dragon/read/pages/minigame/c;->j()V
+
+    return-void
+.end method
+
+.method public static synthetic lambda$XKP98wOINRiPpzBFNDY9KP8tpvQ(Lcom/dragon/read/pages/minigame/c;Lcom/dragon/read/rpc/model/SSTimorTimeResponse;)V
+    .registers 2
+
+    invoke-direct {p0, p1}, Lcom/dragon/read/pages/minigame/c;->a(Lcom/dragon/read/rpc/model/SSTimorTimeResponse;)V
+
+    return-void
+.end method
+
+.method public static synthetic lambda$Z1TlufDUxNW4IhtPWGGTxdyZ-sg(Lcom/dragon/read/pages/minigame/c;Ljava/lang/Throwable;)V
+    .registers 2
+
+    invoke-direct {p0, p1}, Lcom/dragon/read/pages/minigame/c;->a(Ljava/lang/Throwable;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public a(Ljava/lang/String;)Ljava/lang/String;
+    .registers 9
+
+    const/4 v0, 0x1
+
+    new-array v1, v0, [Ljava/lang/Object;
+
+    const/4 v2, 0x0
+
+    aput-object p1, v1, v2
+
+    sget-object v3, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    const/16 v4, 0x3577
+
+    invoke-static {v1, p0, v3, v2, v4}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    move-result-object v1
+
+    iget-boolean v3, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    if-eqz v3, :cond_17
+
+    iget-object p1, v1, Lcom/meituan/robust/PatchProxyResult;->result:Ljava/lang/Object;
+
+    check-cast p1, Ljava/lang/String;
+
+    return-object p1
+
+    .line 398
+    :cond_17
+    invoke-static {p1}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    const-string v3, ""
+
+    if-eqz v1, :cond_20
+
+    return-object v3
+
+    :cond_20
+    const/4 v1, -0x1
+
+    .line 402
+    invoke-virtual {p1}, Ljava/lang/String;->hashCode()I
+
+    move-result v4
+
+    const v5, -0x3ac1651f
+
+    const/4 v6, 0x2
+
+    if-eq v4, v5, :cond_4a
+
+    const v5, 0x332453
+
+    if-eq v4, v5, :cond_40
+
+    const v2, 0x851ad37
+
+    if-eq v4, v2, :cond_36
+
+    goto :goto_53
+
+    :cond_36
+    const-string v2, "benefit_page"
+
+    invoke-virtual {p1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result p1
+
+    if-eqz p1, :cond_53
+
+    const/4 v1, 0x2
+
+    goto :goto_53
+
+    :cond_40
+    const-string v4, "mine"
+
+    invoke-virtual {p1, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result p1
+
+    if-eqz p1, :cond_53
+
+    const/4 v1, 0x0
+
+    goto :goto_53
+
+    :cond_4a
+    const-string v2, "player"
+
+    invoke-virtual {p1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result p1
+
+    if-eqz p1, :cond_53
+
+    const/4 v1, 0x1
+
+    :cond_53
+    :goto_53
+    if-eqz v1, :cond_60
+
+    if-eq v1, v0, :cond_5d
+
+    if-eq v1, v6, :cond_5a
+
+    return-object v3
+
+    :cond_5a
+    const-string p1, "181001"
+
+    return-object p1
+
+    :cond_5d
+    const-string p1, "181002"
+
+    return-object p1
+
+    :cond_60
+    const-string p1, "181003"
+
+    return-object p1
+.end method
+
+.method public a(Landroid/content/Context;Ljava/lang/String;Lcom/dragon/read/report/PageRecorder;)V
+    .registers 11
+
+    const/4 v0, 0x3
+
+    new-array v0, v0, [Ljava/lang/Object;
+
+    const/4 v1, 0x0
+
+    aput-object p1, v0, v1
+
+    const/4 v2, 0x1
+
+    aput-object p2, v0, v2
+
+    const/4 v3, 0x2
+
+    aput-object p3, v0, v3
+
+    sget-object v4, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    const/16 v5, 0x3568
+
+    invoke-static {v0, p0, v4, v1, v5}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    move-result-object v0
+
+    iget-boolean v0, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    if-eqz v0, :cond_19
+
+    return-void
+
+    .line 358
+    :cond_19
+    invoke-static {}, Lcom/dragon/read/app/d;->a()Landroid/app/Application;
+
+    move-result-object v0
+
+    const-string v4, "preference_ss_timor_entry"
+
+    invoke-static {v0, v4}, Lcom/dragon/read/local/d;->a(Landroid/content/Context;Ljava/lang/String;)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    .line 359
+    sget-object v4, Lcom/dragon/read/rpc/model/SSTimorEntryType;->EntryTypeOld:Lcom/dragon/read/rpc/model/SSTimorEntryType;
+
+    invoke-virtual {v4}, Lcom/dragon/read/rpc/model/SSTimorEntryType;->getValue()I
+
+    move-result v4
+
+    const-string v5, "ss_timor_entry_type"
+
+    invoke-interface {v0, v5, v4}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
+
+    move-result v4
+
+    const-string v5, "ss_timor_entry_schema"
+
+    const-string v6, ""
+
+    .line 361
+    invoke-interface {v0, v5, v6}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 363
+    new-array v3, v3, [Ljava/lang/Object;
+
+    .line 364
+    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v5
+
+    aput-object v5, v3, v1
+
+    aput-object v0, v3, v2
+
+    const-string v1, "PolarisMiniGameManager"
+
+    const-string v2, "openMiniGameDetailActivity \u63a5\u5165\u6e38\u620f\u4e2d\u5fc3\uff0c\u6e38\u620f\u5165\u53e3\u7c7b\u578b\u4e3a%1s, \u8df3\u8f6cschema\u4e3a%1s"
+
+    .line 363
+    invoke-static {v1, v2, v3}, Lcom/dragon/read/base/util/LogWrapper;->info(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 366
+    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_64
+
+    sget-object v1, Lcom/dragon/read/rpc/model/SSTimorEntryType;->EntryTypeCenterPlot:Lcom/dragon/read/rpc/model/SSTimorEntryType;
+
+    invoke-virtual {v1}, Lcom/dragon/read/rpc/model/SSTimorEntryType;->getValue()I
+
+    move-result v1
+
+    if-eq v4, v1, :cond_5e
+
+    sget-object v1, Lcom/dragon/read/rpc/model/SSTimorEntryType;->EntryTypePlot:Lcom/dragon/read/rpc/model/SSTimorEntryType;
+
+    .line 367
+    invoke-virtual {v1}, Lcom/dragon/read/rpc/model/SSTimorEntryType;->getValue()I
+
+    move-result v1
+
+    if-ne v4, v1, :cond_64
+
+    .line 368
+    :cond_5e
+    iput-object p2, p0, Lcom/dragon/read/pages/minigame/c;->g:Ljava/lang/String;
+
+    .line 369
+    invoke-static {p1, v0, p3}, Lcom/dragon/read/util/e;->c(Landroid/content/Context;Ljava/lang/String;Lcom/dragon/read/report/PageRecorder;)V
+
+    return-void
+
+    .line 373
+    :cond_64
+    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result p3
+
+    if-nez p3, :cond_78
+
+    sget-object p3, Lcom/dragon/read/rpc/model/SSTimorEntryType;->EntryTypeCenter:Lcom/dragon/read/rpc/model/SSTimorEntryType;
+
+    invoke-virtual {p3}, Lcom/dragon/read/rpc/model/SSTimorEntryType;->getValue()I
+
+    move-result p3
+
+    if-ne v4, p3, :cond_78
+
+    const-string p1, "tt157f63c28a555a38"
+
+    .line 374
+    invoke-virtual {p0, v0, p2, p1}, Lcom/dragon/read/pages/minigame/c;->a(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+
+    return-void
+
+    .line 379
+    :cond_78
+    invoke-static {p1, p2}, Lcom/dragon/read/util/e;->h(Landroid/content/Context;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public a(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+    .registers 8
+
+    const/4 v0, 0x3
+
+    new-array v0, v0, [Ljava/lang/Object;
+
+    const/4 v1, 0x0
+
+    aput-object p1, v0, v1
+
+    const/4 v2, 0x1
+
+    aput-object p2, v0, v2
+
+    const/4 v2, 0x2
+
+    aput-object p3, v0, v2
+
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    const/16 v3, 0x356e
+
+    invoke-static {v0, p0, v2, v1, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    move-result-object v0
+
+    iget-boolean v0, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    if-eqz v0, :cond_19
+
+    return-void
+
+    .line 352
+    :cond_19
+    iput-object p1, p0, Lcom/dragon/read/pages/minigame/c;->c:Ljava/lang/String;
+
+    .line 353
+    invoke-static {}, Lcom/dragon/read/app/d;->a()Landroid/app/Application;
+
+    move-result-object v0
+
+    invoke-static {v0, p1}, Lcom/bytedance/router/j;->a(Landroid/content/Context;Ljava/lang/String;)Lcom/bytedance/router/i;
+
+    move-result-object p1
+
+    const-string v0, "position"
+
+    invoke-virtual {p1, v0, p2}, Lcom/bytedance/router/i;->a(Ljava/lang/String;Ljava/lang/String;)Lcom/bytedance/router/i;
+
+    move-result-object p1
+
+    const-string p2, "game_id"
+
+    .line 354
+    invoke-virtual {p1, p2, p3}, Lcom/bytedance/router/i;->a(Ljava/lang/String;Ljava/lang/String;)Lcom/bytedance/router/i;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lcom/bytedance/router/i;->a()V
+
+    return-void
+.end method
+
+.method public b()V
+    .registers 6
+
+    .prologue
+    .line 327680
+    const/4 v0, 0x0
+
+    .line 327681
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 327682
+    .line 327683
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 327684
+    .line 327685
+    const/16 v3, 0x3575
+
+    .line 327686
+    .line 327687
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 327688
+    .line 327689
+    .line 327690
+    move-result-object v1
+
+    .line 327691
+    iget-boolean v1, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 327692
+    .line 327693
+    if-eqz v1, :cond_10
+
+    .line 327694
+    .line 327695
+    return-void
+
+    .line 327696
+    :cond_10
+    const/4 v1, 0x1
+
+    .line 327697
+    new-array v2, v1, [Ljava/lang/Object;
+
+    .line 327698
+    .line 327699
+    const-string v3, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1 \u5c0f\u6e38\u620f\u5217\u8868\u9875 onResume"
+
+    .line 327700
+    .line 327701
+    aput-object v3, v2, v0
+
+    .line 327702
+    .line 327703
+    const-string v3, "PolarisMiniGameManager"
+
+    .line 327704
+    .line 327705
+    invoke-static {v3, v2}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 327706
+    .line 327707
+    .line 327708
+    invoke-static {}, Lcom/dragon/read/polaris/PolarisTaskMgr;->a()Lcom/dragon/read/polaris/PolarisTaskMgr;
+
+    .line 327709
+    .line 327710
+    .line 327711
+    move-result-object v2
+
+    .line 327712
+    const-string v4, "newbie_play_game"
+
+    .line 327713
+    .line 327714
+    invoke-virtual {v2, v4}, Lcom/dragon/read/polaris/PolarisTaskMgr;->a(Ljava/lang/String;)Lcom/dragon/read/polaris/model/SingleTaskModel;
+
+    .line 327715
+    .line 327716
+    .line 327717
+    move-result-object v2
+
+    .line 327718
+    if-eqz v2, :cond_4b
+
+    .line 327719
+    .line 327720
+    invoke-virtual {v2}, Lcom/dragon/read/polaris/model/SingleTaskModel;->getDonePercent()I
+
+    .line 327721
+    .line 327722
+    .line 327723
+    move-result v2
+
+    .line 327724
+    const/16 v4, 0x21
+
+    .line 327725
+    .line 327726
+    if-eq v2, v4, :cond_31
+
+    .line 327727
+    .line 327728
+    goto :goto_4b
+
+    .line 327729
+    :cond_31
+    iget-boolean v2, p0, Lcom/dragon/read/pages/minigame/c;->f:Z
+
+    .line 327730
+    .line 327731
+    if-eqz v2, :cond_3f
+
+    .line 327732
+    .line 327733
+    new-array v1, v1, [Ljava/lang/Object;
+
+    .line 327734
+    .line 327735
+    const-string v2, "\u798f\u5229\u9875\u5c0f\u6e38\u620f \u6e38\u620f\u65f6\u957f\u5956\u52b1 hasPostInBackground=true"
+
+    .line 327736
+    .line 327737
+    aput-object v2, v1, v0
+
+    .line 327738
+    .line 327739
+    invoke-static {v3, v1}, Lcom/dragon/read/base/util/LogWrapper;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+
+    .line 327740
+    .line 327741
+    .line 327742
+    return-void
+
+    .line 327743
+    :cond_3f
+    new-instance v0, Lcom/dragon/read/pages/minigame/-$$Lambda$c$8Cs-LVJHKzo8ZbE-5QEbYoTWlHo;
+
+    .line 327744
+    .line 327745
+    invoke-direct {v0, p0}, Lcom/dragon/read/pages/minigame/-$$Lambda$c$8Cs-LVJHKzo8ZbE-5QEbYoTWlHo;-><init>(Lcom/dragon/read/pages/minigame/c;)V
+
+    .line 327746
+    .line 327747
+    .line 327748
+    const-wide/16 v2, 0x1f4
+
+    .line 327749
+    .line 327750
+    invoke-static {v0, v2, v3}, Lcom/dragon/read/base/util/ThreadUtils;->postInBackground(Ljava/lang/Runnable;J)V
+
+    .line 327751
+    .line 327752
+    .line 327753
+    iput-boolean v1, p0, Lcom/dragon/read/pages/minigame/c;->f:Z
+
+    .line 327754
+    .line 327755
+    :cond_4b
+    :goto_4b
+    return-void
+.end method
+
+.method public c()V
+    .registers 4
+
+    .prologue
+    .line 131072
+    const/4 v0, 0x0
+
+    .line 131073
+    iput-boolean v0, p0, Lcom/dragon/read/pages/minigame/c;->b:Z
+
+    .line 131074
+    .line 131075
+    const-wide/16 v1, -0x1
+
+    .line 131076
+    .line 131077
+    iput-wide v1, p0, Lcom/dragon/read/pages/minigame/c;->e:J
+
+    .line 131078
+    .line 131079
+    iput-boolean v0, p0, Lcom/dragon/read/pages/minigame/c;->f:Z
+
+    .line 131080
+    .line 131081
+    const/4 v0, 0x0
+
+    .line 131082
+    iput-object v0, p0, Lcom/dragon/read/pages/minigame/c;->c:Ljava/lang/String;
+
+    .line 131083
+    .line 131084
+    return-void
+.end method
+
+.method public d()I
+    .registers 5
+
+    .prologue
+    .line 262144
+    const/4 v0, 0x0
+
+    .line 262145
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 262146
+    .line 262147
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 262148
+    .line 262149
+    const/16 v3, 0x3574
+
+    .line 262150
+    .line 262151
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 262152
+    .line 262153
+    .line 262154
+    move-result-object v0
+
+    .line 262155
+    iget-boolean v1, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 262156
+    .line 262157
+    if-eqz v1, :cond_18
+
+    .line 262158
+    .line 262159
+    iget-object v0, v0, Lcom/meituan/robust/PatchProxyResult;->result:Ljava/lang/Object;
+
+    .line 262160
+    .line 262161
+    check-cast v0, Ljava/lang/Integer;
+
+    .line 262162
+    .line 262163
+    invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
+
+    .line 262164
+    .line 262165
+    .line 262166
+    move-result v0
+
+    .line 262167
+    return v0
+
+    .line 262168
+    :cond_18
+    invoke-static {}, Lcom/dragon/read/app/d;->a()Landroid/app/Application;
+
+    .line 262169
+    .line 262170
+    .line 262171
+    move-result-object v0
+
+    .line 262172
+    const-string v1, "preference_ss_timor_entry"
+
+    .line 262173
+    .line 262174
+    invoke-static {v0, v1}, Lcom/dragon/read/local/d;->a(Landroid/content/Context;Ljava/lang/String;)Landroid/content/SharedPreferences;
+
+    .line 262175
+    .line 262176
+    .line 262177
+    move-result-object v0
+
+    .line 262178
+    sget-object v1, Lcom/dragon/read/rpc/model/SSTimorEntryType;->EntryTypeOld:Lcom/dragon/read/rpc/model/SSTimorEntryType;
+
+    .line 262179
+    .line 262180
+    invoke-virtual {v1}, Lcom/dragon/read/rpc/model/SSTimorEntryType;->getValue()I
+
+    .line 262181
+    .line 262182
+    .line 262183
+    move-result v1
+
+    .line 262184
+    const-string v2, "ss_timor_entry_type"
+
+    .line 262185
+    .line 262186
+    invoke-interface {v0, v2, v1}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
+
+    .line 262187
+    .line 262188
+    .line 262189
+    move-result v0
+
+    .line 262190
+    return v0
+.end method
+
+.method public e()Z
+    .registers 5
+
+    .prologue
+    .line 262144
+    const/4 v0, 0x0
+
+    .line 262145
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 262146
+    .line 262147
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 262148
+    .line 262149
+    const/16 v3, 0x356a
+
+    .line 262150
+    .line 262151
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 262152
+    .line 262153
+    .line 262154
+    move-result-object v1
+
+    .line 262155
+    iget-boolean v2, v1, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 262156
+    .line 262157
+    if-eqz v2, :cond_18
+
+    .line 262158
+    .line 262159
+    iget-object v0, v1, Lcom/meituan/robust/PatchProxyResult;->result:Ljava/lang/Object;
+
+    .line 262160
+    .line 262161
+    check-cast v0, Ljava/lang/Boolean;
+
+    .line 262162
+    .line 262163
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    .line 262164
+    .line 262165
+    .line 262166
+    move-result v0
+
+    .line 262167
+    return v0
+
+    .line 262168
+    :cond_18
+    invoke-static {}, Lcom/dragon/read/plugin/common/PluginServiceManager;->ins()Lcom/dragon/read/plugin/common/PluginServiceManager;
+
+    .line 262169
+    .line 262170
+    .line 262171
+    move-result-object v1
+
+    .line 262172
+    const-string v2, "com.dragon.read.plugin.appbrand"
+
+    .line 262173
+    .line 262174
+    invoke-virtual {v1, v2}, Lcom/dragon/read/plugin/common/PluginServiceManager;->isPluginInstalled(Ljava/lang/String;)Z
+
+    .line 262175
+    .line 262176
+    .line 262177
+    move-result v1
+
+    .line 262178
+    if-eqz v1, :cond_3f
+
+    .line 262179
+    .line 262180
+    invoke-static {}, Lcom/dragon/read/plugin/common/PluginServiceManager;->ins()Lcom/dragon/read/plugin/common/PluginServiceManager;
+
+    .line 262181
+    .line 262182
+    .line 262183
+    move-result-object v1
+
+    .line 262184
+    invoke-virtual {v1, v2}, Lcom/dragon/read/plugin/common/PluginServiceManager;->isPluginLoaded(Ljava/lang/String;)Z
+
+    .line 262185
+    .line 262186
+    .line 262187
+    move-result v1
+
+    .line 262188
+    if-eqz v1, :cond_3f
+
+    .line 262189
+    .line 262190
+    invoke-static {}, Lcom/dragon/read/pages/minigame/c;->a()Lcom/dragon/read/pages/minigame/c;
+
+    .line 262191
+    .line 262192
+    .line 262193
+    move-result-object v1
+
+    .line 262194
+    invoke-virtual {v1}, Lcom/dragon/read/pages/minigame/c;->d()I
+
+    .line 262195
+    .line 262196
+    .line 262197
+    move-result v1
+
+    .line 262198
+    sget-object v2, Lcom/dragon/read/rpc/model/SSTimorEntryType;->EntryTypeCenter:Lcom/dragon/read/rpc/model/SSTimorEntryType;
+
+    .line 262199
+    .line 262200
+    invoke-virtual {v2}, Lcom/dragon/read/rpc/model/SSTimorEntryType;->getValue()I
+
+    .line 262201
+    .line 262202
+    .line 262203
+    move-result v2
+
+    .line 262204
+    if-ne v1, v2, :cond_3f
+
+    .line 262205
+    .line 262206
+    const/4 v0, 0x1
+
+    .line 262207
+    :cond_3f
+    return v0
+.end method
+
+.method public f()Ljava/util/Map;
+    .registers 5
+
+    .prologue
+    .line 327680
+    const/4 v0, 0x0
+
+    .line 327681
+    new-array v1, v0, [Ljava/lang/Object;
+
+    .line 327682
+    .line 327683
+    sget-object v2, Lcom/dragon/read/pages/minigame/c;->a:Lcom/meituan/robust/ChangeQuickRedirect;
+
+    .line 327684
+    .line 327685
+    const/16 v3, 0x3576
+
+    .line 327686
+    .line 327687
+    invoke-static {v1, p0, v2, v0, v3}, Lcom/meituan/robust/PatchProxy;->proxy([Ljava/lang/Object;Ljava/lang/Object;Lcom/meituan/robust/ChangeQuickRedirect;ZI)Lcom/meituan/robust/PatchProxyResult;
+
+    .line 327688
+    .line 327689
+    .line 327690
+    move-result-object v0
+
+    .line 327691
+    iget-boolean v1, v0, Lcom/meituan/robust/PatchProxyResult;->isSupported:Z
+
+    .line 327692
+    .line 327693
+    if-eqz v1, :cond_14
+
+    .line 327694
+    .line 327695
+    iget-object v0, v0, Lcom/meituan/robust/PatchProxyResult;->result:Ljava/lang/Object;
+
+    .line 327696
+    .line 327697
+    check-cast v0, Ljava/util/Map;
+
+    .line 327698
+    .line 327699
+    return-object v0
+
+    .line 327700
+    :cond_14
+    invoke-static {}, Lcom/dragon/read/plugin/common/PluginServiceManager;->ins()Lcom/dragon/read/plugin/common/PluginServiceManager;
+
+    .line 327701
+    .line 327702
+    .line 327703
+    move-result-object v0
+
+    .line 327704
+    invoke-virtual {v0}, Lcom/dragon/read/plugin/common/PluginServiceManager;->getAppBrandPlugin()Lcom/dragon/read/plugin/common/api/appbrand/IAppbrandPlugin;
+
+    .line 327705
+    .line 327706
+    .line 327707
+    move-result-object v0
+
+    .line 327708
+    invoke-interface {v0}, Lcom/dragon/read/plugin/common/api/appbrand/IAppbrandPlugin;->isLoaded()Z
+
+    .line 327709
+    .line 327710
+    .line 327711
+    move-result v0
+
+    .line 327712
+    if-eqz v0, :cond_2b
+
+    .line 327713
+    .line 327714
+    invoke-static {}, Lcom/tt/miniapphost/AppbrandSupport;->inst()Lcom/tt/miniapphost/AppbrandSupport;
+
+    .line 327715
+    .line 327716
+    .line 327717
+    move-result-object v0
+
+    .line 327718
+    invoke-virtual {v0}, Lcom/tt/miniapphost/AppbrandSupport;->getTmaJssdkVersion()Ljava/lang/String;
+
+    .line 327719
+    .line 327720
+    .line 327721
+    move-result-object v0
+
+    .line 327722
+    goto :goto_2d
+
+    .line 327723
+    :cond_2b
+    const-string v0, ""
+
+    .line 327724
+    .line 327725
+    :goto_2d
+    new-instance v1, Ljava/util/HashMap;
+
+    .line 327726
+    .line 327727
+    invoke-direct {v1}, Ljava/util/HashMap;-><init>()V
+
+    .line 327728
+    .line 327729
+    .line 327730
+    iget-object v2, p0, Lcom/dragon/read/pages/minigame/c;->g:Ljava/lang/String;
+
+    .line 327731
+    .line 327732
+    invoke-virtual {p0, v2}, Lcom/dragon/read/pages/minigame/c;->a(Ljava/lang/String;)Ljava/lang/String;
+
+    .line 327733
+    .line 327734
+    .line 327735
+    move-result-object v2
+
+    .line 327736
+    const-string v3, "scene"
+
+    .line 327737
+    .line 327738
+    invoke-interface {v1, v3, v2}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 327739
+    .line 327740
+    .line 327741
+    const-string v2, "jssdk"
+
+    .line 327742
+    .line 327743
+    invoke-interface {v1, v2, v0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 327744
+    .line 327745
+    .line 327746
+    invoke-direct {p0}, Lcom/dragon/read/pages/minigame/c;->i()Ljava/lang/String;
+
+    .line 327747
+    .line 327748
+    .line 327749
+    move-result-object v0
+
+    .line 327750
+    const-string v2, "position"
+
+    .line 327751
+    .line 327752
+    invoke-interface {v1, v2, v0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 327753
+    .line 327754
+    .line 327755
+    return-object v1
+.end method
+
+
+F:\Project\07_Androd\08_FanQie>if "0" == "0" goto mainEnd 
+
+F:\Project\07_Androd\08_FanQie>if "Windows_NT" == "Windows_NT" endlocal

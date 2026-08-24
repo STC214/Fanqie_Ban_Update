@@ -28,13 +28,17 @@ public final class HookEntry implements IXposedHookLoadPackage {
         "/reading/media/video/", "/reading/bookapi/video_tab/", "/video/openapi/",
         "/vod/get_play_info", "/video/play/", "/video/urls/", "/video_api/get_video_pgc/",
         "aweme.snssdk.com", "test-aweme.snssdk.com", "video.snssdk.com",
-        "v3-video.", "v6-video.", "v9-video.", "v11-video.", "v26-video."
+        "v3-video.", "v6-video.", "v9-video.", "v11-video.", "v26-video.",
+        "/minigame/", "/mini_game/", "/api/apps/game/", "game_center", "fanqie-game",
+        "microapp.bytedance.com", "tmaservice.developer.toutiao.com", "tmaportal.snssdk.com", "ohayoo.cn"
     };
     private static final String[] VIDEO_CLASS_MARKERS = {
         "com.dragon.read.pages.video", "com.dragon.read.pages.detail.video",
         "com.dragon.read.pages.bookmall.VideoTab", "com.dragon.read.ad.exciting.video",
         "com.ss.android.excitingvideo", "com.bytedance.sdk.openadsdk.activity.base.TTVideo",
-        "com.bytedance.sdk.openadsdk.activity.base.TTReward", "com.bytedance.sdk.openadsdk.activity.base.TTFullScreen"
+        "com.bytedance.sdk.openadsdk.activity.base.TTReward", "com.bytedance.sdk.openadsdk.activity.base.TTFullScreen",
+        "com.dragon.read.pages.minigame", "com.tt.miniapp", "com.tt.miniapphost",
+        "com.bytedance.bdp.unitycontainer", "com.unity3d.player", "unityplayer.UnityActivity"
     };
 
     @Override public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lp) {
@@ -43,6 +47,7 @@ public final class HookEntry implements IXposedHookLoadPackage {
         hookDialogs();
         hookActivities();
         hookVideoTab(lp.classLoader);
+        hookMiniGame(lp.classLoader);
         hookTextEntries();
         hookUrls();
         hookIntentRouting();
@@ -103,14 +108,42 @@ public final class HookEntry implements IXposedHookLoadPackage {
                 CharSequence cs=tv.getText();
                 if (cs == null) return;
                 String s=cs.toString().replace(" ", "").trim();
-                if (s.equals("??") || s.equals("???") || s.equals("???") || s.equals("???") ||
-                    s.equals("????") || s.equals("???")) {
+                if (s.equals("\u89c6\u9891") || s.equals("\u77ed\u89c6\u9891") ||
+                    s.equals("\u770b\u89c6\u9891") || s.equals("\u5237\u89c6\u9891") ||
+                    s.equals("\u89c6\u9891\u4e13\u533a") || s.equals("\u5c0f\u89c6\u9891") ||
+                    s.equals("\u5c0f\u6e38\u620f") || s.equals("\u6e38\u620f\u4e2d\u5fc3") ||
+                    s.equals("\u73a9\u6e38\u620f") || s.equals("\u798f\u5229\u5c0f\u6e38\u620f")) {
                     tv.setVisibility(View.GONE);
                     ViewParent parent=tv.getParent();
                     if (parent instanceof View) ((View)parent).setVisibility(View.GONE);
                 }
             }
         });
+    }
+
+    private static void hookMiniGame(ClassLoader cl) {
+        Class<?> manager = XposedHelpers.findClassIfExists("com.dragon.read.pages.minigame.c", cl);
+        if (manager != null) {
+            XposedBridge.hookAllMethods(manager, "a", new XC_MethodHook() {
+                @Override protected void beforeHookedMethod(MethodHookParam p) {
+                    if (((Method)p.method).getReturnType() != Void.TYPE) return;
+                    boolean openCall = p.args.length == 3;
+                    for (Object a : p.args) {
+                        if (a instanceof android.content.Context || a instanceof Intent) openCall = true;
+                    }
+                    if (openCall) p.setResult(null);
+                }
+            });
+        }
+        Class<?> cfg = XposedHelpers.findClassIfExists("com.dragon.read.base.ssconfig.settings.interfaces.IMicroGameConfig$$Impl", cl);
+        if (cfg != null) {
+            XposedBridge.hookAllMethods(cfg, "getModel", new XC_MethodHook() {
+                @Override protected void afterHookedMethod(MethodHookParam p) {
+                    Object model=p.getResult();
+                    if (model != null) try { XposedHelpers.setBooleanField(model, "b", false); } catch (Throwable ignored) {}
+                }
+            });
+        }
     }
 
     private static void hookUrls() {

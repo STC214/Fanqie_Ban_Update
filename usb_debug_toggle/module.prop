@@ -1,0 +1,6 @@
+id=usb_debug_toggle
+name=Root USB Debug Toggle
+version=1.0.0
+versionCode=100
+author=Codex
+description=Toggle USB debugging from the SukiSU module Action button. Mountless; no developer-settings navigation required.
