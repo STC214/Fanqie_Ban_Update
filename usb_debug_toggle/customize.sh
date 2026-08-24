@@ -12,9 +12,11 @@ getprop sys.usb.config > "$MODPATH/state/usb_config.before" 2>/dev/null
 touch "$MODPATH/skip_mount"
 
 set_perm_recursive "$MODPATH" 0 0 0755 0644
-for f in action.sh uninstall.sh; do
+for f in action.sh service.sh status.sh toggle-worker.sh uninstall.sh; do
   set_perm "$MODPATH/$f" 0 0 0755
 done
+
+MODDIR="$MODPATH" sh "$MODPATH/status.sh" update
 
 ui_print "- Installation does not change the current USB state"
 ui_print "- Done"

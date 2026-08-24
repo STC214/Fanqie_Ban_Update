@@ -1,0 +1,291 @@
+--- /dev/null
++++ b/action.sh
+@@ -0,0 +1,65 @@
++#!/system/bin/sh
++MODDIR=${0%/*}
++MODE=${1:-toggle}
++. "$MODDIR/status.sh"
++
++status_parts
++current=$(adb_value)
++dev_value=$(settings get global development_settings_enabled 2>/dev/null)
++usb_value=$(getprop sys.usb.config 2>/dev/null)
++
++case "$MODE" in
++  status)
++    echo "========================================"
++    echo " Root USB Debug Toggle v1.3.0"
++    echo "========================================"
++    echo "Status : $STATUS_DOT $STATUS_TEXT"
++    echo "adb_enabled=$current"
++    echo "development_settings_enabled=$dev_value"
++    echo "sys.usb.config=$usb_value"
++    echo "Log: $MODDIR/usb_toggle.log"
++    update_module_status
++    exit 0
++    ;;
++  on|enable|enabled) target=on ;;
++  off|disable|disabled) target=off ;;
++  toggle) if [ "$current" = "1" ]; then target=off; else target=on; fi ;;
++  *) echo "Usage: action.sh [toggle|on|off|status]"; exit 2 ;;
++esac
++
++if [ "$target" = "on" ]; then
++  target_value=1
++  target_dot=$(printf '\360\237\237\242')
++  target_text=ON
++  planned_commands="settings put global development_settings_enabled 1; settings put global adb_enabled 1; start adbd; svc usb setFunctions"
++else
++  target_value=0
++  target_dot=$(printf '\360\237\224\264')
++  target_text=OFF
++  planned_commands="settings put global adb_enabled 0; svc usb setFunctions"
++fi
++
++# All user-facing output is emitted before USB functions can be reset.
++echo "========================================"
++echo " Root USB Debug Toggle v1.3.0"
++echo "========================================"
++echo "[1/4] Root context : $(id 2>/dev/null)"
++echo "[2/4] Current state: $STATUS_DOT $STATUS_TEXT (adb_enabled=$current)"
++echo "      USB functions: ${usb_value:-charging}"
++echo "[3/4] Target state : $target_dot $target_text"
++echo "$target" > "$MODDIR/.pending_status"
++set_module_status "$target_value"
++echo "[4/5] Module status refreshed: $target_dot $target_text"
++echo "[5/5] Queuing root worker; apply after 4 seconds"
++echo "Commands:"
++echo "  $planned_commands"
++echo "Log file: $MODDIR/usb_toggle.log"
++echo "Result: request accepted"
++
++if command -v setsid >/dev/null 2>&1; then
++  nohup setsid sh "$MODDIR/toggle-worker.sh" "$target" </dev/null >/dev/null 2>&1 &
++else
++  nohup sh "$MODDIR/toggle-worker.sh" "$target" </dev/null >/dev/null 2>&1 &
++fi
++sleep 1
++exit 0
+--- /dev/null
++++ b/customize.sh
+@@ -0,0 +1,22 @@
++#!/system/bin/sh
++SKIPUNZIP=0
++
++ui_print "- Root USB Debug Toggle"
++ui_print "- Use the module Action button to toggle USB debugging"
++ui_print "- Mountless mode: no metamodule required"
++
++mkdir -p "$MODPATH/state"
++settings get global adb_enabled > "$MODPATH/state/adb_enabled.before" 2>/dev/null
++settings get global development_settings_enabled > "$MODPATH/state/development_settings_enabled.before" 2>/dev/null
++getprop sys.usb.config > "$MODPATH/state/usb_config.before" 2>/dev/null
++touch "$MODPATH/skip_mount"
++
++set_perm_recursive "$MODPATH" 0 0 0755 0644
++for f in action.sh service.sh status.sh toggle-worker.sh uninstall.sh; do
++  set_perm "$MODPATH/$f" 0 0 0755
++done
++
++MODDIR="$MODPATH" sh "$MODPATH/status.sh" update
++
++ui_print "- Installation does not change the current USB state"
++ui_print "- Done"
+--- /dev/null
++++ b/module.prop
+@@ -0,0 +1,6 @@
++id=usb_debug_toggle
++name=Root USB Debug Toggle
++version=1.3.0
++versionCode=130
++author=Codex
++description=USB debugging: detecting... | Tap Action to toggle. Mountless; no metamodule required.
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,28 @@
++# Root USB Debug Toggle
++
++一个 mountless SukiSU/KernelSU 模块。安装后无需进入开发者选项，直接在模块列表点击本模块的“操作/Action”按钮即可切换 USB 调试。
++
++## 使用
++
++1. 安装 `usb_debug_toggle-v1.3.0.zip`；
++2. 重启；
++3. 打开 SukiSU → 模块 → Root USB Debug Toggle；
++4. 点击“操作/Action”：当前开启则关闭，当前关闭则开启。
++
++模块列表说明会动态显示 `USB debugging: 🟢 ON` 或 `USB debugging: 🔴 OFF`。操作页会先显示当前状态、目标状态和“4 秒后应用”，然后由后台任务切换，因此关闭 ADB 时执行页也有明确内容。
++
++点击操作后会立即把目标状态写入模块说明，产生一次实时刷新；后台切换完成后再按系统实际值校准。若后台任务异常，30 秒后服务会自动清理待处理状态并恢复实际显示。
++
++模块仅切换 USB 调试，不启用无线调试，不删除已有 ADB 授权。首次连接一台新电脑时，Android 原有的 RSA 授权确认仍会显示。
++
++命令行也可执行：
++
++```sh
++su -c 'sh /data/adb/modules/usb_debug_toggle/action.sh status'
++su -c 'sh /data/adb/modules/usb_debug_toggle/action.sh on'
++su -c 'sh /data/adb/modules/usb_debug_toggle/action.sh off'
++```
++
++状态日志：`/data/adb/modules/usb_debug_toggle/usb_toggle.log`。
++
++卸载模块时会恢复安装前记录的 USB 调试、开发者选项和 USB 功能状态。
+--- /dev/null
++++ b/service.sh
+@@ -0,0 +1,22 @@
++#!/system/bin/sh
++MODDIR=${0%/*}
++. "$MODDIR/status.sh"
++while [ "$(getprop sys.boot_completed)" != "1" ]; do sleep 2; done
++last=
++pending_ticks=0
++while true; do
++  current=$(adb_value)
++  if [ -f "$MODDIR/.pending_status" ]; then
++    pending_ticks=$((pending_ticks + 1))
++    if [ "$pending_ticks" -ge 6 ]; then
++      rm -f "$MODDIR/.pending_status"
++      pending_ticks=0
++      update_module_status
++      last=$current
++    fi
++  else
++    pending_ticks=0
++    if [ "$current" != "$last" ]; then update_module_status; last=$current; fi
++  fi
++  sleep 5
++done
+--- /dev/null
++++ b/SHA256SUMS
+@@ -0,0 +1,9 @@
++51ac47dab6cdd68992b421e2b8b95b99df63051869bf8b2fd6f1a6e77c69db60  action.sh
++5b35c0fb30f050097431d1cdf2ab50e86f1ac68f178b4d4bad92413d003ccd1b  customize.sh
++8f70a230ba7da1af9aeb7c7210fe37098fb1a4d3155a70bb489cf9bf187abef2  module.prop
++e0de041965077d67ce9548bb382a22e773c70afdf9728cb011b0c64beaba8072  README.md
++e510b658848fab7fe3582ff7a4c59673a9dd404db7f5f5ecd31f391289c70d0d  service.sh
++01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b  skip_mount
++925a8813942980305c3ef18e5d0fb0a8e6510fb5296f049afcbbca2aad0552eb  status.sh
++243c10d916d97ae42c34b735a07245a80afaeb63049f888d980886083fc46370  toggle-worker.sh
++3da0e0a464726bb8382eab3835f2c9588890d6b2d4b25bce54abd27f865683a6  uninstall.sh
+--- /dev/null
++++ b/skip_mount
+@@ -0,0 +1 @@
++
+--- /dev/null
++++ b/status.sh
+@@ -0,0 +1,46 @@
++#!/system/bin/sh
++MODDIR=${MODDIR:-${0%/*}}
++
++adb_value() {
++  value=$(settings get global adb_enabled 2>/dev/null)
++  [ "$value" = "1" ] && echo 1 || echo 0
++}
++
++status_parts() {
++  value=$(adb_value)
++  if [ "$value" = "1" ]; then
++    STATUS_DOT=$(printf '\360\237\237\242')
++    STATUS_TEXT=ON
++  else
++    STATUS_DOT=$(printf '\360\237\224\264')
++    STATUS_TEXT=OFF
++  fi
++}
++
++set_module_status() {
++  value=$1
++  if [ "$value" = "1" ]; then
++    STATUS_DOT=$(printf '\360\237\237\242')
++    STATUS_TEXT=ON
++  else
++    STATUS_DOT=$(printf '\360\237\224\264')
++    STATUS_TEXT=OFF
++  fi
++  new_description="USB debugging: $STATUS_DOT $STATUS_TEXT | Tap Action to toggle. Mountless; no metamodule required."
++  prop="$MODDIR/module.prop"
++  tmp="$MODDIR/.module.prop.tmp"
++  awk -v d="$new_description" '
++    BEGIN { done=0 }
++    /^description=/ { print "description=" d; done=1; next }
++    { print }
++    END { if (!done) print "description=" d }
++  ' "$prop" > "$tmp" && cat "$tmp" > "$prop"
++  rm -f "$tmp"
++  chmod 0644 "$prop" >/dev/null 2>&1
++}
++
++update_module_status() {
++  set_module_status "$(adb_value)"
++}
++
++[ "$1" = "update" ] && update_module_status
+--- /dev/null
++++ b/toggle-worker.sh
+@@ -0,0 +1,39 @@
++#!/system/bin/sh
++MODDIR=${0%/*}
++TARGET=$1
++LOG="$MODDIR/usb_toggle.log"
++. "$MODDIR/status.sh"
++
++sleep 4
++base_functions() {
++  value=$(getprop sys.usb.config 2>/dev/null)
++  echo "$value" | sed 's/adb//g; s/^,*//; s/,*$//; s/,,*/,/g'
++}
++apply_functions() {
++  base=$(base_functions)
++  if [ -n "$base" ]; then svc usb setFunctions "$base" >/dev/null 2>&1; else svc usb setFunctions >/dev/null 2>&1; fi
++}
++case "$TARGET" in
++  on)
++    settings put global development_settings_enabled 1
++    settings put global adb_enabled 1
++    start adbd >/dev/null 2>&1
++    apply_functions
++    ;;
++  off)
++    settings put global adb_enabled 0
++    apply_functions
++    ;;
++  *) exit 2 ;;
++esac
++sleep 1
++rm -f "$MODDIR/.pending_status"
++update_module_status
++{
++  echo "timestamp=$(date -Iseconds 2>/dev/null || date)"
++  echo "requested=$TARGET"
++  echo "adb_enabled=$(adb_value)"
++  echo "development_settings_enabled=$(settings get global development_settings_enabled 2>/dev/null)"
++  echo "sys.usb.config=$(getprop sys.usb.config 2>/dev/null)"
++  echo "sys.usb.state=$(getprop sys.usb.state 2>/dev/null)"
++} > "$LOG"
+--- /dev/null
++++ b/uninstall.sh
+@@ -0,0 +1,23 @@
++#!/system/bin/sh
++MODDIR=${0%/*}
++
++read_saved() {
++  file="$1"
++  [ -f "$file" ] && head -n 1 "$file"
++}
++
++adb_before=$(read_saved "$MODDIR/state/adb_enabled.before")
++dev_before=$(read_saved "$MODDIR/state/development_settings_enabled.before")
++usb_before=$(read_saved "$MODDIR/state/usb_config.before")
++
++case "$dev_before" in 0|1) settings put global development_settings_enabled "$dev_before";; esac
++case "$adb_before" in 0|1) settings put global adb_enabled "$adb_before";; esac
++
++base=$(echo "$usb_before" | sed 's/adb//g; s/^,*//; s/,*$//; s/,,*/,/g')
++if [ -n "$base" ]; then
++  svc usb setFunctions "$base" >/dev/null 2>&1
++else
++  svc usb setFunctions >/dev/null 2>&1
++fi
++
++[ "$adb_before" = "1" ] && start adbd >/dev/null 2>&1

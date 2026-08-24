@@ -1,75 +1,65 @@
 #!/system/bin/sh
 MODDIR=${0%/*}
-LOG="$MODDIR/usb_toggle.log"
 MODE=${1:-toggle}
+. "$MODDIR/status.sh"
 
-current_functions() {
-  getprop sys.usb.config 2>/dev/null
-}
-
-base_functions() {
-  value=$(current_functions)
-  echo "$value" | sed 's/adb//g; s/^,*//; s/,*$//; s/,,*/,/g'
-}
-
-apply_functions() {
-  base=$(base_functions)
-  if [ -n "$base" ]; then
-    svc usb setFunctions "$base" >/dev/null 2>&1
-  else
-    svc usb setFunctions >/dev/null 2>&1
-  fi
-}
-
-enable_adb() {
-  settings put global development_settings_enabled 1
-  settings put global adb_enabled 1
-  start adbd >/dev/null 2>&1
-  apply_functions
-  sleep 2
-  state=enabled
-}
-
-disable_adb() {
-  settings put global adb_enabled 0
-  apply_functions
-  state=disabled
-}
+status_parts
+current=$(adb_value)
+dev_value=$(settings get global development_settings_enabled 2>/dev/null)
+usb_value=$(getprop sys.usb.config 2>/dev/null)
 
 case "$MODE" in
-  on|enable|enabled) enable_adb ;;
-  off|disable|disabled) disable_adb ;;
-  status) state=status ;;
-  toggle)
-    if [ "$(settings get global adb_enabled 2>/dev/null)" = "1" ]; then
-      disable_adb
-    else
-      enable_adb
-    fi
+  status)
+    echo "========================================"
+    echo " Root USB Debug Toggle v1.3.0"
+    echo "========================================"
+    echo "Status : $STATUS_DOT $STATUS_TEXT"
+    echo "adb_enabled=$current"
+    echo "development_settings_enabled=$dev_value"
+    echo "sys.usb.config=$usb_value"
+    echo "Log: $MODDIR/usb_toggle.log"
+    update_module_status
+    exit 0
     ;;
-  *)
-    echo "Usage: action.sh [toggle|on|off|status]"
-    exit 2
-    ;;
+  on|enable|enabled) target=on ;;
+  off|disable|disabled) target=off ;;
+  toggle) if [ "$current" = "1" ]; then target=off; else target=on; fi ;;
+  *) echo "Usage: action.sh [toggle|on|off|status]"; exit 2 ;;
 esac
 
-adb_value=$(settings get global adb_enabled 2>/dev/null)
-dev_value=$(settings get global development_settings_enabled 2>/dev/null)
-usb_value=$(current_functions)
-{
-  echo "timestamp=$(date -Iseconds 2>/dev/null || date)"
-  echo "requested=$MODE"
-  echo "result=$state"
-  echo "adb_enabled=$adb_value"
-  echo "development_settings_enabled=$dev_value"
-  echo "sys.usb.config=$usb_value"
-} > "$LOG"
-
-echo "USB debugging: $adb_value"
-echo "Developer settings: $dev_value"
-echo "USB functions: $usb_value"
-if [ "$adb_value" = "1" ]; then
-  echo "Result: USB debugging enabled"
+if [ "$target" = "on" ]; then
+  target_value=1
+  target_dot=$(printf '\360\237\237\242')
+  target_text=ON
+  planned_commands="settings put global development_settings_enabled 1; settings put global adb_enabled 1; start adbd; svc usb setFunctions"
 else
-  echo "Result: USB debugging disabled"
+  target_value=0
+  target_dot=$(printf '\360\237\224\264')
+  target_text=OFF
+  planned_commands="settings put global adb_enabled 0; svc usb setFunctions"
 fi
+
+# All user-facing output is emitted before USB functions can be reset.
+echo "========================================"
+echo " Root USB Debug Toggle v1.3.0"
+echo "========================================"
+echo "[1/4] Root context : $(id 2>/dev/null)"
+echo "[2/4] Current state: $STATUS_DOT $STATUS_TEXT (adb_enabled=$current)"
+echo "      USB functions: ${usb_value:-charging}"
+echo "[3/4] Target state : $target_dot $target_text"
+echo "$target" > "$MODDIR/.pending_status"
+set_module_status "$target_value"
+echo "[4/5] Module status refreshed: $target_dot $target_text"
+echo "[5/5] Queuing root worker; apply after 4 seconds"
+echo "Commands:"
+echo "  $planned_commands"
+echo "Log file: $MODDIR/usb_toggle.log"
+echo "Result: request accepted"
+
+if command -v setsid >/dev/null 2>&1; then
+  nohup setsid sh "$MODDIR/toggle-worker.sh" "$target" </dev/null >/dev/null 2>&1 &
+else
+  nohup sh "$MODDIR/toggle-worker.sh" "$target" </dev/null >/dev/null 2>&1 &
+fi
+sleep 1
+exit 0

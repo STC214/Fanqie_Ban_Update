@@ -1,13 +1,17 @@
-# Root USB Debug Toggle
+﻿# Root USB Debug Toggle
 
 一个 mountless SukiSU/KernelSU 模块。安装后无需进入开发者选项，直接在模块列表点击本模块的“操作/Action”按钮即可切换 USB 调试。
 
 ## 使用
 
-1. 安装 `usb_debug_toggle-v1.0.0.zip`；
+1. 安装 `usb_debug_toggle-v1.3.0.zip`；
 2. 重启；
 3. 打开 SukiSU → 模块 → Root USB Debug Toggle；
 4. 点击“操作/Action”：当前开启则关闭，当前关闭则开启。
+
+模块列表说明会动态显示 `USB debugging: 🟢 ON` 或 `USB debugging: 🔴 OFF`。操作页会先显示当前状态、目标状态和“4 秒后应用”，然后由后台任务切换，因此关闭 ADB 时执行页也有明确内容。
+
+点击操作后会立即把目标状态写入模块说明，产生一次实时刷新；后台切换完成后再按系统实际值校准。若后台任务异常，30 秒后服务会自动清理待处理状态并恢复实际显示。
 
 模块仅切换 USB 调试，不启用无线调试，不删除已有 ADB 授权。首次连接一台新电脑时，Android 原有的 RSA 授权确认仍会显示。
 
