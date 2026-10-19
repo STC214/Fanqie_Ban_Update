@@ -1,0 +1,6 @@
+{
+  "command": "java -Xmx1g -cp F:/Android/Sdk/cmdline-tools/latest/lib/lint-classpath.jar com.android.tools.lint.Main --offline --exitcode --sources F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\src --resources F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\res --compile-sdk-version 35 --text F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\lint-baseline.txt --xml F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\lint-baseline.xml F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app",
+  "exit": 1,
+  "stdout": "Wrote text report to F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\lint-baseline.txt\r\nLint found 2 errors and 12 warnings. First failure:\r\nusb_control_app: Error: No .class files were found in project \"usb_control_app\", so none of the classfile based checks could be run. Does the project need to be built first? [LintError]\n\n",
+  "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+}

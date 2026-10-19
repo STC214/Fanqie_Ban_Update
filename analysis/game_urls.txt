@@ -1,0 +1,11 @@
+﻿classes.dex	https://avg-editor.bytedance.net/fanqie-game/index.html
+classes.dex	https://ohayoo.cn/fanqie-game/index.html
+classes2.dex	https://microapp.bytedance.com
+classes2.dex	https://sf1-ttcdn-tos.pstatp.com/obj/union-fe/playable/97699c8fb31e7836e828cffdd428bc80/index.html?toutiao_card_params=%7B%22name%22%3A%20%22%5Cu5168%5Cu6c11%5Cu6f02%5Cu79fb-3D%5Cu98d9%5Cu8f66%22%2C%20%22pkg_name%22%3A%20%22com.joyfort.merge.car%22%2C%20%22id%22%3A%201639299979328516%2C%20%22download_url%22%3A%20%22https%3A//itunes.apple.com/cn/app/%25E5%2585%25A8%25E6%25B0%2591%25E6%25BC%2582%25E7%25A7%25BB3d/id1453467684%3Fmt%3D8%22%2C%20%22external_url%22%3A%20%22%22%7D
+classes2.dex	https://tmaportal.snssdk.com/jssdk/h5/add_to_desktop_learn_more/
+classes2.dex	https://tmaservice.developer.toutiao.com
+classes2.dex	https://tmaservice.developer.toutiao.com/
+classes3.dex	http://sf1-ttcdn-tos.pstatp.com/obj/novel-common/warningtone_have_playable_
+classes3.dex	http://sf1-ttcdn-tos.pstatp.com/obj/novel-common/warningtone_have_playable_1.aac
+classes3.dex	http://sf1-ttcdn-tos.pstatp.com/obj/novel-common/warningtone_no_playable_
+classes3.dex	http://sf1-ttcdn-tos.pstatp.com/obj/novel-common/warningtone_no_playable_1.aac

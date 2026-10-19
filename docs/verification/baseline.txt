@@ -1,0 +1,15 @@
+﻿BASELINE
+timestamp=2026-08-24T17:07:42.0103918+08:00
+command: adb shell su -c "appops get --user 0 com.dragon.read REQUEST_INSTALL_PACKAGES"
+No operations.
+Default mode: default
+exit=0
+command: adb shell su -c "pm list packages --user 0 com.dragon.read"
+package:com.dragon.read
+exit=0
+command: adb shell su -c "cmd package get-component-enabled-setting com.dragon.read/com.ss.android.update.UpdateProgressActivity"
+Unknown command: get-component-enabled-setting
+exit=255
+command: adb shell su -c "getent hosts ichannel.snssdk.com"
+/system/bin/sh: getent: inaccessible or not found
+exit=127

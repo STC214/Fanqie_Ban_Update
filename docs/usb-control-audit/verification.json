@@ -1,0 +1,193 @@
+[
+  {
+    "check": "Production APK ZIP, DEX digest/checksum, class inventory, components and permissions",
+    "result": "PASS",
+    "classes": [
+      "Llocal/usbcontrol/Backdrop$1;",
+      "Llocal/usbcontrol/Backdrop;",
+      "Llocal/usbcontrol/BackgroundStore$$ExternalSyntheticLambda0;",
+      "Llocal/usbcontrol/BackgroundStore;",
+      "Llocal/usbcontrol/Baseline;",
+      "Llocal/usbcontrol/DensitySession;",
+      "Llocal/usbcontrol/Logic;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda0;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda10;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda11;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda12;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda14;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda15;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda16;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda17;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda18;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda19;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda1;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda20;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda21;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda22;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda23;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda24;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda25;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda26;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda27;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda28;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda2;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda30;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda31;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda32;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda33;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda34;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda35;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda36;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda37;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda39;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda3;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda41;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda42;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda43;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda44;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda46;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda48;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda4;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda50;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda51;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda52;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda5;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda6;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda7;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda8;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda9;",
+      "Llocal/usbcontrol/MainActivity$1;",
+      "Llocal/usbcontrol/MainActivity$2;",
+      "Llocal/usbcontrol/MainActivity$3;",
+      "Llocal/usbcontrol/MainActivity$Job;",
+      "Llocal/usbcontrol/MainActivity$ManagedDialogBuilder$$ExternalSyntheticLambda0;",
+      "Llocal/usbcontrol/MainActivity$ManagedDialogBuilder;",
+      "Llocal/usbcontrol/MainActivity;",
+      "Llocal/usbcontrol/R$drawable;",
+      "Llocal/usbcontrol/R$mipmap;",
+      "Llocal/usbcontrol/R$string;",
+      "Llocal/usbcontrol/R$style;",
+      "Llocal/usbcontrol/R$xml;",
+      "Llocal/usbcontrol/R;",
+      "Llocal/usbcontrol/RecoveryScript;",
+      "Llocal/usbcontrol/Root$$ExternalSyntheticLambda0;",
+      "Llocal/usbcontrol/Root;",
+      "Llocal/usbcontrol/SafeFiles;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda13;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda29;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda38;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda40;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda45;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda47;",
+      "Llocal/usbcontrol/MainActivity$$ExternalSyntheticLambda49;"
+    ]
+  },
+  {
+    "command": "cmd /d /c F:\\Android\\Sdk\\build-tools\\35.0.0\\apksigner.bat verify --verbose --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.1.apk",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "Verifies\r\nVerified using v1 scheme (JAR signing): false\r\nVerified using v2 scheme (APK Signature Scheme v2): true\r\nVerified using v3 scheme (APK Signature Scheme v3): true\r\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\r\nVerified using v4 scheme (APK Signature Scheme v4): false\r\nVerified for SourceStamp: false\r\nNumber of signers: 1\r\nSigner #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\nSigner #1 key algorithm: RSA\r\nSigner #1 key size (bits): 2048\r\nSigner #1 public key SHA-256 digest: d31c2568f25d94dc1a3deaaea098e985c42940aa437773810756f27f026af42d\r\nSigner #1 public key SHA-1 digest: 994182c2593106bc75f7c233546f6f811bd43305\r\nSigner #1 public key MD5 digest: f38cd7917b36b591f77099feb20b40eb\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "cmd /d /c F:\\Android\\Sdk\\build-tools\\35.0.0\\apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\releases\\usb-control-v1.0.0.apk",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "F:\\Android\\Sdk\\build-tools\\35.0.0\\zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.1.apk",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "F:\\Android\\Sdk\\build-tools\\35.0.0\\aapt.exe dump badging F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.1.apk",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "package: name='local.usbcontrol' versionCode='101' versionName='1.0.1' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\r\nsdkVersion:'26'\r\ntargetSdkVersion:'36'\r\napplication-label:'轻控'\r\napplication-icon-160:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65534:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65535:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication: label='轻控' icon='res/mipmap-anydpi-v33/ic_launcher.xml'\r\nlaunchable-activity: name='local.usbcontrol.MainActivity'  label='' icon=''\r\nfeature-group: label=''\r\n  uses-feature: name='android.hardware.faketouch'\r\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\r\nmain\r\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\r\nsupports-any-density: 'true'\r\nlocales: '--_--'\r\ndensities: '160' '65534' '65535'\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "javac -encoding UTF-8 -d usb_control_app/build/tests usb_control_app/src/local/usbcontrol/Logic.java usb_control_app/tests/LogicTest.java",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp usb_control_app/build/tests local.usbcontrol.LogicTest",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "PASS: 19 capability, density, crop and aspect-ratio assertions\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "javac -encoding UTF-8 -d usb_control_app/build/model-tests usb_control_app/src/local/usbcontrol/Logic.java usb_control_app/src/local/usbcontrol/SafeFiles.java usb_control_app/src/local/usbcontrol/DensitySession.java usb_control_app/tests/model/Root.java usb_control_app/tests/model/TransactionTest.java",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp usb_control_app/build/model-tests local.usbcontrol.TransactionTest",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -Xmx1g -cp F:/Android/Sdk/cmdline-tools/latest/lib/lint-classpath.jar com.android.tools.lint.Main --offline --exitcode --sources usb_control_app/src --classpath usb_control_app/build/classes --resources usb_control_app/res --compile-sdk-version 36 --text docs/usb-control-audit/lint-final.txt --xml docs/usb-control-audit/lint-final.xml usb_control_app",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "Wrote text report to F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\lint-final.txt\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "check": "Lint",
+    "errors": 0,
+    "advisories": [
+      "ExifInterface",
+      "OldTargetApi",
+      "MonochromeLauncherIcon"
+    ],
+    "note": "Three reviewed non-blocking advisories retained, not described as zero warnings."
+  },
+  {
+    "command": "git apply --check F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\changes.patch",
+    "cwd": "F:\\Temp\\usb-review-verify-7guxz297",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git apply F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\changes.patch",
+    "cwd": "F:\\Temp\\usb-review-verify-7guxz297",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "powershell -NoProfile -File F:\\Project\\07_Androd\\08_FanQie\\scripts\\rollback-usb-control-audit.ps1 -ProjectRoot F:\\Temp\\usb-review-verify-7guxz297",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "Source rollback PASS: original hashes restored. Releases, audit records and phone left unchanged.\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "powershell -NoProfile -File scripts/rollback-usb-control-audit.ps1 -VerifyOnly",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "Rollback preflight PASS; no files changed.\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "git diff --check",
+    "cwd": "F:\\Project\\07_Androd\\08_FanQie",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,39 @@
+usb_control_app: Error: No .class files were found in project "usb_control_app", so none of the classfile based checks could be run. Does the project need to be built first? [LintError]
+src\local\usbcontrol\MainActivity.java:113: Warning: Consider using apply() instead; commit writes its data to persistent storage immediately, whereas apply will handle it in the background [ApplySharedPref]
+            if(!prefs.contains("baseline_adb"))prefs.edit().putString("baseline_adb",Root.section(s,"ADB")).putString("baseline_dev",Root.section(s,"DEV")).putString("baseline_density",previousDensity(Root.section(s,"DENSITY"))).commit();
+                                                                                                                                                                                                                                     ~~~~~~~~
+src\local\usbcontrol\MainActivity.java:115: Warning: Consider using apply() instead; commit writes its data to persistent storage immediately, whereas apply will handle it in the background [ApplySharedPref]
+            if(ns!=null&&!prefs.contains("baseline_install"))prefs.edit().putString("baseline_install_space",ns).putString("baseline_install",Root.run("settings get "+ns+" adb_install_enabled")).commit();
+                                                                                                                                                                                                   ~~~~~~~~
+src\local\usbcontrol\MainActivity.java:167: Warning: Consider using apply() instead; commit writes its data to persistent storage immediately, whereas apply will handle it in the background [ApplySharedPref]
+            String previous=previousDensity(Root.run("wm density"));prefs.edit().putString("pending_previous",previous).commit();
+                                                                                                                        ~~~~~~~~
+src\local\usbcontrol\MainActivity.java:236: Warning: Consider using apply() instead; commit writes its data to persistent storage immediately, whereas apply will handle it in the background [ApplySharedPref]
+                prefs.edit().putFloat("zoom",crop.zoom).putFloat("fx",crop.fx).putFloat("fy",crop.fy).putInt("opacity",crop.opacity).commit();
+                                                                                                                                     ~~~~~~~~
+res\values\styles.xml:8: Error: android:windowLightNavigationBar requires API level 27 (current min is 26) [NewApi]
+        <item name="android:windowLightNavigationBar">true</item>
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+AndroidManifest.xml:3: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35" />
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+AndroidManifest.xml:4: Warning: The attribute android:allowBackup is deprecated from Android 12 and higher and may be removed in future versions. Consider adding the attribute android:dataExtractionRules specifying an @xml resource which configures cloud backups and device transfers on Android 12 and higher. [DataExtractionRules]
+    <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:supportsRtl="true">
+                                                                                                                                                                    ~~~~~
+src\local\usbcontrol\Backdrop.java:31: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+        c.drawBitmap(bitmap,null,new RectF(x,y,x+w,y+h),paint);
+                                 ~~~~~~~~~~~~~~~~~~~~~~
+res\mipmap-anydpi-v26: Warning: This folder configuration (v26) is unnecessary; minSdkVersion is 26. Merge all the resources in this folder into mipmap-anydpi. [ObsoleteSdkInt]
+res\mipmap-anydpi-v26\ic_launcher.xml:1: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+src\local\usbcontrol\Backdrop.java:33: Warning: Custom view Backdrop overrides onTouchEvent but not performClick [ClickableViewAccessibility]
+    public boolean onTouchEvent(android.view.MotionEvent e){
+                   ~~~~~~~~~~~~
+src\local\usbcontrol\MainActivity.java:125: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+        if(adbSwitch==null)return;binding=true;rootLabel.setText("●  "+statusMessage);
+                                                                 ~~~~~~~~~~~~~~~~~~~
+src\local\usbcontrol\MainActivity.java:228: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+        alpha.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int v,boolean user){crop.opacity=100-v;crop.invalidate();label.setText("图片透明度 "+v+"%");}public void onStartTrackingTouch(SeekBar b){}public void onStopTrackingTouch(SeekBar b){}});
+                                                                                                                                                                                              ~~~~~~~~~~~~~~
+2 errors, 12 warnings

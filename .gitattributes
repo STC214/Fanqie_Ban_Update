@@ -1,0 +1,8 @@
+# Normalize ordinary text; preserve bytes for sealed audit/rollback artifacts.
+* text=auto
+/README.md -text
+/docs/** -text
+/usb_control_app/** -text
+/scripts/** -text
+/analysis/** -text
+/logs/** -text

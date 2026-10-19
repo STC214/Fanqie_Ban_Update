@@ -1,0 +1,1427 @@
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -10,14 +10,14 @@
+ 
+ ## 轻控 Android App
+ 
+-新增独立 App **轻控 1.0.0**（Android 8.0+），不依赖安装 USB 开关模块：
+-
+-- 安装包：[`releases/usb-control-v1.0.0.apk`](releases/usb-control-v1.0.0.apk)
++独立 App **轻控 1.0.1**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
++
++- 安装包：[`releases/usb-control-v1.0.1.apk`](releases/usb-control-v1.0.1.apk)
+ - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
+ - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+ - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+ - 源码、构建及兼容说明：[`usb_control_app/README.md`](usb_control_app/README.md)
+-- 验证与界面截图：[`docs/usb-control-app/`](docs/usb-control-app/)
++- 审查与新版验证：[`docs/usb-control-audit/`](docs/usb-control-audit/)；初版历史记录保留在 `docs/usb-control-app/`。
+ 
+ ## 基线信息
+ 
+diff --git a/usb_control_app/AndroidManifest.xml b/usb_control_app/AndroidManifest.xml
+--- a/usb_control_app/AndroidManifest.xml
++++ b/usb_control_app/AndroidManifest.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="100" android:versionName="1.0.0">
+-    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35" />
+-    <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:supportsRtl="true">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="101" android:versionName="1.0.1">
++    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
++    <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+         <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:windowSoftInputMode="adjustResize">
+             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+         </activity>
+diff --git a/usb_control_app/README.md b/usb_control_app/README.md
+--- a/usb_control_app/README.md
++++ b/usb_control_app/README.md
+@@ -1,12 +1,12 @@
+-# 轻控 1.0.0
++# 轻控 1.0.1
+ 
+-一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 35。
++一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
+ 
+ ## 安装
+ 
+-安装 `../releases/usb-control-v1.0.0.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
++安装 `../releases/usb-control-v1.0.1.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+ 
+-首次成功连接 Root 时保存本机初始系统值，之后不会把修改后的值覆盖成初始值。没有 Root 时，系统开关置灰；选图、取景、透明度调整仍正常使用。
++首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
+ 
+ ## 功能
+ 
+@@ -20,17 +20,17 @@
+ 
+ - 同时显示 dp 和当前逻辑 dpi；可输入 280–720 dp 或使用 360 / 393 / 411 / 480 预设。
+ - 按当前有效短边像素计算 `dpi = round(shortSidePx * 160 / smallestWidthDp)`，使用 `wm density`，不修改物理分辨率。
+-- 20 秒独立 Root 看门狗：未确认、退出或 App 进程结束时恢复修改前的密度覆盖。点击「保留」才提交；也可恢复系统默认。
++- 约 20 秒独立 Root 看门狗：每次预览独立脚本和持久化日志，以原子文件改名决出确认/超时的唯一赢家，恢复后读取校验。前台预览保持亮屏，后台以 `/proc/uptime` 计时，休眠唤醒后立即检查超时，最多约一秒轮询延迟。点击「保留」才提交；也可恢复系统默认。
+ - 看门狗不跨手机重启运行；若预览期间手机重启，下次打开 App 会恢复未确认的旧密度。应先确认或还原后再重启。
+ - 折叠屏、桌面模式、多屏及厂商额外显示缩放可能改变系统最终 dp，当前针对默认主显示屏。
+ 
+ ### 自定义背景
+ 
+ - 使用系统文件选择器，选取手机上的图片；不索取相册全量访问或存储权限。
+-- 图片由 Android 解码，长边限制到约 2048 像素，复制到 App 私有目录。Android 9+ 使用 ImageDecoder 处理图像方向。
++- 图片由 Android 解码，长边限制到约 2048 像素，复制到 App 私有目录。Android 9+ 使用 ImageDecoder；Android 8 使用平台 ExifInterface 校正八种方向。解码、持久化均在独立图片队列执行。
+ - 始终等比 cover 缩放；单指拖动选区，双指等比放大 1–4 倍，不提供变形拉伸。
+ - 「图片透明度」滑块：0% = 完全显示，100% = 完全透明。实时预览真实主界面卡片叠加效果；白色高不透明度卡片确保文字可读。
+-- 保存后保留选区、缩放与透明度；取消不修改已保存背景；删除背景仅删除 App 内副本。
++- 保存新图片文件并同步后才提交取景与透明度；失败时保留旧图片和设置，保存期间锁定取消与编辑；活动销毁后不再更新旧窗口。取景窗口随旋转调整预览比例。取消不修改已保存背景；删除背景仅删除 App 内副本。
+ - 图标资源是根目录所给 PNG 的原样副本，不重绘图像。系统桌面按自己的图标蒙版裁切。
+ 
+ ## 回滚与卸载
+@@ -57,14 +57,14 @@
+ .\usb_control_app\build.ps1 -Sdk F:\Android\Sdk
+ ```
+ 
+-需 JDK 21（编译 Java 8 字节码）、Android SDK Platform 35、Build Tools 35.0.0。也可通过 `ANDROID_SDK_ROOT` 指定 SDK。无需 Gradle 或下载应用依赖。
++需 JDK 21（编译 Java 8 字节码）、Android SDK Platform 36、Build Tools 35.0.0。也可通过 `ANDROID_SDK_ROOT` 指定 SDK。无需 Gradle 或下载应用依赖。构建前校验构建路径并清理生成目录，避免旧 class 混入。
+ 
+-输出 `releases/usb-control-v1.0.0.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
++输出 `releases/usb-control-v1.0.1.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
+ 
+ ## 验证
+ 
+ `tests/LogicTest.java` 覆盖能力检测、歧义、密度换算、参数边界及图像等比缩放。`tests/ui_smoke.py` 在专用无 Root 模拟器测试最终 APK 的禁用状态、背景、透明度预览及持久化。Root 命令集测试使用独立 AOSP userdebug 模拟器，测试专用 `su` 参数适配脚本不包含在交付 APK。
+ 
+-完整命令、退出状态、输出和限制见 `../docs/usb-control-app/`。尚未在用户真机执行系统变更测试，不把模拟器中的合成设置键当作厂商 USB 安装实测。
++1.0.0 的历史交付记录保留在 `../docs/usb-control-app/`；1.0.1 的逐轮审查、真实 OnePlus / Android 16 Root 回归、签名、DEX 与资源检查见 `../docs/usb-control-audit/`。真机 USB 安装键缺失，已验证置灰；未伪造系统键，不把合成值的读回当作厂商安装策略验证。
+ 
+ 技术依据：[AOSP WindowManagerShellCommand](https://android.googlesource.com/platform/frameworks/base/+/master/services/core/java/com/android/server/wm/WindowManagerShellCommand.java)、[Android 系统文件选择器](https://developer.android.com/training/data-storage/shared/documents-files)、[RedMagicX 的 USB 安装键实现说明](https://github.com/XPRAMT/RedMagicX)。
+diff --git a/usb_control_app/build.ps1 b/usb_control_app/build.ps1
+--- a/usb_control_app/build.ps1
++++ b/usb_control_app/build.ps1
+@@ -1,7 +1,7 @@
+ param(
+     [string]$Sdk = $(if ($env:ANDROID_SDK_ROOT) { $env:ANDROID_SDK_ROOT } elseif ($env:ANDROID_HOME) { $env:ANDROID_HOME } else { 'F:\Android\Sdk' }),
+     [string]$BuildTools = '35.0.0',
+-    [string]$Platform = 'android-35'
++    [string]$Platform = 'android-36'
+ )
+ $ErrorActionPreference = 'Stop'
+ $root = $PSScriptRoot
+@@ -14,6 +14,13 @@
+     if ($LASTEXITCODE -ne 0) { throw "Build step failed: $Tool ($LASTEXITCODE)" }
+ }
+ New-Item -ItemType Directory -Force $build,"$build/gen","$build/classes","$build/dex" | Out-Null
++# Remove stale generated files only after checking the exact workspace build paths.
++foreach ($name in @('gen','classes','dex')) {
++    $target=[IO.Path]::GetFullPath((Join-Path $build $name))
++    $base=[IO.Path]::GetFullPath($build).TrimEnd('\')+'\'
++    if (-not $target.StartsWith($base,[StringComparison]::OrdinalIgnoreCase)) { throw 'Build cleanup leaves workspace.' }
++    Get-ChildItem -LiteralPath $target -Force | Remove-Item -Recurse -Force
++}
+ Run "$tools/aapt2.exe" @('compile','--dir',"$root/res",'-o',"$build/resources.zip")
+ Run "$tools/aapt2.exe" @('link','-o',"$build/base.apk",'-I',$android,'--manifest',"$root/AndroidManifest.xml",'--java',"$build/gen","$build/resources.zip")
+ $sources = @((Get-ChildItem "$root/src","$build/gen" -Recurse -Filter '*.java').FullName)
+@@ -31,11 +38,11 @@
+     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
+     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
+ }
+-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.0.apk'
++$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.1.apk'
+ Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
+ Run "$tools/apksigner.bat" @('verify','--verbose',$release)
+ Run "$tools/zipalign.exe" @('-c','4',$release)
+ $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
+-"$hash  usb-control-v1.0.0.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
++"$hash  usb-control-v1.0.1.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+ Write-Output "APK: $release"
+ Write-Output "SHA256: $hash"
+diff --git a/usb_control_app/res/drawable/ic_usb_mono.xml b/usb_control_app/res/drawable/ic_usb_mono.xml
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/res/drawable/ic_usb_mono.xml
+@@ -0,0 +1,4 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
++    <path android:strokeColor="#FFFFFFFF" android:strokeWidth="5" android:strokeLineCap="round" android:fillColor="#00000000" android:pathData="M54,77 L54,32 M54,62 L37,52 L37,44 M54,53 L71,44 L71,37"/>
++    <path android:fillColor="#FFFFFFFF" android:pathData="M54,23 L45,36 L63,36 Z M31,33 L43,33 L43,45 L31,45 Z M71,25 A7,7 0,1 1,70.99 25 Z M54,73 A8,8 0,1 1,53.99 73 Z"/>
++</vector>
+diff --git a/usb_control_app/res/mipmap-anydpi-v26/ic_launcher.xml b/usb_control_app/res/mipmap-anydpi-v26/ic_launcher.xml
+deleted file mode 100644
+--- a/usb_control_app/res/mipmap-anydpi-v26/ic_launcher.xml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@android:color/white"/>
+-    <foreground android:drawable="@drawable/app_icon"/>
+-</adaptive-icon>
+diff --git a/usb_control_app/res/mipmap-anydpi-v33/ic_launcher.xml b/usb_control_app/res/mipmap-anydpi-v33/ic_launcher.xml
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/res/mipmap-anydpi-v33/ic_launcher.xml
+@@ -0,0 +1,5 @@
++<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
++    <background android:drawable="@android:color/white"/>
++    <foreground android:drawable="@drawable/app_icon"/>
++    <monochrome android:drawable="@drawable/ic_usb_mono"/>
++</adaptive-icon>
+diff --git a/usb_control_app/res/mipmap-anydpi/ic_launcher.xml b/usb_control_app/res/mipmap-anydpi/ic_launcher.xml
+--- a/usb_control_app/res/mipmap-anydpi/ic_launcher.xml
++++ b/usb_control_app/res/mipmap-anydpi/ic_launcher.xml
+@@ -1 +1,4 @@
+-<bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/app_icon" android:gravity="fill"/>
++<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
++    <background android:drawable="@android:color/white"/>
++    <foreground android:drawable="@drawable/app_icon"/>
++</adaptive-icon>
+diff --git a/usb_control_app/res/values-v27/styles.xml b/usb_control_app/res/values-v27/styles.xml
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/res/values-v27/styles.xml
+@@ -0,0 +1,5 @@
++<resources>
++    <style name="AppTheme" parent="@style/BaseTheme">
++        <item name="android:windowLightNavigationBar">true</item>
++    </style>
++</resources>
+diff --git a/usb_control_app/res/values/strings.xml b/usb_control_app/res/values/strings.xml
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/res/values/strings.xml
+@@ -0,0 +1,4 @@
++<resources>
++    <string name="root_status">●  %1$s</string>
++    <string name="image_transparency">图片透明度 %1$d%%</string>
++</resources>
+diff --git a/usb_control_app/res/values/styles.xml b/usb_control_app/res/values/styles.xml
+--- a/usb_control_app/res/values/styles.xml
++++ b/usb_control_app/res/values/styles.xml
+@@ -1,12 +1,12 @@
+ <resources>
+-    <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
++    <style name="BaseTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+         <item name="android:fontFamily">sans</item>
+         <item name="android:colorAccent">#2563EB</item>
+         <item name="android:windowLightStatusBar">true</item>
+         <item name="android:statusBarColor">#F4F7FC</item>
+         <item name="android:navigationBarColor">#F4F7FC</item>
+-        <item name="android:windowLightNavigationBar">true</item>
+         <item name="android:windowActionModeOverlay">true</item>
+         <item name="android:windowBackground">#F4F7FC</item>
+     </style>
++    <style name="AppTheme" parent="@style/BaseTheme"/>
+ </resources>
+diff --git a/usb_control_app/res/xml/data_extraction_rules.xml b/usb_control_app/res/xml/data_extraction_rules.xml
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/res/xml/data_extraction_rules.xml
+@@ -0,0 +1,24 @@
++<data-extraction-rules>
++    <cloud-backup disableIfNoEncryptionCapabilities="true">
++        <exclude domain="root" path="."/>
++        <exclude domain="file" path="."/>
++        <exclude domain="database" path="."/>
++        <exclude domain="sharedpref" path="."/>
++        <exclude domain="external" path="."/>
++        <exclude domain="device_root" path="."/>
++        <exclude domain="device_file" path="."/>
++        <exclude domain="device_database" path="."/>
++        <exclude domain="device_sharedpref" path="."/>
++    </cloud-backup>
++    <device-transfer>
++        <exclude domain="root" path="."/>
++        <exclude domain="file" path="."/>
++        <exclude domain="database" path="."/>
++        <exclude domain="sharedpref" path="."/>
++        <exclude domain="external" path="."/>
++        <exclude domain="device_root" path="."/>
++        <exclude domain="device_file" path="."/>
++        <exclude domain="device_database" path="."/>
++        <exclude domain="device_sharedpref" path="."/>
++    </device-transfer>
++</data-extraction-rules>
+diff --git a/usb_control_app/src/local/usbcontrol/Backdrop.java b/usb_control_app/src/local/usbcontrol/Backdrop.java
+--- a/usb_control_app/src/local/usbcontrol/Backdrop.java
++++ b/usb_control_app/src/local/usbcontrol/Backdrop.java
+@@ -11,6 +11,7 @@
+     int opacity=25;
+     boolean editable=false;
+     private final Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
++    private final RectF destination=new RectF();
+     private final ScaleGestureDetector scale;
+     private float lastX,lastY;
+     Backdrop(Context c) {
+@@ -20,7 +21,7 @@
+         });
+         setContentDescription("背景预览；双指等比缩放，单指拖动选择显示区域");
+     }
+-    void settings(Bitmap b,float z,float x,float y,int alpha){bitmap=b;zoom=z;fx=x;fy=y;opacity=alpha;invalidate();}
++    void settings(Bitmap b,float z,float x,float y,int alpha){bitmap=b;zoom=Logic.clamp(z,1,4);fx=Logic.clamp(x,0,1);fy=Logic.clamp(y,0,1);opacity=Math.max(0,Math.min(100,alpha));invalidate();}
+     protected void onDraw(Canvas c){
+         super.onDraw(c); c.drawColor(Color.rgb(244,247,252));
+         if(bitmap==null||bitmap.isRecycled()||getWidth()==0||getHeight()==0)return;
+@@ -28,7 +29,7 @@
+         float w=bitmap.getWidth()*s,h=bitmap.getHeight()*s;
+         float x=(getWidth()-w)*Logic.clamp(fx,0,1),y=(getHeight()-h)*Logic.clamp(fy,0,1);
+         paint.setAlpha(Math.round(255*Logic.clamp(opacity/100f,0,1)));
+-        c.drawBitmap(bitmap,null,new RectF(x,y,x+w,y+h),paint);
++        destination.set(x,y,x+w,y+h);c.drawBitmap(bitmap,null,destination,paint);
+     }
+     public boolean onTouchEvent(android.view.MotionEvent e){
+         if(!editable||bitmap==null)return false;
+@@ -45,7 +46,9 @@
+             lastX=e.getX();lastY=e.getY();return true;
+         }
+         if(e.getActionMasked()==MotionEvent.ACTION_POINTER_UP){lastX=e.getX(e.getActionIndex()==0?1:0);lastY=e.getY(e.getActionIndex()==0?1:0);}
+-        if(e.getActionMasked()==MotionEvent.ACTION_UP||e.getActionMasked()==MotionEvent.ACTION_CANCEL)getParent().requestDisallowInterceptTouchEvent(false);
++        if(e.getActionMasked()==MotionEvent.ACTION_UP){performClick();getParent().requestDisallowInterceptTouchEvent(false);}
++        if(e.getActionMasked()==MotionEvent.ACTION_CANCEL)getParent().requestDisallowInterceptTouchEvent(false);
+         return true;
+     }
++    @Override public boolean performClick(){super.performClick();return true;}
+ }
+diff --git a/usb_control_app/src/local/usbcontrol/BackgroundStore.java b/usb_control_app/src/local/usbcontrol/BackgroundStore.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/BackgroundStore.java
+@@ -0,0 +1,73 @@
++package local.usbcontrol;
++
++import android.content.*;
++import android.graphics.*;
++import android.media.ExifInterface;
++import android.net.Uri;
++import android.os.Build;
++import java.io.*;
++import java.util.UUID;
++
++final class BackgroundStore {
++    static Bitmap decode(ContentResolver resolver,Uri uri)throws IOException {
++        Bitmap b;
++        if(Build.VERSION.SDK_INT>=28){
++            b=ImageDecoder.decodeBitmap(ImageDecoder.createSource(resolver,uri),(decoder,info,source)->{
++                decoder.setAllocator(ImageDecoder.ALLOCATOR_SOFTWARE);
++                int w=info.getSize().getWidth(),h=info.getSize().getHeight();
++                float factor=Math.min(1,2048f/Math.max(w,h));
++                decoder.setTargetSize(Math.max(1,Math.round(w*factor)),Math.max(1,Math.round(h*factor)));
++            });
++        }else{
++            BitmapFactory.Options options=new BitmapFactory.Options();options.inJustDecodeBounds=true;
++            try(InputStream in=resolver.openInputStream(uri)){BitmapFactory.decodeStream(in,null,options);}
++            if(options.outWidth<1||options.outHeight<1)throw new IOException("图片尺寸无效");
++            options.inSampleSize=1;while(Math.max(options.outWidth,options.outHeight)/options.inSampleSize>2048)options.inSampleSize*=2;
++            options.inJustDecodeBounds=false;
++            try(InputStream in=resolver.openInputStream(uri)){b=BitmapFactory.decodeStream(in,null,options);}
++            if(b==null)throw new IOException("图片解码失败");
++            int orientation=1;
++            try(InputStream in=resolver.openInputStream(uri)){orientation=new ExifInterface(in).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);}catch(IOException ignored){}
++            b=orient(b,orientation);
++        }
++        if(b==null)throw new IOException("系统未支持此图片格式");return b;
++    }
++    static Bitmap orient(Bitmap b,int orientation){
++            Matrix matrix=new Matrix();
++            switch(orientation){
++                case 2:matrix.setScale(-1,1);break;
++                case 3:matrix.setRotate(180);break;
++                case 4:matrix.setRotate(180);matrix.postScale(-1,1);break;
++                case 5:matrix.setRotate(90);matrix.postScale(-1,1);break;
++                case 6:matrix.setRotate(90);break;
++                case 7:matrix.setRotate(-90);matrix.postScale(-1,1);break;
++                case 8:matrix.setRotate(-90);break;
++            }
++            if(!matrix.isIdentity()){Bitmap rotated=Bitmap.createBitmap(b,0,0,b.getWidth(),b.getHeight(),matrix,true);if(rotated!=b)b.recycle();b=rotated;}
++        return b;
++    }
++    static File selected(File home,SharedPreferences prefs){
++        String name=prefs.getString("wallpaper_file","background.png");
++        if("none".equals(name))return new File(home,"background.none");
++        if(!name.matches("background(?:-[a-f0-9-]{36})?\\.png"))return new File(home,"background.png");
++        return new File(home,name);
++    }
++    static void save(File home,SharedPreferences prefs,Bitmap image,float zoom,float fx,float fy,int opacity)throws IOException {
++        File old=selected(home,prefs),file=new File(home,"background-"+UUID.randomUUID()+".png");
++        String oldName=prefs.getString("wallpaper_file","background.png");float oz=prefs.getFloat("zoom",1),ox=prefs.getFloat("fx",.5f),oy=prefs.getFloat("fy",.5f);int oa=prefs.getInt("opacity",25);
++        boolean preferencesAttempted=false;
++        try {
++            try(FileOutputStream out=new FileOutputStream(file)){if(!image.compress(Bitmap.CompressFormat.PNG,100,out))throw new IOException("图片保存失败");out.getFD().sync();}
++            preferencesAttempted=true;
++            boolean committed=prefs.edit().putString("wallpaper_file",file.getName()).putFloat("zoom",zoom).putFloat("fx",fx).putFloat("fy",fy).putInt("opacity",opacity).commit();
++            if(!committed){boolean restored=prefs.edit().putString("wallpaper_file",oldName).putFloat("zoom",oz).putFloat("fx",ox).putFloat("fy",oy).putInt("opacity",oa).commit();throw new IOException(restored?"背景设置写入失败，已恢复原设置":"背景存储异常；新旧文件均保留，请重启后检查");}
++        }catch(IOException e){if(!preferencesAttempted)file.delete();throw e;}
++        if(!file.equals(old))old.delete();
++    }
++    static void remove(File home,SharedPreferences prefs)throws IOException {
++        File old=selected(home,prefs);
++        String oldName=prefs.getString("wallpaper_file","background.png");
++        if(!prefs.edit().putString("wallpaper_file","none").commit()){boolean restored=prefs.edit().putString("wallpaper_file",oldName).commit();throw new IOException(restored?"背景设置写入失败，已恢复原设置":"背景存储异常；原文件仍保留，请重启后检查");}
++        old.delete();new File(home,"background.png").delete();
++    }
++}
+diff --git a/usb_control_app/src/local/usbcontrol/Baseline.java b/usb_control_app/src/local/usbcontrol/Baseline.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/Baseline.java
+@@ -0,0 +1,29 @@
++package local.usbcontrol;
++import android.content.SharedPreferences;
++import java.io.*;
++import java.util.Properties;
++
++/** The durable file is authoritative even if SharedPreferences.commit fails. */
++final class Baseline {
++    static void ensure(File home,SharedPreferences prefs,String snapshot)throws Exception {
++        File file=new File(home,"system-baseline.properties");Properties p=new Properties();
++        if(file.exists())p=SafeFiles.read(file);
++        else if(prefs.contains("baseline_adb")){
++            for(String key:new String[]{"baseline_adb","baseline_dev","baseline_density","baseline_install_space","baseline_install"})if(prefs.contains(key))p.setProperty(key,prefs.getString(key,""));
++        }else{
++            p.setProperty("baseline_adb",Root.section(snapshot,"ADB"));p.setProperty("baseline_dev",Root.section(snapshot,"DEV"));p.setProperty("baseline_density",DensitySession.previous(Root.section(snapshot,"DENSITY")));
++        }
++        String ns=Logic.installNamespace(Root.section(snapshot,"GLOBAL"),Root.section(snapshot,"SECURE"),Root.section(snapshot,"SYSTEM"));
++        if(ns!=null&&!p.containsKey("baseline_install")){
++            String value=Root.run("settings get "+ns+" adb_install_enabled");if(!value.matches("[01]"))throw new IOException("USB 安装状态在检测期间变化");
++            p.setProperty("baseline_install_space",ns);p.setProperty("baseline_install",value);
++        }
++        for(String key:new String[]{"baseline_adb","baseline_dev"})if(!p.getProperty(key,"").matches("null|[0-9]{1,9}"))throw new IOException("初始系统值异常："+key);
++        if(!DensitySession.validDensity(p.getProperty("baseline_density","")))throw new IOException("初始密度记录异常");
++        if(p.containsKey("baseline_install")&&(!p.getProperty("baseline_install").matches("[01]")||!p.getProperty("baseline_install_space","").matches("global|secure|system")))throw new IOException("初始 USB 安装记录异常");
++        SafeFiles.properties(file,p);
++        SharedPreferences.Editor edit=prefs.edit();for(String key:p.stringPropertyNames())edit.putString(key,p.getProperty(key));
++        edit.putLong("baseline_commit_generation",System.nanoTime());
++        if(!edit.commit())throw new IOException("初始状态缓存写入失败；原始值已保留在恢复文件中");
++    }
++}
+diff --git a/usb_control_app/src/local/usbcontrol/DensitySession.java b/usb_control_app/src/local/usbcontrol/DensitySession.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/DensitySession.java
+@@ -0,0 +1,87 @@
++package local.usbcontrol;
++
++import java.io.*;
++import java.util.*;
++
++/** Durable per-preview journal, atomic decision claim, independent root watchdog. */
++final class DensitySession {
++    final File home,dir;
++    final String token,previous,target;
++    final long deadline;
++    private DensitySession(File home,String token,String previous,String target,long deadline)throws IOException {
++        if(!token.matches("[a-f0-9-]{36}")||!validDensity(previous)||!validDensity(target))throw new IOException("显示恢复记录校验失败");
++        this.home=home;this.token=token;this.previous=previous;this.target=target;this.deadline=deadline;dir=new File(home,"density-"+token);
++    }
++    static boolean validDensity(String value){return "reset".equals(value)||value!=null&&value.matches("[1-9][0-9]{1,3}")&&Integer.parseInt(value)>=72&&Integer.parseInt(value)<=2000;}
++    static String previous(String text)throws IOException {
++        int physical=Logic.lastNumber(text,"Physical density",0);
++        if(physical<72||physical>2000)throw new IOException("系统未返回有效屏幕密度");
++        int override=Logic.lastNumber(text,"Override density",0);
++        if(override!=0&&!validDensity(String.valueOf(override)))throw new IOException("系统密度覆盖值异常");
++        return override>0?String.valueOf(override):"reset";
++    }
++    static DensitySession begin(File home,String target,long now)throws Exception {
++        if(new File(home,"density-active").exists())throw new IOException("上次显示预览尚未结束，请先恢复");
++        DensitySession s=new DensitySession(home,UUID.randomUUID().toString(),previous(Root.run("wm density")),target,now+20000);
++        if(!s.dir.mkdir())throw new IOException("显示预览目录创建失败");
++        SafeFiles.write(s.file("pending"),s.token.getBytes("UTF-8"));
++        SafeFiles.write(s.file("watchdog.sh"),s.watchdog(20).getBytes("UTF-8"));
++        Properties p=new Properties();p.setProperty("token",s.token);p.setProperty("previous",s.previous);p.setProperty("target",s.target);
++        SafeFiles.properties(new File(home,"density-active"),p);
++        try {
++            String q=Root.quote(s.dir.getAbsolutePath());
++            Root.run("command -v nohup >/dev/null && command -v setsid >/dev/null || exit 1; "+
++                "nohup setsid sh "+Root.quote(s.file("watchdog.sh").getAbsolutePath())+" </dev/null >/dev/null 2>&1 & p=$!; "+
++                "i=0; while [ ! -f "+q+"/armed ] && [ $i -lt 20 ]; do sleep 0.1; i=$((i+1)); done; "+
++                "[ -f "+q+"/armed ] && kill -0 $p || exit 1; wm density "+target+" || exit 1");
++            s.verify(target);return s;
++        }catch(Exception e){try{s.rollback();}catch(Exception restore){e.addSuppressed(restore);}throw e;}
++    }
++    String watchdog(int seconds){
++        String d=Root.quote(dir.getAbsolutePath());
++        return "#!/system/bin/sh\ncd "+d+" || exit 1\n"+
++            "uptime_ms() { read up rest < /proc/uptime || return 1; sec=${up%.*}; frac=${up#*.}000; frac=$(printf '%.3s' \"$frac\"); echo $((sec*1000+1$frac-1000)); }\n"+
++            "start=$(uptime_ms) || exit 1; limit=$((start+"+(seconds*1000)+")); printf armed > armed\n"+
++            "while :; do now=$(uptime_ms) || break; [ \"$now\" -ge \"$limit\" ] && break; sleep 1; done\n"+
++            "if mv pending expired 2>/dev/null; then\n wm density "+previous+" && printf restored > rollback.ok\nfi\n";
++    }
++    File file(String name){return new File(dir,name);}
++    boolean confirm()throws Exception {
++        if(!file("pending").exists())return false;
++        verify(target);
++        // rename is the single winner against the watchdog's atomic mv.
++        if(!file("pending").renameTo(file("confirmed")))return false;
++        finish();return true;
++    }
++    void rollback()throws Exception {
++        // Leave the independent watchdog armed if the foreground restore fails.
++        Root.run("wm density "+previous);verify(previous);
++        file("pending").renameTo(file("expired"));finish();
++    }
++    private void verify(String expected)throws Exception {
++        String actual=previous(Root.run("wm density"));
++        if(!expected.equals(actual))throw new IOException("系统密度读回与目标不一致；恢复记录已保留");
++    }
++    private void finish()throws IOException {
++        File active=new File(home,"density-active");
++        if(active.exists()&&!active.delete())throw new IOException("显示事务日志清理失败");
++        // Keep per-session scripts until the sleeping worker exits; never overwrite them.
++    }
++    static boolean recover(File home)throws Exception {
++        File active=new File(home,"density-active");if(!active.exists())return false;
++        Properties p=SafeFiles.read(active);
++        DensitySession s=new DensitySession(home,p.getProperty("token",""),p.getProperty("previous",""),p.getProperty("target",""),0);
++        if(s.file("confirmed").exists()){s.verify(s.target);s.finish();}else{s.rollback();}
++        return true;
++    }
++    static void prune(File home){
++        if(new File(home,"density-active").exists())return;
++        File[] dirs=home.listFiles();if(dirs==null)return;
++        for(File candidate:dirs){
++            if(!candidate.isDirectory()||!candidate.getName().matches("density-[a-f0-9-]{36}")||System.currentTimeMillis()-candidate.lastModified()<120000||new File(candidate,"pending").exists())continue;
++            File[] files=candidate.listFiles();if(files==null)continue;boolean known=true;
++            for(File f:files)if(!f.isFile()||!f.getName().matches("confirmed|expired|armed|rollback\\.ok|watchdog\\.sh"))known=false;
++            if(!known)continue;for(File f:files)f.delete();candidate.delete();
++        }
++    }
++}
+diff --git a/usb_control_app/src/local/usbcontrol/Logic.java b/usb_control_app/src/local/usbcontrol/Logic.java
+--- a/usb_control_app/src/local/usbcontrol/Logic.java
++++ b/usb_control_app/src/local/usbcontrol/Logic.java
+@@ -37,7 +37,7 @@
+         }
+         return match;
+     }
+-    public static float clamp(float v, float min, float max) { return Math.max(min, Math.min(max, v)); }
++    public static float clamp(float v, float min, float max) { return Float.isNaN(v)?min:Math.max(min, Math.min(max, v)); }
+     public static float coverScale(int bw,int bh,int vw,int vh,float zoom) {
+         return Math.max(vw/(float)bw, vh/(float)bh) * clamp(zoom, 1f, 4f);
+     }
+diff --git a/usb_control_app/src/local/usbcontrol/MainActivity.java b/usb_control_app/src/local/usbcontrol/MainActivity.java
+--- a/usb_control_app/src/local/usbcontrol/MainActivity.java
++++ b/usb_control_app/src/local/usbcontrol/MainActivity.java
+@@ -15,7 +15,8 @@
+ 
+ public class MainActivity extends Activity {
+     private static final int BLUE=0xff2563eb, INK=0xff192b48, MUTED=0xff64748b, PICK=81;
+-    private final ExecutorService worker=Executors.newSingleThreadExecutor();
++    private static final ExecutorService worker=Executors.newSingleThreadExecutor();
++    private static final ExecutorService imageWorker=Executors.newSingleThreadExecutor();
+     private final Handler ui=new Handler(Looper.getMainLooper());
+     private SharedPreferences prefs;
+     private FrameLayout stage;
+@@ -24,7 +25,9 @@
+     private Bitmap wallpaper;
+     private Switch adbSwitch,installSwitch;
+     private TextView rootLabel,adbDetail,installDetail,densityValue;
+-    private Button densityButton,restoreButton;
++    private Button densityButton,restoreButton,defaultDensityButton;
++    private final java.util.ArrayList<Dialog> dialogs=new java.util.ArrayList<>();
++    private DensitySession densitySession;
+     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
+     private boolean rootReady=false,busy=false,binding=false,densityInFlight=false;
+     private int shortPx,currentDpi;
+@@ -40,13 +43,18 @@
+         super.onCreate(state);prefs=getSharedPreferences("preferences",MODE_PRIVATE);
+         getWindow().setStatusBarColor(0xfff4f7fc);getWindow().setNavigationBarColor(0xfff4f7fc);
+         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+-        File file=new File(getFilesDir(),"background.png");
+-        if(file.exists())wallpaper=BitmapFactory.decodeFile(file.getPath());
+         build();
++        imageWorker.execute(()->{File file=BackgroundStore.selected(getFilesDir(),prefs);if(!file.exists())return;try{Bitmap loaded=BackgroundStore.decode(getContentResolver(),Uri.fromFile(file));ui.post(()->{if(alive()){wallpaper=loaded;build();}});}catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive())note("背景损坏或内存不足，已使用默认底色；可重新选择图片");});}});
+     }
+     @Override protected void onResume(){super.onResume();if(!densityInFlight)refresh();}
+     @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);build();if(!busy)renderState();}
+-    @Override protected void onDestroy(){super.onDestroy();worker.shutdown();}
++    private boolean alive(){return !isFinishing()&&!isDestroyed();}
++    private final class ManagedDialogBuilder extends AlertDialog.Builder {
++        ManagedDialogBuilder(){super(MainActivity.this);}
++        @Override public AlertDialog create(){AlertDialog d=super.create();dialogs.add(d);d.setOnDismissListener(x->dialogs.remove(d));return d;}
++        @Override public AlertDialog show(){AlertDialog d=create();d.show();return d;}
++    }
++    @Override protected void onDestroy(){ui.removeCallbacksAndMessages(null);for(Dialog d:new java.util.ArrayList<>(dialogs))d.dismiss();dialogs.clear();super.onDestroy();}
+     private void build(){
+         stage=new FrameLayout(this);background=new Backdrop(this);loadBackground();
+         stage.addView(background,new FrameLayout.LayoutParams(-1,-1));
+@@ -61,7 +69,7 @@
+         ImageView icon=new ImageView(this);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
+         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
+         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+-        TextView version=text("1.0",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(0xcce8eef9,10));header.addView(version);page.addView(header);gap(page,24);
++        TextView version=text("1.0.1",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(0xcce8eef9,10));header.addView(version);page.addView(header);gap(page,24);
+         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
+         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(0xe6e8efff,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
+         section("01  /  连接控制");
+@@ -75,11 +83,11 @@
+         section("02  /  显示调节");LinearLayout display=card();display.addView(text("最小宽度",17,INK));gap(display,5);display.addView(text("数值越大，内容越紧凑；不是物理屏幕 DPI。",12,MUTED));gap(display,16);
+         densityValue=text("— dp",29,BLUE);display.addView(densityValue);gap(display,12);
+         densityButton=button("调整最小宽度",()->densityDialog(),true);display.addView(densityButton);
+-        Button system=button("恢复系统默认显示",()->confirmResetDensity(),false);display.addView(system);page.addView(display);gap(page,22);
++        defaultDensityButton=button("恢复系统默认显示",()->confirmResetDensity(),false);display.addView(defaultDensityButton);page.addView(display);gap(page,22);
+         section("03  /  你的风格");LinearLayout appearance=card();appearance.addView(text("让喜欢的画面，留在这里",17,INK));gap(appearance,5);appearance.addView(text("原比例缩放 · 自由取景 · 透明度实时预览",12,MUTED));gap(appearance,12);
+         appearance.addView(button(wallpaper==null?"选择背景图片":"更换背景图片",()->pickImage(),true));
+         if(wallpaper!=null){appearance.addView(button("取景与透明度",()->editBackground(wallpaper,false),false));appearance.addView(button("移除背景",()->{
+-            new AlertDialog.Builder(this).setTitle("移除背景？").setMessage("只删除 App 内的副本，不影响手机相册。").setNegativeButton("取消",null).setPositiveButton("移除",(d,w)->{new File(getFilesDir(),"background.png").delete();wallpaper=null;build();renderState();}).show();
++            new ManagedDialogBuilder().setTitle("移除背景？").setMessage("只删除 App 内的副本，不影响手机相册。").setNegativeButton("取消",null).setPositiveButton("移除",(d,w)->imageWorker.execute(()->{try{BackgroundStore.remove(getFilesDir(),prefs);ui.post(()->{if(alive()){wallpaper=null;build();}});}catch(Exception e){ui.post(()->{if(alive())note("背景移除失败，请重试");});}})).show();
+         },false));}
+         page.addView(appearance);gap(page,18);
+         restoreButton=button("恢复首次使用前的系统设置",()->confirmRestore(),false);page.addView(restoreButton);
+@@ -99,44 +107,47 @@
+     private void loadBackground(){if(background!=null)background.settings(wallpaper,prefs.getFloat("zoom",1),prefs.getFloat("fx",.5f),prefs.getFloat("fy",.5f),prefs.getInt("opacity",25));}
+     private void task(String label,Job job,Runnable success){
+         if(busy){renderState();return;}busy=true;statusMessage=label;renderState();
+-        worker.execute(()->{String error=null;try{job.run();}catch(Exception e){error=e.getMessage();}String err=error;
+-            ui.post(()->{if(isDestroyed())return;busy=false;if(err!=null){densityInFlight=false;note(err);statusMessage=err.split("\n")[0];renderState();}else if(success!=null)success.run();});});
++        worker.execute(()->{String error=null;try{job.run();}catch(Exception e){error=e.getMessage()==null?e.toString():e.getMessage();}String err=error;
++            ui.post(()->{if(!alive())return;busy=false;if(err!=null){rootReady=false;snapshot="";densityInFlight=false;note(err);statusMessage=err.split("\n")[0];renderState();}else if(success!=null)success.run();});});
+     }
+     private void refresh(){
+         if(busy)return;
+         task("读取系统状态…",()->{
+-            String s=Root.run(Root.SNAPSHOT);if(!"0".equals(Root.section(s,"UID")))throw new IOException("请在超级用户管理器中授予轻控 Root 权限");
++            String s=Root.run(Root.SNAPSHOT);Root.validate(s);
++            if(!densityInFlight&&DensitySession.recover(getFilesDir()))s=Root.run(Root.SNAPSHOT);
++            if(!densityInFlight)DensitySession.prune(getFilesDir());
+             if(new File(getFilesDir(),"density.pending").exists()&&!densityInFlight){
+-                Root.run("wm density "+prefs.getString("pending_previous","reset"));new File(getFilesDir(),"density.pending").delete();s=Root.run(Root.SNAPSHOT);
++                String old=prefs.getString("pending_previous","reset");if(!DensitySession.validDensity(old))throw new IOException("旧版显示恢复记录异常");
++                Root.run("wm density "+old);if(!old.equals(DensitySession.previous(Root.run("wm density"))))throw new IOException("旧版显示恢复读回失败");
++                if(!new File(getFilesDir(),"density.pending").delete())throw new IOException("旧版恢复标记清理失败");s=Root.run(Root.SNAPSHOT);
++            }
++            Root.validate(s);
++            Baseline.ensure(getFilesDir(),prefs,s);
++            {
++                String recovery=RecoveryScript.make(restoreSystemCommand(),prefs.getString("baseline_density","reset"),prefs.getString("baseline_adb","0"),prefs.getString("baseline_dev","0"),prefs.contains("baseline_install")?prefs.getString("baseline_install_space","global"):null,prefs.getString("baseline_install","0"));
++                SafeFiles.write(new File(getFilesDir(),"restore-system.sh"),recovery.getBytes("UTF-8"));
+             }
+             snapshot=s;rootReady=true;
+-            if(!prefs.contains("baseline_adb"))prefs.edit().putString("baseline_adb",Root.section(s,"ADB")).putString("baseline_dev",Root.section(s,"DEV")).putString("baseline_density",previousDensity(Root.section(s,"DENSITY"))).commit();
+-            String ns=Logic.installNamespace(Root.section(s,"GLOBAL"),Root.section(s,"SECURE"),Root.section(s,"SYSTEM"));
+-            if(ns!=null&&!prefs.contains("baseline_install"))prefs.edit().putString("baseline_install_space",ns).putString("baseline_install",Root.run("settings get "+ns+" adb_install_enabled")).commit();
+-            try(FileOutputStream out=new FileOutputStream(new File(getFilesDir(),"restore-system.sh"))){
+-                String recovery="#!/system/bin/sh\n[ \"$(id -u)\" = 0 ] || exit 1\n"+restoreSystemCommand()+" || exit 1\nprintf 'Restored initial settings\\n'\nsettings get global adb_enabled\nwm density\n";
+-                out.write(recovery.getBytes("UTF-8"));
+-            }
+             return s;
+         },()->{statusMessage="Root 已连接   ·   "+Build.MANUFACTURER+" "+Build.MODEL+"   ↻";renderState();});
+     }
+-    private static String previousDensity(String density){int override=Logic.lastNumber(density,"Override density",0);return override>0?String.valueOf(override):"reset";}
+     private void renderState(){
+-        if(adbSwitch==null)return;binding=true;rootLabel.setText("●  "+statusMessage);
+-        boolean adb="1".equals(Root.section(snapshot,"ADB"));adbSwitch.setChecked(adb);adbSwitch.setEnabled(rootReady&&!busy);
++        if(adbSwitch==null)return;binding=true;rootLabel.setText(getString(R.string.root_status,statusMessage));
++        if(densityInFlight)getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
++        boolean adb=Root.section(snapshot,"ADB").matches("[0-9]+")&&Long.parseLong(Root.section(snapshot,"ADB"))>0;adbSwitch.setChecked(adb);adbSwitch.setEnabled(rootReady&&!busy&&!densityInFlight);
+         adbDetail.setText(rootReady?(adb?"已开启 · 连接电脑仍需 RSA 授权":"已关闭 · 无线调试保持原状"):"等待 Root 授权；点击上方状态重试");
+         installSpace=Logic.installNamespace(Root.section(snapshot,"GLOBAL"),Root.section(snapshot,"SECURE"),Root.section(snapshot,"SYSTEM"));
+         String table=installSpace==null?"":Root.section(snapshot,installSpace.toUpperCase(java.util.Locale.ROOT));
+         installSwitch.setChecked(java.util.regex.Pattern.compile("(?m)^adb_install_enabled=1$").matcher(table).find());
+-        installSwitch.setEnabled(rootReady&&!busy&&installSpace!=null);installSwitch.setAlpha(installSpace==null?.35f:1);
++        installSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&installSpace!=null);installSwitch.setAlpha(installSwitch.isEnabled()?1:.35f);
+         installDetail.setText(!rootReady?"等待系统能力检测":installSpace==null?"此系统未暴露可识别的独立开关":"系统独立开关 · "+installSpace+" / adb_install_enabled");
+         densityText=Root.section(snapshot,"DENSITY");int[] size=Logic.size(Root.section(snapshot,"SIZE"));shortPx=Math.min(size[0],size[1]);currentDpi=Logic.lastNumber(densityText,"(?:Physical|Override) density",0);
+         densityValue.setText(currentDpi>0?Math.round(shortPx*160f/currentDpi)+" dp  ·  "+currentDpi+" dpi":getResources().getConfiguration().smallestScreenWidthDp+" dp");
+-        densityButton.setEnabled(rootReady&&!busy&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&prefs.contains("baseline_adb"));binding=false;
++        densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));binding=false;
+     }
+     private void confirmAdb(boolean on){
+         renderState();if(!rootReady||busy)return;
+-        new AlertDialog.Builder(this).setTitle(on?"开启 USB 调试？":"关闭 USB 调试？").setMessage(on?"连接电脑时仍需你确认 RSA 授权；不会开启无线调试。":"当前 USB ADB 连接将中断，App 内仍可重新开启。").setNegativeButton("取消",null).setPositiveButton(on?"开启":"关闭",(d,w)->task("切换 USB 调试…",()->{
++        new ManagedDialogBuilder().setTitle(on?"开启 USB 调试？":"关闭 USB 调试？").setMessage(on?"连接电脑时仍需你确认 RSA 授权；不会开启无线调试。":"当前 USB ADB 连接将中断，App 内仍可重新开启。").setNegativeButton("取消",null).setPositiveButton(on?"开启":"关闭",(d,w)->task("切换 USB 调试…",()->{
+             Root.run((on?"settings put global development_settings_enabled 1 && ":"")+"settings put global adb_enabled "+(on?"1":"0"));
+             String actual=Root.run("settings get global adb_enabled");if(!actual.equals(on?"1":"0"))throw new IOException("系统未接受 USB 调试变更");
+             Root.run("if [ -f /data/adb/modules/usb_debug_toggle/status.sh ]; then sh /data/adb/modules/usb_debug_toggle/status.sh update; fi; true");return actual;
+@@ -144,7 +155,9 @@
+     }
+     private void changeInstall(boolean on){
+         String ns=installSpace;renderState();if(ns==null||!rootReady||busy)return;
+-        new AlertDialog.Builder(this).setTitle(on?"允许通过 USB 安装？":"关闭 USB 安装？").setMessage("仅更改系统已存在的 USB 安装独立开关，不更改安装验证、未知来源或账号限制。").setNegativeButton("取消",null).setPositiveButton("确认",(d,w)->task("设置 USB 安装…",()->{
++        new ManagedDialogBuilder().setTitle(on?"允许通过 USB 安装？":"关闭 USB 安装？").setMessage("仅更改系统已存在的 USB 安装独立开关，不更改安装验证、未知来源或账号限制。").setNegativeButton("取消",null).setPositiveButton("确认",(d,w)->task("设置 USB 安装…",()->{
++            String fresh=Root.run(Root.SNAPSHOT);Root.validate(fresh);
++            if(!ns.equals(Logic.installNamespace(Root.section(fresh,"GLOBAL"),Root.section(fresh,"SECURE"),Root.section(fresh,"SYSTEM"))))throw new IOException("USB 安装能力已变化，请刷新后重试");
+             Root.run("settings put "+ns+" adb_install_enabled "+(on?"1":"0"));String actual=Root.run("settings get "+ns+" adb_install_enabled");
+             if(!actual.equals(on?"1":"0"))throw new IOException("系统未接受 USB 安装变更");return actual;
+         },()->{note("USB 安装设置已更新；实际安装仍受系统策略约束");refresh();})).show();
+@@ -156,57 +169,57 @@
+         TextView help=text("280–720 dp · 数值增大，界面变小\n应用后需在 20 秒内确认，否则自动还原。",12,MUTED);box.addView(help);
+         LinearLayout presets=new LinearLayout(this);
+         for(int n:new int[]{360,393,411,480}){Button b=button(String.valueOf(n),()->input.setText(String.valueOf(n)),false);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(46),1);p.setMargins(dp(2),dp(8),dp(2),0);presets.addView(b,p);}box.addView(presets);
+-        AlertDialog dialog=new AlertDialog.Builder(this).setTitle("调整最小宽度 / dp").setView(box).setNegativeButton("取消",null).setPositiveButton("预览应用",null).create();
++        AlertDialog dialog=new ManagedDialogBuilder().setTitle("调整最小宽度 / dp").setView(box).setNegativeButton("取消",null).setPositiveButton("预览应用",null).create();
+         dialog.setOnShowListener(v->dialog.getButton(-1).setOnClickListener(w->{try{int value=Integer.parseInt(input.getText().toString());int dpi=Logic.densityForWidth(shortPx,value);dialog.dismiss();applyDensity(String.valueOf(dpi));}catch(Exception e){input.setError("请输入适合此屏幕的 280–720 dp 数值");}}));dialog.show();
+     }
+-    private void confirmResetDensity(){if(!rootReady||busy)return;new AlertDialog.Builder(this).setTitle("恢复系统默认显示？").setMessage("移除自定义密度覆盖，保留系统物理密度。也会提供 20 秒确认。").setNegativeButton("取消",null).setPositiveButton("恢复",(d,w)->applyDensity("reset")).show();}
++    private void confirmResetDensity(){if(!rootReady||busy)return;new ManagedDialogBuilder().setTitle("恢复系统默认显示？").setMessage("移除自定义密度覆盖，保留系统物理密度。也会提供 20 秒确认。").setNegativeButton("取消",null).setPositiveButton("恢复",(d,w)->applyDensity("reset")).show();}
+     private void applyDensity(String target){
+         if(densityInFlight||busy)return;
+         densityInFlight=true;
+         task("应用显示预览…",()->{
+-            String previous=previousDensity(Root.run("wm density"));prefs.edit().putString("pending_previous",previous).commit();
+-            File marker=new File(getFilesDir(),"density.pending"),watchdog=new File(getFilesDir(),"revert-density.sh");String token=String.valueOf(System.currentTimeMillis());
+-            try(FileOutputStream f=new FileOutputStream(marker)){f.write(token.getBytes("UTF-8"));}
+-            String script="#!/system/bin/sh\nsleep 20\nif [ \"$(cat "+Root.quote(marker.getAbsolutePath())+" 2>/dev/null)\" = "+Root.quote(token)+" ]; then\n wm density "+previous+"\n rm -f "+Root.quote(marker.getAbsolutePath())+"\nfi\n";
+-            try(FileOutputStream f=new FileOutputStream(watchdog)){f.write(script.getBytes("UTF-8"));}
+-            try{Root.run("nohup sh "+Root.quote(watchdog.getAbsolutePath())+" </dev/null >/dev/null 2>&1 & p=$!; sleep 1; kill -0 $p || exit 1; wm density "+target+" || exit 1");}
+-            catch(Exception e){marker.delete();Root.run("wm density "+previous);ui.post(()->densityInFlight=false);throw e;}
++            densitySession=DensitySession.begin(getFilesDir(),target,SystemClock.elapsedRealtime());
+             return "";
+         },()->densityConfirmation());
+     }
+     private void densityConfirmation(){
+-        long deadline=SystemClock.elapsedRealtime()+17500;
+-        AlertDialog dialog=new AlertDialog.Builder(this).setTitle("保留这个显示大小？").setMessage("正在预览").setCancelable(false).setNegativeButton("还原",(d,w)->revertDensity()).setPositiveButton("保留",(d,w)->{
+-            File marker=new File(getFilesDir(),"density.pending");if(marker.delete()){densityInFlight=false;note("显示设置已保留");refresh();}else{densityInFlight=false;note("预览已到期，已还原");refresh();}
++        final DensitySession session=densitySession;
++        AlertDialog dialog=new ManagedDialogBuilder().setTitle("保留这个显示大小？").setMessage("正在预览").setCancelable(false).setNegativeButton("还原",(d,w)->revertDensity()).setPositiveButton("保留",(d,w)->{
++            task("确认显示设置…",()->{
++                if(SystemClock.elapsedRealtime()>=session.deadline||!session.confirm()){session.rollback();return "expired";}
++                return "confirmed";
++            },()->{densityInFlight=false;densitySession=null;refresh();});
+         }).create();dialog.show();
+-        Runnable tick=new Runnable(){public void run(){if(!dialog.isShowing())return;long left=(deadline-SystemClock.elapsedRealtime()+999)/1000;if(left<=0){dialog.dismiss();revertDensity();return;}dialog.setMessage("显示内容是否清晰、大小合适？\n"+left+" 秒后自动还原；App 退出也会还原。");ui.postDelayed(this,500);}};ui.post(tick);
++        Runnable tick=new Runnable(){public void run(){if(!alive()||!dialog.isShowing())return;long left=(session.deadline-SystemClock.elapsedRealtime()+999)/1000;if(left<=0){dialog.dismiss();revertDensity();return;}dialog.setMessage("显示内容是否清晰、大小合适？\n"+left+" 秒后自动还原；App 退出也会还原。");ui.postDelayed(this,250);}};ui.post(tick);
+     }
+     private void revertDensity(){
+-        task("恢复显示设置…",()->{Root.run("wm density "+prefs.getString("pending_previous","reset"));new File(getFilesDir(),"density.pending").delete();densityInFlight=false;return "";},()->refresh());
++        DensitySession session=densitySession;
++        task("恢复显示设置…",()->{if(session!=null)session.rollback();else DensitySession.recover(getFilesDir());return "";},()->{densityInFlight=false;densitySession=null;refresh();});
+     }
+     private String restoreSetting(String space,String key,String value){return "settings "+("null".equals(value)||value.isEmpty()?"delete "+space+" "+key:"put "+space+" "+key+" "+Root.quote(value));}
+     private String restoreSystemCommand(){
+-        String cmd="wm density "+prefs.getString("baseline_density","reset")+" && "+restoreSetting("global","development_settings_enabled",prefs.getString("baseline_dev","0"))+" && "+restoreSetting("global","adb_enabled",prefs.getString("baseline_adb","0"));
++        String density=prefs.getString("baseline_density","reset");if(!DensitySession.validDensity(density))throw new IllegalStateException("初始密度记录异常");
++        String cmd="wm density "+density;
+         if(prefs.contains("baseline_install"))cmd+=" && "+restoreSetting(prefs.getString("baseline_install_space","global"),"adb_install_enabled",prefs.getString("baseline_install","0"));
++        // Restore developer/ADB last: disabling developer options may disconnect adb shell.
++        cmd+=" && "+restoreSetting("global","development_settings_enabled",prefs.getString("baseline_dev","0"))+" && "+restoreSetting("global","adb_enabled",prefs.getString("baseline_adb","0"));
+         return cmd;
+     }
+     private void confirmRestore(){
+         if(!rootReady||busy||densityInFlight)return;
+-        new AlertDialog.Builder(this).setTitle("恢复首次使用前的系统设置？").setMessage("恢复首次成功读取的 USB 调试、开发者选项、USB 安装和显示密度。USB 连接可能中断；不会删除图片。").setNegativeButton("取消",null).setPositiveButton("恢复",(d,w)->task("恢复初始设置…",()->{
+-            Root.run(restoreSystemCommand());return "";
++        new ManagedDialogBuilder().setTitle("恢复首次使用前的系统设置？").setMessage("恢复首次成功读取的 USB 调试、开发者选项、USB 安装和显示密度。USB 连接可能中断；不会删除图片。").setNegativeButton("取消",null).setPositiveButton("恢复",(d,w)->task("恢复初始设置…",()->{
++            Root.run(restoreSystemCommand());String s=Root.run(Root.SNAPSHOT);Root.validate(s);
++            if(!Root.section(s,"ADB").equals(prefs.getString("baseline_adb","0"))||!Root.section(s,"DEV").equals(prefs.getString("baseline_dev","0"))||!DensitySession.previous(Root.section(s,"DENSITY")).equals(prefs.getString("baseline_density","reset")))throw new IOException("恢复读回不一致，初始记录仍保留");
++            if(prefs.contains("baseline_install")&&!Root.run("settings get "+prefs.getString("baseline_install_space","global")+" adb_install_enabled").equals(prefs.getString("baseline_install","0")))throw new IOException("USB 安装恢复读回不一致");return "";
+         },()->{note("已恢复首次使用前的设置");refresh();})).show();
+     }
+     private void pickImage(){try{Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT);i.setType("image/*");i.addCategory(Intent.CATEGORY_OPENABLE);i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);startActivityForResult(i,PICK);}catch(ActivityNotFoundException e){note("请先安装或启用系统文件选择器");}}
+     @Override protected void onActivityResult(int req,int result,Intent data){
+         super.onActivityResult(req,result,data);if(req!=PICK||result!=RESULT_OK||data==null||data.getData()==null)return;
+-        Uri uri=data.getData();note("正在读取图片…");worker.execute(()->{
++        Uri uri=data.getData();note("正在读取图片…");imageWorker.execute(()->{
+             try{
+-                Bitmap b;
+-                if(Build.VERSION.SDK_INT>=28){ImageDecoder.Source src=ImageDecoder.createSource(getContentResolver(),uri);b=ImageDecoder.decodeBitmap(src,(decoder,info,source)->{decoder.setAllocator(ImageDecoder.ALLOCATOR_SOFTWARE);int w=info.getSize().getWidth(),h=info.getSize().getHeight();float factor=Math.min(1,2048f/Math.max(w,h));decoder.setTargetSize(Math.max(1,Math.round(w*factor)),Math.max(1,Math.round(h*factor)));});}
+-                else {BitmapFactory.Options o=new BitmapFactory.Options();o.inJustDecodeBounds=true;try(InputStream in=getContentResolver().openInputStream(uri)){BitmapFactory.decodeStream(in,null,o);}o.inSampleSize=1;while(Math.max(o.outWidth,o.outHeight)/o.inSampleSize>2048)o.inSampleSize*=2;o.inJustDecodeBounds=false;try(InputStream in=getContentResolver().openInputStream(uri)){b=BitmapFactory.decodeStream(in,null,o);}}
+-                if(b==null)throw new IOException("图片格式未被系统支持");Bitmap image=b;
+-                ui.post(()->{if(!isDestroyed())editBackground(image,true);});
+-            }catch(Exception|OutOfMemoryError e){ui.post(()->note("图片读取失败，请选择其他图片"));}
++                Bitmap image=BackgroundStore.decode(getContentResolver(),uri);
++                ui.post(()->{if(alive())editBackground(image,true);});
++            }catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive())note("图片读取失败，请选择其他图片");});}
+         });
+     }
+     private void editBackground(Bitmap image,boolean fresh){
+@@ -216,26 +229,35 @@
+         Backdrop crop=new Backdrop(this);crop.editable=true;crop.settings(image,fresh?1:prefs.getFloat("zoom",1),fresh?.5f:prefs.getFloat("fx",.5f),fresh?.5f:prefs.getFloat("fy",.5f),prefs.getInt("opacity",25));
+         preview.addView(crop,new FrameLayout.LayoutParams(-1,-1));
+         // Preview has the same viewport aspect as the actual main background.
+-        int width=getResources().getDisplayMetrics().widthPixels-dp(88);int height=Math.round(width*(stage.getHeight()/(float)Math.max(1,stage.getWidth())));
++        int width=Math.max(dp(72),getResources().getDisplayMetrics().widthPixels-dp(88));int height=Math.max(dp(72),Math.round(width*(stage.getHeight()/(float)Math.max(1,stage.getWidth()))));
+         int maxHeight=Math.round(getResources().getDisplayMetrics().heightPixels*.37f);if(height>maxHeight){width=Math.round(width*maxHeight/(float)height);height=maxHeight;}
+         LinearLayout.LayoutParams previewLp=new LinearLayout.LayoutParams(width,height);previewLp.gravity=Gravity.CENTER_HORIZONTAL;panel.addView(preview,previewLp);
++        panel.addOnLayoutChangeListener((v,l,t,r,b,ol,ot,or,ob)->{
++            if(panel.getWidth()==0||stage.getWidth()==0||stage.getHeight()==0)return;
++            int w=Math.max(dp(72),panel.getWidth()-panel.getPaddingLeft()-panel.getPaddingRight());
++            int h=Math.max(1,Math.round(w*stage.getHeight()/(float)stage.getWidth()));
++            int cap=Math.max(dp(72),Math.round(getResources().getDisplayMetrics().heightPixels*.37f));
++            if(h>cap){w=Math.max(1,Math.round(w*cap/(float)h));h=cap;}
++            LinearLayout.LayoutParams p=(LinearLayout.LayoutParams)preview.getLayoutParams();
++            if(p.width!=w||p.height!=h){p.width=w;p.height=h;preview.setLayoutParams(p);}
++        });
+         View foreground=new View(this){protected void onDraw(Canvas c){
+             super.onDraw(c);c.save();float s=getWidth()/(float)Math.max(1,stage.getWidth());c.scale(s,s);c.translate(0,dp(24));page.draw(c);c.restore();
+         }};
+         preview.addView(foreground,new FrameLayout.LayoutParams(-1,-1));
+-        TextView label=text("图片透明度 "+(100-crop.opacity)+"%",13,INK);gap(panel,12);panel.addView(label);
++        TextView label=text(getString(R.string.image_transparency,100-crop.opacity),13,INK);gap(panel,12);panel.addView(label);
+         SeekBar alpha=new SeekBar(this);alpha.setMax(100);alpha.setProgress(100-crop.opacity);alpha.setContentDescription("背景图片透明度");panel.addView(alpha,new LinearLayout.LayoutParams(-1,dp(44)));
+-        alpha.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int v,boolean user){crop.opacity=100-v;crop.invalidate();label.setText("图片透明度 "+v+"%");}public void onStartTrackingTouch(SeekBar b){}public void onStopTrackingTouch(SeekBar b){}});
++        alpha.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int v,boolean user){crop.opacity=100-v;crop.invalidate();label.setText(getString(R.string.image_transparency,v));}public void onStartTrackingTouch(SeekBar b){}public void onStopTrackingTouch(SeekBar b){}});
+         Button center=button("居中复位",()->{crop.zoom=1;crop.fx=.5f;crop.fy=.5f;crop.invalidate();},false);panel.addView(center);
+         ScrollView scroll=new ScrollView(this);scroll.addView(panel);
+-        AlertDialog dialog=new AlertDialog.Builder(this).setTitle("背景取景与透明度").setView(scroll).setNegativeButton("取消",null).setPositiveButton("保存",null).create();
++        AlertDialog dialog=new ManagedDialogBuilder().setTitle("背景取景与透明度").setView(scroll).setNegativeButton("取消",null).setPositiveButton("保存",null).create();
+         dialog.setOnShowListener(v->dialog.getButton(-1).setOnClickListener(w->{
+-            dialog.getButton(-1).setEnabled(false);worker.execute(()->{try{
+-                File temp=new File(getFilesDir(),"background.new.png");try(FileOutputStream out=new FileOutputStream(temp)){if(!image.compress(Bitmap.CompressFormat.PNG,100,out))throw new IOException("图片保存失败");}
+-                File target=new File(getFilesDir(),"background.png");if(!temp.renameTo(target))throw new IOException("背景保存失败");
+-                prefs.edit().putFloat("zoom",crop.zoom).putFloat("fx",crop.fx).putFloat("fy",crop.fy).putInt("opacity",crop.opacity).commit();
+-                ui.post(()->{wallpaper=image;dialog.dismiss();build();renderState();note("背景已保存");});
+-            }catch(Exception e){ui.post(()->{dialog.getButton(-1).setEnabled(true);note("保存失败，请重试");});}});
++            final float z=crop.zoom,x=crop.fx,y=crop.fy;final int alphaValue=crop.opacity;
++            dialog.getButton(-1).setEnabled(false);dialog.getButton(-2).setEnabled(false);dialog.setCancelable(false);crop.editable=false;alpha.setEnabled(false);center.setEnabled(false);
++            imageWorker.execute(()->{try{
++                BackgroundStore.save(getFilesDir(),prefs,image,z,x,y,alphaValue);
++                ui.post(()->{if(alive()){wallpaper=image;dialog.dismiss();build();note("背景已保存");}});
++            }catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive()&&dialog.isShowing()){dialog.getButton(-1).setEnabled(true);dialog.getButton(-2).setEnabled(true);dialog.setCancelable(true);crop.editable=true;alpha.setEnabled(true);center.setEnabled(true);note("保存失败，原背景已保留，请重试");}});}});
+         }));dialog.show();
+     }
+ }
+diff --git a/usb_control_app/src/local/usbcontrol/RecoveryScript.java b/usb_control_app/src/local/usbcontrol/RecoveryScript.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/RecoveryScript.java
+@@ -0,0 +1,14 @@
++package local.usbcontrol;
++
++final class RecoveryScript {
++    static String make(String command,String density,String adb,String dev,String space,String install){
++        String script="#!/system/bin/sh\n[ \"$(id -u)\" = 0 ] || exit 1\n"+command+" || exit 1\n";
++        script+="[ \"$(settings get global adb_enabled)\" = "+Root.quote(adb)+" ] || exit 2\n";
++        script+="[ \"$(settings get global development_settings_enabled)\" = "+Root.quote(dev)+" ] || exit 2\n";
++        if(space!=null)script+="[ \"$(settings get "+space+" adb_install_enabled)\" = "+Root.quote(install)+" ] || exit 2\n";
++        script+="actual=$(wm density) || exit 3\nprintf '%s\\n' \"$actual\" | grep -q '^Physical density: [0-9]' || exit 3\n";
++        if("reset".equals(density))script+="if printf '%s\\n' \"$actual\" | grep -q '^Override density:'; then exit 3; fi\n";
++        else script+="printf '%s\\n' \"$actual\" | grep -q '^Override density: "+density+"$' || exit 3\n";
++        return script+"printf 'Restored initial settings; readback verified\\n'\nprintf '%s\\n' \"$actual\"\nsettings get global adb_enabled\n";
++    }
++}
+diff --git a/usb_control_app/src/local/usbcontrol/Root.java b/usb_control_app/src/local/usbcontrol/Root.java
+--- a/usb_control_app/src/local/usbcontrol/Root.java
++++ b/usb_control_app/src/local/usbcontrol/Root.java
+@@ -11,16 +11,22 @@
+         try { p = new ProcessBuilder("su", "-c", command).redirectErrorStream(true).start(); }
+         catch(IOException e) { throw new IOException("未检测到 Root，请安装并授权超级用户管理器"); }
+         ByteArrayOutputStream out = new ByteArrayOutputStream();
++        java.util.concurrent.atomic.AtomicBoolean truncated=new java.util.concurrent.atomic.AtomicBoolean();
+         Thread reader = new Thread(() -> { try(InputStream in=p.getInputStream()) {
+             byte[] b = new byte[4096]; int n;
+-            while((n=in.read(b))!=-1) synchronized(out) { if(out.size()<262144) out.write(b,0,n); }
++            while((n=in.read(b))!=-1) synchronized(out) { if(out.size()+n<=262144) out.write(b,0,n); else truncated.set(true); }
+         } catch(IOException ignored) {} });
+         reader.setDaemon(true); reader.start();
++        try {
+         if(!p.waitFor(35,TimeUnit.SECONDS)) { p.destroyForcibly(); throw new IOException("Root 请求超时，请检查超级用户授权"); }
+         reader.join(1000);
+-        String result = out.toString("UTF-8");
++        if(reader.isAlive())throw new IOException("Root 输出流尚未结束，请重试");
++        if(truncated.get())throw new IOException("Root 返回内容超限，已停止解析");
++        String result;
++        synchronized(out){result=out.toString("UTF-8");}
+         if(p.exitValue()!=0) throw new IOException("Root 命令失败 ("+p.exitValue()+")\n"+result);
+         return result.trim();
++        }finally{p.getInputStream().close();p.getOutputStream().close();p.getErrorStream().close();if(p.isAlive())p.destroyForcibly();}
+     }
+     static String section(String s,String tag) {
+         String token="__"+tag+"__\n";
+@@ -29,10 +35,19 @@
+         i+=token.length(); int end=s.indexOf("\n__",i);
+         return (end<0?s.substring(i):s.substring(i,end)).trim();
+     }
+-    static final String SNAPSHOT = "printf '__UID__\\n'; id -u; " +
++    static final String SNAPSHOT = "set -e; printf '__UID__\\n'; id -u; " +
+         "printf '__ADB__\\n'; settings get global adb_enabled; " +
+         "printf '__DEV__\\n'; settings get global development_settings_enabled; " +
+         "printf '__SIZE__\\n'; wm size; printf '__DENSITY__\\n'; wm density; " +
+-        "printf '__GLOBAL__\\n'; settings list global; printf '__SECURE__\\n'; settings list secure; " +
+-        "printf '__SYSTEM__\\n'; settings list system";
++        "printf '__GLOBAL__\\n'; v=$(settings get global adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
++        "printf '__SECURE__\\n'; v=$(settings get secure adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
++        "printf '__SYSTEM__\\n'; v=$(settings get system adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"";
++    static void validate(String s)throws IOException {
++        for(String tag:new String[]{"UID","ADB","DEV","SIZE","DENSITY","GLOBAL","SECURE","SYSTEM"})
++            if(!s.contains("__"+tag+"__\n"))throw new IOException("系统状态返回不完整："+tag);
++        if(!"0".equals(section(s,"UID")))throw new IOException("请授予 Root 权限");
++        for(String tag:new String[]{"ADB","DEV"})if(!section(s,tag).matches("null|[0-9]{1,9}"))throw new IOException("系统状态值异常："+tag);
++        int[] size=Logic.size(section(s,"SIZE"));if(size[0]<=0||size[1]<=0)throw new IOException("屏幕尺寸读取失败");
++        DensitySession.previous(section(s,"DENSITY"));
++    }
+ }
+diff --git a/usb_control_app/src/local/usbcontrol/SafeFiles.java b/usb_control_app/src/local/usbcontrol/SafeFiles.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/SafeFiles.java
+@@ -0,0 +1,21 @@
++package local.usbcontrol;
++
++import java.io.*;
++import java.nio.file.*;
++import java.util.Properties;
++
++final class SafeFiles {
++    static void write(File file,byte[] data)throws IOException {
++        File temp=File.createTempFile("write-", ".tmp",file.getParentFile());
++        try {
++            try(FileOutputStream out=new FileOutputStream(temp)){out.write(data);out.getFD().sync();}
++            Files.move(temp.toPath(),file.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
++        }finally{temp.delete();}
++    }
++    static void properties(File file,Properties p)throws IOException {
++        ByteArrayOutputStream out=new ByteArrayOutputStream();p.store(out,"USB Control transaction");write(file,out.toByteArray());
++    }
++    static Properties read(File file)throws IOException {
++        Properties p=new Properties();try(InputStream in=new FileInputStream(file)){p.load(in);}return p;
++    }
++}
+diff --git a/usb_control_app/tests/build-device-tests.ps1 b/usb_control_app/tests/build-device-tests.ps1
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/build-device-tests.ps1
+@@ -0,0 +1,20 @@
++param([string]$Sdk='F:\Android\Sdk')
++$ErrorActionPreference='Stop'
++$root=Split-Path -Parent $PSScriptRoot
++$dir=Join-Path $root 'build/device-tests'
++New-Item -ItemType Directory -Force $dir,"$dir/classes","$dir/dex" | Out-Null
++$tools=Join-Path $Sdk 'build-tools/35.0.0'
++$jar=Join-Path $Sdk 'platforms/android-36/android.jar'
++function Run([string]$Tool,[string[]]$Arguments){& $Tool @Arguments;if($LASTEXITCODE -ne 0){throw "Test build failed: $Tool"}}
++Run "$tools/aapt2.exe" @('link','-o',"$dir/base.apk",'-I',$jar,'--manifest',"$PSScriptRoot/device/AndroidManifest.xml")
++Run 'javac' @('--release','8','-encoding','UTF-8','-classpath',$jar,'-d',"$dir/classes","$PSScriptRoot/device/AuditInstrumentation.java")
++Run 'jar' @('cf',"$dir/classes.jar",'-C',"$dir/classes",'.')
++Run "$tools/d8.bat" @('--min-api','26','--lib',$jar,'--output',"$dir/dex","$dir/classes.jar")
++Copy-Item -LiteralPath "$dir/base.apk" -Destination "$dir/unsigned.apk" -Force
++Add-Type -AssemblyName System.IO.Compression
++Add-Type -AssemblyName System.IO.Compression.FileSystem
++$z=[IO.Compression.ZipFile]::Open("$dir/unsigned.apk",[IO.Compression.ZipArchiveMode]::Update)
++try{[void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($z,"$dir/dex/classes.dex",'classes.dex')}finally{$z.Dispose()}
++Run "$tools/zipalign.exe" @('-f','4',"$dir/unsigned.apk","$dir/aligned.apk")
++Run "$tools/apksigner.bat" @('sign','--ks',"$env:USERPROFILE/.android/usbcontrol-local.jks",'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',"$dir/audit-tests.apk","$dir/aligned.apk")
++Write-Output "$dir/audit-tests.apk"
+diff --git a/usb_control_app/tests/cancel_old_audit_workers.py b/usb_control_app/tests/cancel_old_audit_workers.py
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/cancel_old_audit_workers.py
+@@ -0,0 +1,8 @@
++from pathlib import Path
++import re,shlex,subprocess
++text=Path('usb_control_app/build/phone-emergency.sh').read_text(encoding='utf-8')
++current=re.search(r'^cd (\S+) \|\|',text,re.M).group(1)
++cmd='for d in /data/local/tmp/usb-control-audit /data/local/tmp/usb-control-audit-*; do [ "$d" = '+shlex.quote(current)+' ] && continue; [ ! -d "$d" ] || rm -f "$d/pending"; done'
++p=subprocess.run(['adb','-s','3B658E00PN300000','shell','su -c '+shlex.quote(cmd)],capture_output=True)
++print('Preserved current emergency worker:',current,'; cancelled older audit tokens; exit=',p.returncode)
++assert p.returncode==0,p.stderr
+diff --git a/usb_control_app/tests/device/AndroidManifest.xml b/usb_control_app/tests/device/AndroidManifest.xml
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/device/AndroidManifest.xml
+@@ -0,0 +1,6 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol.audit">
++    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
++    <uses-permission android:name="android.permission.WAKE_LOCK"/>
++    <instrumentation android:name="local.usbcontrol.audit.AuditInstrumentation" android:targetPackage="local.usbcontrol" android:label="USB Control audit"/>
++    <application android:label="USB Control audit" android:allowBackup="false"/>
++</manifest>
+diff --git a/usb_control_app/tests/device/AuditInstrumentation.java b/usb_control_app/tests/device/AuditInstrumentation.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/device/AuditInstrumentation.java
+@@ -0,0 +1,104 @@
++package local.usbcontrol.audit;
++import android.app.*;
++import android.content.*;
++import android.graphics.*;
++import android.os.*;
++import org.json.*;
++import java.io.*;
++import java.lang.reflect.*;
++
++/** Separate signed test APK; exercises production classes in the real app process. */
++public class AuditInstrumentation extends Instrumentation {
++    final JSONArray results=new JSONArray();
++    private String mode="full";
++    private Object call(String type,String method,Class<?>[] types,Object... args)throws Exception {
++        Class<?> c=Class.forName("local.usbcontrol."+type,true,getTargetContext().getClassLoader());
++        Method m=c.getDeclaredMethod(method,types);m.setAccessible(true);
++        try{return m.invoke(null,args);}catch(InvocationTargetException e){Throwable cause=e.getCause();if(cause instanceof Exception)throw (Exception)cause;throw new RuntimeException(cause);}
++    }
++    private Object invoke(Object obj,String name)throws Exception {Method m=obj.getClass().getDeclaredMethod(name);m.setAccessible(true);try{return m.invoke(obj);}catch(InvocationTargetException e){throw new RuntimeException(e.getCause());}}
++    private String root(String cmd)throws Exception{return (String)call("Root","run",new Class[]{String.class},cmd);}
++    private void check(boolean pass,String label,String actual)throws Exception {
++        JSONObject result=new JSONObject().put("pass",pass).put("check",label).put("actual",actual);results.put(result);if(!pass)throw new AssertionError(label+": "+actual);
++    }
++    private Object begin(File home,int dpi)throws Exception{return call("DensitySession","begin",new Class[]{File.class,String.class,long.class},home,String.valueOf(dpi),SystemClock.elapsedRealtime());}
++    @Override public void onCreate(Bundle args){super.onCreate(args);mode=args.getString("mode","full");start();}
++    @Override public void callActivityOnCreate(Activity activity,Bundle state){
++        super.callActivityOnCreate(activity,state);
++        activity.getWindow().getDecorView().setKeepScreenOn(true);
++        if(Build.VERSION.SDK_INT>=27){activity.setShowWhenLocked(true);activity.setTurnScreenOn(true);}
++    }
++    @Override public void onStart(){
++        JSONObject report=new JSONObject();Bundle status=new Bundle();String densityBefore=null,adbBefore=null,devBefore=null,wifiBefore=null;boolean passed=false;
++        PowerManager.WakeLock wake=null;
++        try {
++            Intent launch=getTargetContext().getPackageManager().getLaunchIntentForPackage("local.usbcontrol");launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++            Activity activity=startActivitySync(launch);
++            runOnMainSync(()->{activity.getWindow().getDecorView().setKeepScreenOn(true);if(Build.VERSION.SDK_INT>=27){activity.setShowWhenLocked(true);activity.setTurnScreenOn(true);}});
++            if(!"ui".equals(mode)&&Build.VERSION.SDK_INT>=29){getUiAutomation().adoptShellPermissionIdentity(android.Manifest.permission.WAKE_LOCK);wake=((PowerManager)getTargetContext().getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"usbcontrol:audit");wake.acquire(240000);}
++            if("ui".equals(mode)){
++                File ready=new File(getTargetContext().getFilesDir(),"ui-audit-ready"),done=new File(getTargetContext().getFilesDir(),"ui-audit-done");
++                try(FileOutputStream out=new FileOutputStream(ready)){out.write(1);}
++                long until=SystemClock.elapsedRealtime()+180000;while(!done.exists()&&SystemClock.elapsedRealtime()<until)Thread.sleep(500);
++                ready.delete();done.delete();passed=true;return;
++            }
++            check(root("id -u").equals("0"),"Production Root transport: app UID granted root","0");
++            densityBefore=root("wm density");adbBefore=root("settings get global adb_enabled");devBefore=root("settings get global development_settings_enabled");wifiBefore=root("settings get global adb_wifi_enabled");
++            report.put("baseline_density",densityBefore).put("baseline_adb",adbBefore).put("baseline_development",devBefore).put("baseline_wifi",wifiBefore);
++            Field snapshotField=Class.forName("local.usbcontrol.Root",true,getTargetContext().getClassLoader()).getDeclaredField("SNAPSHOT");snapshotField.setAccessible(true);
++            String snapshot=root((String)snapshotField.get(null));
++            call("Root","validate",new Class[]{String.class},snapshot);
++            check(true,"Production snapshot validation",snapshot);
++            java.util.regex.Matcher match=java.util.regex.Pattern.compile("(?:Physical|Override) density: (\\d+)").matcher(densityBefore);int current=0;while(match.find())current=Integer.parseInt(match.group(1));
++            File home=new File(getTargetContext().getFilesDir(),"audit-density");home.mkdirs();
++            if(new File(home,"density-active").exists())call("DensitySession","recover",new Class[]{File.class},home);
++            int target=current+12;
++            Object expiring=begin(home,target);check(root("wm density").contains("Override density: "+target),"Density preview applied",root("wm density"));
++            Thread.sleep(21500);check(root("wm density").equals(densityBefore),"Independent watchdog restores density",root("wm density"));call("DensitySession","recover",new Class[]{File.class},home);
++            Object confirmed=begin(home,target);check((Boolean)invoke(confirmed,"confirm"),"Atomic confirm accepted","true");Thread.sleep(21500);
++            check(root("wm density").contains("Override density: "+target),"Confirmed density survives old watchdog",root("wm density"));
++            restoreDensity(densityBefore);
++            Object manual=begin(home,current+16);invoke(manual,"rollback");check(root("wm density").equals(densityBefore),"Manual rollback preserves pre-existing override",root("wm density"));
++            begin(home,current+20);call("DensitySession","recover",new Class[]{File.class},home);check(root("wm density").equals(densityBefore),"Pending journal process-restart recovery",root("wm density"));
++            check(!new File(home,"density-active").exists(),"No unfinished transaction remains","absent");
++            // This process belongs to the app, not adb: it survives USB transport loss.
++            root("settings put global adb_enabled 0");Thread.sleep(1500);check(root("settings get global adb_enabled").equals("0"),"USB debugging OFF readback","0");
++            root("settings put global development_settings_enabled 1 && settings put global adb_enabled 1");Thread.sleep(1500);check(root("settings get global adb_enabled").equals("1"),"USB debugging ON readback","1");
++            check(root("settings get global adb_wifi_enabled").equals(wifiBefore),"Wireless debugging unchanged",wifiBefore);
++            android.content.SharedPreferences prefs=getTargetContext().getSharedPreferences("audit-background",0);
++            File images=new File(getTargetContext().getFilesDir(),"audit-images");images.mkdirs();Bitmap image=Bitmap.createBitmap(96,64,Bitmap.Config.ARGB_8888);image.eraseColor(0xff3b82f6);
++            call("BackgroundStore","save",new Class[]{File.class,android.content.SharedPreferences.class,Bitmap.class,float.class,float.class,float.class,int.class},images,prefs,image,1.5f,.2f,.7f,35);
++            File selected=(File)call("BackgroundStore","selected",new Class[]{File.class,android.content.SharedPreferences.class},images,prefs);
++            Bitmap stored=BitmapFactory.decodeFile(selected.getAbsolutePath());check(stored!=null&&stored.getWidth()==96&&stored.getHeight()==64,"Atomic background file and metadata commit",selected.getName());
++            call("BackgroundStore","remove",new Class[]{File.class,android.content.SharedPreferences.class},images,prefs);
++            check(!((File)call("BackgroundStore","selected",new Class[]{File.class,android.content.SharedPreferences.class},images,prefs)).exists(),"Background removal stays removed","none");image.recycle();if(stored!=null)stored.recycle();
++            int[][] corners={{0xffff0000,0xff00ff00,0xff0000ff,0xffffff00},{0xff00ff00,0xffff0000,0xffffff00,0xff0000ff},{0xffffff00,0xff0000ff,0xff00ff00,0xffff0000},{0xff0000ff,0xffffff00,0xffff0000,0xff00ff00},{0xffff0000,0xff0000ff,0xff00ff00,0xffffff00},{0xff0000ff,0xffff0000,0xffffff00,0xff00ff00},{0xffffff00,0xff00ff00,0xff0000ff,0xffff0000},{0xff00ff00,0xffffff00,0xffff0000,0xff0000ff}};
++            for(int orientation=1;orientation<=8;orientation++){
++                Bitmap sample=Bitmap.createBitmap(4,2,Bitmap.Config.ARGB_8888);for(int y=0;y<2;y++)for(int x=0;x<4;x++)sample.setPixel(x,y,corners[0][(y==0?0:2)+(x<2?0:1)]);
++                Bitmap oriented=(Bitmap)call("BackgroundStore","orient",new Class[]{Bitmap.class,int.class},sample,orientation);
++                int w=oriented.getWidth(),h=oriented.getHeight();int[] expected=corners[orientation-1];
++                check(w==(orientation>=5?2:4)&&h==(orientation>=5?4:2)&&oriented.getPixel(0,0)==expected[0]&&oriented.getPixel(w-1,0)==expected[1]&&oriented.getPixel(0,h-1)==expected[2]&&oriented.getPixel(w-1,h-1)==expected[3],"EXIF orientation "+orientation,"dimensions and all four corners match");oriented.recycle();
++            }
++            String recoveryOutput=root("sh '"+getTargetContext().getFilesDir().getAbsolutePath()+"/restore-system.sh'");
++            check(recoveryOutput.contains("readback verified"),"Generated emergency recovery script executed with readback",recoveryOutput);
++            passed=true;
++        }catch(Throwable e){try{report.put("error",android.util.Log.getStackTraceString(e));}catch(Exception ignored){}}
++        finally{
++            try{
++                if(densityBefore!=null)restoreDensity(densityBefore);
++                if(devBefore!=null)restoreSetting("development_settings_enabled",devBefore);
++                if(adbBefore!=null)restoreSetting("adb_enabled",adbBefore);
++                if(densityBefore!=null)check(root("wm density").equals(densityBefore),"Final density restored",root("wm density"));
++                if(adbBefore!=null)check(root("settings get global adb_enabled").equals(adbBefore),"Final USB debugging restored",root("settings get global adb_enabled"));
++                if(devBefore!=null)check(root("settings get global development_settings_enabled").equals(devBefore),"Final developer options restored",root("settings get global development_settings_enabled"));
++                if(wifiBefore!=null)check(root("settings get global adb_wifi_enabled").equals(wifiBefore),"Final wireless debugging unchanged",root("settings get global adb_wifi_enabled"));
++            }catch(Throwable e){passed=false;try{report.put("restore_error",android.util.Log.getStackTraceString(e));}catch(Exception ignored){}}
++            try{report.put("passed",passed).put("checks",results);try(FileOutputStream out=new FileOutputStream(new File(getTargetContext().getFilesDir(),"audit-report.json"))){out.write(report.toString(2).getBytes("UTF-8"));out.getFD().sync();}}catch(Exception e){passed=false;}
++            if(wake!=null&&wake.isHeld())wake.release();if(!"ui".equals(mode)&&Build.VERSION.SDK_INT>=29)getUiAutomation().dropShellPermissionIdentity();status.putString("stream",report.toString());finish(passed?Activity.RESULT_OK:Activity.RESULT_CANCELED,status);
++        }
++    }
++    private void restoreDensity(String text)throws Exception {
++        java.util.regex.Matcher m=java.util.regex.Pattern.compile("Override density: (\\d+)").matcher(text);root("wm density "+(m.find()?m.group(1):"reset"));
++    }
++    private void restoreSetting(String key,String value)throws Exception{root("settings "+("null".equals(value)?"delete global "+key:"put global "+key+" "+value));}
++}
+diff --git a/usb_control_app/tests/model/Root.java b/usb_control_app/tests/model/Root.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/model/Root.java
+@@ -0,0 +1,19 @@
++package local.usbcontrol;
++import java.io.IOException;
++import java.util.regex.*;
++/** JVM test double only; never in production src/. */
++final class Root {
++    static String density="reset";
++    static boolean failWrite,failRead,failApply;
++    static String quote(String s){return "'"+s.replace("'","'\\''")+"'";}
++    static String run(String command)throws Exception {
++        if(command.equals("wm density")){
++            if(failRead)throw new IOException("injected read failure");
++            return "Physical density: 420"+(density.equals("reset")?"":"\nOverride density: "+density);
++        }
++        if(command.contains("nohup")&&failApply)throw new IOException("injected watchdog launch failure");
++        Matcher m=Pattern.compile("wm density (reset|[0-9]+)").matcher(command);
++        while(m.find()){if(failWrite)throw new IOException("injected write failure");density=m.group(1);}
++        return "";
++    }
++}
+diff --git a/usb_control_app/tests/model/TransactionTest.java b/usb_control_app/tests/model/TransactionTest.java
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/model/TransactionTest.java
+@@ -0,0 +1,38 @@
++package local.usbcontrol;
++import java.io.*;
++import java.nio.file.*;
++import java.util.*;
++
++public class TransactionTest {
++    static int checks;
++    static void check(boolean ok,String label){checks++;if(!ok)throw new AssertionError(label);}
++    static File home()throws Exception{return Files.createTempDirectory("usb-density-model-").toFile();}
++    static void reset(){Root.density="reset";Root.failWrite=false;Root.failRead=false;Root.failApply=false;}
++    static void remove(File home)throws Exception{try(java.util.stream.Stream<Path> s=Files.walk(home.toPath())){s.sorted(Comparator.reverseOrder()).forEach(p->{try{Files.delete(p);}catch(IOException e){throw new RuntimeException(e);}});}}
++    public static void main(String[] args)throws Exception {
++        for(int pass=0;pass<20;pass++){
++            reset();File h=home();
++            try{
++                DensitySession a=DensitySession.begin(h,"480",100);
++                check(Root.density.equals("480"),"preview applied");check(new File(h,"density-active").exists(),"journal persisted");
++                check(a.confirm(),"atomic confirmation wins");check(!new File(h,"density-active").exists(),"confirmed journal cleared");
++                DensitySession b=DensitySession.begin(h,"360",200);check(!a.dir.equals(b.dir),"per-session paths never reused");
++                b.rollback();check(Root.density.equals("480"),"rollback restores earlier override, not physical default");
++                DensitySession c=DensitySession.begin(h,"400",300);c.file("pending").renameTo(c.file("expired"));Root.density="480";
++                check(!c.confirm(),"watchdog wins confirmation race");DensitySession.recover(h);check(Root.density.equals("480"),"expiry recovered");
++                DensitySession d=DensitySession.begin(h,"360",400);Root.failWrite=true;
++                boolean failed=false;try{d.rollback();}catch(IOException e){failed=true;}
++                check(failed,"injected restore failure surfaced");check(new File(h,"density-active").exists(),"failed recovery retains journal");check(d.file("pending").exists(),"failed foreground rollback leaves watchdog armed");
++                Root.failWrite=false;DensitySession.recover(h);check(Root.density.equals("480"),"retry recovers original override");
++                Root.failApply=true;failed=false;try{DensitySession.begin(h,"360",500);}catch(IOException e){failed=true;}
++                check(failed,"watchdog launch failure surfaces");check(Root.density.equals("480"),"watchdog launch failure never leaves preview applied");check(!new File(h,"density-active").exists(),"failed begin verified rollback clears journal");Root.failApply=false;
++                DensitySession e=DensitySession.begin(h,"reset",600);check(Root.density.equals("reset"),"system default preview");e.rollback();check(Root.density.equals("480"),"default preview rollback preserves prior override");
++                check(!DensitySession.validDensity("480;reboot"),"density injection rejected");check(!DensitySession.validDensity("0"),"zero rejected");
++                check(Logic.clamp(Float.NaN,0,1)==0,"NaN crop preference bounded");
++                Properties bad=new Properties();bad.setProperty("token","../../bad");bad.setProperty("previous","480");bad.setProperty("target","360");SafeFiles.properties(new File(h,"density-active"),bad);
++                failed=false;try{DensitySession.recover(h);}catch(IOException x){failed=true;}check(failed,"invalid journal path rejected");
++            }finally{reset();remove(h);}
++        }
++        System.out.println("PASS: "+checks+" transaction assertions across 20 repeated model cycles");
++    }
++}
+diff --git a/usb_control_app/tests/phone_audit.py b/usb_control_app/tests/phone_audit.py
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/phone_audit.py
+@@ -0,0 +1,64 @@
++"""Run only on the explicitly selected, user-approved phone; restore all system values."""
++from pathlib import Path
++import json,re,shlex,subprocess,time,argparse,uuid
++
++ROOT=Path(__file__).resolve().parents[2]
++parser=argparse.ArgumentParser();parser.add_argument('--round',default='round2');opts=parser.parse_args()
++OUT=ROOT/'docs/usb-control-audit'/opts.round;OUT.mkdir(parents=True,exist_ok=True)
++SERIAL='3B658E00PN300000'
++ADB=['adb','-s',SERIAL]
++records=[]
++def adb(args,required=True,timeout=45):
++    p=subprocess.run(ADB+args,capture_output=True,timeout=timeout)
++    records.append(dict(command=subprocess.list2cmdline(ADB+args),exit=p.returncode,stdout=p.stdout.decode('utf-8','replace'),stderr=p.stderr.decode('utf-8','replace')))
++    if required:assert p.returncode==0,records[-1]
++    return p
++def root(cmd,required=True):return adb(['shell','su -c '+shlex.quote(cmd)],required)
++def snapshot():
++    return {key:root(cmd).stdout.decode().strip() for key,cmd in {
++        'density':'wm density','adb':'settings get global adb_enabled','development':'settings get global development_settings_enabled',
++        'wifi':'settings get global adb_wifi_enabled','install_global':'settings get global adb_install_enabled',
++        'install_secure':'settings get secure adb_install_enabled','install_system':'settings get system adb_install_enabled'}.items()}
++assert root('id -u').stdout.strip()==b'0'
++before=snapshot();(OUT/'phone-baseline.json').write_text(json.dumps(before,indent=2),encoding='utf-8')
++override=re.search(r'Override density: (\d+)',before['density']);density=override.group(1) if override else 'reset'
++assert before['adb']=='1', 'USB connection recovery requires an initially enabled ADB fixture'
++assert re.fullmatch(r'null|[0-9]+',before['development'])
++remote='/data/local/tmp/usb-control-audit-'+str(uuid.uuid4())
++root('mkdir -p '+remote)
++script=ROOT/'usb_control_app/build/phone-emergency.sh'
++dev=('settings delete global development_settings_enabled' if before['development']=='null' else 'settings put global development_settings_enabled '+before['development'])
++script.write_text('#!/system/bin/sh\ncd '+remote+' || exit 1\nprintf ready > armed\nsleep 300\nif mv pending expired 2>/dev/null; then\nwm density '+density+'\n'+dev+'\nsettings put global adb_enabled 1\nprintf recovered > recovery.done\nfi\n',encoding='utf-8',newline='\n')
++adb(['push',str(script),'/data/local/tmp/usb-control-audit-emergency.sh'])
++root('cp /data/local/tmp/usb-control-audit-emergency.sh '+remote+'/emergency.sh')
++root('rm -f /data/user/0/local.usbcontrol/files/audit-report.json')
++root('printf pending > '+remote+'/pending; nohup setsid sh '+remote+'/emergency.sh </dev/null >/dev/null 2>&1 & p=$!; sleep 1; kill -0 $p && test -f '+remote+'/armed')
++instrumentation=None
++try:
++    instrumentation=subprocess.Popen(ADB+['shell','am','instrument','-w','local.usbcontrol.audit/local.usbcontrol.audit.AuditInstrumentation'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
++    deadline=time.time()+240
++    while time.time()<deadline:
++        time.sleep(4)
++        p=root('cat /data/user/0/local.usbcontrol/files/audit-report.json',False)
++        if p.returncode==0 and p.stdout.strip():
++            report=json.loads(p.stdout.decode('utf-8'));break
++    else:
++        adb(['shell','am','force-stop','local.usbcontrol'],False)
++        root('for f in /data/user/0/local.usbcontrol/files/audit-density/density-*/pending; do [ ! -f "$f" ] || mv "$f" "$f.cancelled"; done',False)
++        raise TimeoutError('Phone instrumentation did not finish')
++    (OUT/'phone-instrumentation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
++    assert report.get('passed'),report
++finally:
++    # Restore on host even if the test assertion failed; emergency worker remains if ADB is lost.
++    restored=root('wm density '+density+' && '+dev+' && settings put global adb_enabled '+before['adb'],False)
++    if restored.returncode==0:
++        after=snapshot();(OUT/'phone-after.json').write_text(json.dumps(after,indent=2),encoding='utf-8')
++        if before==after:root('rm -f '+remote+'/pending')
++        else:records.append(dict(check='host restore comparison',before=before,after=after));raise AssertionError('Phone state differs; emergency recovery retained')
++    if instrumentation is not None:
++        try:
++            output,error=instrumentation.communicate(timeout=5)
++            records.append(dict(command='am instrument (ADB may disconnect during USB toggle)',exit=instrumentation.returncode,stdout=output.decode('utf-8','replace'),stderr=error.decode('utf-8','replace')))
++        except subprocess.TimeoutExpired:instrumentation.terminate()
++    (OUT/'phone-commands.json').write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding='utf-8')
++print('PASS: real app-process Root, density timeout/confirm/rollback/recovery, USB OFF/ON, background persistence; phone baseline fully restored')
+diff --git a/usb_control_app/tests/phone_diagnostics.py b/usb_control_app/tests/phone_diagnostics.py
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/phone_diagnostics.py
+@@ -0,0 +1,9 @@
++import subprocess,shlex
++cmds=[
++ 'ls -la /data/user/0/local.usbcontrol/files/audit-density/density-*',
++ 'ps -A -o PID,PPID,NAME,ARGS | grep -E "watchdog|AuditInstrumentation|wm density|su -c"',
++ 'cat /data/user/0/local.usbcontrol/files/audit-report.json',
++]
++for cmd in cmds:
++ p=subprocess.run(['adb','-s','3B658E00PN300000','shell','su -c '+shlex.quote(cmd)],capture_output=True,timeout=15)
++ print(cmd,'exit',p.returncode);print(p.stdout.decode('utf-8','replace'));print(p.stderr.decode('utf-8','replace'))
+diff --git a/usb_control_app/tests/phone_ui.py b/usb_control_app/tests/phone_ui.py
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/phone_ui.py
+@@ -0,0 +1,45 @@
++"""Foreground UI regression on the approved phone; preserves the original density."""
++from pathlib import Path
++import subprocess,shlex,json,re,time,xml.etree.ElementTree as ET
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'docs/usb-control-audit/phone-ui';OUT.mkdir(exist_ok=True)
++ADB=['adb','-s','3B658E00PN300000'];records=[]
++def run(args,binary=False):
++ p=subprocess.run(ADB+args,capture_output=True,timeout=45);records.append(dict(command=subprocess.list2cmdline(ADB+args),exit=p.returncode,stdout='<PNG>' if binary else p.stdout.decode('utf-8','replace'),stderr=p.stderr.decode('utf-8','replace')));assert p.returncode==0,records[-1];return p.stdout
++def root(cmd):return run(['shell','su -c '+shlex.quote(cmd)]).decode().strip()
++def dump(name):
++ run(['shell','uiautomator','dump','/sdcard/usb-control-review.xml']);data=run(['exec-out','cat','/sdcard/usb-control-review.xml']);(OUT/name).write_bytes(data);return ET.fromstring(data)
++def find(tree,**attrs):return next(n for n in tree.iter('node') if all(n.get(k)==v for k,v in attrs.items()))
++def tap(n):
++ x,y,X,Y=map(int,re.findall(r'\d+',n.get('bounds')));run(['shell','input','tap',str((x+X)//2),str((y+Y)//2)])
++def enter(tree,value):
++ tap(find(tree,**{'class':'android.widget.EditText'}));run(['shell','input','keyevent','123','67','67','67','67','67']);run(['shell','input','text',value])
++before=root('wm density');m=re.search(r'Override density: (\d+)',before);prior=m.group(1) if m else 'reset'
++root('rm -f /data/user/0/local.usbcontrol/files/ui-audit-ready /data/user/0/local.usbcontrol/files/ui-audit-done')
++hold=subprocess.Popen(ADB+['shell','am','instrument','-w','-e','mode','ui','local.usbcontrol.audit/local.usbcontrol.audit.AuditInstrumentation'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
++for _ in range(30):
++ p=subprocess.run(ADB+['shell','su -c '+shlex.quote('test -f /data/user/0/local.usbcontrol/files/ui-audit-ready')],capture_output=True)
++ if p.returncode==0:break
++ time.sleep(1)
++else:raise TimeoutError('Foreground UI harness')
++try:
++ run(['shell','am','start','-n','local.usbcontrol/.MainActivity']);time.sleep(3);tree=dump('main.xml')
++ switches=[n for n in tree.iter('node') if n.get('class')=='android.widget.Switch'];assert len(switches)==2 and switches[0].get('enabled')=='true' and switches[0].get('checked')=='true' and switches[1].get('enabled')=='false'
++ (OUT/'main.png').write_bytes(run(['exec-out','screencap','-p'],True))
++ tap(switches[0]);tree=dump('usb-confirm.xml');tap(find(tree,text='取消'));assert root('settings get global adb_enabled')=='1'
++ tree=dump('main-after-cancel.xml');tap(find(tree,text='调整最小宽度'));tree=dump('density-input.xml');enter(tree,'0');tree=dump('invalid-entered.xml');tap(find(tree,text='预览应用'));tree=dump('invalid-input.xml')
++ assert any(n.get('text')=='0' and n.get('class')=='android.widget.EditText' for n in tree.iter('node'));assert root('wm density')==before
++ tap(find(tree,text='取消'));tree=dump('before-preview.xml');tap(find(tree,text='调整最小宽度'));tree=dump('valid-input.xml');enter(tree,'410');tree=dump('valid-entered.xml');tap(find(tree,text='预览应用'));time.sleep(3)
++ tree=dump('preview-confirm.xml');assert any(n.get('text')=='保留这个显示大小？' for n in tree.iter('node'))
++ (OUT/'density-preview.png').write_bytes(run(['exec-out','screencap','-p'],True));assert root('wm density')!=before
++ time.sleep(22);assert root('wm density')==before
++ tree=dump('after-timeout.xml');tap(find(tree,text='调整最小宽度'));tree=dump('confirm-input.xml');enter(tree,'410');tree=dump('confirm-entered.xml');tap(find(tree,text='预览应用'));time.sleep(2)
++ tree=dump('save-confirm.xml');tap(find(tree,text='保留'));time.sleep(2);assert root('wm density')!=before
++ run(['shell','input','swipe','600','2350','600','800','450']);tree=dump('restore-menu.xml');tap(find(tree,text='恢复首次使用前的系统设置'));tree=dump('restore-confirm.xml');tap(find(tree,text='恢复'));time.sleep(3);assert root('wm density')==before
++ records.append(dict(result='PASS',checks=['real phone supported/unsupported switch states','USB cancel does not change setting','invalid minimum width rejected','DPI preview UI and automatic rollback','DPI confirmation commits','in-app initial-system restore readback']))
++finally:
++ root('wm density '+prior)
++ root('touch /data/user/0/local.usbcontrol/files/ui-audit-done')
++ try:hold.communicate(timeout=10)
++ except subprocess.TimeoutExpired:hold.terminate()
++ (OUT/'commands.json').write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding='utf-8')
++print('PASS: real phone UI, USB cancellation, invalid DPI, countdown rollback, confirm and in-app restoration')
+diff --git a/usb_control_app/tests/review_artifacts.py b/usb_control_app/tests/review_artifacts.py
+new file mode 100644
+--- /dev/null
++++ b/usb_control_app/tests/review_artifacts.py
+@@ -0,0 +1,72 @@
++from pathlib import Path
++import hashlib,json,struct,subprocess,tempfile,shutil,difflib,zipfile,zlib,xml.etree.ElementTree as ET
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'docs/usb-control-audit';BASE=OUT/'baseline';records=[]
++sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
++def run(args,cwd=ROOT):
++ p=subprocess.run([str(a) for a in args],cwd=cwd,capture_output=True);records.append(dict(command=subprocess.list2cmdline([str(a) for a in args]),cwd=str(cwd),exit=p.returncode,stdout=p.stdout.decode('utf-8','replace'),stderr=p.stderr.decode('utf-8','replace')));assert p.returncode==0,records[-1];return p.stdout
++def scope(base):
++ f={p.relative_to(base).as_posix():p for p in (base/'usb_control_app').rglob('*') if p.is_file() and 'build' not in p.relative_to(base/'usb_control_app').parts and '__pycache__' not in p.parts and p.suffix!='.pyc'};f['README.md']=base/'README.md';return f
++baseline=json.loads((OUT/'baseline-hashes.json').read_text(encoding='utf-8'))
++for rel,h in baseline.items():assert sha(BASE/rel)==h,rel
++assert sha(ROOT/'releases/usb-control-v1.0.0.apk')==baseline['releases/usb-control-v1.0.0.apk']
++manifest=ET.parse(ROOT/'usb_control_app/AndroidManifest.xml').getroot();NS='{http://schemas.android.com/apk/res/android}';version=manifest.get(NS+'versionName');apk=ROOT/f'releases/usb-control-v{version}.apk'
++assert version=='1.0.1' and manifest.get(NS+'versionCode')=='101';assert manifest.find('uses-sdk').get(NS+'targetSdkVersion')=='36'
++assert not manifest.findall('uses-permission') and manifest.find('instrumentation') is None
++assert manifest.find('application').get(NS+'allowBackup')=='false' and manifest.find('application').get(NS+'debuggable') in [None,'false']
++assert len(manifest.findall('./application/activity'))==1
++with zipfile.ZipFile(apk) as z:
++ assert z.testzip() is None and len(z.namelist())==len(set(z.namelist()));dex=z.read('classes.dex')
++ assert not any(n.startswith('lib/') or n.startswith('assets/') for n in z.namelist())
++ assert struct.unpack_from('<I',dex,8)[0]==zlib.adler32(dex[12:])&0xffffffff and dex[12:32]==hashlib.sha1(dex[32:]).digest()
++ assert struct.unpack_from('<I',dex,32)[0]==len(dex)
++ strings=[];count,offset=struct.unpack_from('<II',dex,56)
++ for i in range(count):
++  off=struct.unpack_from('<I',dex,offset+i*4)[0]
++  while dex[off]&128:off+=1
++  off+=1;strings.append(dex[off:dex.index(0,off)].decode('utf-8','replace'))
++ classes=[];_,type_off=struct.unpack_from('<II',dex,64);count,offset=struct.unpack_from('<II',dex,96)
++ for i in range(count):
++  type_id=struct.unpack_from('<I',dex,offset+i*32)[0];string_id=struct.unpack_from('<I',dex,type_off+type_id*4)[0];classes.append(strings[string_id])
++ assert all(c.startswith('Llocal/usbcontrol/') for c in classes),classes
++ for name in ['MainActivity','Root','DensitySession','SafeFiles','Baseline','BackgroundStore','RecoveryScript']:assert 'Llocal/usbcontrol/'+name+';' in classes
++ assert not any('AuditInstrumentation' in c or 'Test;' in c for c in classes)
++records.append(dict(check='Production APK ZIP, DEX digest/checksum, class inventory, components and permissions',result='PASS',classes=classes))
++assert sha(ROOT/'147263862_p0_master1200.png')==sha(ROOT/'usb_control_app/res/drawable-nodpi/app_icon.png')
++tools=Path('F:/Android/Sdk/build-tools/35.0.0')
++new=run(['cmd','/d','/c',tools/'apksigner.bat','verify','--verbose','--print-certs',apk]);old=run(['cmd','/d','/c',tools/'apksigner.bat','verify','--print-certs',BASE/'releases/usb-control-v1.0.0.apk'])
++assert next(x for x in new.splitlines() if b'certificate SHA-256 digest' in x) in old
++run([tools/'zipalign.exe','-c','4',apk]);run([tools/'aapt.exe','dump','badging',apk])
++run(['javac','-encoding','UTF-8','-d','usb_control_app/build/tests','usb_control_app/src/local/usbcontrol/Logic.java','usb_control_app/tests/LogicTest.java']);run(['java','-cp','usb_control_app/build/tests','local.usbcontrol.LogicTest'])
++model=['usb_control_app/src/local/usbcontrol/'+n+'.java' for n in ['Logic','SafeFiles','DensitySession']]+['usb_control_app/tests/model/Root.java','usb_control_app/tests/model/TransactionTest.java']
++run(['javac','-encoding','UTF-8','-d','usb_control_app/build/model-tests',*model]);run(['java','-cp','usb_control_app/build/model-tests','local.usbcontrol.TransactionTest'])
++run(['java','-Xmx1g','-cp','F:/Android/Sdk/cmdline-tools/latest/lib/lint-classpath.jar','com.android.tools.lint.Main','--offline','--exitcode','--sources','usb_control_app/src','--classpath','usb_control_app/build/classes','--resources','usb_control_app/res','--compile-sdk-version','36','--text','docs/usb-control-audit/lint-final.txt','--xml','docs/usb-control-audit/lint-final.xml','usb_control_app'])
++issues=ET.parse(OUT/'lint-final.xml').getroot().findall('issue');assert not any(n.get('severity') in ['Error','Fatal'] for n in issues)
++assert all(n.get('id') in ['ExifInterface','OldTargetApi','MonochromeLauncherIcon'] for n in issues)
++records.append(dict(check='Lint',errors=0,advisories=[n.get('id') for n in issues],note='Three reviewed non-blocking advisories retained, not described as zero warnings.'))
++old,new=scope(BASE),scope(ROOT);entries=[];patch=[]
++for rel in sorted(old.keys()|new.keys()):
++ a,b=old.get(rel),new.get(rel);entry=dict(path=rel,original=sha(a) if a else None,modified=sha(b) if b else None);entries.append(entry)
++ if entry['original']==entry['modified'] or rel.endswith('.png'):continue
++ patch.append('diff --git a/'+rel+' b/'+rel+'\n')
++ if a is None:patch.append('new file mode 100644\n')
++ if b is None:patch.append('deleted file mode 100644\n')
++ patch.extend(difflib.unified_diff(a.read_text(encoding='utf-8-sig').splitlines(True) if a else [],b.read_text(encoding='utf-8-sig').splitlines(True) if b else [],fromfile='a/'+rel if a else '/dev/null',tofile='b/'+rel if b else '/dev/null'))
++(OUT/'changes.patch').write_text(''.join(patch),encoding='utf-8',newline='\n');(OUT/'rollback-manifest.json').write_text(json.dumps(dict(files=entries,apk_sha256=sha(apk)),indent=2),encoding='utf-8')
++with tempfile.TemporaryDirectory(prefix='usb-review-verify-') as tmp:
++ fixture=Path(tmp)
++ for rel,p in old.items():
++  dest=fixture/rel;dest.parent.mkdir(parents=True,exist_ok=True)
++  if rel.endswith('.png'):shutil.copy2(p,dest)
++  else:dest.write_text(p.read_text(encoding='utf-8-sig'),encoding='utf-8',newline='\n')
++ run(['git','apply','--check',OUT/'changes.patch'],fixture);run(['git','apply',OUT/'changes.patch'],fixture)
++ for rel,p in new.items():
++  if not rel.endswith('.png'):assert (fixture/rel).read_text(encoding='utf-8')==p.read_text(encoding='utf-8-sig'),rel
++  shutil.copy2(p,fixture/rel)
++ fa=fixture/'docs/usb-control-audit';fa.mkdir(parents=True,exist_ok=True);shutil.copytree(BASE,fa/'baseline');shutil.copy2(OUT/'rollback-manifest.json',fa/'rollback-manifest.json')
++ run(['powershell','-NoProfile','-File',ROOT/'scripts/rollback-usb-control-audit.ps1','-ProjectRoot',fixture])
++ for rel,p in old.items():assert sha(fixture/rel)==sha(p),rel
++ for rel in new.keys()-old.keys():assert not (fixture/rel).exists(),rel
++run(['powershell','-NoProfile','-File','scripts/rollback-usb-control-audit.ps1','-VerifyOnly']);run(['git','diff','--check'])
++(OUT/'release-identity.json').write_text(json.dumps(dict(apk=apk.relative_to(ROOT).as_posix(),sha256=sha(apk),bytes=apk.stat().st_size,sources={k:sha(v) for k,v in new.items()}),indent=2),encoding='utf-8')
++(OUT/'verification.json').write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding='utf-8')
++print('PASS: APK signatures/ZIP/DEX, 439 unit/model assertions, lint errors=0, patch application, exact-byte rollback executed on copy; live sources retained')
+diff --git a/usb_control_app/tests/ui_smoke.py b/usb_control_app/tests/ui_smoke.py
+--- a/usb_control_app/tests/ui_smoke.py
++++ b/usb_control_app/tests/ui_smoke.py
+@@ -1,11 +1,17 @@
+ """Production-APK UI smoke test on a disposable non-root emulator with test image."""
+ from pathlib import Path
+-import subprocess, json, re, time, xml.etree.ElementTree as ET
++import subprocess, json, re, time, xml.etree.ElementTree as ET, argparse,struct
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+-OUT = ROOT / 'docs/usb-control-app'
+-OUT.mkdir(exist_ok=True)
+-ADB = ['adb', '-s', 'emulator-5554']
++parser=argparse.ArgumentParser()
++parser.add_argument('--apk',default='releases/usb-control-v1.0.1.apk')
++parser.add_argument('--serial',default='emulator-5554')
++parser.add_argument('--out',default='docs/usb-control-audit/ui')
++parser.add_argument('--rotate',action='store_true')
++opts=parser.parse_args()
++OUT = ROOT / opts.out
++OUT.mkdir(exist_ok=True,parents=True)
++ADB = ['adb', '-s', opts.serial]
+ records = []
+ def run(args, binary=False):
+     p = subprocess.run(ADB + args, capture_output=True)
+@@ -28,7 +34,7 @@
+     x,y=center(node);run(['shell','input','tap',str(x),str(y)])
+ def screenshot(name):
+     (OUT/name).write_bytes(run(['exec-out','screencap','-p'],True))
+-run(['install','-r',str(ROOT/'releases/usb-control-v1.0.0.apk')])
++run(['install','-r',str(ROOT/opts.apk)])
+ run(['shell','am','force-stop','local.usbcontrol'])
+ run(['shell','am','start','-n','local.usbcontrol/.MainActivity'])
+ time.sleep(2)
+@@ -39,14 +45,32 @@
+ screenshot('main.png')
+ run(['shell','input','swipe','520','2050','520','700','450'])
+ tree=dump('appearance-ui.xml')
+-tap(find(tree,text='取景与透明度'))
++edit=next((n for n in tree.iter('node') if n.get('text')=='取景与透明度'),None)
++if edit is None:
++    run(['push',str(ROOT/'147263862_p0_master1200.png'),'/sdcard/Download/usb-control-audit.png'])
++    run(['shell','am','broadcast','-a','android.intent.action.MEDIA_SCANNER_SCAN_FILE','-d','file:///sdcard/Download/usb-control-audit.png'])
++    tap(find(tree,text='选择背景图片'));time.sleep(1)
++    picker=dump('picker-ui.xml')
++    pic=next(n for n in picker.iter('node') if n.get('content-desc','').startswith('usb-control-audit.png,'))
++    tap(pic);time.sleep(1)
++else:tap(edit)
+ tree=dump('crop-ui.xml')
++if opts.rotate:
++    run(['shell','wm','user-rotation','lock','1']);time.sleep(2);landscape=dump('landscape-crop.xml')
++    cropnode=[n for n in landscape.iter('node') if n.get('content-desc','').startswith('背景预览')][-1]
++    x,y,X,Y=map(int,re.findall(r'\d+',cropnode.get('bounds')))
++    png=run(['exec-out','screencap','-p'],True);sw,sh=struct.unpack_from('>II',png,16)
++    (OUT/'landscape-preview.png').write_bytes(png)
++    assert sw>sh and abs((X-x)/(Y-y)-sw/sh)<.08,((X-x,Y-y),(sw,sh))
++    run(['shell','wm','user-rotation','lock','0']);time.sleep(2);tree=dump('portrait-crop.xml')
++old_label=next(n.get('text') for n in tree.iter('node') if n.get('text','').startswith('图片透明度 '))
+ slider=find(tree,**{'class':'android.widget.SeekBar'})
+ x1,y1,x2,y2=map(int,re.findall(r'\d+',slider.get('bounds')))
+-run(['shell','input','tap',str(x1+(x2-x1)//2),str((y1+y2)//2)])
++fraction=.25 if old_label=='图片透明度 50%' else .5
++run(['shell','input','tap',str(x1+int((x2-x1)*fraction)),str((y1+y2)//2)])
+ tree=dump('opacity-preview-ui.xml')
+ label=next(n.get('text') for n in tree.iter('node') if n.get('text','').startswith('图片透明度 '))
+-assert label != '图片透明度 75%'
++assert label != old_label
+ preview=[n for n in tree.iter('node') if n.get('content-desc','').startswith('背景预览')][-1]
+ x1,y1,x2,y2=map(int,re.findall(r'\d+',preview.get('bounds')))
+ run(['shell','input','swipe',str((x1+x2)//2),str(y2-70),str((x1+x2)//2+60),str(y2-120),'400'])
+diff --git a/usb_control_app/tests/verify_artifacts.py b/usb_control_app/tests/verify_artifacts.py
+--- a/usb_control_app/tests/verify_artifacts.py
++++ b/usb_control_app/tests/verify_artifacts.py
+@@ -1,53 +1,3 @@
+ from pathlib import Path
+-import difflib, hashlib, json, shutil, subprocess, tempfile, zipfile
+-
+-root=Path(__file__).resolve().parents[2]
+-audit=root/'docs/usb-control-app'
+-hashof=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+-records=[]
+-def run(args,cwd=root):
+-    p=subprocess.run([str(x) for x in args],cwd=cwd,capture_output=True)
+-    records.append(dict(command=subprocess.list2cmdline([str(x) for x in args]),cwd=str(cwd),exit=p.returncode,stdout=p.stdout.decode('utf-8','replace'),stderr=p.stderr.decode('utf-8','replace')))
+-    assert p.returncode==0,records[-1]
+-    return p.stdout
+-text=(root/'README.md').read_text(encoding='utf-8')
+-start=text.index('## ',text.index('2.1.3**'))
+-end=text.index('## ',start+3)
+-baseline=text[:start]+text[end:]
+-baseline=''.join(line for line in baseline.splitlines(True) if not line.startswith('usb_control_app/'))
+-expected=json.loads((root/'docs/reorganization/manifest.json').read_text(encoding='utf-8'))['readme_sha256']
+-assert hashlib.sha256(baseline.replace('\n','\r\n').encode('utf-8')).hexdigest()==expected
+-(audit/'baseline').mkdir(exist_ok=True)
+-(audit/'baseline/README.md').write_text(baseline,encoding='utf-8')
+-sources=sorted(p for p in (root/'usb_control_app').rglob('*') if p.is_file() and 'build' not in p.relative_to(root/'usb_control_app').parts and p.suffix not in ['.png','.pyc'] and '__pycache__' not in p.parts)
+-sources += [root/'scripts/rollback-usb-control-app.ps1']
+-patch=list(difflib.unified_diff(baseline.splitlines(True),text.splitlines(True),fromfile='a/README.md',tofile='b/README.md'))
+-for p in sources:
+-    rel=p.relative_to(root).as_posix()
+-    patch.append('diff --git a/'+rel+' b/'+rel+'\nnew file mode 100644\n')
+-    patch.extend(difflib.unified_diff([],p.read_text(encoding='utf-8-sig').splitlines(True),fromfile='/dev/null',tofile='b/'+rel))
+-(audit/'source.patch').write_text(''.join(patch),encoding='utf-8')
+-with tempfile.TemporaryDirectory(prefix='usb-app-patch-') as temp:
+-    fixture=Path(temp);(fixture/'README.md').write_text(baseline,encoding='utf-8')
+-    run(['git','apply','--check',audit/'source.patch'],fixture)
+-    run(['git','apply',audit/'source.patch'],fixture)
+-    for p in sources:
+-        rel=p.relative_to(root)
+-        assert (fixture/rel).read_text(encoding='utf-8')==p.read_text(encoding='utf-8-sig')
+-apk=root/'releases/usb-control-v1.0.0.apk'
+-with zipfile.ZipFile(apk) as z:
+-    assert z.testzip() is None
+-    assert 'classes.dex' in z.namelist()
+-assert hashof(root/'147263862_p0_master1200.png')==hashof(root/'usb_control_app/res/drawable-nodpi/app_icon.png')
+-manifest=dict(apk=apk.relative_to(root).as_posix(),bytes=apk.stat().st_size,sha256=hashof(apk),icon_sha256=hashof(root/'147263862_p0_master1200.png'),sources={p.relative_to(root).as_posix():hashof(p) for p in sources})
+-(audit/'artifacts.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
+-run(['javac','-encoding','UTF-8','-d','usb_control_app/build/tests','usb_control_app/src/local/usbcontrol/Logic.java','usb_control_app/tests/LogicTest.java'])
+-run(['java','-cp','usb_control_app/build/tests','local.usbcontrol.LogicTest'])
+-run(['powershell','-NoProfile','-Command',"$t=$null;$e=$null;[void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/rollback-usb-control-app.ps1'),[ref]$t,[ref]$e);if($e.Count){throw ($e|Out-String)};'Rollback script syntax: PASS'"])
+-run(['cmd','/d','/c',r'F:\Android\Sdk\build-tools\35.0.0\apksigner.bat','verify','--verbose',apk])
+-run([r'F:\Android\Sdk\build-tools\35.0.0\zipalign.exe','-c','4',apk])
+-run([r'F:\Android\Sdk\build-tools\35.0.0\aapt.exe','dump','badging',apk])
+-run(['git','diff','--check'])
+-records.append(dict(check='APK CRC, original icon hash, baseline README preserved, source patch applied and contents compared',result='PASS'))
+-(audit/'artifact-verification.json').write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding='utf-8')
+-print('PASS: APK signatures/alignment/CRC, icon hash, 19 unit assertions, patch apply and source contents, rollback syntax')
++import runpy
++runpy.run_path(str(Path(__file__).with_name('review_artifacts.py')),run_name='__main__')

@@ -1,0 +1,26 @@
+[
+  {
+    "command": "F:\\Android\\Sdk\\build-tools\\35.0.0\\aapt2.exe compile --dir F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\res -o F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\baseline-lint\\resources.zip",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "F:\\Android\\Sdk\\build-tools\\35.0.0\\aapt2.exe link -o F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\baseline-lint\\resources.apk -I F:/Android/Sdk/platforms/android-35/android.jar --manifest F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\AndroidManifest.xml --java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\baseline-lint\\gen F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\baseline-lint\\resources.zip",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "javac --release 8 -encoding UTF-8 -classpath F:/Android/Sdk/platforms/android-35/android.jar -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\baseline-lint\\classes F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\src\\local\\usbcontrol\\Backdrop.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\src\\local\\usbcontrol\\MainActivity.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\baseline-lint\\gen\\local\\usbcontrol\\R.java",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n\ufffd\ufffd\ufffd\ufffd: [options] \u0534\u05b5 8 \ufffd\u0479\ufffd\u02b1\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\u03b4\ufffd\ufffd\ufffd\ufffd\ufffd\u0430\ufffd\ufffd\ufffd\u027e\ufffd\ufffd\r\n\ufffd\ufffd\ufffd\ufffd: [options] \u013f\ufffd\ufffd\u05b5 8 \ufffd\u0479\ufffd\u02b1\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\u03b4\ufffd\ufffd\ufffd\ufffd\ufffd\u0430\ufffd\ufffd\ufffd\u027e\ufffd\ufffd\r\n\ufffd\ufffd\ufffd\ufffd: [options] \u04aa\ufffd\ufffd\ufffd\ufffd\ufffd\u0439\ufffd\ufffd\u0479\ufffd\u02b1\u0461\ufffd\ufffd\u013e\ufffd\ufffd\ufffd, \ufffd\ufffd\u02b9\ufffd\ufffd -Xlint:-options\ufffd\ufffd\r\n\u05e2: F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\src\\local\\usbcontrol\\MainActivity.java\u02b9\ufffd\u00fb\udaa3\udcb8\ufffd\ufffd\ufffd\ufffd\u0479\ufffd\u02b1\ufffd\ufffd API\ufffd\ufffd\r\n\u05e2: \ufffd\u0439\ufffd\ufffd\ufffd\u03f8\ufffd\ufffd\u03e2, \ufffd\ufffd\u02b9\ufffd\ufffd -Xlint:deprecation \ufffd\ufffd\ufffd\u00b1\ufffd\ufffd\ub863\r\n3 \ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\r\n"
+  },
+  {
+    "command": "java -Xmx1g -cp F:/Android/Sdk/cmdline-tools/latest/lib/lint-classpath.jar com.android.tools.lint.Main --offline --exitcode --sources F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\src --classpath F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\baseline-lint\\classes --resources F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app\\res --compile-sdk-version 35 --text F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\lint-baseline.txt --xml F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\lint-baseline.xml F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\baseline\\usb_control_app",
+    "exit": 1,
+    "stdout": "Wrote text report to F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-audit\\lint-baseline.txt\r\nLint found 1 error and 12 warnings. First failure:\r\nres\\values\\styles.xml:8: Error: android:windowLightNavigationBar requires API level 27 (current min is 26) [NewApi]\n        <item name=\"android:windowLightNavigationBar\">true</item>\n              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  }
+]

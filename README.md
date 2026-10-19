@@ -1,4 +1,4 @@
-﻿# 番茄小说升级、短视频与小游戏屏蔽模块
+# 番茄小说升级、短视频与小游戏屏蔽模块
 
 适用于 SukiSU Ultra / KernelSU 的模块，目标包名为 `com.dragon.read`。模块通过 KernelSU 系统层规则和 LSPosed 进程内钩子共同屏蔽以下功能：
 
@@ -8,12 +8,23 @@
 
 当前版本：**2.1.3**。
 
+## 轻控 Android App
+
+独立 App **轻控 1.0.2**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+
+- 安装包：[`releases/usb-control-v1.0.2.apk`](releases/usb-control-v1.0.2.apk)
+- USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
+- 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+- 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+- 源码、构建及兼容说明：[`usb_control_app/README.md`](usb_control_app/README.md)
+- 审查与新版验证：[`docs/usb-control-audit/`](docs/usb-control-audit/)；初版历史记录保留在 `docs/usb-control-app/`。
+
 ## 基线信息
 
 | 项目 | 值 |
 |---|---|
 | 目标包名 | `com.dragon.read` |
-| 分析 APK | `番茄小说oppo定制.apk` |
+| 分析 APK | `original/番茄小说oppo定制.apk` |
 | APK 版本 | `4.9.0.99` |
 | versionCode | `490` |
 | APK SHA-256 | `048C20F0963F594E72D754422F625B005CE5228B8D585C50E55D86CCD0CC1535` |
@@ -84,7 +95,7 @@
 
 ### 使用管理器安装
 
-在 SukiSU/KernelSU 管理器中选择：
+在 SukiSU/KernelSU 管理器中选择 `releases/` 下的安装包：
 
 ```text
 fanqie_update_video_game_blocker-v2.1.3.zip
@@ -96,13 +107,13 @@ fanqie_update_video_game_blocker-v2.1.3.zip
 
 ```powershell
 cd F:\Project\07_Androd\08_FanQie
-.\install-v2.1.ps1
+.\scripts\install-v2.1.ps1
 ```
 
 也可手动执行：
 
 ```powershell
-adb push .\fanqie_update_video_game_blocker-v2.1.3.zip /data/local/tmp/
+adb push .\releases\fanqie_update_video_game_blocker-v2.1.3.zip /data/local/tmp/
 adb shell su -c "ksud module install /data/local/tmp/fanqie_update_video_game_blocker-v2.1.3.zip"
 adb reboot
 ```
@@ -165,7 +176,7 @@ adb shell su -c "ip6tables -S FQ_MEDIA_BLOCK"
 
 ```powershell
 cd F:\Project\07_Androd\08_FanQie
-.\rollback-v2.ps1
+.\scripts\rollback-v2.ps1
 ```
 
 回滚会：
@@ -197,16 +208,29 @@ fanqie_update_blocker/
 └── README.md
 ```
 
-项目目录中的主要产物：
+项目目录按用途分类（源码目录保持原位）：
 
 ```text
-fanqie_update_video_game_blocker-v2.1.3.zip
-fanqie_update_video_game_blocker-v2.1.3.patch
-verification_record-v2.1.3.md
-install-v2.1.ps1
-rollback-v2.ps1
-original/fanqie_baseline_v490.apk
+README.md                       # 项目说明和使用入口
+fanqie_update_blocker/           # 主模块
+usb_debug_toggle/               # USB 调试切换模块
+xposed_hook/                    # Hook 源码、构建产物及依赖
+usb_control_app/                # 轻控原生 Android App 源码和构建脚本
+original/                      # 原始 APK 与基线副本，均保留
+releases/                      # 发布 ZIP 与对应补丁
+scripts/                       # 安装、部署、设备回滚、分析脚本
+analysis/                      # 清单、Smali 导出、字符串及域名分析
+docs/verification/             # 历史基线、哈希及真机验证记录
+docs/reorganization/           # 整理清单、备份、差异及验证
+logs/                          # 部署日志
 ```
+
+- 安装包：`releases/fanqie_update_video_game_blocker-v2.1.3.zip`
+- USB 模块安装：`.\scripts\install-usb-debug-toggle.ps1`
+- USB 模块回滚：`.\scripts\rollback-usb-debug-toggle.ps1`
+- 分析扫描：`python .\scripts\scan_update_strings.py`，也支持传入 APK 路径；默认读取 `original/fanqie_baseline_v490.apk`，与当前工作目录无关。
+- 历史分析输出、旧补丁和真机记录原样保留，其中旧路径表示当时的执行位置。
+- 撤销本次整理：`.\scripts\rollback-directory-layout.ps1`，仅处理项目文件，不执行设备操作。整理后若文件被编辑，先停止以保护新内容。
 
 ## 审查结果
 
@@ -256,3 +280,7 @@ FanqieBlocker: hooks active in com.dragon.read
 3. 作用域是否包含 `com.dragon.read`；
 4. 目标 APP 是否在模块启用后被强制停止或设备是否已重启；
 5. `verification.log` 中 `hook_scope_rc` 是否为 `0`。
+
+### 外观模式（1.0.2）
+在「03 / 你的风格」中选择「外观模式」：跟随系统（默认）、浅色、暗色。选择自动记忆；暗色同时适配卡片、文字、系统栏、弹窗及背景透明度预览，不改变图片原色、裁剪位置或透明度。
+暗色模式验证记录：`docs/usb-control-dark-mode/`。

@@ -1,0 +1,379 @@
+--- a/usb_control_app/AndroidManifest.xml
++++ b/usb_control_app/AndroidManifest.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="101" android:versionName="1.0.1">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="102" android:versionName="1.0.2">
+     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+     <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+         <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:windowSoftInputMode="adjustResize">
+--- a/usb_control_app/build.ps1
++++ b/usb_control_app/build.ps1
+@@ -38,11 +38,11 @@
+     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
+     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
+ }
+-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.1.apk'
++$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.2.apk'
+ Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
+ Run "$tools/apksigner.bat" @('verify','--verbose',$release)
+ Run "$tools/zipalign.exe" @('-c','4',$release)
+ $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
+-"$hash  usb-control-v1.0.1.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
++"$hash  usb-control-v1.0.2.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+ Write-Output "APK: $release"
+ Write-Output "SHA256: $hash"
+--- a/usb_control_app/README.md
++++ b/usb_control_app/README.md
+@@ -1,10 +1,10 @@
+-# 轻控 1.0.1
++# 轻控 1.0.2
+ 
+ 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
+ 
+ ## 安装
+ 
+-安装 `../releases/usb-control-v1.0.1.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
++安装 `../releases/usb-control-v1.0.2.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+ 
+ 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
+ 
+@@ -59,7 +59,7 @@
+ 
+ 需 JDK 21（编译 Java 8 字节码）、Android SDK Platform 36、Build Tools 35.0.0。也可通过 `ANDROID_SDK_ROOT` 指定 SDK。无需 Gradle 或下载应用依赖。构建前校验构建路径并清理生成目录，避免旧 class 混入。
+ 
+-输出 `releases/usb-control-v1.0.1.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
++输出 `releases/usb-control-v1.0.2.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
+ 
+ ## 验证
+ 
+@@ -68,3 +68,7 @@
+ 1.0.0 的历史交付记录保留在 `../docs/usb-control-app/`；1.0.1 的逐轮审查、真实 OnePlus / Android 16 Root 回归、签名、DEX 与资源检查见 `../docs/usb-control-audit/`。真机 USB 安装键缺失，已验证置灰；未伪造系统键，不把合成值的读回当作厂商安装策略验证。
+ 
+ 技术依据：[AOSP WindowManagerShellCommand](https://android.googlesource.com/platform/frameworks/base/+/master/services/core/java/com/android/server/wm/WindowManagerShellCommand.java)、[Android 系统文件选择器](https://developer.android.com/training/data-storage/shared/documents-files)、[RedMagicX 的 USB 安装键实现说明](https://github.com/XPRAMT/RedMagicX)。
++
++### 外观模式（1.0.2）
++在「03 / 你的风格」中选择「外观模式」：跟随系统（默认）、浅色、暗色。选择自动记忆；暗色同时适配卡片、文字、系统栏、弹窗及背景透明度预览，不改变图片原色、裁剪位置或透明度。
++暗色模式验证记录：`../docs/usb-control-dark-mode/`。
+--- /dev/null
++++ b/usb_control_app/tests/dark_mode_ui.py
+@@ -0,0 +1,64 @@
++"""Dark/light/system UI regression. Run against disposable emulator only."""
++from pathlib import Path
++import subprocess,json,time,re,xml.etree.ElementTree as ET,io
++from PIL import Image
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'docs/usb-control-dark-mode/theme-ui';OUT.mkdir(exist_ok=True,parents=True)
++ADB=['adb','-s','emulator-5554'];records=[]
++def run(args,binary=False):
++ p=subprocess.run(ADB+args,capture_output=True,timeout=45)
++ records.append(dict(command=subprocess.list2cmdline(ADB+args),exit=p.returncode,stdout='<PNG>' if binary else p.stdout.decode('utf-8','replace'),stderr=p.stderr.decode('utf-8','replace')))
++ assert p.returncode==0,records[-1]
++ return p.stdout
++
++def dump(name):
++ run(['shell','uiautomator','dump','/sdcard/dark-test.xml'])
++ data=run(['exec-out','cat','/sdcard/dark-test.xml']);(OUT/(name+'.xml')).write_bytes(data);return ET.fromstring(data)
++def find(t,text):return next(n for n in t.iter('node') if n.get('text')==text)
++def tap(n):
++ x,y,X,Y=map(int,re.findall(r'\d+',n.get('bounds')));run(['shell','input','tap',str((x+X)//2),str((y+Y)//2)])
++def shot(name,dark=None):
++ data=run(['exec-out','screencap','-p'],True);(OUT/(name+'.png')).write_bytes(data)
++ if dark is not None:
++  colors=Image.open(io.BytesIO(data)).convert('RGB').get_flattened_data();expected=(230,237,248) if dark else (25,43,72)
++  count=sum(c==expected for c in colors);assert count>80,(name,expected,count)
++def restart():
++ run(['shell','am','force-stop','local.usbcontrol']);run(['shell','am','start','-n','local.usbcontrol/.MainActivity']);time.sleep(4)
++def appearance():
++ for i in range(5):
++  t=dump('find-appearance')
++  mode=next((n for n in t.iter('node') if n.get('text','').startswith('外观模式 · ')),None)
++  if mode is not None:return t,mode
++  run(['shell','input','swipe','520','2000','520','700','300'])
++ raise AssertionError('Appearance control missing')
++def reveal(text):
++ for i in range(5):
++  t=dump('reveal');n=next((n for n in t.iter('node') if n.get('text')==text),None)
++  if n is not None:return n
++  run(['shell','input','swipe','520','2000','520','700','300'])
++ raise AssertionError('Control not visible: '+text)
++def choose(label):
++ t,b=appearance();tap(b);t=dump('chooser-'+label);shot('chooser-'+label);tap(find(t,label));time.sleep(.5)
++original=run(['shell','cmd','uimode','night']).decode().strip();assert any(x in original for x in ['yes','no','auto']),original
++try:
++ run(['shell','logcat','-c']);run(['shell','cmd','uimode','night','no']);restart()
++ choose('暗色');shot('dark-main',True)
++ restart();shot('dark-persisted',True)
++ # Explicit dark remains dark even if system light; native dialog and actual crop preview.
++ t,b=appearance();assert '暗色' in b.get('text');tap(reveal('取景与透明度'))
++ t=dump('dark-editor');assert any(n.get('class')=='android.widget.SeekBar' for n in t.iter('node'));shot('dark-editor',True)
++ opacity=next(n.get('text') for n in t.iter('node') if n.get('text','').startswith('图片透明度 '));tap(find(t,'取消'))
++ choose('浅色');shot('light-main',False)
++ run(['shell','cmd','uimode','night','yes']);time.sleep(4);shot('light-overrides-system-dark',False)
++ choose('跟随系统');shot('system-dark',True)
++ run(['shell','cmd','uimode','night','no']);time.sleep(4);shot('system-live-light',False)
++ run(['shell','cmd','uimode','night','yes']);time.sleep(4);shot('system-live-dark',True)
++ restart();shot('system-dark-restarted',True)
++ t,b=appearance();assert '跟随系统' in b.get('text');tap(reveal('取景与透明度'));t=dump('preserved-background');assert any(n.get('text')==opacity for n in t.iter('node'));tap(find(t,'取消'))
++ assert b'FATAL EXCEPTION' not in run(['shell','logcat','-d','-s','AndroidRuntime:E'])
++ records.append(dict(result='PASS',checks=['dark palette pixels','light palette pixels','manual dark persists','manual light overrides system dark','follow system changes live both directions','restart persistence','dark native dialog/editor/slider','existing background opacity preserved','no runtime crash']))
++ print('PASS: dark/light/system, native editor, image persistence and restart')
++finally:
++ setting=next(x for x in ['yes','no','auto'] if x in original);run(['shell','cmd','uimode','night',setting])
++ (OUT/'verification.json').write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding='utf-8')
++
++
+--- a/usb_control_app/src/local/usbcontrol/Backdrop.java
++++ b/usb_control_app/src/local/usbcontrol/Backdrop.java
+@@ -9,6 +9,7 @@
+     Bitmap bitmap;
+     float zoom=1, fx=.5f, fy=.5f;
+     int opacity=25;
++    int baseColor=0xfff4f7fc;
+     boolean editable=false;
+     private final Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
+     private final RectF destination=new RectF();
+@@ -23,7 +24,7 @@
+     }
+     void settings(Bitmap b,float z,float x,float y,int alpha){bitmap=b;zoom=Logic.clamp(z,1,4);fx=Logic.clamp(x,0,1);fy=Logic.clamp(y,0,1);opacity=Math.max(0,Math.min(100,alpha));invalidate();}
+     protected void onDraw(Canvas c){
+-        super.onDraw(c); c.drawColor(Color.rgb(244,247,252));
++        super.onDraw(c); c.drawColor(baseColor);
+         if(bitmap==null||bitmap.isRecycled()||getWidth()==0||getHeight()==0)return;
+         float s=Logic.coverScale(bitmap.getWidth(),bitmap.getHeight(),getWidth(),getHeight(),zoom);
+         float w=bitmap.getWidth()*s,h=bitmap.getHeight()*s;
+--- a/usb_control_app/src/local/usbcontrol/MainActivity.java
++++ b/usb_control_app/src/local/usbcontrol/MainActivity.java
+@@ -14,7 +14,35 @@
+ import java.util.concurrent.*;
+ 
+ public class MainActivity extends Activity {
+-    private static final int BLUE=0xff2563eb, INK=0xff192b48, MUTED=0xff64748b, PICK=81;
++    private static final int PICK=81;
++    private int BLUE, INK, MUTED, BASE, CARD, SOFT, LINE, CHIP, PRIMARY_TEXT;
++    private boolean dark;
++    private String appliedMode;
++    private Context themed;
++    private String appearanceMode(){return prefs.getString("appearance_mode","system");}
++    private boolean wantsDark(){return "dark".equals(appearanceMode())||(!"light".equals(appearanceMode())&&(getResources().getConfiguration().uiMode&Configuration.UI_MODE_NIGHT_MASK)==Configuration.UI_MODE_NIGHT_YES);}
++    private boolean appearanceChanged(){return dark!=wantsDark()||!appearanceMode().equals(appliedMode);}
++    private void applyAppearance(){
++        dark=wantsDark();appliedMode=appearanceMode();
++        themed=new ContextThemeWrapper(this,dark?R.style.DarkTheme:R.style.LightTheme);
++        BLUE=dark?0xff8ab4ff:0xff2563eb;INK=dark?0xffe6edf8:0xff192b48;MUTED=dark?0xffa9b7cb:0xff64748b;
++        BASE=dark?0xff101722:0xfff4f7fc;CARD=dark?0xf51c2736:0xf5ffffff;
++        SOFT=dark?0xff293951:0xffeef3fd;LINE=dark?0xff344257:0xffe9eef6;CHIP=dark?0xe6293951:0xe6e8efff;
++        PRIMARY_TEXT=dark?0xff102039:Color.WHITE;
++        getWindow().setBackgroundDrawable(new ColorDrawable(BASE));
++        getWindow().setStatusBarColor(BASE);getWindow().setNavigationBarColor(BASE);
++        int lightFlags=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
++        View decor=getWindow().getDecorView();decor.setSystemUiVisibility((decor.getSystemUiVisibility()&~lightFlags)|(dark?0:lightFlags));
++        if(Build.VERSION.SDK_INT>=30)getWindow().getInsetsController().setSystemBarsAppearance(dark?0:WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS|WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS|WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
++    }
++    private void chooseAppearance(){
++        String[] modes={"system","light","dark"};String[] labels={"跟随系统","浅色","暗色"};
++        int selected=java.util.Arrays.asList(modes).indexOf(appearanceMode());
++        new ManagedDialogBuilder().setTitle("外观模式").setSingleChoiceItems(labels,Math.max(0,selected),(dialog,which)->{
++            if(!prefs.edit().putString("appearance_mode",modes[which]).commit()){note("外观设置保存失败，请重试");return;}
++            dialog.dismiss();
++        }).setNegativeButton("取消",null).show();
++    }
+     private static final ExecutorService worker=Executors.newSingleThreadExecutor();
+     private static final ExecutorService imageWorker=Executors.newSingleThreadExecutor();
+     private final Handler ui=new Handler(Looper.getMainLooper());
+@@ -33,49 +61,49 @@
+     private int shortPx,currentDpi;
+     private interface Job { String run() throws Exception; }
+     private int dp(float n){return Math.round(n*getResources().getDisplayMetrics().density);}
+-    private TextView text(String s,int size,int color){ TextView t=new TextView(this);t.setText(s);t.setTextSize(size);t.setTextColor(color);t.setLineSpacing(dp(3),1);return t; }
++    private TextView text(String s,int size,int color){ TextView t=new TextView(themed);t.setText(s);t.setTextSize(size);t.setTextColor(color);t.setLineSpacing(dp(3),1);return t; }
+     private GradientDrawable shape(int color,int radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(dp(radius));return d;}
+     private void pad(View v,int a,int b,int c,int d){v.setPadding(dp(a),dp(b),dp(c),dp(d));}
+-    private LinearLayout vertical(){LinearLayout l=new LinearLayout(this);l.setOrientation(LinearLayout.VERTICAL);return l;}
+-    private void gap(LinearLayout l,int h){l.addView(new View(this),new LinearLayout.LayoutParams(1,dp(h)));}
++    private LinearLayout vertical(){LinearLayout l=new LinearLayout(themed);l.setOrientation(LinearLayout.VERTICAL);return l;}
++    private void gap(LinearLayout l,int h){l.addView(new View(themed),new LinearLayout.LayoutParams(1,dp(h)));}
+     private void note(String s){Toast.makeText(this,s,Toast.LENGTH_LONG).show();}
+     @Override public void onCreate(Bundle state){
+-        super.onCreate(state);prefs=getSharedPreferences("preferences",MODE_PRIVATE);
+-        getWindow().setStatusBarColor(0xfff4f7fc);getWindow().setNavigationBarColor(0xfff4f7fc);
+-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
++        prefs=getSharedPreferences("preferences",MODE_PRIVATE);
++        setTheme(wantsDark()?R.style.DarkTheme:R.style.LightTheme);
++        super.onCreate(state);applyAppearance();
+         build();
+         imageWorker.execute(()->{File file=BackgroundStore.selected(getFilesDir(),prefs);if(!file.exists())return;try{Bitmap loaded=BackgroundStore.decode(getContentResolver(),Uri.fromFile(file));ui.post(()->{if(alive()){wallpaper=loaded;build();}});}catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive())note("背景损坏或内存不足，已使用默认底色；可重新选择图片");});}});
+     }
+     @Override protected void onResume(){super.onResume();if(!densityInFlight)refresh();}
+-    @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);build();if(!busy)renderState();}
++    @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);if(dialogs.isEmpty())applyAppearance();build();if(!busy)renderState();}
+     private boolean alive(){return !isFinishing()&&!isDestroyed();}
+     private final class ManagedDialogBuilder extends AlertDialog.Builder {
+-        ManagedDialogBuilder(){super(MainActivity.this);}
+-        @Override public AlertDialog create(){AlertDialog d=super.create();dialogs.add(d);d.setOnDismissListener(x->dialogs.remove(d));return d;}
++        ManagedDialogBuilder(){super(themed);}
++        @Override public AlertDialog create(){AlertDialog d=super.create();dialogs.add(d);d.setOnDismissListener(x->{dialogs.remove(d);if(alive()&&dialogs.isEmpty()&&appearanceChanged()){applyAppearance();build();}});return d;}
+         @Override public AlertDialog show(){AlertDialog d=create();d.show();return d;}
+     }
+     @Override protected void onDestroy(){ui.removeCallbacksAndMessages(null);for(Dialog d:new java.util.ArrayList<>(dialogs))d.dismiss();dialogs.clear();super.onDestroy();}
+     private void build(){
+-        stage=new FrameLayout(this);background=new Backdrop(this);loadBackground();
++        stage=new FrameLayout(themed);background=new Backdrop(themed);loadBackground();
+         stage.addView(background,new FrameLayout.LayoutParams(-1,-1));
+-        ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setClipToPadding(false);
++        ScrollView scroll=new ScrollView(themed);scroll.setFillViewport(true);scroll.setClipToPadding(false);
+         page=vertical();pad(page,24,14,24,24);scroll.addView(page);stage.addView(scroll,new FrameLayout.LayoutParams(-1,-1));
+         if(Build.VERSION.SDK_INT>=30)stage.setOnApplyWindowInsetsListener((v,insets)->{
+             android.graphics.Insets bars=insets.getInsets(WindowInsets.Type.systemBars()|WindowInsets.Type.displayCutout());
+             scroll.setPadding(bars.left,bars.top,bars.right,bars.bottom);return insets;
+         });
+         setContentView(stage);
+-        LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);
+-        ImageView icon=new ImageView(this);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
++        LinearLayout header=new LinearLayout(themed);header.setGravity(Gravity.CENTER_VERTICAL);
++        ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
+         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
+         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+-        TextView version=text("1.0.1",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(0xcce8eef9,10));header.addView(version);page.addView(header);gap(page,24);
++        TextView version=text("1.0.2",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
+-        rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(0xe6e8efff,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
++        rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
+         section("01  /  连接控制");
+         LinearLayout connect=card();
+         adbSwitch=toggle(connect,"USB 调试","检查系统状态…",true);adbDetail=(TextView)adbSwitch.getTag();
+-        View line=new View(this);line.setBackgroundColor(0xffe9eef6);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(1));lp.setMargins(0,dp(16),0,dp(16));connect.addView(line,lp);
++        View line=new View(themed);line.setBackgroundColor(LINE);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(1));lp.setMargins(0,dp(16),0,dp(16));connect.addView(line,lp);
+         installSwitch=toggle(connect,"USB 安装","检测此系统是否提供独立开关",false);installDetail=(TextView)installSwitch.getTag();
+         adbSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)confirmAdb(on);});
+         installSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)changeInstall(on);});
+@@ -85,6 +113,8 @@
+         densityButton=button("调整最小宽度",()->densityDialog(),true);display.addView(densityButton);
+         defaultDensityButton=button("恢复系统默认显示",()->confirmResetDensity(),false);display.addView(defaultDensityButton);page.addView(display);gap(page,22);
+         section("03  /  你的风格");LinearLayout appearance=card();appearance.addView(text("让喜欢的画面，留在这里",17,INK));gap(appearance,5);appearance.addView(text("原比例缩放 · 自由取景 · 透明度实时预览",12,MUTED));gap(appearance,12);
++        appearance.addView(button("外观模式 · "+("dark".equals(appliedMode)?"暗色":"light".equals(appliedMode)?"浅色":"跟随系统"),()->chooseAppearance(),false));
++        gap(appearance,8);
+         appearance.addView(button(wallpaper==null?"选择背景图片":"更换背景图片",()->pickImage(),true));
+         if(wallpaper!=null){appearance.addView(button("取景与透明度",()->editBackground(wallpaper,false),false));appearance.addView(button("移除背景",()->{
+             new ManagedDialogBuilder().setTitle("移除背景？").setMessage("只删除 App 内的副本，不影响手机相册。").setNegativeButton("取消",null).setPositiveButton("移除",(d,w)->imageWorker.execute(()->{try{BackgroundStore.remove(getFilesDir(),prefs);ui.post(()->{if(alive()){wallpaper=null;build();}});}catch(Exception e){ui.post(()->{if(alive())note("背景移除失败，请重试");});}})).show();
+@@ -95,16 +125,16 @@
+         renderState();
+     }
+     private void section(String s){TextView t=text(s,11,MUTED);t.setLetterSpacing(.10f);page.addView(t);gap(page,10);}
+-    private LinearLayout card(){LinearLayout c=vertical();pad(c,20,20,20,18);c.setBackground(shape(0xf5ffffff,22));return c;}
++    private LinearLayout card(){LinearLayout c=vertical();pad(c,20,20,20,18);c.setBackground(shape(CARD,22));return c;}
+     private Switch toggle(LinearLayout parent,String title,String detail,boolean adb){
+-        LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);
++        LinearLayout row=new LinearLayout(themed);row.setGravity(Gravity.CENTER_VERTICAL);
+         LinearLayout labels=vertical();labels.addView(text(title,17,INK));TextView sub=text(detail,12,MUTED);gap(labels,5);labels.addView(sub);row.addView(labels,new LinearLayout.LayoutParams(0,-2,1));
+-        Switch sw=new Switch(this);sw.setContentDescription(title);sw.setTag(sub);sw.setShowText(false);sw.setThumbTintList(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked},new int[]{}},new int[]{BLUE,0xffa3afc2}));sw.setTrackTintList(ColorStateList.valueOf(0xffcedaf0));
++        Switch sw=new Switch(themed);sw.setContentDescription(title);sw.setTag(sub);sw.setShowText(false);sw.setThumbTintList(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked},new int[]{}},new int[]{BLUE,dark?0xff74849b:0xffa3afc2}));sw.setTrackTintList(ColorStateList.valueOf(dark?0xff40536f:0xffcedaf0));
+         LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(dp(56),dp(48));p.setMargins(dp(12),0,0,0);row.addView(sw,p);parent.addView(row);return sw;
+     }
+-    private Button button(String label,Runnable action,boolean primary){Button b=new Button(this);b.setText(label);b.setTextSize(13);b.setAllCaps(false);b.setTextColor(primary?Color.WHITE:BLUE);b.setBackground(shape(primary?BLUE:0xffeef3fd,13));
++    private Button button(String label,Runnable action,boolean primary){Button b=new Button(themed);b.setText(label);b.setTextSize(13);b.setAllCaps(false);b.setTextColor(primary?PRIMARY_TEXT:BLUE);b.setBackground(shape(primary?BLUE:SOFT,13));
+         LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,dp(48));p.setMargins(0,dp(7),0,dp(2));b.setLayoutParams(p);b.setOnClickListener(v->action.run());return b;}
+-    private void loadBackground(){if(background!=null)background.settings(wallpaper,prefs.getFloat("zoom",1),prefs.getFloat("fx",.5f),prefs.getFloat("fy",.5f),prefs.getInt("opacity",25));}
++    private void loadBackground(){if(background!=null){background.baseColor=BASE;background.settings(wallpaper,prefs.getFloat("zoom",1),prefs.getFloat("fx",.5f),prefs.getFloat("fy",.5f),prefs.getInt("opacity",25));}}
+     private void task(String label,Job job,Runnable success){
+         if(busy){renderState();return;}busy=true;statusMessage=label;renderState();
+         worker.execute(()->{String error=null;try{job.run();}catch(Exception e){error=e.getMessage()==null?e.toString():e.getMessage();}String err=error;
+@@ -165,9 +195,9 @@
+     private void densityDialog(){
+         if(!rootReady||busy)return;
+         LinearLayout box=vertical();pad(box,24,4,24,4);
+-        EditText input=new EditText(this);input.setSingleLine();input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);input.setText(String.valueOf(Math.round(shortPx*160f/currentDpi)));input.setSelectAllOnFocus(true);box.addView(input);
++        EditText input=new EditText(themed);input.setSingleLine();input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);input.setText(String.valueOf(Math.round(shortPx*160f/currentDpi)));input.setSelectAllOnFocus(true);box.addView(input);
+         TextView help=text("280–720 dp · 数值增大，界面变小\n应用后需在 20 秒内确认，否则自动还原。",12,MUTED);box.addView(help);
+-        LinearLayout presets=new LinearLayout(this);
++        LinearLayout presets=new LinearLayout(themed);
+         for(int n:new int[]{360,393,411,480}){Button b=button(String.valueOf(n),()->input.setText(String.valueOf(n)),false);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(46),1);p.setMargins(dp(2),dp(8),dp(2),0);presets.addView(b,p);}box.addView(presets);
+         AlertDialog dialog=new ManagedDialogBuilder().setTitle("调整最小宽度 / dp").setView(box).setNegativeButton("取消",null).setPositiveButton("预览应用",null).create();
+         dialog.setOnShowListener(v->dialog.getButton(-1).setOnClickListener(w->{try{int value=Integer.parseInt(input.getText().toString());int dpi=Logic.densityForWidth(shortPx,value);dialog.dismiss();applyDensity(String.valueOf(dpi));}catch(Exception e){input.setError("请输入适合此屏幕的 280–720 dp 数值");}}));dialog.show();
+@@ -225,8 +255,8 @@
+     private void editBackground(Bitmap image,boolean fresh){
+         LinearLayout panel=vertical();pad(panel,20,4,20,8);
+         TextView hint=text("单指拖动选区 · 双指等比缩放\n背景不变形，卡片保持高对比。",12,MUTED);panel.addView(hint);gap(panel,10);
+-        FrameLayout preview=new FrameLayout(this);preview.setBackground(shape(0xfff4f7fc,16));preview.setClipToOutline(true);
+-        Backdrop crop=new Backdrop(this);crop.editable=true;crop.settings(image,fresh?1:prefs.getFloat("zoom",1),fresh?.5f:prefs.getFloat("fx",.5f),fresh?.5f:prefs.getFloat("fy",.5f),prefs.getInt("opacity",25));
++        FrameLayout preview=new FrameLayout(themed);preview.setBackground(shape(BASE,16));preview.setClipToOutline(true);
++        Backdrop crop=new Backdrop(themed);crop.baseColor=BASE;crop.editable=true;crop.settings(image,fresh?1:prefs.getFloat("zoom",1),fresh?.5f:prefs.getFloat("fx",.5f),fresh?.5f:prefs.getFloat("fy",.5f),prefs.getInt("opacity",25));
+         preview.addView(crop,new FrameLayout.LayoutParams(-1,-1));
+         // Preview has the same viewport aspect as the actual main background.
+         int width=Math.max(dp(72),getResources().getDisplayMetrics().widthPixels-dp(88));int height=Math.max(dp(72),Math.round(width*(stage.getHeight()/(float)Math.max(1,stage.getWidth()))));
+@@ -241,15 +271,15 @@
+             LinearLayout.LayoutParams p=(LinearLayout.LayoutParams)preview.getLayoutParams();
+             if(p.width!=w||p.height!=h){p.width=w;p.height=h;preview.setLayoutParams(p);}
+         });
+-        View foreground=new View(this){protected void onDraw(Canvas c){
++        View foreground=new View(themed){protected void onDraw(Canvas c){
+             super.onDraw(c);c.save();float s=getWidth()/(float)Math.max(1,stage.getWidth());c.scale(s,s);c.translate(0,dp(24));page.draw(c);c.restore();
+         }};
+         preview.addView(foreground,new FrameLayout.LayoutParams(-1,-1));
+         TextView label=text(getString(R.string.image_transparency,100-crop.opacity),13,INK);gap(panel,12);panel.addView(label);
+-        SeekBar alpha=new SeekBar(this);alpha.setMax(100);alpha.setProgress(100-crop.opacity);alpha.setContentDescription("背景图片透明度");panel.addView(alpha,new LinearLayout.LayoutParams(-1,dp(44)));
++        SeekBar alpha=new SeekBar(themed);alpha.setMax(100);alpha.setProgress(100-crop.opacity);alpha.setContentDescription("背景图片透明度");panel.addView(alpha,new LinearLayout.LayoutParams(-1,dp(44)));
+         alpha.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int v,boolean user){crop.opacity=100-v;crop.invalidate();label.setText(getString(R.string.image_transparency,v));}public void onStartTrackingTouch(SeekBar b){}public void onStopTrackingTouch(SeekBar b){}});
+         Button center=button("居中复位",()->{crop.zoom=1;crop.fx=.5f;crop.fy=.5f;crop.invalidate();},false);panel.addView(center);
+-        ScrollView scroll=new ScrollView(this);scroll.addView(panel);
++        ScrollView scroll=new ScrollView(themed);scroll.addView(panel);
+         AlertDialog dialog=new ManagedDialogBuilder().setTitle("背景取景与透明度").setView(scroll).setNegativeButton("取消",null).setPositiveButton("保存",null).create();
+         dialog.setOnShowListener(v->dialog.getButton(-1).setOnClickListener(w->{
+             final float z=crop.zoom,x=crop.fx,y=crop.fy;final int alphaValue=crop.opacity;
+--- a/usb_control_app/res/values/styles.xml
++++ b/usb_control_app/res/values/styles.xml
+@@ -8,5 +8,16 @@
+         <item name="android:windowActionModeOverlay">true</item>
+         <item name="android:windowBackground">#F4F7FC</item>
+     </style>
+-    <style name="AppTheme" parent="@style/BaseTheme"/>
++    <style name="LightTheme" parent="@style/BaseTheme"/>
++    <style name="AppTheme" parent="@style/LightTheme"/>
++    <style name="DarkTheme" parent="android:style/Theme.Material.NoActionBar">
++        <item name="android:fontFamily">sans</item>
++        <item name="android:colorAccent">#8AB4FF</item>
++        <item name="android:windowLightStatusBar">false</item>
++        <item name="android:statusBarColor">#101722</item>
++        <item name="android:navigationBarColor">#101722</item>
++        <item name="android:windowActionModeOverlay">true</item>
++        <item name="android:windowBackground">#101722</item>
++        <item name="android:colorBackground">#101722</item>
++    </style>
+ </resources>
+--- /dev/null
++++ b/usb_control_app/res/values-night/styles.xml
+@@ -0,0 +1,3 @@
++<resources>
++    <style name="AppTheme" parent="@style/DarkTheme"/>
++</resources>
+--- a/usb_control_app/res/values-v27/styles.xml
++++ b/usb_control_app/res/values-v27/styles.xml
+@@ -1,5 +1,5 @@
+ <resources>
+-    <style name="AppTheme" parent="@style/BaseTheme">
++    <style name="LightTheme" parent="@style/BaseTheme">
+         <item name="android:windowLightNavigationBar">true</item>
+     </style>
+ </resources>
+--- a/README.md
++++ b/README.md
+@@ -10,9 +10,9 @@
+ 
+ ## 轻控 Android App
+ 
+-独立 App **轻控 1.0.1**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+-
+-- 安装包：[`releases/usb-control-v1.0.1.apk`](releases/usb-control-v1.0.1.apk)
++独立 App **轻控 1.0.2**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
++
++- 安装包：[`releases/usb-control-v1.0.2.apk`](releases/usb-control-v1.0.2.apk)
+ - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
+ - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+ - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+@@ -280,3 +280,7 @@
+ 3. 作用域是否包含 `com.dragon.read`；
+ 4. 目标 APP 是否在模块启用后被强制停止或设备是否已重启；
+ 5. `verification.log` 中 `hook_scope_rc` 是否为 `0`。
++
++### 外观模式（1.0.2）
++在「03 / 你的风格」中选择「外观模式」：跟随系统（默认）、浅色、暗色。选择自动记忆；暗色同时适配卡片、文字、系统栏、弹窗及背景透明度预览，不改变图片原色、裁剪位置或透明度。
++暗色模式验证记录：`docs/usb-control-dark-mode/`。

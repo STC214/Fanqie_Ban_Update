@@ -1,0 +1,200 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "original": "0510a879b9f04600b55bc27dedf030ad53da4a7bfdbc1352aa4a6b6b80279f93",
+      "modified": "761249fff11eaa2fc5f9f019ab516bfca1b42da1d8e19b33fffb7465abab31cf"
+    },
+    {
+      "path": "usb_control_app/.gitignore",
+      "original": "f46e9fe4d2e1bd34d318a02f6f674aa4338bd793f645c33ade71e9ba1fdd539e",
+      "modified": "f46e9fe4d2e1bd34d318a02f6f674aa4338bd793f645c33ade71e9ba1fdd539e"
+    },
+    {
+      "path": "usb_control_app/AndroidManifest.xml",
+      "original": "1d8438b3977efba1240e595d249d02b163c50833af772e40f336e1cef7fce89b",
+      "modified": "79ed34fb0a1a1e84a6b72c635760b76a01e7690042e4b579f5750b4c276b08ed"
+    },
+    {
+      "path": "usb_control_app/README.md",
+      "original": "e2dadca746cdcc2217d3aee549c14285095787e8756361cedb3ff6565cc7da49",
+      "modified": "c7f10fecb3293515dc0e2f9e6abf32e08b26b88a9f3d72ad65715dd7f534a44a"
+    },
+    {
+      "path": "usb_control_app/build.ps1",
+      "original": "40c7e569ecd5ca4774f22190b9d5cca6a2564440d3b9f7d5e0ac629c6a15ce4e",
+      "modified": "3a84c78aef70ba886b286f3712437871848136389d41f19585c07b58df5acb88"
+    },
+    {
+      "path": "usb_control_app/res/drawable-nodpi/app_icon.png",
+      "original": "ccdc7140e7c8a49d5468e26c65c1f3753fa06c1f88fc728642a1deb8a6964f28",
+      "modified": "ccdc7140e7c8a49d5468e26c65c1f3753fa06c1f88fc728642a1deb8a6964f28"
+    },
+    {
+      "path": "usb_control_app/res/drawable/ic_usb_mono.xml",
+      "original": null,
+      "modified": "d26c32af2ad9595a8d1e5e0442ec9cd39a275f5a92a1d360ef467ed6d94d7cf4"
+    },
+    {
+      "path": "usb_control_app/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "original": "323afd97e3c1ca5a1bb57881ceac53309978d076ad543abab73153fac46eded4",
+      "modified": null
+    },
+    {
+      "path": "usb_control_app/res/mipmap-anydpi-v33/ic_launcher.xml",
+      "original": null,
+      "modified": "2a5c72591dd4c7e8d078db167ad8a2f233d1425c918d5bf24a9c6c9e45f2036e"
+    },
+    {
+      "path": "usb_control_app/res/mipmap-anydpi/ic_launcher.xml",
+      "original": "4dc64c775537dcfdde315bf16aef3b48680c7b8881be6751d6e6e5e0fb60c6e5",
+      "modified": "323afd97e3c1ca5a1bb57881ceac53309978d076ad543abab73153fac46eded4"
+    },
+    {
+      "path": "usb_control_app/res/values-v27/styles.xml",
+      "original": null,
+      "modified": "887666ebe6513e8d8d9d1fa600f7b1b82d420e91e95e034793fa63a5ed593b7d"
+    },
+    {
+      "path": "usb_control_app/res/values/strings.xml",
+      "original": null,
+      "modified": "e748601f953b2f25c3f241a835c01337de5dc4755426754bcb0b7222721503c6"
+    },
+    {
+      "path": "usb_control_app/res/values/styles.xml",
+      "original": "651562aa94cf1e8f8025c648bb3a8ec8b1c24f248fb36dad84af27c2b9014f39",
+      "modified": "b2373533a220f6a9ed2337815ca9cad99398dfa05884798a6cfe233dceadb0d3"
+    },
+    {
+      "path": "usb_control_app/res/xml/data_extraction_rules.xml",
+      "original": null,
+      "modified": "cd84ddeceb22e2f9f5091f976173a1c8687e403838dc4565fa510bea4df9b79b"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/Backdrop.java",
+      "original": "c10e691a2b867b2ca9e7f180bb026643edc41b19d0d942f79bac42aff865c987",
+      "modified": "eeea60385f964ef72b0dc7ac838c4949fc3380765d92de95da064ba367610ccb"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/BackgroundStore.java",
+      "original": null,
+      "modified": "1f7bf5669215ade4655b447149e28b3d30fe1ba1f3b43b43e337abf3735f10be"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/Baseline.java",
+      "original": null,
+      "modified": "effd5719edadaa77728673cad2d9d519dec62bcc48ec4279649834174f255964"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/DensitySession.java",
+      "original": null,
+      "modified": "820c0966d23c5df3eb9738ebd8d5a6757cfee9f688f55d2cced75c72de3c2912"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/Logic.java",
+      "original": "7bb355c45a1b7ba1bba8b6c052b9e620e6eaf28657f29609a7a752d2ef4b8c8a",
+      "modified": "d3ec775d1f77571bd4fbb825ffdb8216f3b3bb7857f3775f6de6b8d40dfc0434"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/MainActivity.java",
+      "original": "92c0c8e603613666af2ce9c665d156aad0b9d35daebdbd906363e7868dde19c4",
+      "modified": "341bea2302bdc2b8b846c6de68a3b5e37c9e940c8c3258f5b81c8c0ebc3aea9c"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/RecoveryScript.java",
+      "original": null,
+      "modified": "e4e798af94457132640599886509be5f34e54f6a8a7251c8f0e1e406748823eb"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/Root.java",
+      "original": "bbc8f3daf47793d9e55585e4f3c84fd8199dccfb7c85aa4590de320fe100a555",
+      "modified": "aaa69e6b276ae0e32cb78bb6bcabfa13a4ac2b750b5b792a9f11a73c2b25342c"
+    },
+    {
+      "path": "usb_control_app/src/local/usbcontrol/SafeFiles.java",
+      "original": null,
+      "modified": "f6ea279b9e91cb7c695e8b3d602fb183a6ccae8884d645c479e7495e8a18944d"
+    },
+    {
+      "path": "usb_control_app/tests/LogicTest.java",
+      "original": "58da134913a822791be49fab0d57dae9313f0327723efc72b73a3e51abb4745e",
+      "modified": "58da134913a822791be49fab0d57dae9313f0327723efc72b73a3e51abb4745e"
+    },
+    {
+      "path": "usb_control_app/tests/RootBridgeTest.java",
+      "original": "4e7e2292edc02ea1762a1f8b0e03cb8a5edabd3491b14c6a9765aad2e632fae1",
+      "modified": "4e7e2292edc02ea1762a1f8b0e03cb8a5edabd3491b14c6a9765aad2e632fae1"
+    },
+    {
+      "path": "usb_control_app/tests/aosp-su.sh",
+      "original": "b986b9c3ca51e336832e3644e6ded32ba5594e5acdcaa699a790b1cb2c52a774",
+      "modified": "b986b9c3ca51e336832e3644e6ded32ba5594e5acdcaa699a790b1cb2c52a774"
+    },
+    {
+      "path": "usb_control_app/tests/build-device-tests.ps1",
+      "original": null,
+      "modified": "08972ce897124270d9edaebd78438b0eb47d4d75312c4c268b516528e10995a5"
+    },
+    {
+      "path": "usb_control_app/tests/cancel_old_audit_workers.py",
+      "original": null,
+      "modified": "7b47375302f75c24c3f6215f43cd14b2fa32b81185be08fec20b493bee83c80a"
+    },
+    {
+      "path": "usb_control_app/tests/device/AndroidManifest.xml",
+      "original": null,
+      "modified": "d94560809ecfcdcc863135a62157d3991dd2897838ca180b975fb56a838c3d6c"
+    },
+    {
+      "path": "usb_control_app/tests/device/AuditInstrumentation.java",
+      "original": null,
+      "modified": "b079d840e07304b03f6b585aa87c2a808e256137b83319e0a93e00c15f193845"
+    },
+    {
+      "path": "usb_control_app/tests/model/Root.java",
+      "original": null,
+      "modified": "397ac906b21537b342e981bc80c8648ac636d31ee016f5392a8ce981f69d6ee6"
+    },
+    {
+      "path": "usb_control_app/tests/model/TransactionTest.java",
+      "original": null,
+      "modified": "8f04ee5de4f0522718e4d7a6cad48c0c5c1f5bf4c8a51b9ab8f78e410236e6c6"
+    },
+    {
+      "path": "usb_control_app/tests/phone_audit.py",
+      "original": null,
+      "modified": "d54b514d8eec425304126f99d644a563cce38be2f853f427ae0d798ecfa40ebf"
+    },
+    {
+      "path": "usb_control_app/tests/phone_diagnostics.py",
+      "original": null,
+      "modified": "121945e5e52e95e9b0f11557c1f8fa46619ef0935fc3cc0ae8591ac7c5e401d7"
+    },
+    {
+      "path": "usb_control_app/tests/phone_ui.py",
+      "original": null,
+      "modified": "3b05ebae367f9f4dd31f9e486d6b1d62dba462e2bd89d08b1b5f92d953523a78"
+    },
+    {
+      "path": "usb_control_app/tests/review_artifacts.py",
+      "original": null,
+      "modified": "ea032ec15e65bfe76eb5d8f4b863c45631131adf98a3462b50f3aab2bab0168c"
+    },
+    {
+      "path": "usb_control_app/tests/root_smoke.py",
+      "original": "cb07f0af4609f8f3519cc28628af00c00913ae08deceba21b2a8c989a52cf31b",
+      "modified": "cb07f0af4609f8f3519cc28628af00c00913ae08deceba21b2a8c989a52cf31b"
+    },
+    {
+      "path": "usb_control_app/tests/ui_smoke.py",
+      "original": "fef1c4baa6c178dd87ac231bc298f27d30519d0244443b3f23a42bb694a437a2",
+      "modified": "528cc68f5335003d187d2dcf94bc95d0539b4b70fa1e887c90e9df0914cc728f"
+    },
+    {
+      "path": "usb_control_app/tests/verify_artifacts.py",
+      "original": "3ddd01139d1961640f28c1b54662683722e43ab05e5271eed278bb0c3c4bfcab",
+      "modified": "0931c68be0384812cb3fcca195e4ab0f3b8121b72216f56d94bd98842bca2b29"
+    }
+  ],
+  "apk_sha256": "9bc30e10132746cfcc9cdbc6d591c3d84aec6e4f698bb2496f3e9c635048905d"
+}

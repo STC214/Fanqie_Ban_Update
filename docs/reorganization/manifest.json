@@ -1,0 +1,170 @@
+{
+  "moves": [
+    {
+      "source": "fanqie_update_video_game_blocker-v2.1.3.zip",
+      "destination": "releases/fanqie_update_video_game_blocker-v2.1.3.zip",
+      "sha256": "2773a5406069e88a9e15a85517cf300ed5b68b4390df3e5fc531e022900149a5",
+      "organized_sha256": "2773a5406069e88a9e15a85517cf300ed5b68b4390df3e5fc531e022900149a5"
+    },
+    {
+      "source": "usb_debug_toggle-v1.3.0.zip",
+      "destination": "releases/usb_debug_toggle-v1.3.0.zip",
+      "sha256": "fccab1b6e38b4cb2cbcc34d2e4d924fb3ab2358e2d40b8d01a367a0126166bb5",
+      "organized_sha256": "fccab1b6e38b4cb2cbcc34d2e4d924fb3ab2358e2d40b8d01a367a0126166bb5"
+    },
+    {
+      "source": "fanqie_update_video_game_blocker-v2.1.3.patch",
+      "destination": "releases/fanqie_update_video_game_blocker-v2.1.3.patch",
+      "sha256": "825600d0768a472fed796fffa52516863f9304b5abaaefe74a942c6cd1704962",
+      "organized_sha256": "825600d0768a472fed796fffa52516863f9304b5abaaefe74a942c6cd1704962"
+    },
+    {
+      "source": "usb_debug_toggle-v1.3.0.patch",
+      "destination": "releases/usb_debug_toggle-v1.3.0.patch",
+      "sha256": "8a5f74fc910e6bab823f833ef72833159f6b55ffa9b05b2d3e37e824b03bb8e5",
+      "organized_sha256": "8a5f74fc910e6bab823f833ef72833159f6b55ffa9b05b2d3e37e824b03bb8e5"
+    },
+    {
+      "source": "_auto_usb_v130.ps1",
+      "destination": "scripts/_auto_usb_v130.ps1",
+      "sha256": "fa3ef9ace4d3ae28807e2bf180a420adc20d3590192ccfdcf5f56c13823eb229",
+      "organized_sha256": "3adfeb4723010c0c774ab7bc7d589e02b80cc49c5caedbd2dd4346694a219e7a"
+    },
+    {
+      "source": "auto-deploy-v2.1.ps1",
+      "destination": "scripts/auto-deploy-v2.1.ps1",
+      "sha256": "3ffa69b939e3bc668e70c9e9f85ec028d335192c40563a4b72acb033249642ad",
+      "organized_sha256": "3dd7c2d300bfdf774407e4c0222cff598e797f9a33fff44e239ad947d27aefa2"
+    },
+    {
+      "source": "install-usb-debug-toggle.ps1",
+      "destination": "scripts/install-usb-debug-toggle.ps1",
+      "sha256": "7ef67cec94eee459164aa64ad50337f8faf91a430c400f64aec24c1d63cacae2",
+      "organized_sha256": "a47a1857f5eb950f795b34d145e9db88eb414576e878d9e76a1ca3b2894664f3"
+    },
+    {
+      "source": "install-v2.1.ps1",
+      "destination": "scripts/install-v2.1.ps1",
+      "sha256": "764b9e51a66418d7a931113f30d8e19f54634410cdf57b5f66eb6b427527cbc9",
+      "organized_sha256": "e00f052116b4202a224c4b5fd090e63b27977e91a62abf87d49b3697a63867e5"
+    },
+    {
+      "source": "rollback-usb-debug-toggle.ps1",
+      "destination": "scripts/rollback-usb-debug-toggle.ps1",
+      "sha256": "c25864a48b893405bad3c731e56bf70453cb1e786ccb0048c6a73b3d7ac81170",
+      "organized_sha256": "c25864a48b893405bad3c731e56bf70453cb1e786ccb0048c6a73b3d7ac81170"
+    },
+    {
+      "source": "rollback-v2.ps1",
+      "destination": "scripts/rollback-v2.ps1",
+      "sha256": "3ba15df89751690f24760912c88ee06c0c357b48b20c9a005ddf4344a6d051c8",
+      "organized_sha256": "3ba15df89751690f24760912c88ee06c0c357b48b20c9a005ddf4344a6d051c8"
+    },
+    {
+      "source": "scan_update_strings.py",
+      "destination": "scripts/scan_update_strings.py",
+      "sha256": "5ca12f83099320d88ed954ed74f268a57b28c48f70c22f223bb92e5835c2df45",
+      "organized_sha256": "5bd25e5fa690c76173b81e7f9d9b082294d6cc082de301acb3db2adde2942fa7"
+    },
+    {
+      "source": "MiniGameManager-c.smali.txt",
+      "destination": "analysis/MiniGameManager-c.smali.txt",
+      "sha256": "73efe15f1fd1bb238fde960e77b7d08cdce473b8f07d3ea8493bf8801836b3b1",
+      "organized_sha256": "73efe15f1fd1bb238fde960e77b7d08cdce473b8f07d3ea8493bf8801836b3b1"
+    },
+    {
+      "source": "NewAboutActivity.smali.txt",
+      "destination": "analysis/NewAboutActivity.smali.txt",
+      "sha256": "eff3db0ac6c006f657162c796e8bf126d70369f3ea5174ba9c5a7baf5f4bebd9",
+      "organized_sha256": "eff3db0ac6c006f657162c796e8bf126d70369f3ea5174ba9c5a7baf5f4bebd9"
+    },
+    {
+      "source": "UpdateProgressActivity.smali.txt",
+      "destination": "analysis/UpdateProgressActivity.smali.txt",
+      "sha256": "8374c19bc843a52d3f650c9070c016ff945de44e4d5038b8425966eda3321ea9",
+      "organized_sha256": "8374c19bc843a52d3f650c9070c016ff945de44e4d5038b8425966eda3321ea9"
+    },
+    {
+      "source": "AndroidManifest.decoded.xml",
+      "destination": "analysis/AndroidManifest.decoded.xml",
+      "sha256": "aed02e86bf414852dc85a958a5b9d37d959c7a9763c8685b89898824becec6dc",
+      "organized_sha256": "aed02e86bf414852dc85a958a5b9d37d959c7a9763c8685b89898824becec6dc"
+    },
+    {
+      "source": "game_strings.txt",
+      "destination": "analysis/game_strings.txt",
+      "sha256": "404f8d8d165b971b934ebf312c0192b56125e5328d0e39ea3692ace7a51c87fc",
+      "organized_sha256": "404f8d8d165b971b934ebf312c0192b56125e5328d0e39ea3692ace7a51c87fc"
+    },
+    {
+      "source": "game_urls.txt",
+      "destination": "analysis/game_urls.txt",
+      "sha256": "5ac38b81e3b343014c44f9d877a754f48255b6515ad63809acf7368b0ebcee02",
+      "organized_sha256": "5ac38b81e3b343014c44f9d877a754f48255b6515ad63809acf7368b0ebcee02"
+    },
+    {
+      "source": "minigame_c_methods.txt",
+      "destination": "analysis/minigame_c_methods.txt",
+      "sha256": "6a4ae62a240254256701ecdace046accb53475aaacc13102092c03c85d9683d1",
+      "organized_sha256": "6a4ae62a240254256701ecdace046accb53475aaacc13102092c03c85d9683d1"
+    },
+    {
+      "source": "update_string_hits.txt",
+      "destination": "analysis/update_string_hits.txt",
+      "sha256": "147a3588331288a245d79db2666263b4c140bb6b211fa6a45bf523931c80e0ce",
+      "organized_sha256": "147a3588331288a245d79db2666263b4c140bb6b211fa6a45bf523931c80e0ce"
+    },
+    {
+      "source": "video_domain_analysis.txt",
+      "destination": "analysis/video_domain_analysis.txt",
+      "sha256": "ca03a405a3f7ba7db59e4b05162a5d80b075bfe39f9fa2f7af7749383acd3a44",
+      "organized_sha256": "ca03a405a3f7ba7db59e4b05162a5d80b075bfe39f9fa2f7af7749383acd3a44"
+    },
+    {
+      "source": "video_strings.txt",
+      "destination": "analysis/video_strings.txt",
+      "sha256": "22e1b048cc054320d47608764c3665a47f3b6ce23e74fc2e3485a229e352cfd1",
+      "organized_sha256": "22e1b048cc054320d47608764c3665a47f3b6ce23e74fc2e3485a229e352cfd1"
+    },
+    {
+      "source": "baseline.txt",
+      "destination": "docs/verification/baseline.txt",
+      "sha256": "0f66817e494c151ebb529659e74710411f0f3ce51e17ac37215aa7c40bc4514b",
+      "organized_sha256": "0f66817e494c151ebb529659e74710411f0f3ce51e17ac37215aa7c40bc4514b"
+    },
+    {
+      "source": "original_apk.sha256",
+      "destination": "docs/verification/original_apk.sha256",
+      "sha256": "576171fda6a22d4add6714a6710779ea65ddc35e575ec1eb56b1153d4c545ba5",
+      "organized_sha256": "576171fda6a22d4add6714a6710779ea65ddc35e575ec1eb56b1153d4c545ba5"
+    },
+    {
+      "source": "verification_record-v2.1.3.md",
+      "destination": "docs/verification/verification_record-v2.1.3.md",
+      "sha256": "ec113f7df0389ab356afba8ee3f1db0fc2725675bc7b6a50c47cbd39a87593e6",
+      "organized_sha256": "ec113f7df0389ab356afba8ee3f1db0fc2725675bc7b6a50c47cbd39a87593e6"
+    },
+    {
+      "source": "_usb_v130_deploy.log",
+      "destination": "logs/_usb_v130_deploy.log",
+      "sha256": "9640e8fd5c72d50de664e36c0e169376d872a8c1187037a566d74e103563cbb8",
+      "organized_sha256": "9640e8fd5c72d50de664e36c0e169376d872a8c1187037a566d74e103563cbb8"
+    },
+    {
+      "source": "番茄小说oppo定制.apk",
+      "destination": "original/番茄小说oppo定制.apk",
+      "sha256": "048c20f0963f594e72d754422f625b005ce5228b8d585c50e55d86ccd0cc1535",
+      "organized_sha256": "048c20f0963f594e72d754422f625b005ce5228b8d585c50e55d86ccd0cc1535"
+    }
+  ],
+  "backups": [
+    "README.md",
+    "auto-deploy-v2.1.ps1",
+    "_auto_usb_v130.ps1",
+    "install-v2.1.ps1",
+    "install-usb-debug-toggle.ps1",
+    "scan_update_strings.py"
+  ],
+  "readme_sha256": "56768229b4e1de04bf266e3112a46ecb4dcab1395fd441ce985515997babc816",
+  "original_readme_sha256": "3891d870a5a5e654110d405029e469a539b3ac92a9fc3bf19f16c138b980f1c5"
+}

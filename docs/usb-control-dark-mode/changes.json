@@ -1,0 +1,52 @@
+[
+  {
+    "path": "usb_control_app/AndroidManifest.xml",
+    "baseline": "79ed34fb0a1a1e84a6b72c635760b76a01e7690042e4b579f5750b4c276b08ed",
+    "modified": "2ee7553db4d41e6b045fe14b717f7408cc2b691d98493a7c9e144c089a8952b0"
+  },
+  {
+    "path": "usb_control_app/build.ps1",
+    "baseline": "3a84c78aef70ba886b286f3712437871848136389d41f19585c07b58df5acb88",
+    "modified": "7bd2c2814177abd251bdef5617ed0dedee638cc04b651240088ec8e751e49cb3"
+  },
+  {
+    "path": "usb_control_app/README.md",
+    "baseline": "c7f10fecb3293515dc0e2f9e6abf32e08b26b88a9f3d72ad65715dd7f534a44a",
+    "modified": "5584be471b8774ede693ee7b27e50498e4003ace38c5b385ce45b4de0125e43b"
+  },
+  {
+    "path": "usb_control_app/tests/dark_mode_ui.py",
+    "baseline": null,
+    "modified": "10408dc31fa2c7454c3033d9431498f5dfa7734f739cc18e29323c71d53250dd"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/Backdrop.java",
+    "baseline": "eeea60385f964ef72b0dc7ac838c4949fc3380765d92de95da064ba367610ccb",
+    "modified": "be6917ce4918baa6ed21495e0cefa6b52fb72110c1017ea488ba821d838484fe"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/MainActivity.java",
+    "baseline": "341bea2302bdc2b8b846c6de68a3b5e37c9e940c8c3258f5b81c8c0ebc3aea9c",
+    "modified": "f15852408303acaf2b1d372abaa76e1c203c590d829c82e17a27311a928b1581"
+  },
+  {
+    "path": "usb_control_app/res/values/styles.xml",
+    "baseline": "b2373533a220f6a9ed2337815ca9cad99398dfa05884798a6cfe233dceadb0d3",
+    "modified": "703d032884bdfba8650fff10fafc7c9a6e923dc53dfa91d804211d22e2c62616"
+  },
+  {
+    "path": "usb_control_app/res/values-night/styles.xml",
+    "baseline": null,
+    "modified": "0d4994ec70d162e2ff741d85e3df749395fa151717cc23e9ecbae50390c39b99"
+  },
+  {
+    "path": "usb_control_app/res/values-v27/styles.xml",
+    "baseline": "887666ebe6513e8d8d9d1fa600f7b1b82d420e91e95e034793fa63a5ed593b7d",
+    "modified": "c266eebd361957ece22d16aeb600c263f75e3a3b67c62308631bfb4dfc536e07"
+  },
+  {
+    "path": "README.md",
+    "baseline": "761249fff11eaa2fc5f9f019ab516bfca1b42da1d8e19b33fffb7465abab31cf",
+    "modified": "b984e62b4668f503396abd4e1d8b8d61d250dcbf4b5887240f8473d7cea14678"
+  }
+]
