@@ -1,0 +1,61 @@
+[
+  {
+    "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.4.apk",
+    "exit": 0,
+    "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.4.apk",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "F:/Android/Sdk/build-tools/35.0.0/aapt2.exe dump badging F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.4.apk",
+    "exit": 0,
+    "stdout": "package: name='local.usbcontrol' versionCode='104' versionName='1.0.4' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\r\nminSdkVersion:'26'\r\ntargetSdkVersion:'36'\r\napplication-label:'轻控'\r\napplication-icon-160:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65534:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65535:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication: label='轻控' icon='res/mipmap-anydpi-v33/ic_launcher.xml'\r\nlaunchable-activity: name='local.usbcontrol.MainActivity'  label='' icon=''\r\nfeature-group: label=''\r\n  uses-feature: name='android.hardware.faketouch'\r\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\r\nmain\r\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\r\nsupports-any-density: 'true'\r\nlocales: '--_--'\r\ndensities: '160' '65534' '65535'\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\LogicTest.java",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.LogicTest",
+    "exit": 0,
+    "stdout": "PASS: 34 capability, density, crop and aspect-ratio assertions\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.TransactionTest",
+    "exit": 0,
+    "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\UsbInstallTest.java",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter local.usbcontrol.UsbInstallTest",
+    "exit": 0,
+    "stdout": "PASS: 23 USB-install adapter and recovery assertions\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "result": "PASS",
+    "version": "1.0.4",
+    "apk_sha256": "aa4a25d98070b7fd7a8c5234c0b94007a28ca23152fd9c80ae2c60b0449898b6",
+    "archived_files": 17,
+    "checks": [
+      "latest signature/alignment/version/checksum/ZIP",
+      "current model and adapter tests",
+      "no historical USB Control packages in project"
+    ]
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "path": "usb_control_app/AndroidManifest.xml",
+    "baseline": "98016c2c1827e863833d9496e15127faa3fcfe13f5a37cd93dd42b0c8dc3c7c0",
+    "modified": "1ebceddb63c09f57bb0003bee0f5adb9a8e8e9b12c498e98fc4e79cb4c37fc74"
+  },
+  {
+    "path": "usb_control_app/build.ps1",
+    "baseline": "1c157319be81e3aba61640762b8647b5318b0eba0d42fc5b15b5aed8671620e5",
+    "modified": "05443bc8a18bf9ef7a4b831e9aa37bee709ca29e8d50e094ba7a44663bc5622e"
+  },
+  {
+    "path": "usb_control_app/README.md",
+    "baseline": "86adf589727d22aae8395c651dfdc8dcc199e36fd00dc1ba621815aa2ec0aa2f",
+    "modified": "a5c19535b9dd8a576bb00282d0c6b7c19ce88a8721dbc487227854ad1b66061c"
+  },
+  {
+    "path": "usb_control_app/tests/fast_toggle_phone.py",
+    "baseline": null,
+    "modified": "e1655cb2baf623109740b968e6d00888a8ee964877b43decf27612151b8c93f3"
+  },
+  {
+    "path": "usb_control_app/tests/LogicTest.java",
+    "baseline": "24ff71bf70b45d09475ff07d4921b497410dad0c2b0d24c7a1b19d01acbc1c46",
+    "modified": "bd7cfae32807cb98cd6de007b40dd038ecdb95e4404766815c7596fc1d7ce70e"
+  },
+  {
+    "path": "usb_control_app/tests/UsbInstallTest.java",
+    "baseline": "ef428b5ee4de950d341a08cb64a13f117c9b483fac1eed8405cd083797848d71",
+    "modified": "a44578a1b250165cdf5c3b67d4ba5c64bc1b28463da07e931ce31f33272a64e2"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/Logic.java",
+    "baseline": "4bb1692154d3788ecb48849d60e4e67b24dc9bdcc93ccc3b3c176e883a1cf7c7",
+    "modified": "1cf8bf5827d9a9eeac98895c934fe36a30ee6933cea38f778391cb118b3f33b9"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/MainActivity.java",
+    "baseline": "e241617b9ba608cd03f1b72b8bf2cbc9dd4fc214b8504f44afe4dfedcd4fd21b",
+    "modified": "719748d82563d9cfd23498c1f0ed8bd97ea3d8f256d5b92c40d31e0b382a3d6e"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/UsbInstall.java",
+    "baseline": "06c8aea7653e691c1ee06b1b9609affdf0efc91ec4046dce63a447887b47ec75",
+    "modified": "01a3b4199e0eff6f12870268418a31c8fa7c99485fd116d7d8261072e5ce4e0a"
+  },
+  {
+    "path": "README.md",
+    "baseline": "491b9dc28311125a6c13621bbc2d2a13962b5e3c167a92466ef7b94fb816a266",
+    "modified": "534a5f16e631909a981ccd4f9007301d34048bee3bb362c87d9db78522e9266d"
+  }
+]

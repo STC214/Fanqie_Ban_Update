@@ -1,0 +1,114 @@
+[
+  {
+    "command": "git -C F:\\Temp\\usb-dark-verify-l7ykc1ej apply --check F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\usb-install.patch",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git -C F:\\Temp\\usb-dark-verify-l7ykc1ej apply F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\usb-install.patch",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "F:\\Programer\\miniforge3\\python.exe F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\rollback.py --root F:\\Temp\\usb-dark-verify-l7ykc1ej",
+    "exit": 0,
+    "stdout": "PASS: exact baseline source restored; no phone settings changed\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\dark-baseline-tests F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\baseline\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\baseline\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\baseline\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\baseline\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\baseline\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\baseline\\usb_control_app\\tests\\LogicTest.java",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\dark-baseline-tests local.usbcontrol.LogicTest",
+    "exit": 0,
+    "stdout": "PASS: 19 capability, density, crop and aspect-ratio assertions\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\dark-baseline-tests local.usbcontrol.TransactionTest",
+    "exit": 0,
+    "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\dark-modified-tests F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\LogicTest.java",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\dark-modified-tests local.usbcontrol.LogicTest",
+    "exit": 0,
+    "stdout": "PASS: 29 capability, density, crop and aspect-ratio assertions\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\dark-modified-tests local.usbcontrol.TransactionTest",
+    "exit": 0,
+    "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.2.apk",
+    "exit": 0,
+    "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.2.apk",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.3.apk",
+    "exit": 0,
+    "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.3.apk",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "java -Xmx1g -cp F:/Android/Sdk/cmdline-tools/latest/lib/lint-classpath.jar com.android.tools.lint.Main --offline --exitcode --sources usb_control_app/src --classpath usb_control_app/build/classes --resources usb_control_app/res --compile-sdk-version 36 --text F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\lint.txt --xml F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\lint.xml usb_control_app",
+    "exit": 0,
+    "stdout": "Wrote text report to F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-usb-install\\lint.txt\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\adapter-verified F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\UsbInstallTest.java",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\adapter-verified local.usbcontrol.UsbInstallTest",
+    "exit": 0,
+    "stdout": "PASS: 20 USB-install adapter and recovery assertions\r\n",
+    "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+  },
+  {
+    "result": "PASS",
+    "modified_apk_sha256": "1d1bfc24fe1b2cbdc2c47f0f96986f06736505008e718654c5147f608311ed3d",
+    "baseline_apk_sha256": "826fcd2cb172a640b520f15067eb978aa0dc1b5bf42f329d00af00e84213a41c",
+    "checks": [
+      "immutable baseline hashes",
+      "patch applied and compared",
+      "rollback executed and compared",
+      "baseline and modified model tests",
+      "unchanged original icon",
+      "both APK signatures and alignment",
+      "lint 0 errors / 3 prior warnings",
+      "MIUI strict capability and readback parser",
+      "official system verification preserved"
+    ]
+  }
+]

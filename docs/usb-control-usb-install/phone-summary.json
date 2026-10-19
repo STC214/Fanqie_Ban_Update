@@ -1,0 +1,35 @@
+{
+  "device": "Xiaomi 23117RK66C",
+  "android": "16",
+  "rom": "HyperOS OS3.0 / V816",
+  "system_artifact_sha256": {
+    "settings": "b8097710b892cf7e7191dc8518a4297055cde643f84e9bae78aaf5688928643a",
+    "securitycenter": "f4eda1b7b0f46521c93ddc75f7d833aec7bd48674c561e545f2b84a1edd6284c"
+  },
+  "observed": {
+    "standard_install_key_global": "null",
+    "standard_install_key_secure": "null",
+    "standard_install_key_system": "null",
+    "actual_provider_disabled": "Result: Bundle[{security_adb_install_enable=false}]",
+    "actual_provider_enabled": "Result: Bundle[{security_adb_install_enable=true}]"
+  },
+  "final": {
+    "result": "PASS",
+    "installed_apk_sha256": "1d1bfc24fe1b2cbdc2c47f0f96986f06736505008e718654c5147f608311ed3d",
+    "checks": [
+      "actual USB install enabled restored",
+      "USB debugging 1 unchanged",
+      "wireless debugging 0 unchanged",
+      "density override 420 unchanged",
+      "no fabricated standard keys",
+      "no remaining test APK",
+      "installed hash equals final release"
+    ]
+  },
+  "raw_record": ".local/usb-install/final-phone-record.json (local only)",
+  "limitations": [
+    "UIAutomator collides with an existing device UiAutomation; existing session left untouched.",
+    "Instrumentation did not produce a completed report across system verification; it is not counted as a passed native test.",
+    "Observed real switch readback and ordinary App UI; did not claim arbitrary third-party APK installation-policy coverage."
+  ]
+}

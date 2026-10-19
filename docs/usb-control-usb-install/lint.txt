@@ -1,0 +1,10 @@
+src\local\usbcontrol\BackgroundStore.java:5: Warning: Avoid using android.media.ExifInterface; use androidx.exifinterface.media.ExifInterface instead [ExifInterface]
+import android.media.ExifInterface;
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+AndroidManifest.xml:3: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+res\mipmap-anydpi\ic_launcher.xml:1: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+0 errors, 3 warnings

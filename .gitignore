@@ -18,3 +18,4 @@ local.properties
 /docs/usb-control-audit/final-phone-identity.json
 /docs/usb-control-audit/phone-ui/
 /docs/usb-control-dark-mode/phone-install.json
+/.local/

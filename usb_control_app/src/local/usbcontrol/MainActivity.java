@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
     private DensitySession densitySession;
     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
     private boolean rootReady=false,busy=false,binding=false,densityInFlight=false;
+    private Boolean pendingAdb,pendingInstall;
     private int shortPx,currentDpi;
     private interface Job { String run() throws Exception; }
     private int dp(float n){return Math.round(n*getResources().getDisplayMetrics().density);}
@@ -74,7 +75,7 @@ public class MainActivity extends Activity {
         build();
         imageWorker.execute(()->{File file=BackgroundStore.selected(getFilesDir(),prefs);if(!file.exists())return;try{Bitmap loaded=BackgroundStore.decode(getContentResolver(),Uri.fromFile(file));ui.post(()->{if(alive()){wallpaper=loaded;build();}});}catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive())note("背景损坏或内存不足，已使用默认底色；可重新选择图片");});}});
     }
-    @Override protected void onResume(){super.onResume();if(!densityInFlight)refresh();}
+    @Override protected void onResume(){super.onResume();if(installVerificationPending)ui.postDelayed(()->refreshInstallAfterVerification(),200);else if(!densityInFlight)refresh();}
     @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);if(dialogs.isEmpty())applyAppearance();build();if(!busy)renderState();}
     private boolean alive(){return !isFinishing()&&!isDestroyed();}
     private final class ManagedDialogBuilder extends AlertDialog.Builder {
@@ -96,8 +97,8 @@ public class MainActivity extends Activity {
         LinearLayout header=new LinearLayout(themed);header.setGravity(Gravity.CENTER_VERTICAL);
         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
-        LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
-        TextView version=text("1.0.2",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+        LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+        TextView version=text("1.0.4",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
         section("01  /  连接控制");
@@ -105,7 +106,7 @@ public class MainActivity extends Activity {
         adbSwitch=toggle(connect,"USB 调试","检查系统状态…",true);adbDetail=(TextView)adbSwitch.getTag();
         View line=new View(themed);line.setBackgroundColor(LINE);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(1));lp.setMargins(0,dp(16),0,dp(16));connect.addView(line,lp);
         installSwitch=toggle(connect,"USB 安装","检测此系统是否提供独立开关",false);installDetail=(TextView)installSwitch.getTag();
-        adbSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)confirmAdb(on);});
+        adbSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)changeAdb(on);});
         installSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)changeInstall(on);});
         page.addView(connect);gap(page,22);
         section("02  /  显示调节");LinearLayout display=card();display.addView(text("最小宽度",17,INK));gap(display,5);display.addView(text("数值越大，内容越紧凑；不是物理屏幕 DPI。",12,MUTED));gap(display,16);
@@ -138,7 +139,7 @@ public class MainActivity extends Activity {
     private void task(String label,Job job,Runnable success){
         if(busy){renderState();return;}busy=true;statusMessage=label;renderState();
         worker.execute(()->{String error=null;try{job.run();}catch(Exception e){error=e.getMessage()==null?e.toString():e.getMessage();}String err=error;
-            ui.post(()->{if(!alive())return;busy=false;if(err!=null){rootReady=false;snapshot="";densityInFlight=false;note(err);statusMessage=err.split("\n")[0];renderState();}else if(success!=null)success.run();});});
+            ui.post(()->{if(!alive())return;busy=false;pendingAdb=null;pendingInstall=null;if(err!=null){rootReady=false;snapshot="";densityInFlight=false;installVerificationPending=false;note(err);statusMessage=err.split("\n")[0];renderState();}else if(success!=null)success.run();});});
     }
     private void refresh(){
         if(busy)return;
@@ -164,33 +165,46 @@ public class MainActivity extends Activity {
     private void renderState(){
         if(adbSwitch==null)return;binding=true;rootLabel.setText(getString(R.string.root_status,statusMessage));
         if(densityInFlight)getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        boolean adb=Root.section(snapshot,"ADB").matches("[0-9]+")&&Long.parseLong(Root.section(snapshot,"ADB"))>0;adbSwitch.setChecked(adb);adbSwitch.setEnabled(rootReady&&!busy&&!densityInFlight);
+        boolean adb=Root.section(snapshot,"ADB").matches("[0-9]+")&&Long.parseLong(Root.section(snapshot,"ADB"))>0;adbSwitch.setChecked(pendingAdb!=null?pendingAdb:adb);adbSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&!installVerificationPending);
         adbDetail.setText(rootReady?(adb?"已开启 · 连接电脑仍需 RSA 授权":"已关闭 · 无线调试保持原状"):"等待 Root 授权；点击上方状态重试");
-        installSpace=Logic.installNamespace(Root.section(snapshot,"GLOBAL"),Root.section(snapshot,"SECURE"),Root.section(snapshot,"SYSTEM"));
-        String table=installSpace==null?"":Root.section(snapshot,installSpace.toUpperCase(java.util.Locale.ROOT));
-        installSwitch.setChecked(java.util.regex.Pattern.compile("(?m)^adb_install_enabled=1$").matcher(table).find());
-        installSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&installSpace!=null);installSwitch.setAlpha(installSwitch.isEnabled()?1:.35f);
-        installDetail.setText(!rootReady?"等待系统能力检测":installSpace==null?"此系统未暴露可识别的独立开关":"系统独立开关 · "+installSpace+" / adb_install_enabled");
+        installSpace=UsbInstall.backend(snapshot);
+        installSwitch.setChecked(pendingInstall!=null?pendingInstall:"1".equals(UsbInstall.state(snapshot,installSpace)));
+        installSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&!installVerificationPending&&installSpace!=null);installSwitch.setAlpha(installSwitch.isEnabled()?1:.35f);
+        installDetail.setText(!rootReady?"等待系统能力检测":installSpace==null?"此系统未暴露可识别的独立开关":UsbInstall.MIUI.equals(installSpace)?"小米 / HyperOS · 开启时由系统确认":"系统独立开关 · "+installSpace+" / adb_install_enabled");
         densityText=Root.section(snapshot,"DENSITY");int[] size=Logic.size(Root.section(snapshot,"SIZE"));shortPx=Math.min(size[0],size[1]);currentDpi=Logic.lastNumber(densityText,"(?:Physical|Override) density",0);
         densityValue.setText(currentDpi>0?Math.round(shortPx*160f/currentDpi)+" dp  ·  "+currentDpi+" dpi":getResources().getConfiguration().smallestScreenWidthDp+" dp");
         densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));binding=false;
     }
-    private void confirmAdb(boolean on){
-        renderState();if(!rootReady||busy)return;
-        new ManagedDialogBuilder().setTitle(on?"开启 USB 调试？":"关闭 USB 调试？").setMessage(on?"连接电脑时仍需你确认 RSA 授权；不会开启无线调试。":"当前 USB ADB 连接将中断，App 内仍可重新开启。").setNegativeButton("取消",null).setPositiveButton(on?"开启":"关闭",(d,w)->task("切换 USB 调试…",()->{
-            Root.run((on?"settings put global development_settings_enabled 1 && ":"")+"settings put global adb_enabled "+(on?"1":"0"));
-            String actual=Root.run("settings get global adb_enabled");if(!actual.equals(on?"1":"0"))throw new IOException("系统未接受 USB 调试变更");
-            Root.run("if [ -f /data/adb/modules/usb_debug_toggle/status.sh ]; then sh /data/adb/modules/usb_debug_toggle/status.sh update; fi; true");return actual;
-        },()->{note("USB 调试已"+(on?"开启":"关闭"));refresh();})).show();
+    private void switchReady(){statusMessage="Root 已连接   ·   "+Build.MANUFACTURER+" "+Build.MODEL+"   ↻";renderState();}
+    private void changeAdb(boolean on){
+        if(!rootReady||busy||densityInFlight){renderState();return;}
+        pendingAdb=on;
+        task("切换 USB 调试…",()->{
+            String result=Root.run("set -e; "+(on?"settings put global development_settings_enabled 1; ":"")+"settings put global adb_enabled "+(on?"1":"0")+"; printf '__ADB__\\n'; settings get global adb_enabled; printf '__DEV__\\n'; settings get global development_settings_enabled; "+
+                "if [ -f /data/adb/modules/usb_debug_toggle/status.sh ]; then (sh /data/adb/modules/usb_debug_toggle/status.sh update </dev/null >/dev/null 2>&1 &) ; fi");
+            String actual=Root.section(result,"ADB"),dev=Root.section(result,"DEV");
+            if(!actual.equals(on?"1":"0")||!dev.matches("null|[0-9]{1,9}"))throw new IOException("系统未接受 USB 调试变更");
+            snapshot=Logic.replaceSection(Logic.replaceSection(snapshot,"ADB",actual),"DEV",dev);return actual;
+        },()->switchReady());
+    }
+    private boolean installVerificationPending=false;
+    private void refreshInstallAfterVerification(){
+        if(!alive()||!installVerificationPending)return;
+        if(busy){ui.postDelayed(()->refreshInstallAfterVerification(),150);return;}
+        installVerificationPending=false;
+        task("读取 USB 安装状态…",()->{snapshot=UsbInstall.readSnapshot(snapshot,UsbInstall.MIUI);return "";},()->switchReady());
     }
     private void changeInstall(boolean on){
-        String ns=installSpace;renderState();if(ns==null||!rootReady||busy)return;
-        new ManagedDialogBuilder().setTitle(on?"允许通过 USB 安装？":"关闭 USB 安装？").setMessage("仅更改系统已存在的 USB 安装独立开关，不更改安装验证、未知来源或账号限制。").setNegativeButton("取消",null).setPositiveButton("确认",(d,w)->task("设置 USB 安装…",()->{
-            String fresh=Root.run(Root.SNAPSHOT);Root.validate(fresh);
-            if(!ns.equals(Logic.installNamespace(Root.section(fresh,"GLOBAL"),Root.section(fresh,"SECURE"),Root.section(fresh,"SYSTEM"))))throw new IOException("USB 安装能力已变化，请刷新后重试");
-            Root.run("settings put "+ns+" adb_install_enabled "+(on?"1":"0"));String actual=Root.run("settings get "+ns+" adb_install_enabled");
-            if(!actual.equals(on?"1":"0"))throw new IOException("系统未接受 USB 安装变更");return actual;
-        },()->{note("USB 安装设置已更新；实际安装仍受系统策略约束");refresh();})).show();
+        String ns=installSpace;if(ns==null||!rootReady||busy||densityInFlight){renderState();return;}
+        pendingInstall=on;
+        boolean verification=UsbInstall.MIUI.equals(ns)&&on;
+        if(verification)installVerificationPending=true;
+        task(verification?"打开系统 USB 安装流程…":"设置 USB 安装…",()->{
+            // Validate only this backend, not a full display/system/baseline scan.
+            snapshot=UsbInstall.toggleSnapshot(snapshot,ns,on);
+            if(verification)return "pending";
+            if(!UsbInstall.state(snapshot,ns).equals(on?"1":"0"))throw new IOException("系统未接受 USB 安装变更");return "";
+        },()->{switchReady();if(verification&&hasWindowFocus())ui.postDelayed(()->refreshInstallAfterVerification(),200);});
     }
     private void densityDialog(){
         if(!rootReady||busy)return;
@@ -229,17 +243,21 @@ public class MainActivity extends Activity {
     private String restoreSystemCommand(){
         String density=prefs.getString("baseline_density","reset");if(!DensitySession.validDensity(density))throw new IllegalStateException("初始密度记录异常");
         String cmd="wm density "+density;
-        if(prefs.contains("baseline_install"))cmd+=" && "+restoreSetting(prefs.getString("baseline_install_space","global"),"adb_install_enabled",prefs.getString("baseline_install","0"));
+        if(prefs.contains("baseline_install"))cmd+=" && "+UsbInstall.restoreCommand(prefs.getString("baseline_install_space","global"),prefs.getString("baseline_install","0"));
         // Restore developer/ADB last: disabling developer options may disconnect adb shell.
         cmd+=" && "+restoreSetting("global","development_settings_enabled",prefs.getString("baseline_dev","0"))+" && "+restoreSetting("global","adb_enabled",prefs.getString("baseline_adb","0"));
         return cmd;
     }
     private void confirmRestore(){
         if(!rootReady||busy||densityInFlight)return;
+        if(UsbInstall.MIUI.equals(prefs.getString("baseline_install_space",""))&&"1".equals(prefs.getString("baseline_install",""))&&"0".equals(UsbInstall.state(snapshot,UsbInstall.MIUI))){
+            new ManagedDialogBuilder().setTitle("先完成系统 USB 安装确认").setMessage("初始状态为开启。小米系统要求在官方页面确认开启；完成后返回，再恢复其他初始设置。")
+                .setNegativeButton("取消",null).setPositiveButton("打开系统确认",(d,w)->task("打开系统确认…",()->Root.run(UsbInstall.ENABLE),()->{note("完成系统确认后返回，再点击恢复初始设置");refresh();})).show();return;
+        }
         new ManagedDialogBuilder().setTitle("恢复首次使用前的系统设置？").setMessage("恢复首次成功读取的 USB 调试、开发者选项、USB 安装和显示密度。USB 连接可能中断；不会删除图片。").setNegativeButton("取消",null).setPositiveButton("恢复",(d,w)->task("恢复初始设置…",()->{
             Root.run(restoreSystemCommand());String s=Root.run(Root.SNAPSHOT);Root.validate(s);
             if(!Root.section(s,"ADB").equals(prefs.getString("baseline_adb","0"))||!Root.section(s,"DEV").equals(prefs.getString("baseline_dev","0"))||!DensitySession.previous(Root.section(s,"DENSITY")).equals(prefs.getString("baseline_density","reset")))throw new IOException("恢复读回不一致，初始记录仍保留");
-            if(prefs.contains("baseline_install")&&!Root.run("settings get "+prefs.getString("baseline_install_space","global")+" adb_install_enabled").equals(prefs.getString("baseline_install","0")))throw new IOException("USB 安装恢复读回不一致");return "";
+            if(prefs.contains("baseline_install")&&!UsbInstall.read(prefs.getString("baseline_install_space","global")).equals(prefs.getString("baseline_install","0")))throw new IOException("USB 安装恢复读回不一致");return "";
         },()->{note("已恢复首次使用前的设置");refresh();})).show();
     }
     private void pickImage(){try{Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT);i.setType("image/*");i.addCategory(Intent.CATEGORY_OPENABLE);i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);startActivityForResult(i,PICK);}catch(ActivityNotFoundException e){note("请先安装或启用系统文件选择器");}}

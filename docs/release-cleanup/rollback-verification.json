@@ -1,0 +1,8 @@
+{
+  "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/restore-usb-control-history.ps1 -DestinationRoot F:\\Temp\\usb-control-history-restore-96f7785ad72e44a3b89c9eb576dd1dde",
+  "exit": 0,
+  "stdout": "PASS: restored 17 historical files; latest release untouched\n",
+  "rechecked_hashes": 17,
+  "project_historical_packages": 0,
+  "archive_hashes_verified": true
+}

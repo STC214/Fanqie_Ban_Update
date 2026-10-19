@@ -1,0 +1,21 @@
+# Local build products and caches
+/usb_control_app/build/
+/xposed_hook/build/
+**/__pycache__/
+*.py[cod]
+*.idsig
+
+# Keep signing material and machine configuration local
+*.jks
+*.keystore
+.env
+.env.*
+local.properties
+
+# Raw physical-device diagnostics remain local; aggregate reports stay in Git
+/docs/usb-control-audit/**/phone-*.json
+/docs/usb-control-audit/**/phone-*.xml
+/docs/usb-control-audit/final-phone-identity.json
+/docs/usb-control-audit/phone-ui/
+/docs/usb-control-dark-mode/phone-install.json
+/.local/

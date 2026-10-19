@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "version": "1.0.4 / 104",
+  "final_apk_sha256": "aa4a25d98070b7fd7a8c5234c0b94007a28ca23152fd9c80ae2c60b0449898b6",
+  "header": "USB & DISPLAY 「BY STC214」",
+  "measurements": [
+    {
+      "action": "off",
+      "observed_actual_value": false,
+      "host_observed_seconds": 2.651
+    },
+    {
+      "action": "on",
+      "observed_actual_value": true,
+      "host_observed_seconds": 2.56
+    }
+  ],
+  "checks": [
+    "single tap both directions without App confirmation",
+    "actual provider readback",
+    "USB-install original value restored",
+    "ADB, wireless and density unchanged"
+  ],
+  "notes": [
+    "Timing includes host ADB input and provider polling, not isolated application UI frame latency.",
+    "Runtime switch test preceded the text-only credit addition; final uppercase credit verified in final DEX and installed APK hash.",
+    "USB debugging off was not exercised against the active development connection; both handler directions checked structurally without App dialog code."
+  ],
+  "raw_records": ".local/fast-toggle/ (local only)"
+}

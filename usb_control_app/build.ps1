@@ -38,11 +38,11 @@ if (-not (Test-Path -LiteralPath $key)) {
     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
 }
-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.2.apk'
+$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.4.apk'
 Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
 Run "$tools/apksigner.bat" @('verify','--verbose',$release)
 Run "$tools/zipalign.exe" @('-c','4',$release)
 $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
-"$hash  usb-control-v1.0.2.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+"$hash  usb-control-v1.0.4.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
 Write-Output "APK: $release"
 Write-Output "SHA256: $hash"

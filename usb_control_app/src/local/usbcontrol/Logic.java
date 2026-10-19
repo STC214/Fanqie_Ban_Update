@@ -37,7 +37,23 @@ public final class Logic {
         }
         return match;
     }
+    public static String replaceSection(String snapshot,String tag,String value) {
+        if(!tag.matches("[A-Z]+")||value.contains("\n__"))throw new IllegalArgumentException("Invalid state section");
+        String token="__"+tag+"__\n";int i=snapshot.indexOf(token);
+        if(i<0)return snapshot+(snapshot.isEmpty()?"":"\n")+token+value.trim();
+        int start=i+token.length(),end=snapshot.indexOf("\n__",start);
+        return snapshot.substring(0,start)+value.trim()+(end<0?"":snapshot.substring(end));
+    }
     public static float clamp(float v, float min, float max) { return Float.isNaN(v)?min:Math.max(min, Math.min(max, v)); }
+    public static String miuiInstallState(String probe) {
+        // GET's default=false is not evidence of a supported key: require CONTAIN_KEY
+        // and the matching system confirmation component as well as a unique value.
+        if(!Pattern.compile("(?m)^Result: Bundle\\[\\{CONTAIN_KEY=true\\}\\]\\r?$").matcher(probe).find()
+            ||!Pattern.compile("(?m)^com\\.miui\\.securitycenter/com\\.miui\\.permcenter\\.install\\.AdbInstallVerifyActivity\\r?$").matcher(probe).find())return null;
+        Matcher m=Pattern.compile("(?m)^Result: Bundle\\[\\{security_adb_install_enable=(true|false)\\}\\]\\r?$").matcher(probe);
+        if(!m.find())return null;String value="true".equals(m.group(1))?"1":"0";
+        return m.find()?null:value;
+    }
     public static float coverScale(int bw,int bh,int vw,int vh,float zoom) {
         return Math.max(vw/(float)bw, vh/(float)bh) * clamp(zoom, 1f, 4f);
     }

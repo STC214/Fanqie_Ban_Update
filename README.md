@@ -10,9 +10,9 @@
 
 ## 轻控 Android App
 
-独立 App **轻控 1.0.2**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+独立 App **轻控 1.0.4**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
 
-- 安装包：[`releases/usb-control-v1.0.2.apk`](releases/usb-control-v1.0.2.apk)
+- 安装包：[`releases/usb-control-v1.0.4.apk`](releases/usb-control-v1.0.4.apk)
 - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
 - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
 - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
@@ -284,3 +284,14 @@ FanqieBlocker: hooks active in com.dragon.read
 ### 外观模式（1.0.2）
 在「03 / 你的风格」中选择「外观模式」：跟随系统（默认）、浅色、暗色。选择自动记忆；暗色同时适配卡片、文字、系统栏、弹窗及背景透明度预览，不改变图片原色、裁剪位置或透明度。
 暗色模式验证记录：`docs/usb-control-dark-mode/`。
+
+### USB 安装兼容性（1.0.3）
+新增 Xiaomi / MIUI / HyperOS 安全中心接口适配：读取真实开关状态，关闭后读回核对；开启时进入系统原有验证页面，完成或取消后返回自动刷新。没有对应接口的系统继续置灰；标准设置键适配保留。恢复初始开启状态同样遵循系统确认，不改动账号、安装验证、未知来源或 USB 调试安全设置。
+验证与回滚见 `docs/usb-control-usb-install/`。
+
+### 直接切换（1.0.4）
+USB 调试和 USB 安装的开启、关闭均取消 App 二次确认；点击立即显示处理中状态，核对系统读回后完成。切换仅读取相关状态，避免重复全量扫描和恢复文件写入；小米系统自身的开启验证流程保留。密度预览、还原设置、删除背景等其他确认不变。
+验证记录：`docs/usb-control-fast-toggle/`。
+
+### 安装包保留策略
+轻控仅保留最新版 `releases/usb-control-v1.0.4.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。

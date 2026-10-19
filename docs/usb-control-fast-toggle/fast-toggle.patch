@@ -1,0 +1,305 @@
+--- a/usb_control_app/AndroidManifest.xml
++++ b/usb_control_app/AndroidManifest.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="103" android:versionName="1.0.3">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="104" android:versionName="1.0.4">
+     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+     <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+         <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:windowSoftInputMode="adjustResize">
+--- a/usb_control_app/build.ps1
++++ b/usb_control_app/build.ps1
+@@ -38,11 +38,11 @@
+     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
+     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
+ }
+-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.3.apk'
++$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.4.apk'
+ Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
+ Run "$tools/apksigner.bat" @('verify','--verbose',$release)
+ Run "$tools/zipalign.exe" @('-c','4',$release)
+ $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
+-"$hash  usb-control-v1.0.3.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
++"$hash  usb-control-v1.0.4.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+ Write-Output "APK: $release"
+ Write-Output "SHA256: $hash"
+--- a/usb_control_app/README.md
++++ b/usb_control_app/README.md
+@@ -1,10 +1,10 @@
+-# 轻控 1.0.3
++# 轻控 1.0.4
+ 
+ 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
+ 
+ ## 安装
+ 
+-安装 `../releases/usb-control-v1.0.3.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
++安装 `../releases/usb-control-v1.0.4.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+ 
+ 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
+ 
+@@ -59,7 +59,7 @@
+ 
+ 需 JDK 21（编译 Java 8 字节码）、Android SDK Platform 36、Build Tools 35.0.0。也可通过 `ANDROID_SDK_ROOT` 指定 SDK。无需 Gradle 或下载应用依赖。构建前校验构建路径并清理生成目录，避免旧 class 混入。
+ 
+-输出 `releases/usb-control-v1.0.3.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
++输出 `releases/usb-control-v1.0.4.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
+ 
+ ## 验证
+ 
+@@ -76,3 +76,7 @@
+ ### USB 安装兼容性（1.0.3）
+ 新增 Xiaomi / MIUI / HyperOS 安全中心接口适配：读取真实开关状态，关闭后读回核对；开启时进入系统原有验证页面，完成或取消后返回自动刷新。没有对应接口的系统继续置灰；标准设置键适配保留。恢复初始开启状态同样遵循系统确认，不改动账号、安装验证、未知来源或 USB 调试安全设置。
+ 验证与回滚见 `../docs/usb-control-usb-install/`。
++
++### 直接切换（1.0.4）
++USB 调试和 USB 安装的开启、关闭均取消 App 二次确认；点击立即显示处理中状态，核对系统读回后完成。切换仅读取相关状态，避免重复全量扫描和恢复文件写入；小米系统自身的开启验证流程保留。密度预览、还原设置、删除背景等其他确认不变。
++验证记录：`../docs/usb-control-fast-toggle/`。
+--- /dev/null
++++ b/usb_control_app/tests/fast_toggle_phone.py
+@@ -0,0 +1,27 @@
++"""Direct USB-install smoke test for the observed 1080x2400 / 420-dpi phone layout."""
++from pathlib import Path
++import subprocess,shlex,time,json,argparse,struct
++p=argparse.ArgumentParser();p.add_argument('--serial',required=True);a=p.parse_args()
++out=Path('.local/fast-toggle');out.mkdir(parents=True,exist_ok=True);adb=['adb','-s',a.serial];records=[]
++def run(args,binary=False):
++ r=subprocess.run(adb+args,capture_output=True,timeout=30);records.append(dict(command=subprocess.list2cmdline(adb+args),exit=r.returncode,stdout='<PNG>' if binary else r.stdout.decode('utf-8','replace'),stderr=r.stderr.decode('utf-8','replace')));(out/'commands.json').write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding='utf-8');assert r.returncode==0,records[-1];return r.stdout
++get='content call --uri content://com.miui.securitycenter.remoteprovider --method callPreference --arg GET --extra type:i:1 --extra key:s:security_adb_install_enable --extra default:b:false'
++def read():
++ value=run(['shell','su -c '+shlex.quote(get)]).decode();assert 'enable=true' in value or 'enable=false' in value;return 'enable=true' in value
++before=read();density=run(['shell','wm','density']);assert b'Override density: 420' in density
++adb_before=run(['shell','settings','get','global','adb_enabled']);wifi_before=run(['shell','settings','get','global','adb_wifi_enabled'])
++run(['shell','am','start','-n','local.usbcontrol/.MainActivity']);time.sleep(4)
++png=run(['exec-out','screencap','-p'],True);assert struct.unpack_from('>II',png,16)==(1080,2400),'Layout differs: do not use fixed touch coordinates'
++for expected in [not before,before]:
++ start=time.perf_counter();run(['shell','su -c '+shlex.quote('input tap 930 1083')]);deadline=time.monotonic()+50
++ while time.monotonic()<deadline:
++  if read()==expected:break
++  time.sleep(.2)
++ else:raise AssertionError('Value unchanged: check the official system flow and restore the original state in App')
++ seconds=round(time.perf_counter()-start,3);records.append(dict(action='on' if expected else 'off',observed_actual_value=expected,host_observed_seconds=seconds));print('PASS:',records[-1],flush=True)
++ time.sleep(2);(out/('on.png' if expected else 'off.png')).write_bytes(run(['exec-out','screencap','-p'],True))
++ run(['shell','am','start','-n','local.usbcontrol/.MainActivity']);time.sleep(3)
++assert read()==before
++assert run(['shell','wm','density'])==density;assert run(['shell','settings','get','global','adb_enabled'])==adb_before;assert run(['shell','settings','get','global','adb_wifi_enabled'])==wifi_before
++records.append(dict(result='PASS',checks=['single tap both directions without App confirmation','actual provider readback','USB-install original value restored','ADB, wireless and density unchanged']))
++(out/'commands.json').write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding='utf-8');print('PASS: direct switches and original state restored')
+--- a/usb_control_app/tests/LogicTest.java
++++ b/usb_control_app/tests/LogicTest.java
+@@ -23,6 +23,12 @@
+         check(Logic.miuiInstallState(miui+"\nResult: Bundle[{security_adb_install_enable=false}]")==null,"reject ambiguous MIUI values");
+         check(Logic.miuiInstallState("")==null,"other ROM unaffected");
+         check("1".equals(Logic.miuiInstallState(miui.replace("\n","\r\n"))),"support CRLF transport");
++        String sections="__ADB__\n0\n__DEV__\n1\n__MIUI__\nprovider";
++        check(Logic.replaceSection(sections,"ADB","1").equals("__ADB__\n1\n__DEV__\n1\n__MIUI__\nprovider"),"fast readback replaces only target section");
++        check(Logic.replaceSection(sections,"MIUI","new").endsWith("__MIUI__\nnew"),"replace terminal vendor readback");
++        check(Logic.replaceSection("","ADB","1").equals("__ADB__\n1"),"append initial readback");
++        check(Logic.replaceSection(sections,"EXTRA","x").endsWith("\n__EXTRA__\nx"),"append new readback");
++        boolean unsafe=false;try{Logic.replaceSection(sections,"ADB","1\n__DEV__\n0");}catch(IllegalArgumentException e){unsafe=true;}check(unsafe,"reject section delimiter in state");
+         check(Logic.lastNumber("Physical density: 420\nOverride density: 360","(?:Physical|Override) density",0)==360,"override density");
+         check(Logic.lastNumber("Physical density: 420","Override density",0)==0,"default reset");
+         int[] size=Logic.size("Physical size: 1080x2400\nOverride size: 900x2000");
+--- a/usb_control_app/tests/UsbInstallTest.java
++++ b/usb_control_app/tests/UsbInstallTest.java
+@@ -19,6 +19,9 @@
+   String off=UsbInstall.writeCommand("miui",false),on=UsbInstall.writeCommand("miui",true);
+   check(off.contains("--arg SET")&&off.contains("--extra value:b:false"),"vendor uses supported disable API");
+   check(on.contains("am start")&&on.contains("AdbInstallVerifyActivity"),"enable routes to official activity");
++  check(UsbInstall.toggleCommand("miui",false).contains("CONTAIN_KEY"),"fast toggle checks key before writing");
++  check(UsbInstall.toggleCommand("global",true).contains("case \"$old\" in 0|1)"),"fast standard path rejects missing keys");
++  check(UsbInstall.toggleCommand("miui",true).contains("AdbInstallVerifyActivity")&&!UsbInstall.toggleCommand("miui",true).contains("value:b:true"),"fast enable preserves official validation");
+   check(!on.contains("--arg SET")&&!on.contains("setprop")&&!on.contains("sed "),"no forced enable or XML edit");
+   check(UsbInstall.restoreCommand("miui","1").contains("AdbInstallVerifyActivity"),"enabled baseline keeps official confirmation");
+   check(UsbInstall.restoreCommand("miui","0").contains("--extra value:b:false"),"disabled baseline restore");
+--- a/usb_control_app/src/local/usbcontrol/Logic.java
++++ b/usb_control_app/src/local/usbcontrol/Logic.java
+@@ -37,6 +37,13 @@
+         }
+         return match;
+     }
++    public static String replaceSection(String snapshot,String tag,String value) {
++        if(!tag.matches("[A-Z]+")||value.contains("\n__"))throw new IllegalArgumentException("Invalid state section");
++        String token="__"+tag+"__\n";int i=snapshot.indexOf(token);
++        if(i<0)return snapshot+(snapshot.isEmpty()?"":"\n")+token+value.trim();
++        int start=i+token.length(),end=snapshot.indexOf("\n__",start);
++        return snapshot.substring(0,start)+value.trim()+(end<0?"":snapshot.substring(end));
++    }
+     public static float clamp(float v, float min, float max) { return Float.isNaN(v)?min:Math.max(min, Math.min(max, v)); }
+     public static String miuiInstallState(String probe) {
+         // GET's default=false is not evidence of a supported key: require CONTAIN_KEY
+--- a/usb_control_app/src/local/usbcontrol/MainActivity.java
++++ b/usb_control_app/src/local/usbcontrol/MainActivity.java
+@@ -58,6 +58,7 @@
+     private DensitySession densitySession;
+     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
+     private boolean rootReady=false,busy=false,binding=false,densityInFlight=false;
++    private Boolean pendingAdb,pendingInstall;
+     private int shortPx,currentDpi;
+     private interface Job { String run() throws Exception; }
+     private int dp(float n){return Math.round(n*getResources().getDisplayMetrics().density);}
+@@ -74,7 +75,7 @@
+         build();
+         imageWorker.execute(()->{File file=BackgroundStore.selected(getFilesDir(),prefs);if(!file.exists())return;try{Bitmap loaded=BackgroundStore.decode(getContentResolver(),Uri.fromFile(file));ui.post(()->{if(alive()){wallpaper=loaded;build();}});}catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive())note("背景损坏或内存不足，已使用默认底色；可重新选择图片");});}});
+     }
+-    @Override protected void onResume(){super.onResume();if(!densityInFlight)refresh();}
++    @Override protected void onResume(){super.onResume();if(installVerificationPending)ui.postDelayed(()->refreshInstallAfterVerification(),200);else if(!densityInFlight)refresh();}
+     @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);if(dialogs.isEmpty())applyAppearance();build();if(!busy)renderState();}
+     private boolean alive(){return !isFinishing()&&!isDestroyed();}
+     private final class ManagedDialogBuilder extends AlertDialog.Builder {
+@@ -96,8 +97,8 @@
+         LinearLayout header=new LinearLayout(themed);header.setGravity(Gravity.CENTER_VERTICAL);
+         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
+         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
+-        LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+-        TextView version=text("1.0.3",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
++        LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
++        TextView version=text("1.0.4",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
+         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
+         section("01  /  连接控制");
+@@ -105,7 +106,7 @@
+         adbSwitch=toggle(connect,"USB 调试","检查系统状态…",true);adbDetail=(TextView)adbSwitch.getTag();
+         View line=new View(themed);line.setBackgroundColor(LINE);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(1));lp.setMargins(0,dp(16),0,dp(16));connect.addView(line,lp);
+         installSwitch=toggle(connect,"USB 安装","检测此系统是否提供独立开关",false);installDetail=(TextView)installSwitch.getTag();
+-        adbSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)confirmAdb(on);});
++        adbSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)changeAdb(on);});
+         installSwitch.setOnCheckedChangeListener((b,on)->{if(!binding)changeInstall(on);});
+         page.addView(connect);gap(page,22);
+         section("02  /  显示调节");LinearLayout display=card();display.addView(text("最小宽度",17,INK));gap(display,5);display.addView(text("数值越大，内容越紧凑；不是物理屏幕 DPI。",12,MUTED));gap(display,16);
+@@ -138,7 +139,7 @@
+     private void task(String label,Job job,Runnable success){
+         if(busy){renderState();return;}busy=true;statusMessage=label;renderState();
+         worker.execute(()->{String error=null;try{job.run();}catch(Exception e){error=e.getMessage()==null?e.toString():e.getMessage();}String err=error;
+-            ui.post(()->{if(!alive())return;busy=false;if(err!=null){rootReady=false;snapshot="";densityInFlight=false;note(err);statusMessage=err.split("\n")[0];renderState();}else if(success!=null)success.run();});});
++            ui.post(()->{if(!alive())return;busy=false;pendingAdb=null;pendingInstall=null;if(err!=null){rootReady=false;snapshot="";densityInFlight=false;installVerificationPending=false;note(err);statusMessage=err.split("\n")[0];renderState();}else if(success!=null)success.run();});});
+     }
+     private void refresh(){
+         if(busy)return;
+@@ -164,34 +165,46 @@
+     private void renderState(){
+         if(adbSwitch==null)return;binding=true;rootLabel.setText(getString(R.string.root_status,statusMessage));
+         if(densityInFlight)getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+-        boolean adb=Root.section(snapshot,"ADB").matches("[0-9]+")&&Long.parseLong(Root.section(snapshot,"ADB"))>0;adbSwitch.setChecked(adb);adbSwitch.setEnabled(rootReady&&!busy&&!densityInFlight);
++        boolean adb=Root.section(snapshot,"ADB").matches("[0-9]+")&&Long.parseLong(Root.section(snapshot,"ADB"))>0;adbSwitch.setChecked(pendingAdb!=null?pendingAdb:adb);adbSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&!installVerificationPending);
+         adbDetail.setText(rootReady?(adb?"已开启 · 连接电脑仍需 RSA 授权":"已关闭 · 无线调试保持原状"):"等待 Root 授权；点击上方状态重试");
+         installSpace=UsbInstall.backend(snapshot);
+-        installSwitch.setChecked("1".equals(UsbInstall.state(snapshot,installSpace)));
+-        installSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&installSpace!=null);installSwitch.setAlpha(installSwitch.isEnabled()?1:.35f);
++        installSwitch.setChecked(pendingInstall!=null?pendingInstall:"1".equals(UsbInstall.state(snapshot,installSpace)));
++        installSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&!installVerificationPending&&installSpace!=null);installSwitch.setAlpha(installSwitch.isEnabled()?1:.35f);
+         installDetail.setText(!rootReady?"等待系统能力检测":installSpace==null?"此系统未暴露可识别的独立开关":UsbInstall.MIUI.equals(installSpace)?"小米 / HyperOS · 开启时由系统确认":"系统独立开关 · "+installSpace+" / adb_install_enabled");
+         densityText=Root.section(snapshot,"DENSITY");int[] size=Logic.size(Root.section(snapshot,"SIZE"));shortPx=Math.min(size[0],size[1]);currentDpi=Logic.lastNumber(densityText,"(?:Physical|Override) density",0);
+         densityValue.setText(currentDpi>0?Math.round(shortPx*160f/currentDpi)+" dp  ·  "+currentDpi+" dpi":getResources().getConfiguration().smallestScreenWidthDp+" dp");
+         densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));binding=false;
+     }
+-    private void confirmAdb(boolean on){
+-        renderState();if(!rootReady||busy)return;
+-        new ManagedDialogBuilder().setTitle(on?"开启 USB 调试？":"关闭 USB 调试？").setMessage(on?"连接电脑时仍需你确认 RSA 授权；不会开启无线调试。":"当前 USB ADB 连接将中断，App 内仍可重新开启。").setNegativeButton("取消",null).setPositiveButton(on?"开启":"关闭",(d,w)->task("切换 USB 调试…",()->{
+-            Root.run((on?"settings put global development_settings_enabled 1 && ":"")+"settings put global adb_enabled "+(on?"1":"0"));
+-            String actual=Root.run("settings get global adb_enabled");if(!actual.equals(on?"1":"0"))throw new IOException("系统未接受 USB 调试变更");
+-            Root.run("if [ -f /data/adb/modules/usb_debug_toggle/status.sh ]; then sh /data/adb/modules/usb_debug_toggle/status.sh update; fi; true");return actual;
+-        },()->{note("USB 调试已"+(on?"开启":"关闭"));refresh();})).show();
++    private void switchReady(){statusMessage="Root 已连接   ·   "+Build.MANUFACTURER+" "+Build.MODEL+"   ↻";renderState();}
++    private void changeAdb(boolean on){
++        if(!rootReady||busy||densityInFlight){renderState();return;}
++        pendingAdb=on;
++        task("切换 USB 调试…",()->{
++            String result=Root.run("set -e; "+(on?"settings put global development_settings_enabled 1; ":"")+"settings put global adb_enabled "+(on?"1":"0")+"; printf '__ADB__\\n'; settings get global adb_enabled; printf '__DEV__\\n'; settings get global development_settings_enabled; "+
++                "if [ -f /data/adb/modules/usb_debug_toggle/status.sh ]; then (sh /data/adb/modules/usb_debug_toggle/status.sh update </dev/null >/dev/null 2>&1 &) ; fi");
++            String actual=Root.section(result,"ADB"),dev=Root.section(result,"DEV");
++            if(!actual.equals(on?"1":"0")||!dev.matches("null|[0-9]{1,9}"))throw new IOException("系统未接受 USB 调试变更");
++            snapshot=Logic.replaceSection(Logic.replaceSection(snapshot,"ADB",actual),"DEV",dev);return actual;
++        },()->switchReady());
++    }
++    private boolean installVerificationPending=false;
++    private void refreshInstallAfterVerification(){
++        if(!alive()||!installVerificationPending)return;
++        if(busy){ui.postDelayed(()->refreshInstallAfterVerification(),150);return;}
++        installVerificationPending=false;
++        task("读取 USB 安装状态…",()->{snapshot=UsbInstall.readSnapshot(snapshot,UsbInstall.MIUI);return "";},()->switchReady());
+     }
+     private void changeInstall(boolean on){
+-        String ns=installSpace;renderState();if(ns==null||!rootReady||busy)return;
+-        new ManagedDialogBuilder().setTitle(on?"允许通过 USB 安装？":"关闭 USB 安装？").setMessage("仅更改系统已存在的 USB 安装独立开关，不更改安装验证、未知来源或账号限制。").setNegativeButton("取消",null).setPositiveButton("确认",(d,w)->task("设置 USB 安装…",()->{
+-            String fresh=Root.run(Root.SNAPSHOT);Root.validate(fresh);
+-            if(!ns.equals(UsbInstall.backend(fresh)))throw new IOException("USB 安装能力已变化，请刷新后重试");
+-            Root.run(UsbInstall.writeCommand(ns,on));
+-            if(UsbInstall.MIUI.equals(ns)&&on)return "pending";
+-            String actual=UsbInstall.read(ns);
+-            if(!actual.equals(on?"1":"0"))throw new IOException("系统未接受 USB 安装变更");return actual;
+-        },()->{note(UsbInstall.MIUI.equals(ns)&&on?"已打开系统验证页；完成或取消后返回，自动读取实际状态":"USB 安装设置已更新；实际安装仍受系统策略约束");refresh();})).show();
++        String ns=installSpace;if(ns==null||!rootReady||busy||densityInFlight){renderState();return;}
++        pendingInstall=on;
++        boolean verification=UsbInstall.MIUI.equals(ns)&&on;
++        if(verification)installVerificationPending=true;
++        task(verification?"打开系统 USB 安装流程…":"设置 USB 安装…",()->{
++            // Validate only this backend, not a full display/system/baseline scan.
++            snapshot=UsbInstall.toggleSnapshot(snapshot,ns,on);
++            if(verification)return "pending";
++            if(!UsbInstall.state(snapshot,ns).equals(on?"1":"0"))throw new IOException("系统未接受 USB 安装变更");return "";
++        },()->{switchReady();if(verification&&hasWindowFocus())ui.postDelayed(()->refreshInstallAfterVerification(),200);});
+     }
+     private void densityDialog(){
+         if(!rootReady||busy)return;
+--- a/usb_control_app/src/local/usbcontrol/UsbInstall.java
++++ b/usb_control_app/src/local/usbcontrol/UsbInstall.java
+@@ -37,6 +37,35 @@
+         if(MIUI.equals(backend))return on?ENABLE:CALL+"SET"+EXTRAS+" --extra value:b:false";
+         return "settings put "+backend+" adb_install_enabled "+(on?"1":"0");
+     }
++    static String readSnapshot(String snapshot,String backend)throws Exception {
++        if(!validBackend(backend))throw new IOException("USB 安装接口未识别");
++        if(MIUI.equals(backend)){
++            String probe=Root.run(PROBE);
++            if(Logic.miuiInstallState(probe)==null)throw new IOException("USB 安装接口已变化，请刷新后重试");
++            return Logic.replaceSection(snapshot,"MIUI",probe);
++        }
++        return Logic.replaceSection(snapshot,backend.toUpperCase(java.util.Locale.ROOT),"adb_install_enabled="+read(backend));
++    }
++    static String toggleCommand(String backend,boolean on){
++        if(!validBackend(backend))throw new IllegalArgumentException("USB 安装接口异常");
++        if(MIUI.equals(backend)){
++            String guard="[ \"$("+CALL+"CONTAIN_KEY"+EXTRAS+")\" = 'Result: Bundle[{CONTAIN_KEY=true}]' ]";
++            return "set -e; "+guard+"; "+writeCommand(backend,on)+(on?"":"; "+PROBE);
++        }
++        return "set -e; old=$(settings get "+backend+" adb_install_enabled); case \"$old\" in 0|1) ;; *) exit 2;; esac; "+
++            writeCommand(backend,on)+"; settings get "+backend+" adb_install_enabled";
++    }
++    static String toggleSnapshot(String snapshot,String backend,boolean on)throws Exception {
++        String output=Root.run(toggleCommand(backend,on));
++        if(MIUI.equals(backend)&&on){
++            if(output.contains("Error:")||output.contains("Exception"))throw new IOException("系统 USB 安装流程启动失败");
++            return snapshot; // Await real provider readback on return, never assume enabled.
++        }
++        String value=MIUI.equals(backend)?Logic.miuiInstallState(output):output;
++        if(!(on?"1":"0").equals(value))throw new IOException("系统未接受 USB 安装变更");
++        return Logic.replaceSection(snapshot,MIUI.equals(backend)?"MIUI":backend.toUpperCase(java.util.Locale.ROOT),
++            MIUI.equals(backend)?output:"adb_install_enabled="+value);
++    }
+     static String verifyCommand(String backend,String value){
+         if(!validBackend(backend)||!value.matches("[01]"))throw new IllegalArgumentException("USB 安装恢复记录异常");
+         String get=MIUI.equals(backend)?CALL+"GET"+EXTRAS+" --extra default:b:false":"settings get "+backend+" adb_install_enabled";
+--- a/README.md
++++ b/README.md
+@@ -10,9 +10,9 @@
+ 
+ ## 轻控 Android App
+ 
+-独立 App **轻控 1.0.3**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+-
+-- 安装包：[`releases/usb-control-v1.0.3.apk`](releases/usb-control-v1.0.3.apk)
++独立 App **轻控 1.0.4**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
++
++- 安装包：[`releases/usb-control-v1.0.4.apk`](releases/usb-control-v1.0.4.apk)
+ - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
+ - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+ - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+@@ -288,3 +288,7 @@
+ ### USB 安装兼容性（1.0.3）
+ 新增 Xiaomi / MIUI / HyperOS 安全中心接口适配：读取真实开关状态，关闭后读回核对；开启时进入系统原有验证页面，完成或取消后返回自动刷新。没有对应接口的系统继续置灰；标准设置键适配保留。恢复初始开启状态同样遵循系统确认，不改动账号、安装验证、未知来源或 USB 调试安全设置。
+ 验证与回滚见 `docs/usb-control-usb-install/`。
++
++### 直接切换（1.0.4）
++USB 调试和 USB 安装的开启、关闭均取消 App 二次确认；点击立即显示处理中状态，核对系统读回后完成。切换仅读取相关状态，避免重复全量扫描和恢复文件写入；小米系统自身的开启验证流程保留。密度预览、还原设置、删除背景等其他确认不变。
++验证记录：`docs/usb-control-fast-toggle/`。

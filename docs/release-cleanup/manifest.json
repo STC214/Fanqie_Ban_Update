@@ -1,0 +1,91 @@
+﻿{
+    "retained":  "releases/usb-control-v1.0.4.apk",
+    "archived_count":  17,
+    "files":  [
+                  {
+                      "path":  "docs/usb-control-audit/baseline/releases/usb-control-v1.0.0.apk",
+                      "sha256":  "92F32FB2318BC935A4A473671B8AC8655248D91B8F08B91C3D66B3ABF7708F32",
+                      "bytes":  979510
+                  },
+                  {
+                      "path":  "docs/usb-control-audit/baseline/releases/usb-control-v1.0.0.apk.sha256",
+                      "sha256":  "D06630F29357A3EEFD2AD55A43EF581E1D10D824693710BDDA55DB15081DE95F",
+                      "bytes":  90
+                  },
+                  {
+                      "path":  "docs/usb-control-dark-mode/baseline/releases/usb-control-v1.0.1.apk",
+                      "sha256":  "9BC30E10132746CFCC9CDBC6D591C3D84AEC6E4F698BB2496F3E9C635048905D",
+                      "bytes":  992034
+                  },
+                  {
+                      "path":  "docs/usb-control-fast-toggle/baseline/releases/usb-control-v1.0.3.apk",
+                      "sha256":  "1D1BFC24FE1B2CBDC2C47F0F96986F06736505008E718654C5147F608311ED3D",
+                      "bytes":  996130
+                  },
+                  {
+                      "path":  "docs/usb-control-usb-install/baseline/releases/usb-control-v1.0.2.apk",
+                      "sha256":  "826FCD2CB172A640B520F15067EB978AA0DC1B5BF42F329D00AF00E84213A41C",
+                      "bytes":  992034
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.0.apk",
+                      "sha256":  "92F32FB2318BC935A4A473671B8AC8655248D91B8F08B91C3D66B3ABF7708F32",
+                      "bytes":  979510
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.0.apk.idsig",
+                      "sha256":  "D85E34E57043BB3341D1C1F7249C22CF4BB3809E7A18024FAF8DC263E2DB0586",
+                      "bytes":  13705
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.0.apk.sha256",
+                      "sha256":  "D06630F29357A3EEFD2AD55A43EF581E1D10D824693710BDDA55DB15081DE95F",
+                      "bytes":  90
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.1.apk",
+                      "sha256":  "9BC30E10132746CFCC9CDBC6D591C3D84AEC6E4F698BB2496F3E9C635048905D",
+                      "bytes":  992034
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.1.apk.idsig",
+                      "sha256":  "CD245F7C5BD8F252349038594F8D4E6EC3167E8B9A72D4361BF6B912740DFB96",
+                      "bytes":  13705
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.1.apk.sha256",
+                      "sha256":  "694B7FA8537FC45F7A5401FC328F121ACDDCD4607F4546203633D00E0078B9EC",
+                      "bytes":  90
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.2.apk",
+                      "sha256":  "826FCD2CB172A640B520F15067EB978AA0DC1B5BF42F329D00AF00E84213A41C",
+                      "bytes":  992034
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.2.apk.idsig",
+                      "sha256":  "4CBD13A7D439B1D44BE53614F4629F3019FC53149508DC70750BBBEFDF643781",
+                      "bytes":  13705
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.2.apk.sha256",
+                      "sha256":  "342578567B8EC6CDE909C40BFB913171982475B8F49EF3582BD8506FD07DBE68",
+                      "bytes":  90
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.3.apk",
+                      "sha256":  "1D1BFC24FE1B2CBDC2C47F0F96986F06736505008E718654C5147F608311ED3D",
+                      "bytes":  996130
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.3.apk.idsig",
+                      "sha256":  "5E2A11CC0168CD3F33DBBBC2139EFA61934F30E477BED7E1E6C459033082C5F1",
+                      "bytes":  13705
+                  },
+                  {
+                      "path":  "releases/usb-control-v1.0.3.apk.sha256",
+                      "sha256":  "02BF1FBCAAD64A69A3265D843B1A91490E456D7AF76819FC50E5F5C182E34E78",
+                      "bytes":  90
+                  }
+              ]
+}

@@ -41,7 +41,8 @@ final class Root {
         "printf '__SIZE__\\n'; wm size; printf '__DENSITY__\\n'; wm density; " +
         "printf '__GLOBAL__\\n'; v=$(settings get global adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
         "printf '__SECURE__\\n'; v=$(settings get secure adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
-        "printf '__SYSTEM__\\n'; v=$(settings get system adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"";
+        "printf '__SYSTEM__\\n'; v=$(settings get system adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
+        "printf '__MIUI__\\n'; "+UsbInstall.PROBE;
     static void validate(String s)throws IOException {
         for(String tag:new String[]{"UID","ADB","DEV","SIZE","DENSITY","GLOBAL","SECURE","SYSTEM"})
             if(!s.contains("__"+tag+"__\n"))throw new IOException("系统状态返回不完整："+tag);

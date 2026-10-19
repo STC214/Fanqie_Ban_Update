@@ -1,0 +1,67 @@
+[
+  {
+    "path": "usb_control_app/AndroidManifest.xml",
+    "baseline": "2ee7553db4d41e6b045fe14b717f7408cc2b691d98493a7c9e144c089a8952b0",
+    "modified": "98016c2c1827e863833d9496e15127faa3fcfe13f5a37cd93dd42b0c8dc3c7c0"
+  },
+  {
+    "path": "usb_control_app/build.ps1",
+    "baseline": "7bd2c2814177abd251bdef5617ed0dedee638cc04b651240088ec8e751e49cb3",
+    "modified": "1c157319be81e3aba61640762b8647b5318b0eba0d42fc5b15b5aed8671620e5"
+  },
+  {
+    "path": "usb_control_app/README.md",
+    "baseline": "5584be471b8774ede693ee7b27e50498e4003ace38c5b385ce45b4de0125e43b",
+    "modified": "86adf589727d22aae8395c651dfdc8dcc199e36fd00dc1ba621815aa2ec0aa2f"
+  },
+  {
+    "path": "usb_control_app/tests/LogicTest.java",
+    "baseline": "58da134913a822791be49fab0d57dae9313f0327723efc72b73a3e51abb4745e",
+    "modified": "24ff71bf70b45d09475ff07d4921b497410dad0c2b0d24c7a1b19d01acbc1c46"
+  },
+  {
+    "path": "usb_control_app/tests/UsbInstallTest.java",
+    "baseline": null,
+    "modified": "ef428b5ee4de950d341a08cb64a13f117c9b483fac1eed8405cd083797848d71"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/Baseline.java",
+    "baseline": "effd5719edadaa77728673cad2d9d519dec62bcc48ec4279649834174f255964",
+    "modified": "8fbe86653c7581d9538c7e30d93b30c9b86fd5ba231d93b88bb476fe339e6fb9"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/Logic.java",
+    "baseline": "d3ec775d1f77571bd4fbb825ffdb8216f3b3bb7857f3775f6de6b8d40dfc0434",
+    "modified": "4bb1692154d3788ecb48849d60e4e67b24dc9bdcc93ccc3b3c176e883a1cf7c7"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/MainActivity.java",
+    "baseline": "f15852408303acaf2b1d372abaa76e1c203c590d829c82e17a27311a928b1581",
+    "modified": "e241617b9ba608cd03f1b72b8bf2cbc9dd4fc214b8504f44afe4dfedcd4fd21b"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/RecoveryScript.java",
+    "baseline": "e4e798af94457132640599886509be5f34e54f6a8a7251c8f0e1e406748823eb",
+    "modified": "03fb3c582c15280406ac925f8ab5a9253c0e85b5b18f9a6f47943e215f9afd48"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/Root.java",
+    "baseline": "aaa69e6b276ae0e32cb78bb6bcabfa13a4ac2b750b5b792a9f11a73c2b25342c",
+    "modified": "05dea6c8eb51601288b176f569a5fc4583c36835a9a83bc32a90211ff9966efa"
+  },
+  {
+    "path": "usb_control_app/src/local/usbcontrol/UsbInstall.java",
+    "baseline": null,
+    "modified": "06c8aea7653e691c1ee06b1b9609affdf0efc91ec4046dce63a447887b47ec75"
+  },
+  {
+    "path": "README.md",
+    "baseline": "b984e62b4668f503396abd4e1d8b8d61d250dcbf4b5887240f8473d7cea14678",
+    "modified": "491b9dc28311125a6c13621bbc2d2a13962b5e3c167a92466ef7b94fb816a266"
+  },
+  {
+    "path": ".gitignore",
+    "baseline": "be231b5f840fd8af5f6d2736627587fce0f6127837587be3a8246abc9065b6c6",
+    "modified": "bd8c9e5eb3e3b317ed6910c7d0f636e94826b1d3dcc1f26a59500eb9f957e8a8"
+  }
+]

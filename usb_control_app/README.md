@@ -1,10 +1,10 @@
-# 轻控 1.0.2
+# 轻控 1.0.4
 
 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
 
 ## 安装
 
-安装 `../releases/usb-control-v1.0.2.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+安装 `../releases/usb-control-v1.0.4.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
 
 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
 
@@ -59,7 +59,7 @@ su -c 'sh /data/user/0/local.usbcontrol/files/restore-system.sh'
 
 需 JDK 21（编译 Java 8 字节码）、Android SDK Platform 36、Build Tools 35.0.0。也可通过 `ANDROID_SDK_ROOT` 指定 SDK。无需 Gradle 或下载应用依赖。构建前校验构建路径并清理生成目录，避免旧 class 混入。
 
-输出 `releases/usb-control-v1.0.2.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
+输出 `releases/usb-control-v1.0.4.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
 
 ## 验证
 
@@ -72,3 +72,11 @@ su -c 'sh /data/user/0/local.usbcontrol/files/restore-system.sh'
 ### 外观模式（1.0.2）
 在「03 / 你的风格」中选择「外观模式」：跟随系统（默认）、浅色、暗色。选择自动记忆；暗色同时适配卡片、文字、系统栏、弹窗及背景透明度预览，不改变图片原色、裁剪位置或透明度。
 暗色模式验证记录：`../docs/usb-control-dark-mode/`。
+
+### USB 安装兼容性（1.0.3）
+新增 Xiaomi / MIUI / HyperOS 安全中心接口适配：读取真实开关状态，关闭后读回核对；开启时进入系统原有验证页面，完成或取消后返回自动刷新。没有对应接口的系统继续置灰；标准设置键适配保留。恢复初始开启状态同样遵循系统确认，不改动账号、安装验证、未知来源或 USB 调试安全设置。
+验证与回滚见 `../docs/usb-control-usb-install/`。
+
+### 直接切换（1.0.4）
+USB 调试和 USB 安装的开启、关闭均取消 App 二次确认；点击立即显示处理中状态，核对系统读回后完成。切换仅读取相关状态，避免重复全量扫描和恢复文件写入；小米系统自身的开启验证流程保留。密度预览、还原设置、删除背景等其他确认不变。
+验证记录：`../docs/usb-control-fast-toggle/`。

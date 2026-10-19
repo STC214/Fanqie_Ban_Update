@@ -1,0 +1,323 @@
+--- a/usb_control_app/AndroidManifest.xml
++++ b/usb_control_app/AndroidManifest.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="102" android:versionName="1.0.2">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="103" android:versionName="1.0.3">
+     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+     <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+         <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:windowSoftInputMode="adjustResize">
+--- a/usb_control_app/build.ps1
++++ b/usb_control_app/build.ps1
+@@ -38,11 +38,11 @@
+     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
+     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
+ }
+-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.2.apk'
++$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.3.apk'
+ Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
+ Run "$tools/apksigner.bat" @('verify','--verbose',$release)
+ Run "$tools/zipalign.exe" @('-c','4',$release)
+ $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
+-"$hash  usb-control-v1.0.2.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
++"$hash  usb-control-v1.0.3.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+ Write-Output "APK: $release"
+ Write-Output "SHA256: $hash"
+--- a/usb_control_app/README.md
++++ b/usb_control_app/README.md
+@@ -1,10 +1,10 @@
+-# 轻控 1.0.2
++# 轻控 1.0.3
+ 
+ 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
+ 
+ ## 安装
+ 
+-安装 `../releases/usb-control-v1.0.2.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
++安装 `../releases/usb-control-v1.0.3.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+ 
+ 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
+ 
+@@ -59,7 +59,7 @@
+ 
+ 需 JDK 21（编译 Java 8 字节码）、Android SDK Platform 36、Build Tools 35.0.0。也可通过 `ANDROID_SDK_ROOT` 指定 SDK。无需 Gradle 或下载应用依赖。构建前校验构建路径并清理生成目录，避免旧 class 混入。
+ 
+-输出 `releases/usb-control-v1.0.2.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
++输出 `releases/usb-control-v1.0.3.apk` 和 `.apk.sha256`。本地签名密钥为 `%USERPROFILE%\.android\usbcontrol-local.jks`（本地构建口令 `android`），不入仓库；请另行备份以便后续覆盖更新。此口令用于个人本地构建，不是商店发行的密钥管理方案。
+ 
+ ## 验证
+ 
+@@ -72,3 +72,7 @@
+ ### 外观模式（1.0.2）
+ 在「03 / 你的风格」中选择「外观模式」：跟随系统（默认）、浅色、暗色。选择自动记忆；暗色同时适配卡片、文字、系统栏、弹窗及背景透明度预览，不改变图片原色、裁剪位置或透明度。
+ 暗色模式验证记录：`../docs/usb-control-dark-mode/`。
++
++### USB 安装兼容性（1.0.3）
++新增 Xiaomi / MIUI / HyperOS 安全中心接口适配：读取真实开关状态，关闭后读回核对；开启时进入系统原有验证页面，完成或取消后返回自动刷新。没有对应接口的系统继续置灰；标准设置键适配保留。恢复初始开启状态同样遵循系统确认，不改动账号、安装验证、未知来源或 USB 调试安全设置。
++验证与回滚见 `../docs/usb-control-usb-install/`。
+--- a/usb_control_app/tests/LogicTest.java
++++ b/usb_control_app/tests/LogicTest.java
+@@ -12,6 +12,17 @@
+         check(Logic.installNamespace("package_verifier_enable=0", "", "")==null,"never confuse installation verification");
+         check(Logic.installNamespace("adb_install_enabled=1", "adb_install_enabled=0", "")==null,"ambiguity disabled");
+         check(Logic.installNamespace("other_adb_install_enabled=1", "", "")==null,"no fuzzy matching");
++        String miui="Result: Bundle[{CONTAIN_KEY=true}]\nResult: Bundle[{security_adb_install_enable=true}]\ncom.miui.securitycenter/com.miui.permcenter.install.AdbInstallVerifyActivity";
++        check("1".equals(Logic.miuiInstallState(miui)),"MIUI actual enabled value");
++        check("0".equals(Logic.miuiInstallState(miui.replace("enable=true","enable=false"))),"MIUI actual disabled value");
++        check(Logic.miuiInstallState(miui.replace("CONTAIN_KEY=true","CONTAIN_KEY=false"))==null,"missing MIUI key not fabricated from default");
++        check(Logic.miuiInstallState(miui.replace("CONTAIN_KEY=true","CONTAIN_KEY=null"))==null,"invalid MIUI key");
++        check(Logic.miuiInstallState(miui.replace("enable=true","enable=1"))==null,"strict boolean provider type");
++        check(Logic.miuiInstallState(miui.replace("com.miui.securitycenter/com.miui.permcenter.install.AdbInstallVerifyActivity","No activity found"))==null,"require official enable confirmation");
++        check(Logic.miuiInstallState(miui.replace("enable=true}]","enable=true}] "))==null,"reject malformed provider value");
++        check(Logic.miuiInstallState(miui+"\nResult: Bundle[{security_adb_install_enable=false}]")==null,"reject ambiguous MIUI values");
++        check(Logic.miuiInstallState("")==null,"other ROM unaffected");
++        check("1".equals(Logic.miuiInstallState(miui.replace("\n","\r\n"))),"support CRLF transport");
+         check(Logic.lastNumber("Physical density: 420\nOverride density: 360","(?:Physical|Override) density",0)==360,"override density");
+         check(Logic.lastNumber("Physical density: 420","Override density",0)==0,"default reset");
+         int[] size=Logic.size("Physical size: 1080x2400\nOverride size: 900x2000");
+--- /dev/null
++++ b/usb_control_app/tests/UsbInstallTest.java
+@@ -0,0 +1,32 @@
++package local.usbcontrol;
++public final class UsbInstallTest {
++ static int checks;
++ static void check(boolean yes,String name){checks++;if(!yes)throw new AssertionError(name);}
++ public static void main(String[] args){
++  String standard="__GLOBAL__\nadb_install_enabled=1\n__SECURE__\nadb_install_enabled=null\n__SYSTEM__\nadb_install_enabled=null";
++  check("global".equals(UsbInstall.backend(standard)),"standard backend retained");
++  check("1".equals(UsbInstall.state(standard,"global")),"standard on state");
++  check("0".equals(UsbInstall.state(standard.replace("enabled=1","enabled=0"),"global")),"standard off state");
++  check(UsbInstall.backend(standard.replace("enabled=1","enabled=null"))==null,"unsupported disabled");
++  String miui="\n__MIUI__\nResult: Bundle[{CONTAIN_KEY=true}]\nResult: Bundle[{security_adb_install_enable=false}]\ncom.miui.securitycenter/com.miui.permcenter.install.AdbInstallVerifyActivity";
++  check("miui".equals(UsbInstall.backend(standard+miui)),"vendor API preferred over stale standard key");
++  check("0".equals(UsbInstall.state(standard+miui,"miui")),"vendor actual off");
++  check("1".equals(UsbInstall.state(standard+miui.replace("enable=false","enable=true"),"miui")),"vendor actual on");
++  check(UsbInstall.state(standard,"miui")==null,"no stale vendor state");
++  check(UsbInstall.state(standard,"invalid")==null,"invalid backend");
++  check(UsbInstall.writeCommand("global",true).equals("settings put global adb_install_enabled 1"),"standard enable");
++  check(UsbInstall.writeCommand("secure",false).equals("settings put secure adb_install_enabled 0"),"standard disable");
++  String off=UsbInstall.writeCommand("miui",false),on=UsbInstall.writeCommand("miui",true);
++  check(off.contains("--arg SET")&&off.contains("--extra value:b:false"),"vendor uses supported disable API");
++  check(on.contains("am start")&&on.contains("AdbInstallVerifyActivity"),"enable routes to official activity");
++  check(!on.contains("--arg SET")&&!on.contains("setprop")&&!on.contains("sed "),"no forced enable or XML edit");
++  check(UsbInstall.restoreCommand("miui","1").contains("AdbInstallVerifyActivity"),"enabled baseline keeps official confirmation");
++  check(UsbInstall.restoreCommand("miui","0").contains("--extra value:b:false"),"disabled baseline restore");
++  check(UsbInstall.verifyCommand("miui","1").contains("security_adb_install_enable=true"),"vendor actual readback");
++  boolean rejected=false;try{UsbInstall.writeCommand("global; bad",true);}catch(IllegalArgumentException e){rejected=true;}check(rejected,"backend command injection rejected");
++  rejected=false;try{UsbInstall.restoreCommand("miui","true");}catch(IllegalArgumentException e){rejected=true;}check(rejected,"baseline malformed value rejected");
++  String script=RecoveryScript.make("true","420","1","1","miui","1");
++  check(script.contains("security_adb_install_enable=true")&&!script.contains("settings get miui"),"recovery uses provider verification");
++  System.out.println("PASS: "+checks+" USB-install adapter and recovery assertions");
++ }
++}
+--- a/usb_control_app/src/local/usbcontrol/Baseline.java
++++ b/usb_control_app/src/local/usbcontrol/Baseline.java
+@@ -13,14 +13,14 @@
+         }else{
+             p.setProperty("baseline_adb",Root.section(snapshot,"ADB"));p.setProperty("baseline_dev",Root.section(snapshot,"DEV"));p.setProperty("baseline_density",DensitySession.previous(Root.section(snapshot,"DENSITY")));
+         }
+-        String ns=Logic.installNamespace(Root.section(snapshot,"GLOBAL"),Root.section(snapshot,"SECURE"),Root.section(snapshot,"SYSTEM"));
++        String ns=UsbInstall.backend(snapshot);
+         if(ns!=null&&!p.containsKey("baseline_install")){
+-            String value=Root.run("settings get "+ns+" adb_install_enabled");if(!value.matches("[01]"))throw new IOException("USB 安装状态在检测期间变化");
++            String value=UsbInstall.read(ns);
+             p.setProperty("baseline_install_space",ns);p.setProperty("baseline_install",value);
+         }
+         for(String key:new String[]{"baseline_adb","baseline_dev"})if(!p.getProperty(key,"").matches("null|[0-9]{1,9}"))throw new IOException("初始系统值异常："+key);
+         if(!DensitySession.validDensity(p.getProperty("baseline_density","")))throw new IOException("初始密度记录异常");
+-        if(p.containsKey("baseline_install")&&(!p.getProperty("baseline_install").matches("[01]")||!p.getProperty("baseline_install_space","").matches("global|secure|system")))throw new IOException("初始 USB 安装记录异常");
++        if(p.containsKey("baseline_install")&&(!p.getProperty("baseline_install").matches("[01]")||!UsbInstall.validBackend(p.getProperty("baseline_install_space",""))))throw new IOException("初始 USB 安装记录异常");
+         SafeFiles.properties(file,p);
+         SharedPreferences.Editor edit=prefs.edit();for(String key:p.stringPropertyNames())edit.putString(key,p.getProperty(key));
+         edit.putLong("baseline_commit_generation",System.nanoTime());
+--- a/usb_control_app/src/local/usbcontrol/Logic.java
++++ b/usb_control_app/src/local/usbcontrol/Logic.java
+@@ -38,6 +38,15 @@
+         return match;
+     }
+     public static float clamp(float v, float min, float max) { return Float.isNaN(v)?min:Math.max(min, Math.min(max, v)); }
++    public static String miuiInstallState(String probe) {
++        // GET's default=false is not evidence of a supported key: require CONTAIN_KEY
++        // and the matching system confirmation component as well as a unique value.
++        if(!Pattern.compile("(?m)^Result: Bundle\\[\\{CONTAIN_KEY=true\\}\\]\\r?$").matcher(probe).find()
++            ||!Pattern.compile("(?m)^com\\.miui\\.securitycenter/com\\.miui\\.permcenter\\.install\\.AdbInstallVerifyActivity\\r?$").matcher(probe).find())return null;
++        Matcher m=Pattern.compile("(?m)^Result: Bundle\\[\\{security_adb_install_enable=(true|false)\\}\\]\\r?$").matcher(probe);
++        if(!m.find())return null;String value="true".equals(m.group(1))?"1":"0";
++        return m.find()?null:value;
++    }
+     public static float coverScale(int bw,int bh,int vw,int vh,float zoom) {
+         return Math.max(vw/(float)bw, vh/(float)bh) * clamp(zoom, 1f, 4f);
+     }
+--- a/usb_control_app/src/local/usbcontrol/MainActivity.java
++++ b/usb_control_app/src/local/usbcontrol/MainActivity.java
+@@ -97,7 +97,7 @@
+         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
+         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
+         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+-        TextView version=text("1.0.2",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
++        TextView version=text("1.0.3",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
+         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
+         section("01  /  连接控制");
+@@ -166,11 +166,10 @@
+         if(densityInFlight)getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+         boolean adb=Root.section(snapshot,"ADB").matches("[0-9]+")&&Long.parseLong(Root.section(snapshot,"ADB"))>0;adbSwitch.setChecked(adb);adbSwitch.setEnabled(rootReady&&!busy&&!densityInFlight);
+         adbDetail.setText(rootReady?(adb?"已开启 · 连接电脑仍需 RSA 授权":"已关闭 · 无线调试保持原状"):"等待 Root 授权；点击上方状态重试");
+-        installSpace=Logic.installNamespace(Root.section(snapshot,"GLOBAL"),Root.section(snapshot,"SECURE"),Root.section(snapshot,"SYSTEM"));
+-        String table=installSpace==null?"":Root.section(snapshot,installSpace.toUpperCase(java.util.Locale.ROOT));
+-        installSwitch.setChecked(java.util.regex.Pattern.compile("(?m)^adb_install_enabled=1$").matcher(table).find());
++        installSpace=UsbInstall.backend(snapshot);
++        installSwitch.setChecked("1".equals(UsbInstall.state(snapshot,installSpace)));
+         installSwitch.setEnabled(rootReady&&!busy&&!densityInFlight&&installSpace!=null);installSwitch.setAlpha(installSwitch.isEnabled()?1:.35f);
+-        installDetail.setText(!rootReady?"等待系统能力检测":installSpace==null?"此系统未暴露可识别的独立开关":"系统独立开关 · "+installSpace+" / adb_install_enabled");
++        installDetail.setText(!rootReady?"等待系统能力检测":installSpace==null?"此系统未暴露可识别的独立开关":UsbInstall.MIUI.equals(installSpace)?"小米 / HyperOS · 开启时由系统确认":"系统独立开关 · "+installSpace+" / adb_install_enabled");
+         densityText=Root.section(snapshot,"DENSITY");int[] size=Logic.size(Root.section(snapshot,"SIZE"));shortPx=Math.min(size[0],size[1]);currentDpi=Logic.lastNumber(densityText,"(?:Physical|Override) density",0);
+         densityValue.setText(currentDpi>0?Math.round(shortPx*160f/currentDpi)+" dp  ·  "+currentDpi+" dpi":getResources().getConfiguration().smallestScreenWidthDp+" dp");
+         densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));binding=false;
+@@ -187,10 +186,12 @@
+         String ns=installSpace;renderState();if(ns==null||!rootReady||busy)return;
+         new ManagedDialogBuilder().setTitle(on?"允许通过 USB 安装？":"关闭 USB 安装？").setMessage("仅更改系统已存在的 USB 安装独立开关，不更改安装验证、未知来源或账号限制。").setNegativeButton("取消",null).setPositiveButton("确认",(d,w)->task("设置 USB 安装…",()->{
+             String fresh=Root.run(Root.SNAPSHOT);Root.validate(fresh);
+-            if(!ns.equals(Logic.installNamespace(Root.section(fresh,"GLOBAL"),Root.section(fresh,"SECURE"),Root.section(fresh,"SYSTEM"))))throw new IOException("USB 安装能力已变化，请刷新后重试");
+-            Root.run("settings put "+ns+" adb_install_enabled "+(on?"1":"0"));String actual=Root.run("settings get "+ns+" adb_install_enabled");
++            if(!ns.equals(UsbInstall.backend(fresh)))throw new IOException("USB 安装能力已变化，请刷新后重试");
++            Root.run(UsbInstall.writeCommand(ns,on));
++            if(UsbInstall.MIUI.equals(ns)&&on)return "pending";
++            String actual=UsbInstall.read(ns);
+             if(!actual.equals(on?"1":"0"))throw new IOException("系统未接受 USB 安装变更");return actual;
+-        },()->{note("USB 安装设置已更新；实际安装仍受系统策略约束");refresh();})).show();
++        },()->{note(UsbInstall.MIUI.equals(ns)&&on?"已打开系统验证页；完成或取消后返回，自动读取实际状态":"USB 安装设置已更新；实际安装仍受系统策略约束");refresh();})).show();
+     }
+     private void densityDialog(){
+         if(!rootReady||busy)return;
+@@ -229,17 +230,21 @@
+     private String restoreSystemCommand(){
+         String density=prefs.getString("baseline_density","reset");if(!DensitySession.validDensity(density))throw new IllegalStateException("初始密度记录异常");
+         String cmd="wm density "+density;
+-        if(prefs.contains("baseline_install"))cmd+=" && "+restoreSetting(prefs.getString("baseline_install_space","global"),"adb_install_enabled",prefs.getString("baseline_install","0"));
++        if(prefs.contains("baseline_install"))cmd+=" && "+UsbInstall.restoreCommand(prefs.getString("baseline_install_space","global"),prefs.getString("baseline_install","0"));
+         // Restore developer/ADB last: disabling developer options may disconnect adb shell.
+         cmd+=" && "+restoreSetting("global","development_settings_enabled",prefs.getString("baseline_dev","0"))+" && "+restoreSetting("global","adb_enabled",prefs.getString("baseline_adb","0"));
+         return cmd;
+     }
+     private void confirmRestore(){
+         if(!rootReady||busy||densityInFlight)return;
++        if(UsbInstall.MIUI.equals(prefs.getString("baseline_install_space",""))&&"1".equals(prefs.getString("baseline_install",""))&&"0".equals(UsbInstall.state(snapshot,UsbInstall.MIUI))){
++            new ManagedDialogBuilder().setTitle("先完成系统 USB 安装确认").setMessage("初始状态为开启。小米系统要求在官方页面确认开启；完成后返回，再恢复其他初始设置。")
++                .setNegativeButton("取消",null).setPositiveButton("打开系统确认",(d,w)->task("打开系统确认…",()->Root.run(UsbInstall.ENABLE),()->{note("完成系统确认后返回，再点击恢复初始设置");refresh();})).show();return;
++        }
+         new ManagedDialogBuilder().setTitle("恢复首次使用前的系统设置？").setMessage("恢复首次成功读取的 USB 调试、开发者选项、USB 安装和显示密度。USB 连接可能中断；不会删除图片。").setNegativeButton("取消",null).setPositiveButton("恢复",(d,w)->task("恢复初始设置…",()->{
+             Root.run(restoreSystemCommand());String s=Root.run(Root.SNAPSHOT);Root.validate(s);
+             if(!Root.section(s,"ADB").equals(prefs.getString("baseline_adb","0"))||!Root.section(s,"DEV").equals(prefs.getString("baseline_dev","0"))||!DensitySession.previous(Root.section(s,"DENSITY")).equals(prefs.getString("baseline_density","reset")))throw new IOException("恢复读回不一致，初始记录仍保留");
+-            if(prefs.contains("baseline_install")&&!Root.run("settings get "+prefs.getString("baseline_install_space","global")+" adb_install_enabled").equals(prefs.getString("baseline_install","0")))throw new IOException("USB 安装恢复读回不一致");return "";
++            if(prefs.contains("baseline_install")&&!UsbInstall.read(prefs.getString("baseline_install_space","global")).equals(prefs.getString("baseline_install","0")))throw new IOException("USB 安装恢复读回不一致");return "";
+         },()->{note("已恢复首次使用前的设置");refresh();})).show();
+     }
+     private void pickImage(){try{Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT);i.setType("image/*");i.addCategory(Intent.CATEGORY_OPENABLE);i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);startActivityForResult(i,PICK);}catch(ActivityNotFoundException e){note("请先安装或启用系统文件选择器");}}
+--- a/usb_control_app/src/local/usbcontrol/RecoveryScript.java
++++ b/usb_control_app/src/local/usbcontrol/RecoveryScript.java
+@@ -5,7 +5,7 @@
+         String script="#!/system/bin/sh\n[ \"$(id -u)\" = 0 ] || exit 1\n"+command+" || exit 1\n";
+         script+="[ \"$(settings get global adb_enabled)\" = "+Root.quote(adb)+" ] || exit 2\n";
+         script+="[ \"$(settings get global development_settings_enabled)\" = "+Root.quote(dev)+" ] || exit 2\n";
+-        if(space!=null)script+="[ \"$(settings get "+space+" adb_install_enabled)\" = "+Root.quote(install)+" ] || exit 2\n";
++        if(space!=null)script+=UsbInstall.verifyCommand(space,install)+" || exit 2\n";
+         script+="actual=$(wm density) || exit 3\nprintf '%s\\n' \"$actual\" | grep -q '^Physical density: [0-9]' || exit 3\n";
+         if("reset".equals(density))script+="if printf '%s\\n' \"$actual\" | grep -q '^Override density:'; then exit 3; fi\n";
+         else script+="printf '%s\\n' \"$actual\" | grep -q '^Override density: "+density+"$' || exit 3\n";
+--- a/usb_control_app/src/local/usbcontrol/Root.java
++++ b/usb_control_app/src/local/usbcontrol/Root.java
+@@ -41,7 +41,8 @@
+         "printf '__SIZE__\\n'; wm size; printf '__DENSITY__\\n'; wm density; " +
+         "printf '__GLOBAL__\\n'; v=$(settings get global adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
+         "printf '__SECURE__\\n'; v=$(settings get secure adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
+-        "printf '__SYSTEM__\\n'; v=$(settings get system adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"";
++        "printf '__SYSTEM__\\n'; v=$(settings get system adb_install_enabled); printf 'adb_install_enabled=%s\\n' \"$v\"; "+
++        "printf '__MIUI__\\n'; "+UsbInstall.PROBE;
+     static void validate(String s)throws IOException {
+         for(String tag:new String[]{"UID","ADB","DEV","SIZE","DENSITY","GLOBAL","SECURE","SYSTEM"})
+             if(!s.contains("__"+tag+"__\n"))throw new IOException("系统状态返回不完整："+tag);
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/UsbInstall.java
+@@ -0,0 +1,51 @@
++package local.usbcontrol;
++
++import java.io.IOException;
++
++/** Vendor adapters change only the existing USB-install setting, never verification policy. */
++final class UsbInstall {
++    static final String MIUI="miui";
++    private static final String URI="content://com.miui.securitycenter.remoteprovider";
++    private static final String KEY="security_adb_install_enable";
++    private static final String CALL="content call --uri "+URI+" --method callPreference --arg ";
++    private static final String EXTRAS=" --extra type:i:1 --extra key:s:"+KEY;
++    static final String ENABLE="am start --user current -n com.miui.securitycenter/com.miui.permcenter.install.AdbInstallVerifyActivity -a com.miui.securitycenter.action.ADB_INSTALL_VERIFY";
++    static final String PROBE="if [ -n \"$(getprop ro.miui.ui.version.name)\" ]; then "+
++        CALL+"CONTAIN_KEY"+EXTRAS+" 2>/dev/null || true; "+
++        CALL+"GET"+EXTRAS+" --extra default:b:false 2>/dev/null || true; "+
++        "cmd package resolve-activity --brief -a com.miui.securitycenter.action.ADB_INSTALL_VERIFY -p com.miui.securitycenter 2>/dev/null || true; fi";
++
++    static boolean validBackend(String backend){return backend!=null&&backend.matches("global|secure|system|miui");}
++    static String backend(String snapshot){
++        if(Logic.miuiInstallState(Root.section(snapshot,"MIUI"))!=null)return MIUI;
++        return Logic.installNamespace(Root.section(snapshot,"GLOBAL"),Root.section(snapshot,"SECURE"),Root.section(snapshot,"SYSTEM"));
++    }
++    static String state(String snapshot,String backend){
++        if(MIUI.equals(backend))return Logic.miuiInstallState(Root.section(snapshot,"MIUI"));
++        if(!validBackend(backend))return null;
++        java.util.regex.Matcher m=java.util.regex.Pattern.compile("(?m)^adb_install_enabled=([01])\\r?$").matcher(Root.section(snapshot,backend.toUpperCase(java.util.Locale.ROOT)));
++        return m.find()?m.group(1):null;
++    }
++    static String read(String backend)throws Exception {
++        if(!validBackend(backend))throw new IOException("USB 安装接口未识别");
++        String value=MIUI.equals(backend)?Logic.miuiInstallState(Root.run(PROBE)):Root.run("settings get "+backend+" adb_install_enabled");
++        if(value==null||!value.matches("[01]"))throw new IOException("USB 安装状态读取失败");
++        return value;
++    }
++    static String writeCommand(String backend,boolean on){
++        if(!validBackend(backend))throw new IllegalArgumentException("USB 安装接口异常");
++        if(MIUI.equals(backend))return on?ENABLE:CALL+"SET"+EXTRAS+" --extra value:b:false";
++        return "settings put "+backend+" adb_install_enabled "+(on?"1":"0");
++    }
++    static String verifyCommand(String backend,String value){
++        if(!validBackend(backend)||!value.matches("[01]"))throw new IllegalArgumentException("USB 安装恢复记录异常");
++        String get=MIUI.equals(backend)?CALL+"GET"+EXTRAS+" --extra default:b:false":"settings get "+backend+" adb_install_enabled";
++        String expected=MIUI.equals(backend)?"Result: Bundle[{"+KEY+"="+("1".equals(value)?"true":"false")+"}]":value;
++        return "[ \"$("+get+")\" = "+Root.quote(expected)+" ]";
++    }
++    static String restoreCommand(String backend,String value){
++        String verify=verifyCommand(backend,value);
++        if(MIUI.equals(backend)&&"1".equals(value))return "("+verify+" || { "+ENABLE+"; printf '请完成系统 USB 安装确认后，再重试恢复\\n'; "+verify+"; })";
++        return "("+writeCommand(backend,"1".equals(value))+" && "+verify+")";
++    }
++}
+--- a/README.md
++++ b/README.md
+@@ -10,9 +10,9 @@
+ 
+ ## 轻控 Android App
+ 
+-独立 App **轻控 1.0.2**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+-
+-- 安装包：[`releases/usb-control-v1.0.2.apk`](releases/usb-control-v1.0.2.apk)
++独立 App **轻控 1.0.3**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
++
++- 安装包：[`releases/usb-control-v1.0.3.apk`](releases/usb-control-v1.0.3.apk)
+ - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
+ - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+ - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+@@ -284,3 +284,7 @@
+ ### 外观模式（1.0.2）
+ 在「03 / 你的风格」中选择「外观模式」：跟随系统（默认）、浅色、暗色。选择自动记忆；暗色同时适配卡片、文字、系统栏、弹窗及背景透明度预览，不改变图片原色、裁剪位置或透明度。
+ 暗色模式验证记录：`docs/usb-control-dark-mode/`。
++
++### USB 安装兼容性（1.0.3）
++新增 Xiaomi / MIUI / HyperOS 安全中心接口适配：读取真实开关状态，关闭后读回核对；开启时进入系统原有验证页面，完成或取消后返回自动刷新。没有对应接口的系统继续置灰；标准设置键适配保留。恢复初始开启状态同样遵循系统确认，不改动账号、安装验证、未知来源或 USB 调试安全设置。
++验证与回滚见 `docs/usb-control-usb-install/`。
+--- a/.gitignore
++++ b/.gitignore
+@@ -18,3 +18,4 @@
+ /docs/usb-control-audit/final-phone-identity.json
+ /docs/usb-control-audit/phone-ui/
+ /docs/usb-control-dark-mode/phone-install.json
++/.local/
