@@ -6,3 +6,7 @@
 /scripts/** -text
 /analysis/** -text
 /logs/** -text
+# Release patches are byte-sensitive data (including CRLF context and space markers).
+/releases/usb-control-*.patch -text -whitespace
+/releases/usb-control-*.txt -text
+/docs/usb-control-wallpaper/*.patch -whitespace

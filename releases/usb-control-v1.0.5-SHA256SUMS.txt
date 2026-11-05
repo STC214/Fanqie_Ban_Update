@@ -1,4 +1,4 @@
 56804b92984be80df89840cdc9ffed8e6d7d2f4db246226a012908edb17d11fe  usb-control-v1.0.5.apk
 6190f6cad538e124088287f3f88b4b9b03798fd2c295f7d89851d729bf03f5ad  usb-control-v1.0.5.apk.sha256
-08d802f22dddf23c457ba8ec5991da548bd0be019a3ef476d0a232ab33df036c  usb-control-v1.0.5.patch
-b5b24accb02c2c50e95bcdcab9930566d1e382a6f1861c935f2e38389c97cd1f  usb-control-v1.0.5-verification.zip
+342ec648b27c43d1a8833b5fc2574e67633e561f9ee7313dc9cbbe22d3f82d31  usb-control-v1.0.5.patch
+3dfcbb2ab9c34bea0db649e00f74e2695142bba0398187ae0d3725821f3cb95f  usb-control-v1.0.5-verification.zip

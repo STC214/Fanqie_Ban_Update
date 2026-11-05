@@ -34,4 +34,3 @@ shell('printf bad > '+shlex.quote(st+'/wallpaper-renames.tsv'));shell(cmd+' undo
 assert shell('exec 9> '+shlex.quote(st+'/wallpaper.lock')+'; flock -n 9 9>&9; '+cmd+' apply; test $? -eq 3')
 rec.append(dict(result='PASS',fixture=base,checks=['four delimiter variants','canonical idempotence','target collision never overwritten','nonvideo invalid names extensions directories and symlink skipped','SHA256 exact rollback','changed-content undo blocked','original-name undo collision blocked','missing directory','journal validation','kernel lock exclusion']))
 (OUT/'verification.json').write_text(json.dumps(rec,ensure_ascii=False,indent=2),encoding='utf-8');print('PASS fixture:',base)
-

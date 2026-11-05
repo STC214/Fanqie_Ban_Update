@@ -1,265 +1,265 @@
 [
   {
     "command": "adb shell \"su -c 'mktemp -d /data/local/tmp/wallpaper-test.XXXXXX'\"",
-    "stdout": "/data/local/tmp/wallpaper-test.O0hOMz\r\n",
+    "stdout": "/data/local/tmp/wallpaper-test.e0CnvH\r\n",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'chmod 777 /data/local/tmp/wallpaper-test.O0hOMz'\"",
-    "stdout": "",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\res\\raw\\wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\res\\raw\\wallpaper.sh: 1 file pushed, 0 skipped. 19.8 MB/s (4779 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'mkdir /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state; chmod 777 /data/local/tmp/wallpaper-test.O0hOMz/media'\"",
+    "command": "adb shell \"su -c 'chmod 777 /data/local/tmp/wallpaper-test.e0CnvH'\"",
     "stdout": "",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000001",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\res\\raw\\wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\res\\raw\\wallpaper.sh: 1 file pushed, 0 skipped. 23.3 MB/s (4779 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'mkdir /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state; chmod 777 /data/local/tmp/wallpaper-test.e0CnvH/media'\"",
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000001",
     "stdout": "",
     "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (68 bytes in 0.000s)\r\n",
     "exit": 0
   },
   {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport&00000000000000000000000000000002",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (68 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport__&&_00000000000000000000000000000003",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.4 MB/s (72 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&00000000000000000000000000000004",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.2 MB/s (69 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000005",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.2 MB/s (70 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000006",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (68 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000006",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (70 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000007.mp4",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (72 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (38 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_bad",
-    "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (39 bytes in 0.000s)\r\n",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000008",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport&00000000000000000000000000000002",
     "stdout": "",
     "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.2 MB/s (68 bytes in 0.000s)\r\n",
     "exit": 0
   },
   {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/other",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport__&&_00000000000000000000000000000003",
     "stdout": "",
-    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (29 bytes in 0.000s)\r\n",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (72 bytes in 0.000s)\r\n",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'mkdir /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000009'\"",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&00000000000000000000000000000004",
     "stdout": "",
-    "stderr": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.4 MB/s (69 bytes in 0.000s)\r\n",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'ln -s /system/build.prop /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_0000000000000000000000000000000a'\"",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000005",
     "stdout": "",
-    "stderr": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.4 MB/s (70 bytes in 0.000s)\r\n",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'printf nonvideo > /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000008'\"",
-    "stdout": "",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'cd /data/local/tmp/wallpaper-test.O0hOMz/media; sha256sum * 2>/dev/null || true'\"",
-    "stdout": "af2e02e3baec4402f7a09cba3168de2f1d1a660a4872ecd14225e4e4ad9df995  LocalImport&00000000000000000000000000000002\r\n3ccd01e97b88614aafc9b445233e7abef74bc3f5f730bfcc49d94e2f0b596961  LocalImport_&00000000000000000000000000000004\r\n30329c3c0fe0ee6819465c778c70edb441cb01be7afc5954b1218de31e1cbef2  LocalImport_&_\r\n86c24b324197b10106c3b86d715dd182e04dc6fa75966bd1219bcc5decf05f7d  LocalImport_&_00000000000000000000000000000005\r\n5da9e98de21bce2de0b4cc97e9c9510ed4946b1e1f0b38079869aa954bffb417  LocalImport_&_00000000000000000000000000000006\r\n478c5df4bf0f2841813e4246267a25bd411f14ecd65e449ff04b2ef726b12aa6  LocalImport_00000000000000000000000000000001\r\n7defb347fb9151e912b2fd0ea3e1aeed26143c8b2bcfcd01b1347bbbdde46f30  LocalImport_00000000000000000000000000000006\r\n2a74e226935b298ef40f1bdc391f694b5aac35b2ce1646babebeda4568d04ba7  LocalImport_00000000000000000000000000000007.mp4\r\n3d6090561bc45b78361c47b59f3a92408d67609d01f8440f236f5778fa9c465b  LocalImport_00000000000000000000000000000008\r\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  LocalImport_00000000000000000000000000000009\r\nb480b79c26c62569deba6451ec05adfb7c39138d881bc4931e4e5ef6c1919ca7  LocalImport_0000000000000000000000000000000a\r\n313dea9b16d0acec637bf879f390b73f1877d09d19d549f6b453058d20a9a327  LocalImport__&&_00000000000000000000000000000003\r\nb36866d2dc7e2c9c0719c1efcff595b8cefaf9dac16c9d079f68b30e329b0590  LocalImport_bad\r\n6d0bb23ba916c3dfada13e0893076ad38370473dfdafc70643a55254e082efb6  other\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state apply'\"",
-    "stdout": "已处理 4 个；已规范 2 个；跳过 6 个；重名冲突 1 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000001'\\\"'\\\"'; echo $?'\"",
-    "stdout": "0\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000002'\\\"'\\\"'; echo $?'\"",
-    "stdout": "0\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000003'\\\"'\\\"'; echo $?'\"",
-    "stdout": "0\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000004'\\\"'\\\"'; echo $?'\"",
-    "stdout": "0\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state apply'\"",
-    "stdout": "已处理 0 个；已规范 6 个；跳过 6 个；重名冲突 1 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state undo'\"",
-    "stdout": "已撤销 4 个；冲突或内容变化 0 个（保留记录，未覆盖文件）。\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'cd /data/local/tmp/wallpaper-test.O0hOMz/media; sha256sum * 2>/dev/null || true'\"",
-    "stdout": "af2e02e3baec4402f7a09cba3168de2f1d1a660a4872ecd14225e4e4ad9df995  LocalImport&00000000000000000000000000000002\r\n3ccd01e97b88614aafc9b445233e7abef74bc3f5f730bfcc49d94e2f0b596961  LocalImport_&00000000000000000000000000000004\r\n30329c3c0fe0ee6819465c778c70edb441cb01be7afc5954b1218de31e1cbef2  LocalImport_&_\r\n86c24b324197b10106c3b86d715dd182e04dc6fa75966bd1219bcc5decf05f7d  LocalImport_&_00000000000000000000000000000005\r\n5da9e98de21bce2de0b4cc97e9c9510ed4946b1e1f0b38079869aa954bffb417  LocalImport_&_00000000000000000000000000000006\r\n478c5df4bf0f2841813e4246267a25bd411f14ecd65e449ff04b2ef726b12aa6  LocalImport_00000000000000000000000000000001\r\n7defb347fb9151e912b2fd0ea3e1aeed26143c8b2bcfcd01b1347bbbdde46f30  LocalImport_00000000000000000000000000000006\r\n2a74e226935b298ef40f1bdc391f694b5aac35b2ce1646babebeda4568d04ba7  LocalImport_00000000000000000000000000000007.mp4\r\n3d6090561bc45b78361c47b59f3a92408d67609d01f8440f236f5778fa9c465b  LocalImport_00000000000000000000000000000008\r\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  LocalImport_00000000000000000000000000000009\r\nb480b79c26c62569deba6451ec05adfb7c39138d881bc4931e4e5ef6c1919ca7  LocalImport_0000000000000000000000000000000a\r\n313dea9b16d0acec637bf879f390b73f1877d09d19d549f6b453058d20a9a327  LocalImport__&&_00000000000000000000000000000003\r\nb36866d2dc7e2c9c0719c1efcff595b8cefaf9dac16c9d079f68b30e329b0590  LocalImport_bad\r\n6d0bb23ba916c3dfada13e0893076ad38370473dfdafc70643a55254e082efb6  other\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state undo'\"",
-    "stdout": "没有待撤销的壁纸改名。\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state apply'\"",
-    "stdout": "已处理 4 个；已规范 2 个；跳过 6 个；重名冲突 1 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'cat '\\\"'\\\"'/data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000001'\\\"'\\\"''\"",
-    "stdout": "\u0000\u0000\u0000\u0018ftypisom\u0000\u0000\u0000\u0000isommp41LocalImport_00000000000000000000000000000001",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'printf changed >> '\\\"'\\\"'/data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000001'\\\"'\\\"''\"",
-    "stdout": "",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state undo'\"",
-    "stdout": "已撤销 3 个；冲突或内容变化 1 个（保留记录，未覆盖文件）。\r\n",
-    "stderr": "",
-    "exit": 0
-  },
-  {
-    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_&_00000000000000000000000000000001",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000006",
     "stdout": "",
     "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (68 bytes in 0.000s)\r\n",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state undo'\"",
-    "stdout": "已撤销 1 个；冲突或内容变化 0 个（保留记录，未覆盖文件）。\r\n",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000006",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.3 MB/s (70 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000007.mp4",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.2 MB/s (72 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (38 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_bad",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.2 MB/s (39 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000008",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.2 MB/s (68 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/other",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (29 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'mkdir /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000009'\"",
+    "stdout": "",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state apply'\"",
+    "command": "adb shell \"su -c 'ln -s /system/build.prop /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_0000000000000000000000000000000a'\"",
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'printf nonvideo > /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000008'\"",
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'cd /data/local/tmp/wallpaper-test.e0CnvH/media; sha256sum * 2>/dev/null || true'\"",
+    "stdout": "af2e02e3baec4402f7a09cba3168de2f1d1a660a4872ecd14225e4e4ad9df995  LocalImport&00000000000000000000000000000002\r\n3ccd01e97b88614aafc9b445233e7abef74bc3f5f730bfcc49d94e2f0b596961  LocalImport_&00000000000000000000000000000004\r\n30329c3c0fe0ee6819465c778c70edb441cb01be7afc5954b1218de31e1cbef2  LocalImport_&_\r\n86c24b324197b10106c3b86d715dd182e04dc6fa75966bd1219bcc5decf05f7d  LocalImport_&_00000000000000000000000000000005\r\n5da9e98de21bce2de0b4cc97e9c9510ed4946b1e1f0b38079869aa954bffb417  LocalImport_&_00000000000000000000000000000006\r\n478c5df4bf0f2841813e4246267a25bd411f14ecd65e449ff04b2ef726b12aa6  LocalImport_00000000000000000000000000000001\r\n7defb347fb9151e912b2fd0ea3e1aeed26143c8b2bcfcd01b1347bbbdde46f30  LocalImport_00000000000000000000000000000006\r\n2a74e226935b298ef40f1bdc391f694b5aac35b2ce1646babebeda4568d04ba7  LocalImport_00000000000000000000000000000007.mp4\r\n3d6090561bc45b78361c47b59f3a92408d67609d01f8440f236f5778fa9c465b  LocalImport_00000000000000000000000000000008\r\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  LocalImport_00000000000000000000000000000009\r\nb480b79c26c62569deba6451ec05adfb7c39138d881bc4931e4e5ef6c1919ca7  LocalImport_0000000000000000000000000000000a\r\n313dea9b16d0acec637bf879f390b73f1877d09d19d549f6b453058d20a9a327  LocalImport__&&_00000000000000000000000000000003\r\nb36866d2dc7e2c9c0719c1efcff595b8cefaf9dac16c9d079f68b30e329b0590  LocalImport_bad\r\n6d0bb23ba916c3dfada13e0893076ad38370473dfdafc70643a55254e082efb6  other\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state apply'\"",
     "stdout": "已处理 4 个；已规范 2 个；跳过 6 个；重名冲突 1 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'printf keep > /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000001'\"",
+    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000001'\\\"'\\\"'; echo $?'\"",
+    "stdout": "0\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000002'\\\"'\\\"'; echo $?'\"",
+    "stdout": "0\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000003'\\\"'\\\"'; echo $?'\"",
+    "stdout": "0\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'test -f '\\\"'\\\"'/data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000004'\\\"'\\\"'; echo $?'\"",
+    "stdout": "0\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state apply'\"",
+    "stdout": "已处理 0 个；已规范 6 个；跳过 6 个；重名冲突 1 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state undo'\"",
+    "stdout": "已撤销 4 个；冲突或内容变化 0 个（保留记录，未覆盖文件）。\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'cd /data/local/tmp/wallpaper-test.e0CnvH/media; sha256sum * 2>/dev/null || true'\"",
+    "stdout": "af2e02e3baec4402f7a09cba3168de2f1d1a660a4872ecd14225e4e4ad9df995  LocalImport&00000000000000000000000000000002\r\n3ccd01e97b88614aafc9b445233e7abef74bc3f5f730bfcc49d94e2f0b596961  LocalImport_&00000000000000000000000000000004\r\n30329c3c0fe0ee6819465c778c70edb441cb01be7afc5954b1218de31e1cbef2  LocalImport_&_\r\n86c24b324197b10106c3b86d715dd182e04dc6fa75966bd1219bcc5decf05f7d  LocalImport_&_00000000000000000000000000000005\r\n5da9e98de21bce2de0b4cc97e9c9510ed4946b1e1f0b38079869aa954bffb417  LocalImport_&_00000000000000000000000000000006\r\n478c5df4bf0f2841813e4246267a25bd411f14ecd65e449ff04b2ef726b12aa6  LocalImport_00000000000000000000000000000001\r\n7defb347fb9151e912b2fd0ea3e1aeed26143c8b2bcfcd01b1347bbbdde46f30  LocalImport_00000000000000000000000000000006\r\n2a74e226935b298ef40f1bdc391f694b5aac35b2ce1646babebeda4568d04ba7  LocalImport_00000000000000000000000000000007.mp4\r\n3d6090561bc45b78361c47b59f3a92408d67609d01f8440f236f5778fa9c465b  LocalImport_00000000000000000000000000000008\r\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  LocalImport_00000000000000000000000000000009\r\nb480b79c26c62569deba6451ec05adfb7c39138d881bc4931e4e5ef6c1919ca7  LocalImport_0000000000000000000000000000000a\r\n313dea9b16d0acec637bf879f390b73f1877d09d19d549f6b453058d20a9a327  LocalImport__&&_00000000000000000000000000000003\r\nb36866d2dc7e2c9c0719c1efcff595b8cefaf9dac16c9d079f68b30e329b0590  LocalImport_bad\r\n6d0bb23ba916c3dfada13e0893076ad38370473dfdafc70643a55254e082efb6  other\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state undo'\"",
+    "stdout": "没有待撤销的壁纸改名。\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state apply'\"",
+    "stdout": "已处理 4 个；已规范 2 个；跳过 6 个；重名冲突 1 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'cat '\\\"'\\\"'/data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000001'\\\"'\\\"''\"",
+    "stdout": "\u0000\u0000\u0000\u0018ftypisom\u0000\u0000\u0000\u0000isommp41LocalImport_00000000000000000000000000000001",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'printf changed >> '\\\"'\\\"'/data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000001'\\\"'\\\"''\"",
     "stdout": "",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state undo'\"",
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state undo'\"",
     "stdout": "已撤销 3 个；冲突或内容变化 1 个（保留记录，未覆盖文件）。\r\n",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'cat /data/local/tmp/wallpaper-test.O0hOMz/media/LocalImport_00000000000000000000000000000001'\"",
-    "stdout": "keep",
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4 /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_&_00000000000000000000000000000001",
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\functional\\fixture.mp4: 1 file pushed, 0 skipped. 0.2 MB/s (68 bytes in 0.000s)\r\n",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state undo'\"",
+    "stdout": "已撤销 1 个；冲突或内容变化 0 个（保留记录，未覆盖文件）。\r\n",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/missing /data/local/tmp/wallpaper-test.O0hOMz/state apply'\"",
-    "stdout": "壁纸目录不存在或是符号链接，请先用主题管理导入本地视频。\r\n",
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state apply'\"",
+    "stdout": "已处理 4 个；已规范 2 个；跳过 6 个；重名冲突 1 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
     "stderr": "",
-    "exit": 1
+    "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'printf bad > /data/local/tmp/wallpaper-test.O0hOMz/state/wallpaper-renames.tsv'\"",
+    "command": "adb shell \"su -c 'printf keep > /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000001'\"",
     "stdout": "",
     "stderr": "",
     "exit": 0
   },
   {
-    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state undo'\"",
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state undo'\"",
+    "stdout": "已撤销 3 个；冲突或内容变化 1 个（保留记录，未覆盖文件）。\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'cat /data/local/tmp/wallpaper-test.e0CnvH/media/LocalImport_00000000000000000000000000000001'\"",
+    "stdout": "keep",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/missing /data/local/tmp/wallpaper-test.e0CnvH/state apply'\"",
+    "stdout": "壁纸目录不存在或是符号链接，请先用主题管理导入本地视频。\r\n",
+    "stderr": "",
+    "exit": 1
+  },
+  {
+    "command": "adb shell \"su -c 'printf bad > /data/local/tmp/wallpaper-test.e0CnvH/state/wallpaper-renames.tsv'\"",
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state undo'\"",
     "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
     "stderr": "",
     "exit": 6
   },
   {
-    "command": "adb shell \"su -c 'exec 9> /data/local/tmp/wallpaper-test.O0hOMz/state/wallpaper.lock; flock -n 9 9>&9; sh /data/local/tmp/wallpaper-test.O0hOMz/wallpaper.sh /data/local/tmp/wallpaper-test.O0hOMz/media /data/local/tmp/wallpaper-test.O0hOMz/state apply; test $? -eq 3'\"",
+    "command": "adb shell \"su -c 'exec 9> /data/local/tmp/wallpaper-test.e0CnvH/state/wallpaper.lock; flock -n 9 9>&9; sh /data/local/tmp/wallpaper-test.e0CnvH/wallpaper.sh /data/local/tmp/wallpaper-test.e0CnvH/media /data/local/tmp/wallpaper-test.e0CnvH/state apply; test $? -eq 3'\"",
     "stdout": "已有壁纸任务正在运行，或系统缺少 flock，请稍后重试。\r\n",
     "stderr": "",
     "exit": 0
   },
   {
     "result": "PASS",
-    "fixture": "/data/local/tmp/wallpaper-test.O0hOMz",
+    "fixture": "/data/local/tmp/wallpaper-test.e0CnvH",
     "checks": [
       "four delimiter variants",
       "canonical idempotence",
