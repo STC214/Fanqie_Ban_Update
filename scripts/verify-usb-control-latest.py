@@ -1,9 +1,13 @@
 """Verify the current release without archived historical APKs."""
 from pathlib import Path
-import subprocess, hashlib, json, zipfile, xml.etree.ElementTree as ET
+import subprocess, hashlib, json, zipfile, xml.etree.ElementTree as ET, argparse
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'docs/release-cleanup'
+parser = argparse.ArgumentParser()
+parser.add_argument('--out', default='docs/release-cleanup')
+args = parser.parse_args()
+OUT = ROOT / args.out
+OUT.mkdir(parents=True, exist_ok=True)
 records = []
 
 def run(args):
@@ -21,6 +25,9 @@ digest = hashlib.sha256(apk.read_bytes()).hexdigest()
 assert digest.upper() == Path(str(apk) + '.sha256').read_text().split()[0].upper()
 with zipfile.ZipFile(apk) as z:
     assert z.testzip() is None and len(z.namelist()) == len(set(z.namelist()))
+    assert z.read('res/raw/wallpaper.sh') == (app / 'res/raw/wallpaper.sh').read_bytes(), 'APK helper differs from tested source'
+    dex = z.read('classes.dex')
+    assert b'Llocal/usbcontrol/WallpaperLoop;' in dex, 'Wallpaper wrapper missing from DEX'
 run(['F:/Android/Sdk/build-tools/35.0.0/apksigner.bat', 'verify', '--print-certs', apk])
 run(['F:/Android/Sdk/build-tools/35.0.0/zipalign.exe', '-c', '4', apk])
 assert ("versionName='" + version + "'").encode() in run(['F:/Android/Sdk/build-tools/35.0.0/aapt2.exe', 'dump', 'badging', apk])
@@ -41,7 +48,7 @@ old = [p.relative_to(ROOT).as_posix() for p in ROOT.rglob('usb-control-v*.apk*')
        if '.git' not in p.relative_to(ROOT).parts and '.local' not in p.relative_to(ROOT).parts
        and not p.name.startswith('usb-control-v' + version + '.apk')]
 assert not old, old
-manifest = json.loads((OUT / 'manifest.json').read_text(encoding='utf-8-sig'))
+manifest = json.loads((ROOT / 'docs/release-cleanup/manifest.json').read_text(encoding='utf-8-sig'))
 assert all(not (ROOT / e['path']).exists() for e in manifest['files'])
 records.append(dict(result='PASS', version=version, apk_sha256=digest, archived_files=len(manifest['files']),
                     checks=['latest signature/alignment/version/checksum/ZIP', 'current model and adapter tests',

@@ -53,7 +53,9 @@ public class MainActivity extends Activity {
     private Bitmap wallpaper;
     private Switch adbSwitch,installSwitch;
     private TextView rootLabel,adbDetail,installDetail,densityValue;
-    private Button densityButton,restoreButton,defaultDensityButton;
+    private Button densityButton,restoreButton,defaultDensityButton,wallpaperLoopButton,wallpaperUndoButton;
+    private String wallpaperResult="主题管理导入本地视频后，统一 LocalImport 后的分隔符为 _&_。仅改名，不自动切换壁纸。";
+    private TextView wallpaperDetail;
     private final java.util.ArrayList<Dialog> dialogs=new java.util.ArrayList<>();
     private DensitySession densitySession;
     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
@@ -98,7 +100,7 @@ public class MainActivity extends Activity {
         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
-        TextView version=text("1.0.4",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+        TextView version=text("1.0.5",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
         section("01  /  连接控制");
@@ -120,7 +122,12 @@ public class MainActivity extends Activity {
         if(wallpaper!=null){appearance.addView(button("取景与透明度",()->editBackground(wallpaper,false),false));appearance.addView(button("移除背景",()->{
             new ManagedDialogBuilder().setTitle("移除背景？").setMessage("只删除 App 内的副本，不影响手机相册。").setNegativeButton("取消",null).setPositiveButton("移除",(d,w)->imageWorker.execute(()->{try{BackgroundStore.remove(getFilesDir(),prefs);ui.post(()->{if(alive()){wallpaper=null;build();}});}catch(Exception e){ui.post(()->{if(alive())note("背景移除失败，请重试");});}})).show();
         },false));}
-        page.addView(appearance);gap(page,18);
+        page.addView(appearance);gap(page,22);
+        section("04  /  壁纸小工具");LinearLayout video=card();video.addView(text("一键循环壁纸",17,INK));gap(video,5);
+        wallpaperDetail=text(wallpaperResult,12,MUTED);video.addView(wallpaperDetail);gap(video,10);
+        wallpaperLoopButton=button("一键循环壁纸",()->processWallpapers(false),true);video.addView(wallpaperLoopButton);
+        wallpaperUndoButton=button("撤销壁纸改名",()->processWallpapers(true),false);video.addView(wallpaperUndoButton);
+        page.addView(video);gap(page,18);
         restoreButton=button("恢复首次使用前的系统设置",()->confirmRestore(),false);page.addView(restoreButton);
         TextView footer=text("本地运行 · 无网络权限 · 不收集数据\n系统操作需 Root；图片留在本机。",11,MUTED);footer.setGravity(Gravity.CENTER);pad(footer,0,16,0,4);page.addView(footer);
         renderState();
@@ -173,9 +180,25 @@ public class MainActivity extends Activity {
         installDetail.setText(!rootReady?"等待系统能力检测":installSpace==null?"此系统未暴露可识别的独立开关":UsbInstall.MIUI.equals(installSpace)?"小米 / HyperOS · 开启时由系统确认":"系统独立开关 · "+installSpace+" / adb_install_enabled");
         densityText=Root.section(snapshot,"DENSITY");int[] size=Logic.size(Root.section(snapshot,"SIZE"));shortPx=Math.min(size[0],size[1]);currentDpi=Logic.lastNumber(densityText,"(?:Physical|Override) density",0);
         densityValue.setText(currentDpi>0?Math.round(shortPx*160f/currentDpi)+" dp  ·  "+currentDpi+" dpi":getResources().getConfiguration().smallestScreenWidthDp+" dp");
-        densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));binding=false;
+        densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));
+        boolean wallpaperReady=rootReady&&!busy&&!densityInFlight&&!installVerificationPending;
+        wallpaperLoopButton.setEnabled(wallpaperReady);wallpaperLoopButton.setAlpha(wallpaperReady?1:.45f);
+        wallpaperLoopButton.setText(busy?"请稍候…":"一键循环壁纸");wallpaperUndoButton.setEnabled(wallpaperReady);wallpaperUndoButton.setAlpha(wallpaperReady?1:.45f);binding=false;
     }
     private void switchReady(){statusMessage="Root 已连接   ·   "+Build.MANUFACTURER+" "+Build.MODEL+"   ↻";renderState();}
+    private void processWallpapers(boolean undo){
+        if(!rootReady||busy||densityInFlight||installVerificationPending)return;
+        if(undo){new ManagedDialogBuilder().setTitle("撤销壁纸改名？").setMessage("还原轻控累计处理且尚未撤销的文件名。遇到重名或内容变化会跳过，不覆盖现有文件。").setNegativeButton("取消",null).setPositiveButton("撤销",(d,w)->runWallpaperTask(true)).show();}
+        else runWallpaperTask(false);
+    }
+    private void runWallpaperTask(boolean undo){
+        task(undo?"撤销壁纸改名…":"处理视频壁纸…",()->{
+            // A path/rename error is local to this tool, not loss of Root for all switches.
+            try{wallpaperResult=WallpaperLoop.run(getApplicationContext(),undo);}
+            catch(Exception e){wallpaperResult="壁纸处理未完成："+(e.getMessage()==null?e.toString():e.getMessage());}
+            return "";
+        },()->{wallpaperDetail.setText(wallpaperResult);switchReady();new ManagedDialogBuilder().setTitle(undo?"壁纸撤销结果":"壁纸处理结果").setMessage(wallpaperResult).setPositiveButton("知道了",null).show();});
+    }
     private void changeAdb(boolean on){
         if(!rootReady||busy||densityInFlight){renderState();return;}
         pendingAdb=on;

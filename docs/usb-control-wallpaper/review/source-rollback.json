@@ -1,0 +1,9 @@
+{
+  "command": "git -c core.autocrlf=false apply --reverse F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\changes.patch",
+  "cwd": "F:\\Temp\\qingkong-final-rollback-co6yojol",
+  "exit": 0,
+  "stdout": "",
+  "stderr": "F:/Project/07_Androd/08_FanQie/docs/usb-control-wallpaper/changes.patch:27: trailing whitespace.\n# \u8f7b\u63a7 1.0.4\r\nwarning: 1 line adds whitespace errors.\n",
+  "patch_sha256": "08d802f22dddf23c457ba8ec5991da548bd0be019a3ef476d0a232ab33df036c",
+  "result": "PASS: all original source bytes restored; all added feature/test sources removed"
+}

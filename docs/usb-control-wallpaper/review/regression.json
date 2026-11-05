@@ -1,0 +1,409 @@
+[
+  {
+    "command": "adb shell \"su -c 'mktemp -d /data/local/tmp/wallpaper-recovery.XXXXXX'\"",
+    "exit": 0,
+    "stdout": "/data/local/tmp/wallpaper-recovery.98zbvS\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'chmod 777 /data/local/tmp/wallpaper-recovery.98zbvS; mkdir /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state; chmod 777 /data/local/tmp/wallpaper-recovery.98zbvS/media'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\res\\raw\\wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\res\\raw\\wallpaper.sh: 1 file pushed, 0 skipped. 11.0 MB/s (4779 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4 /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (32 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.0 MB/s (7 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.0 MB/s (7 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789'\"",
+    "exit": 0,
+    "stdout": "05ac0394ab61a6259c4fbde6ffd5a3cd1ec1350cd8a367bbe93e0031d72187da  /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'test ! -e '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_&_abcdef0123456789abcdef0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.6 MB/s (156 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789'\"",
+    "exit": 0,
+    "stdout": "05ac0394ab61a6259c4fbde6ffd5a3cd1ec1350cd8a367bbe93e0031d72187da  /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'test ! -e '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_&_abcdef0123456789abcdef0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.4 MB/s (157 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789'\"",
+    "exit": 0,
+    "stdout": "05ac0394ab61a6259c4fbde6ffd5a3cd1ec1350cd8a367bbe93e0031d72187da  /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'test ! -e '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_&_abcdef0123456789abcdef0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.5 MB/s (123 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789'\"",
+    "exit": 0,
+    "stdout": "05ac0394ab61a6259c4fbde6ffd5a3cd1ec1350cd8a367bbe93e0031d72187da  /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'test ! -e '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_&_abcdef0123456789abcdef0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.5 MB/s (167 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789'\"",
+    "exit": 0,
+    "stdout": "05ac0394ab61a6259c4fbde6ffd5a3cd1ec1350cd8a367bbe93e0031d72187da  /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'test ! -e '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_&_abcdef0123456789abcdef0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.4 MB/s (158 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 6,
+    "stdout": "壁纸撤销记录不完整，已停止改名；请保留记录后检查。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789'\"",
+    "exit": 0,
+    "stdout": "05ac0394ab61a6259c4fbde6ffd5a3cd1ec1350cd8a367bbe93e0031d72187da  /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'test ! -e '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_&_abcdef0123456789abcdef0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.6 MB/s (157 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 0,
+    "stdout": "已撤销 1 个；冲突或内容变化 0 个（保留记录，未覆盖文件）。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.3 MB/s (157 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.98zbvS/input.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'mv /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_abcdef0123456789abcdef0123456789 '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport_&_abcdef0123456789abcdef0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 0,
+    "stdout": "已撤销 1 个；冲突或内容变化 0 个（保留记录，未覆盖文件）。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 0,
+    "stdout": "没有待撤销的壁纸改名。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4 /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport&ABCDEF0123456789ABCDEF0123456789",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (32 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 0,
+    "stdout": "已处理 2 个；已规范 0 个；跳过 0 个；重名冲突 0 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4 /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport__11111111111111111111111111111111",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (32 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 0,
+    "stdout": "已处理 1 个；已规范 2 个；跳过 0 个；重名冲突 0 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 0,
+    "stdout": "已处理 0 个；已规范 3 个；跳过 0 个；重名冲突 0 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state undo'\"",
+    "exit": 0,
+    "stdout": "已撤销 3 个；冲突或内容变化 0 个（保留记录，未覆盖文件）。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum '\\\"'\\\"'/data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport&ABCDEF0123456789ABCDEF0123456789'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "05ac0394ab61a6259c4fbde6ffd5a3cd1ec1350cd8a367bbe93e0031d72187da  /data/local/tmp/wallpaper-recovery.98zbvS/media/LocalImport&ABCDEF0123456789ABCDEF0123456789\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'mv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv /data/local/tmp/wallpaper-recovery.98zbvS/saved.tsv; ln -s /data/local/tmp/wallpaper-recovery.98zbvS/saved.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 5,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'unlink /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv; mv /data/local/tmp/wallpaper-recovery.98zbvS/saved.tsv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper-renames.tsv; ln -s /data/local/tmp/wallpaper-recovery.98zbvS/state /data/local/tmp/wallpaper-recovery.98zbvS/linked-state'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/linked-state apply'\"",
+    "exit": 2,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh'\"",
+    "exit": 8,
+    "stdout": "壁纸任务参数异常。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state wrong'\"",
+    "exit": 8,
+    "stdout": "壁纸任务类型异常。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'mv /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper.lock /data/local/tmp/wallpaper-recovery.98zbvS/saved.lock; mkfifo /data/local/tmp/wallpaper-recovery.98zbvS/state/wallpaper.lock'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.98zbvS/wallpaper.sh /data/local/tmp/wallpaper-recovery.98zbvS/media /data/local/tmp/wallpaper-recovery.98zbvS/state apply'\"",
+    "exit": 3,
+    "stdout": "壁纸任务锁文件异常。\r\n",
+    "stderr": ""
+  },
+  {
+    "result": "PASS",
+    "fixture": "/data/local/tmp/wallpaper-recovery.98zbvS",
+    "checks": [
+      "damaged journal blocks apply and undo before mutation",
+      "missing final newline rejected",
+      "invalid hash and traversal rejected",
+      "partial trailing row and blank row rejected",
+      "write-ahead crash before and after rename recoverable",
+      "repeat undo idempotent",
+      "multiple batches accumulated and undone",
+      "uppercase suffix preserved",
+      "journal/state symlinks rejected",
+      "bad argument count and mode rejected",
+      "FIFO lock rejected"
+    ]
+  }
+]

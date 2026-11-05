@@ -1,0 +1,126 @@
+[
+  {
+    "command": "adb push releases/usb-control-v1.0.5.apk /data/local/tmp/qingkong-reviewed.apk",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "releases/usb-control-v1.0.5.apk: 1 file pushed, 0 skipped. 27.2 MB/s (1000292 bytes in 0.035s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'pm install -r /data/local/tmp/qingkong-reviewed.apk'\"",
+    "exit": 0,
+    "stdout": "Success\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb push usb_control_app/build/wallpaper-test/wallpaper-test.apk /data/local/tmp/qingkong-wallpaper-test.apk",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "usb_control_app/build/wallpaper-test/wallpaper-test.apk: 1 file pushed, 0 skipped. 37.4 MB/s (12691 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'pm install -r /data/local/tmp/qingkong-wallpaper-test.apk'\"",
+    "exit": 0,
+    "stdout": "Success\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell am instrument -w local.usbcontrol.wallpapertest/.WallpaperInstrumentation",
+    "exit": 0,
+    "stdout": "{\"passed\":true,\"checks\":[{\"check\":\"Installed target version\",\"pass\":true,\"actual\":\"1.0.5\"},{\"check\":\"Production Root transport from app UID\",\"pass\":true,\"actual\":\"root UID 0\"},{\"check\":\"State symlink rejected BEFORE extracting script\",\"pass\":true,\"actual\":\"rejected; sibling remains empty\"},{\"check\":\"Known real-directory fixture count\",\"pass\":true,\"actual\":\"LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\\nLocalImport_&_44a93123a91d4a365a3047bc7a1531e4\\nLocalImport_&_24916224046766a23868876f37a79648\\nLocalImport_&_8c3639388857993f6aded0a21867e2c8\\nLocalImport_&_11e4907bf8fd1795b75badb173d1d98c\"},{\"check\":\"Existing name canonical\",\"pass\":true,\"actual\":\"LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\"},{\"check\":\"Existing name canonical\",\"pass\":true,\"actual\":\"LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\"},{\"check\":\"Existing name canonical\",\"pass\":true,\"actual\":\"LocalImport_&_24916224046766a23868876f37a79648\"},{\"check\":\"Existing name canonical\",\"pass\":true,\"actual\":\"LocalImport_&_8c3639388857993f6aded0a21867e2c8\"},{\"check\":\"Existing name canonical\",\"pass\":true,\"actual\":\"LocalImport_&_11e4907bf8fd1795b75badb173d1d98c\"},{\"check\":\"No user undo records will be consumed\",\"pass\":true,\"actual\":\"empty\"},{\"check\":\"Production wrapper, packaged raw resource and real directory\",\"pass\":true,\"actual\":\"已处理 0 个；已规范 5 个；跳过 1 个；重名冲突 0 个；失败 0 个。\\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\"},{\"check\":\"Production wrapper undo no-op\",\"pass\":true,\"actual\":\"没有待撤销的壁纸改名。\"},{\"check\":\"Real filenames and contents unchanged\",\"pass\":true,\"actual\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/ai.json\\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/VideoTag.json\\nd967fe899b1837b2eb0781cd6012816029413c4e0c749fd9180836ddc918b067  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\\n0686aea4c38edadaf036325e62b872c6c1ec5f0566b5b2f39fbace52c6e9900a  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\\n256ce847fc359ce8253a1dfc9d8613df8f5fd46d7c7aa8fe9ccf90b44b0f11bc  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_24916224046766a23868876f37a79648\\n4846d2c686fd0c9c55950cb116c501807b10ddfa44ec19ac5b253b06e69eb6b7  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_8c3639388857993f6aded0a21867e2c8\\n5028cff9bcc56f0cda0ce2ecb94a3c80daf05d6f44f5145284a65cabb50bb22e  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_11e4907bf8fd1795b75badb173d1d98c\"}]}\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'cat /data/user/0/local.usbcontrol/files/wallpaper-review-test.json'\"",
+    "exit": 0,
+    "stdout": "{\r\n  \"passed\": true,\r\n  \"checks\": [\r\n    {\r\n      \"check\": \"Installed target version\",\r\n      \"pass\": true,\r\n      \"actual\": \"1.0.5\"\r\n    },\r\n    {\r\n      \"check\": \"Production Root transport from app UID\",\r\n      \"pass\": true,\r\n      \"actual\": \"root UID 0\"\r\n    },\r\n    {\r\n      \"check\": \"State symlink rejected BEFORE extracting script\",\r\n      \"pass\": true,\r\n      \"actual\": \"rejected; sibling remains empty\"\r\n    },\r\n    {\r\n      \"check\": \"Known real-directory fixture count\",\r\n      \"pass\": true,\r\n      \"actual\": \"LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\\nLocalImport_&_44a93123a91d4a365a3047bc7a1531e4\\nLocalImport_&_24916224046766a23868876f37a79648\\nLocalImport_&_8c3639388857993f6aded0a21867e2c8\\nLocalImport_&_11e4907bf8fd1795b75badb173d1d98c\"\r\n    },\r\n    {\r\n      \"check\": \"Existing name canonical\",\r\n      \"pass\": true,\r\n      \"actual\": \"LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\"\r\n    },\r\n    {\r\n      \"check\": \"Existing name canonical\",\r\n      \"pass\": true,\r\n      \"actual\": \"LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\"\r\n    },\r\n    {\r\n      \"check\": \"Existing name canonical\",\r\n      \"pass\": true,\r\n      \"actual\": \"LocalImport_&_24916224046766a23868876f37a79648\"\r\n    },\r\n    {\r\n      \"check\": \"Existing name canonical\",\r\n      \"pass\": true,\r\n      \"actual\": \"LocalImport_&_8c3639388857993f6aded0a21867e2c8\"\r\n    },\r\n    {\r\n      \"check\": \"Existing name canonical\",\r\n      \"pass\": true,\r\n      \"actual\": \"LocalImport_&_11e4907bf8fd1795b75badb173d1d98c\"\r\n    },\r\n    {\r\n      \"check\": \"No user undo records will be consumed\",\r\n      \"pass\": true,\r\n      \"actual\": \"empty\"\r\n    },\r\n    {\r\n      \"check\": \"Production wrapper, packaged raw resource and real directory\",\r\n      \"pass\": true,\r\n      \"actual\": \"已处理 0 个；已规范 5 个；跳过 1 个；重名冲突 0 个；失败 0 个。\\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\"\r\n    },\r\n    {\r\n      \"check\": \"Production wrapper undo no-op\",\r\n      \"pass\": true,\r\n      \"actual\": \"没有待撤销的壁纸改名。\"\r\n    },\r\n    {\r\n      \"check\": \"Real filenames and contents unchanged\",\r\n      \"pass\": true,\r\n      \"actual\": \"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/ai.json\\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/VideoTag.json\\nd967fe899b1837b2eb0781cd6012816029413c4e0c749fd9180836ddc918b067  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\\n0686aea4c38edadaf036325e62b872c6c1ec5f0566b5b2f39fbace52c6e9900a  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\\n256ce847fc359ce8253a1dfc9d8613df8f5fd46d7c7aa8fe9ccf90b44b0f11bc  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_24916224046766a23868876f37a79648\\n4846d2c686fd0c9c55950cb116c501807b10ddfa44ec19ac5b253b06e69eb6b7  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_8c3639388857993f6aded0a21867e2c8\\n5028cff9bcc56f0cda0ce2ecb94a3c80daf05d6f44f5145284a65cabb50bb22e  \\/sdcard\\/Android\\/data\\/com.android.thememanager\\/files\\/MIUI\\/.videowallpaper\\/LocalImport_&_11e4907bf8fd1795b75badb173d1d98c\"\r\n    }\r\n  ]\r\n}",
+    "stderr": ""
+  },
+  {
+    "passed": true,
+    "checks": [
+      {
+        "check": "Installed target version",
+        "pass": true,
+        "actual": "1.0.5"
+      },
+      {
+        "check": "Production Root transport from app UID",
+        "pass": true,
+        "actual": "root UID 0"
+      },
+      {
+        "check": "State symlink rejected BEFORE extracting script",
+        "pass": true,
+        "actual": "rejected; sibling remains empty"
+      },
+      {
+        "check": "Known real-directory fixture count",
+        "pass": true,
+        "actual": "LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\nLocalImport_&_44a93123a91d4a365a3047bc7a1531e4\nLocalImport_&_24916224046766a23868876f37a79648\nLocalImport_&_8c3639388857993f6aded0a21867e2c8\nLocalImport_&_11e4907bf8fd1795b75badb173d1d98c"
+      },
+      {
+        "check": "Existing name canonical",
+        "pass": true,
+        "actual": "LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a"
+      },
+      {
+        "check": "Existing name canonical",
+        "pass": true,
+        "actual": "LocalImport_&_44a93123a91d4a365a3047bc7a1531e4"
+      },
+      {
+        "check": "Existing name canonical",
+        "pass": true,
+        "actual": "LocalImport_&_24916224046766a23868876f37a79648"
+      },
+      {
+        "check": "Existing name canonical",
+        "pass": true,
+        "actual": "LocalImport_&_8c3639388857993f6aded0a21867e2c8"
+      },
+      {
+        "check": "Existing name canonical",
+        "pass": true,
+        "actual": "LocalImport_&_11e4907bf8fd1795b75badb173d1d98c"
+      },
+      {
+        "check": "No user undo records will be consumed",
+        "pass": true,
+        "actual": "empty"
+      },
+      {
+        "check": "Production wrapper, packaged raw resource and real directory",
+        "pass": true,
+        "actual": "已处理 0 个；已规范 5 个；跳过 1 个；重名冲突 0 个；失败 0 个。\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。"
+      },
+      {
+        "check": "Production wrapper undo no-op",
+        "pass": true,
+        "actual": "没有待撤销的壁纸改名。"
+      },
+      {
+        "check": "Real filenames and contents unchanged",
+        "pass": true,
+        "actual": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/ai.json\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/VideoTag.json\nd967fe899b1837b2eb0781cd6012816029413c4e0c749fd9180836ddc918b067  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\n0686aea4c38edadaf036325e62b872c6c1ec5f0566b5b2f39fbace52c6e9900a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\n256ce847fc359ce8253a1dfc9d8613df8f5fd46d7c7aa8fe9ccf90b44b0f11bc  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_24916224046766a23868876f37a79648\n4846d2c686fd0c9c55950cb116c501807b10ddfa44ec19ac5b253b06e69eb6b7  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_8c3639388857993f6aded0a21867e2c8\n5028cff9bcc56f0cda0ce2ecb94a3c80daf05d6f44f5145284a65cabb50bb22e  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_11e4907bf8fd1795b75badb173d1d98c"
+      }
+    ]
+  },
+  {
+    "command": "adb shell \"su -c 'pm uninstall local.usbcontrol.wallpapertest'\"",
+    "exit": 0,
+    "stdout": "Success\r\n",
+    "stderr": ""
+  },
+  {
+    "result": "PASS",
+    "checks": [
+      "root package update",
+      "production Root transport from app UID",
+      "actual packaged WallpaperLoop and raw script",
+      "real directory no-op apply and undo",
+      "five real video hashes unchanged",
+      "no screenshots or UI actions",
+      "test APK uninstalled"
+    ]
+  }
+]

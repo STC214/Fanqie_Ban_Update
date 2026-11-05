@@ -1,0 +1,17 @@
+{
+  "usb_control_app\\src\\local\\usbcontrol\\Backdrop.java": "be6917ce4918baa6ed21495e0cefa6b52fb72110c1017ea488ba821d838484fe",
+  "usb_control_app\\src\\local\\usbcontrol\\BackgroundStore.java": "1f7bf5669215ade4655b447149e28b3d30fe1ba1f3b43b43e337abf3735f10be",
+  "usb_control_app\\src\\local\\usbcontrol\\Baseline.java": "8fbe86653c7581d9538c7e30d93b30c9b86fd5ba231d93b88bb476fe339e6fb9",
+  "usb_control_app\\src\\local\\usbcontrol\\DensitySession.java": "820c0966d23c5df3eb9738ebd8d5a6757cfee9f688f55d2cced75c72de3c2912",
+  "usb_control_app\\src\\local\\usbcontrol\\Logic.java": "1cf8bf5827d9a9eeac98895c934fe36a30ee6933cea38f778391cb118b3f33b9",
+  "usb_control_app\\src\\local\\usbcontrol\\MainActivity.java": "719748d82563d9cfd23498c1f0ed8bd97ea3d8f256d5b92c40d31e0b382a3d6e",
+  "usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java": "03fb3c582c15280406ac925f8ab5a9253c0e85b5b18f9a6f47943e215f9afd48",
+  "usb_control_app\\src\\local\\usbcontrol\\Root.java": "05dea6c8eb51601288b176f569a5fc4583c36835a9a83bc32a90211ff9966efa",
+  "usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java": "f6ea279b9e91cb7c695e8b3d602fb183a6ccae8884d645c479e7495e8a18944d",
+  "usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java": "01a3b4199e0eff6f12870268418a31c8fa7c99485fd116d7d8261072e5ce4e0a",
+  "usb_control_app\\AndroidManifest.xml": "1ebceddb63c09f57bb0003bee0f5adb9a8e8e9b12c498e98fc4e79cb4c37fc74",
+  "usb_control_app\\build.ps1": "05443bc8a18bf9ef7a4b831e9aa37bee709ca29e8d50e094ba7a44663bc5622e",
+  "usb_control_app\\README.md": "a5c19535b9dd8a576bb00282d0c6b7c19ce88a8721dbc487227854ad1b66061c",
+  "README.md": "3af791c86f181460cc2624a0f5a3484be3e351ec13df409094cff75dd7953c63",
+  "releases\\usb-control-v1.0.4.apk": "aa4a25d98070b7fd7a8c5234c0b94007a28ca23152fd9c80ae2c60b0449898b6"
+}

@@ -6,6 +6,9 @@ import java.util.concurrent.*;
 final class Root {
     static String quote(String s) { return "'" + s.replace("'", "'\\''") + "'"; }
     static String run(String command) throws Exception {
+        return run(command,35);
+    }
+    static String run(String command,int timeoutSeconds) throws Exception {
         // No shell input comes from editable UI: density is numeric; names are constants.
         Process p;
         try { p = new ProcessBuilder("su", "-c", command).redirectErrorStream(true).start(); }
@@ -18,7 +21,7 @@ final class Root {
         } catch(IOException ignored) {} });
         reader.setDaemon(true); reader.start();
         try {
-        if(!p.waitFor(35,TimeUnit.SECONDS)) { p.destroyForcibly(); throw new IOException("Root 请求超时，请检查超级用户授权"); }
+        if(!p.waitFor(timeoutSeconds,TimeUnit.SECONDS)) { p.destroyForcibly(); throw new IOException("Root 请求超时，请检查超级用户授权"); }
         reader.join(1000);
         if(reader.isAlive())throw new IOException("Root 输出流尚未结束，请重试");
         if(truncated.get())throw new IOException("Root 返回内容超限，已停止解析");

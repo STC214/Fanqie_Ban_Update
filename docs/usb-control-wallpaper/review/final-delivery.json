@@ -1,0 +1,108 @@
+[
+  {
+    "command": "adb shell \"su -c 'find /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper -type f -exec sha256sum {} \\;'\"",
+    "exit": 0,
+    "stdout": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/ai.json\r\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/VideoTag.json\r\nd967fe899b1837b2eb0781cd6012816029413c4e0c749fd9180836ddc918b067  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\r\n0686aea4c38edadaf036325e62b872c6c1ec5f0566b5b2f39fbace52c6e9900a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\r\n256ce847fc359ce8253a1dfc9d8613df8f5fd46d7c7aa8fe9ccf90b44b0f11bc  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_24916224046766a23868876f37a79648\r\n4846d2c686fd0c9c55950cb116c501807b10ddfa44ec19ac5b253b06e69eb6b7  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_8c3639388857993f6aded0a21867e2c8\r\n5028cff9bcc56f0cda0ce2ecb94a3c80daf05d6f44f5145284a65cabb50bb22e  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_11e4907bf8fd1795b75badb173d1d98c\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'settings get global adb_enabled; settings get global adb_wifi_enabled; wm density'\"",
+    "exit": 0,
+    "stdout": "1\r\n0\r\nPhysical density: 480\r\nOverride density: 450\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/user/0/local.usbcontrol/shared_prefs/preferences.xml'\"",
+    "exit": 0,
+    "stdout": "a53b44deb4be82443cbaea4c52b67ddb94ce27ebf0a5fb4c1897152d1fc8352c  /data/user/0/local.usbcontrol/shared_prefs/preferences.xml\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File docs/usb-control-wallpaper/rollback.ps1 -Mode Verify",
+    "exit": 0,
+    "stdout": "PASS: reverse patch applicable; baseline APK SHA256 verified.\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File docs/usb-control-wallpaper/rollback.ps1 -Mode Wallpapers",
+    "exit": 0,
+    "stdout": "没有待撤销的壁纸改名。\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File docs/usb-control-wallpaper/rollback.ps1 -Mode Apk",
+    "exit": 0,
+    "stdout": "Success\r\n",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\.local\\wallpaper-rollback\\usb-control-v1.0.4.apk: 1 file pushed, 0 skipped. 33.8 MB/s (996130 bytes in 0.028s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'dumpsys package local.usbcontrol | grep -E '\\\"'\\\"'versionCode=|versionName='\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "    versionCode=104 minSdk=26 targetSdk=36\r\n    versionName=1.0.4\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb push releases/usb-control-v1.0.5.apk /data/local/tmp/qingkong-reviewed-final.apk",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "releases/usb-control-v1.0.5.apk: 1 file pushed, 0 skipped. 40.5 MB/s (1000292 bytes in 0.024s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'pm install -r /data/local/tmp/qingkong-reviewed-final.apk'\"",
+    "exit": 0,
+    "stdout": "Success\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'dumpsys package local.usbcontrol | grep -E '\\\"'\\\"'versionCode=|versionName='\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "    versionCode=105 minSdk=26 targetSdk=36\r\n    versionName=1.0.5\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell pm path local.usbcontrol",
+    "exit": 0,
+    "stdout": "package:/data/app/~~d_rjOWPgnljkNDAFpxzASg==/local.usbcontrol-N_t_UDbHUEVmC80E1-iuCA==/base.apk\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum '\\\"'\\\"'/data/app/~~d_rjOWPgnljkNDAFpxzASg==/local.usbcontrol-N_t_UDbHUEVmC80E1-iuCA==/base.apk'\\\"'\\\"''\"",
+    "exit": 0,
+    "stdout": "56804b92984be80df89840cdc9ffed8e6d7d2f4db246226a012908edb17d11fe  /data/app/~~d_rjOWPgnljkNDAFpxzASg==/local.usbcontrol-N_t_UDbHUEVmC80E1-iuCA==/base.apk\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'find /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper -type f -exec sha256sum {} \\;'\"",
+    "exit": 0,
+    "stdout": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/ai.json\r\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/VideoTag.json\r\nd967fe899b1837b2eb0781cd6012816029413c4e0c749fd9180836ddc918b067  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\r\n0686aea4c38edadaf036325e62b872c6c1ec5f0566b5b2f39fbace52c6e9900a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\r\n256ce847fc359ce8253a1dfc9d8613df8f5fd46d7c7aa8fe9ccf90b44b0f11bc  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_24916224046766a23868876f37a79648\r\n4846d2c686fd0c9c55950cb116c501807b10ddfa44ec19ac5b253b06e69eb6b7  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_8c3639388857993f6aded0a21867e2c8\r\n5028cff9bcc56f0cda0ce2ecb94a3c80daf05d6f44f5145284a65cabb50bb22e  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_11e4907bf8fd1795b75badb173d1d98c\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'settings get global adb_enabled; settings get global adb_wifi_enabled; wm density'\"",
+    "exit": 0,
+    "stdout": "1\r\n0\r\nPhysical density: 480\r\nOverride density: 450\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sha256sum /data/user/0/local.usbcontrol/shared_prefs/preferences.xml'\"",
+    "exit": 0,
+    "stdout": "a53b44deb4be82443cbaea4c52b67ddb94ce27ebf0a5fb4c1897152d1fc8352c  /data/user/0/local.usbcontrol/shared_prefs/preferences.xml\r\n",
+    "stderr": ""
+  },
+  {
+    "result": "PASS",
+    "version": "1.0.5",
+    "versionCode": 105,
+    "apk_sha256": "56804b92984be80df89840cdc9ffed8e6d7d2f4db246226a012908edb17d11fe",
+    "checks": [
+      "all delivered rollback modes verified; source rollback separately executed in copy",
+      "Root downgrade to preserved baseline 1.0.4",
+      "Root push and reinstall final 1.0.5",
+      "installed APK SHA256 equals local release APK",
+      "all real wallpaper names and hashes unchanged",
+      "preferences preserved",
+      "ADB wireless and density unchanged",
+      "no UI or screenshots"
+    ]
+  }
+]

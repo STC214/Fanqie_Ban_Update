@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol.wallpapertest">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
+    <instrumentation android:name=".WallpaperInstrumentation" android:targetPackage="local.usbcontrol" android:label="Wallpaper root integration test"/>
+    <application android:label="Wallpaper root integration test" android:allowBackup="false"/>
+</manifest>

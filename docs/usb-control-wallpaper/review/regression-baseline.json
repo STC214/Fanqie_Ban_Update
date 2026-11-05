@@ -1,0 +1,48 @@
+[
+  {
+    "command": "adb shell \"su -c 'mktemp -d /data/local/tmp/wallpaper-recovery.XXXXXX'\"",
+    "exit": 0,
+    "stdout": "/data/local/tmp/wallpaper-recovery.8gcmxG\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'chmod 777 /data/local/tmp/wallpaper-recovery.8gcmxG; mkdir /data/local/tmp/wallpaper-recovery.8gcmxG/media /data/local/tmp/wallpaper-recovery.8gcmxG/state; chmod 777 /data/local/tmp/wallpaper-recovery.8gcmxG/media'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\baseline-wallpaper.sh /data/local/tmp/wallpaper-recovery.8gcmxG/wallpaper.sh",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\baseline-wallpaper.sh: 1 file pushed, 0 skipped. 14.5 MB/s (3988 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4 /data/local/tmp/wallpaper-recovery.8gcmxG/media/LocalImport_abcdef0123456789abcdef0123456789",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\recovery.mp4: 1 file pushed, 0 skipped. 0.1 MB/s (32 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb push F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv /data/local/tmp/wallpaper-recovery.8gcmxG/input.tsv",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\review\\test-journal.tsv: 1 file pushed, 0 skipped. 0.0 MB/s (7 bytes in 0.000s)\r\n"
+  },
+  {
+    "command": "adb shell \"su -c 'cp /data/local/tmp/wallpaper-recovery.8gcmxG/input.tsv /data/local/tmp/wallpaper-recovery.8gcmxG/state/wallpaper-renames.tsv'\"",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'sh /data/local/tmp/wallpaper-recovery.8gcmxG/wallpaper.sh /data/local/tmp/wallpaper-recovery.8gcmxG/media /data/local/tmp/wallpaper-recovery.8gcmxG/state apply'\"",
+    "exit": 0,
+    "stdout": "已处理 1 个；已规范 0 个；跳过 0 个；重名冲突 0 个；失败 0 个。\r\n仅改文件名，不改视频内容；到主题管理重新选择壁纸后查看循环效果。\r\n",
+    "stderr": ""
+  },
+  {
+    "result": "REPRODUCED",
+    "finding": "Original code renames a file despite damaged undo journal"
+  }
+]

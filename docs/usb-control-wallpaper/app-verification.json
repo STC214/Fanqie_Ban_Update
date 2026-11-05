@@ -1,0 +1,20 @@
+[
+  {
+    "command": "adb shell \"su -c 'find /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper -type f -exec sha256sum {} \\;'\"",
+    "exit": 0,
+    "stdout": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/ai.json\r\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/VideoTag.json\r\nd967fe899b1837b2eb0781cd6012816029413c4e0c749fd9180836ddc918b067  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_6d414a1936a4c7373537ecc45dc08c0a\r\n0686aea4c38edadaf036325e62b872c6c1ec5f0566b5b2f39fbace52c6e9900a  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_44a93123a91d4a365a3047bc7a1531e4\r\n256ce847fc359ce8253a1dfc9d8613df8f5fd46d7c7aa8fe9ccf90b44b0f11bc  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_24916224046766a23868876f37a79648\r\n4846d2c686fd0c9c55950cb116c501807b10ddfa44ec19ac5b253b06e69eb6b7  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_8c3639388857993f6aded0a21867e2c8\r\n5028cff9bcc56f0cda0ce2ecb94a3c80daf05d6f44f5145284a65cabb50bb22e  /sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper/LocalImport_&_11e4907bf8fd1795b75badb173d1d98c\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell am start -n local.usbcontrol/.MainActivity",
+    "exit": 0,
+    "stdout": "Starting: Intent { cmp=local.usbcontrol/.MainActivity }\r\n",
+    "stderr": ""
+  },
+  {
+    "command": "adb shell \"su -c 'uiautomator dump /data/local/tmp/qingkong-wallpaper-ui.xml'\"",
+    "exit": 137,
+    "stdout": "",
+    "stderr": "Killed \r\n"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "original": "releases/usb-control-v1.0.4.apk",
+    "local_archive": "F:\\Project\\07_Androd\\08_FanQie\\.local\\wallpaper-release-history\\usb-control-v1.0.4.apk",
+    "sha256": "aa4a25d98070b7fd7a8c5234c0b94007a28ca23152fd9c80ae2c60b0449898b6",
+    "baseline_zip_entry": "releases/usb-control-v1.0.4.apk",
+    "result": "copied to ZIP and archived; hashes verified"
+  },
+  {
+    "original": "releases/usb-control-v1.0.4.apk.idsig",
+    "local_archive": "F:\\Project\\07_Androd\\08_FanQie\\.local\\wallpaper-release-history\\usb-control-v1.0.4.apk.idsig",
+    "sha256": "4a1a2246208af655e877fe53cb446e34673f8ccb3803b0314e27dfe091b2e964",
+    "baseline_zip_entry": "releases/usb-control-v1.0.4.apk.idsig",
+    "result": "copied to ZIP and archived; hashes verified"
+  },
+  {
+    "original": "releases/usb-control-v1.0.4.apk.sha256",
+    "local_archive": "F:\\Project\\07_Androd\\08_FanQie\\.local\\wallpaper-release-history\\usb-control-v1.0.4.apk.sha256",
+    "sha256": "54ee91b7eb893f84f4e6a7caec2bdb9db8abdb2153ef4e797af5ee7d0a7adaa4",
+    "baseline_zip_entry": "releases/usb-control-v1.0.4.apk.sha256",
+    "result": "copied to ZIP and archived; hashes verified"
+  }
+]

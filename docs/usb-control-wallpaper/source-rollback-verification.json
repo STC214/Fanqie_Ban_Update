@@ -1,0 +1,8 @@
+{
+  "command": "git -c core.autocrlf=false apply --reverse F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-wallpaper\\changes.patch",
+  "cwd": "F:\\Temp\\qingkong-rollback-lovvhivk",
+  "exit": 0,
+  "stdout": "",
+  "stderr": "F:/Project/07_Androd/08_FanQie/docs/usb-control-wallpaper/changes.patch:4: trailing whitespace.\n# \u756a\u8304\u5c0f\u8bf4\u5347\u7ea7\u3001\u77ed\u89c6\u9891\u4e0e\u5c0f\u6e38\u620f\u5c4f\u853d\u6a21\u5757\r\nF:/Project/07_Androd/08_FanQie/docs/usb-control-wallpaper/changes.patch:5: trailing whitespace.\n\r\nF:/Project/07_Androd/08_FanQie/docs/usb-control-wallpaper/changes.patch:6: trailing whitespace.\n\u9002\u7528\u4e8e SukiSU Ultra / KernelSU \u7684\u6a21\u5757\uff0c\u76ee\u6807\u5305\u540d\u4e3a `com.dragon.read`\u3002\u6a21\u5757\u901a\u8fc7 KernelSU \u7cfb\u7edf\u5c42\u89c4\u5219\u548c LSPosed \u8fdb\u7a0b\u5185\u94a9\u5b50\u5171\u540c\u5c4f\u853d\u4ee5\u4e0b\u529f\u80fd\uff1a\r\nF:/Project/07_Androd/08_FanQie/docs/usb-control-wallpaper/changes.patch:7: trailing whitespace.\n\r\nF:/Project/07_Androd/08_FanQie/docs/usb-control-wallpaper/changes.patch:8: trailing whitespace.\n- APP \u7248\u672c\u68c0\u67e5\u3001\u5347\u7ea7\u5f39\u7a97\u3001\u5347\u7ea7\u4e0b\u8f7d\u548c APK \u5b89\u88c5\uff1b\r\nwarning: squelched 374 whitespace errors\nwarning: 379 lines add whitespace errors.\n",
+  "result": "PASS: byte-exact baseline restore, new source files removed"
+}

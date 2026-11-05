@@ -10,9 +10,9 @@
 
 ## 轻控 Android App
 
-独立 App **轻控 1.0.4**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+独立 App **轻控 1.0.5**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
 
-- 安装包：[`releases/usb-control-v1.0.4.apk`](releases/usb-control-v1.0.4.apk)
+- 安装包：[`releases/usb-control-v1.0.5.apk`](releases/usb-control-v1.0.5.apk)
 - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
 - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
 - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
@@ -294,4 +294,6 @@ USB 调试和 USB 安装的开启、关闭均取消 App 二次确认；点击立
 验证记录：`docs/usb-control-fast-toggle/`。
 
 ### 安装包保留策略
-轻控仅保留最新版 `releases/usb-control-v1.0.4.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。
+轻控仅保留最新版 `releases/usb-control-v1.0.5.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。
+
+轻控 1.0.5 新增「一键循环壁纸」，目录、命名规则与撤销见 [轻控说明](usb_control_app/README.md)。
