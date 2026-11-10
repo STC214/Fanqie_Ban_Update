@@ -35,6 +35,7 @@ for label, sources, mains in [
     ('model', ['src/local/usbcontrol/Logic.java', 'src/local/usbcontrol/SafeFiles.java',
                'src/local/usbcontrol/DensitySession.java', 'tests/model/Root.java',
                'tests/model/TransactionTest.java', 'tests/LogicTest.java'], ['LogicTest', 'TransactionTest']),
+    ('system-apps', ['src/local/usbcontrol/SystemApps.java', 'tests/SystemAppsTest.java'], ['SystemAppsTest']),
     ('adapter', ['src/local/usbcontrol/Logic.java', 'src/local/usbcontrol/Root.java',
                  'src/local/usbcontrol/UsbInstall.java', 'src/local/usbcontrol/SafeFiles.java',
                  'src/local/usbcontrol/DensitySession.java', 'src/local/usbcontrol/RecoveryScript.java',

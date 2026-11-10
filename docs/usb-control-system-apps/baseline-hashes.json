@@ -1,0 +1,674 @@
+﻿[
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb-control-v1.0.5.apk",
+        "Hash":  "56804B92984BE80DF89840CDC9FFED8E6D7D2F4DB246226A012908EDB17D11FE"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\.gitignore",
+        "Hash":  "F46E9FE4D2E1BD34D318A02F6F674AA4338BD793F645C33ADE71E9BA1FDD539E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\AndroidManifest.xml",
+        "Hash":  "0807B29191A0D2807939E0316F233B3B88C78DCA15ABD4DC806EAFB245E8751E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build.ps1",
+        "Hash":  "FE5D46B14F907FEEF53C4F2CB8E102866F88ABDD48D4BB35A2C811557D7F27E9"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\README.md",
+        "Hash":  "C20343481259F97910750A82D0FAF2BFCF3FF3958A558B74062252F7F9F5A0E9"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\aligned.apk",
+        "Hash":  "63E717DBB5C7AE7B0547D941B2D55EF7AA27383F19CF9F44ADBF55C12042F44F"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\base.apk",
+        "Hash":  "1A57EBDB7542CEA603CD217124E80156B7B211CB1B7A173C48A99D04CF00E3A8"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes.jar",
+        "Hash":  "30D7AA37A537685AB3370EA287769D9FECE4BCDE64B669FBE4CDC1017B364CDC"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\phone-emergency.sh",
+        "Hash":  "43F1147A03827B82FDC7EE4F25F2AAEF536DAF8D3B543A56B3A05D32CB7294A8"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\resources.zip",
+        "Hash":  "A026E3E948BB5BD2C4A4072316C0E89F14F1E68219B1387EE70FA38E4A824AE1"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\root-runner.sh",
+        "Hash":  "F60218184710FC70CBC6B98A68B538A6E780255757204B0EA7C030E1DBC69FEC"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\root-tests.jar",
+        "Hash":  "16F6289A9DD513FD49B856459676EE0B0601451F6B616F860DC02A17DCA757D5"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\unsigned.apk",
+        "Hash":  "D0DEB9952EF255CD2FD7C163F7B641DCBAB2695BA384BBC38A3ABA1D12C07CE2"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-tests\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "AD8F9E18D5B4B0DB0137DF07FF904116C97860A5E5FA441EA0C6B182A540BA19"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-tests\\local\\usbcontrol\\Logic.class",
+        "Hash":  "30DA17426C909A7292363C46F41B7789CC17AA92CBC40B166CCF864D4E8E6601"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-tests\\local\\usbcontrol\\RecoveryScript.class",
+        "Hash":  "73BE01F6589B147D59696B43AF242CC64F96A20AD466357EC9A68EA16374E333"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-tests\\local\\usbcontrol\\Root.class",
+        "Hash":  "2149E6D534CADF7FF7DA74BB5EE624F86BB32B40CCBEFB1DA47462DCE92927CC"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-tests\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "3EC9545F34C119A61CF0098DEB735959F50D75B8C6E5E02450165E9C0F034FFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-tests\\local\\usbcontrol\\UsbInstall.class",
+        "Hash":  "4FEC01A0FC97F601A25C748762FEFCBBD809EB41E01CB6AF0ABCFFF7A3A66632"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-tests\\local\\usbcontrol\\UsbInstallTest.class",
+        "Hash":  "B75A2BF7E402BE7028CF384FE9156878602E8D2A906512C90AFCB46530210881"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-verified\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "AD8F9E18D5B4B0DB0137DF07FF904116C97860A5E5FA441EA0C6B182A540BA19"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-verified\\local\\usbcontrol\\Logic.class",
+        "Hash":  "79ECF655BA42411492311098B2F8D26EC96BC5D74F5FA919651AFE00BB531D8C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-verified\\local\\usbcontrol\\RecoveryScript.class",
+        "Hash":  "73BE01F6589B147D59696B43AF242CC64F96A20AD466357EC9A68EA16374E333"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-verified\\local\\usbcontrol\\Root.class",
+        "Hash":  "2149E6D534CADF7FF7DA74BB5EE624F86BB32B40CCBEFB1DA47462DCE92927CC"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-verified\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "3EC9545F34C119A61CF0098DEB735959F50D75B8C6E5E02450165E9C0F034FFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-verified\\local\\usbcontrol\\UsbInstall.class",
+        "Hash":  "977F7C4B58B7C4C54E869B4C7CEC65DA8CC523BF731AC663FF8699B9B97FEDD4"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\adapter-verified\\local\\usbcontrol\\UsbInstallTest.class",
+        "Hash":  "08080206BB29049D71E67C89374CC311F6CB1A5732D0AD76A2B723B45E416171"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\resources.apk",
+        "Hash":  "2C5662971EC9449B72A26C5A8F38A46E1461E8795D6E09369DA94AC4A8F397B4"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\resources.zip",
+        "Hash":  "6A1A7BE3B1307301FD8F42D5CD2C79D9433A90220DA8BBE35319795BA0F0F8B1"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\Backdrop$1.class",
+        "Hash":  "08BAD3C9023CE8A0736276595D6A2C8D8FF935CEE2AF8894B133FF862B59AAED"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\Backdrop.class",
+        "Hash":  "A5602AFED26FEB88BEC5F83EA75508F9525E112132EF46AB3F3528456B0BC774"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\Logic.class",
+        "Hash":  "874D5B9E583E9D2FC87F9ABE0EBE364AB413B8BA93DE1582981D9A1108BE9F3F"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\MainActivity$1.class",
+        "Hash":  "8E18B5A9F6317101AC7A9E3FCA18F8A675B87E1F4166A9976C6482449F5CF742"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\MainActivity$2.class",
+        "Hash":  "35BE0E10F1C222724203E20D348349E545A0CD91F73BD2EB94AC5C02D752DF0E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\MainActivity$3.class",
+        "Hash":  "0606A253E0964A46C09156757D8CB9509CDC2351BCF6CC5BBCA6FEE570A0810D"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\MainActivity$Job.class",
+        "Hash":  "94EC592CABC5D063F566F442A5A675EA289D74DC5475CD503210C61518F78F3A"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\MainActivity.class",
+        "Hash":  "0FE1D0891A91503AB9467651A2CDB50010D1464C7418A4811AFEFD3000C2BECA"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\R$drawable.class",
+        "Hash":  "7BDE5258D7158DD04C32A72AAD7D8920ADB8C0D89EF29AB65F7E127FBE45878E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\R$mipmap.class",
+        "Hash":  "414D521E825CBB9C9FCC0AD4C615A6289F2F035A179AF69CAAA3B668D553BDEF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\R$style.class",
+        "Hash":  "CD434E03A7C760C309938935AC61BD6987BD08C8FE39143D2FC909F98505B830"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\R.class",
+        "Hash":  "BC12F403C9B4A4CB593EC879F98E5BD810991635E8B5DEC27C4BBC3D95A5E34E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\classes\\local\\usbcontrol\\Root.class",
+        "Hash":  "EAEF83A78838E16B4987DBE0FFC94BBA248AD8CBB570548713C4496E904D7A9C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\baseline-lint\\gen\\local\\usbcontrol\\R.java",
+        "Hash":  "F0D1FB335F096005FCB699DD6ED37498A72B6D78C3997105C0060829009843BA"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\Backdrop$1.class",
+        "Hash":  "48EAFEEF1E4D3BD2CB5D9BDB7F3D43341403F439D5D78E2DFB18675C816D2F26"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\Backdrop.class",
+        "Hash":  "195F3AA800A5E28056CACB01F27AF637E0B6DC150E1A6DCA660BA411ECB33625"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\BackgroundStore.class",
+        "Hash":  "E1E64DF837A1200A903351DD6862D31380F30CB5213117870BE6C3A40306FAD3"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\Baseline.class",
+        "Hash":  "67C6FBE50D677B896AD69E3822BE9DC73CA6467D21E627CDAA092316746E36F3"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "1B7962ADA665EA0732532E3187C91F115CD72AB8CD0A842DF917FACB1DAE975E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\Logic.class",
+        "Hash":  "685D8AA63A83BC26BE48CD00A0B07B8B7B3DBFF06A7C11FBEAC0139E412D80ED"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\MainActivity$1.class",
+        "Hash":  "A72AC64D444874BC594420CA2B367BC9A880116CF43CCF857C9325BCCFF3679E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\MainActivity$2.class",
+        "Hash":  "FBC12C8A0C591197EA1F69562A754B56DF7B569508B5BD2366318D0186163623"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\MainActivity$3.class",
+        "Hash":  "BA0126AF6FD88101A5181AA297B07CC817D88918DFC1D57DA29F51C608F05CC1"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\MainActivity$Job.class",
+        "Hash":  "94EC592CABC5D063F566F442A5A675EA289D74DC5475CD503210C61518F78F3A"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\MainActivity$ManagedDialogBuilder.class",
+        "Hash":  "944817393E6040BF5CC33AE5291EE82CCD78EFE25E1EA32D9469D912AE5D02F2"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\MainActivity.class",
+        "Hash":  "4305433A35CFBB43AB65CD91F447B456250FF971B9C76CA88D6D846223962BB6"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\R$drawable.class",
+        "Hash":  "70D53580C4AB32DA433F4EC6C690810A046D86CD8D23D9AD02B70E1730372420"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\R$mipmap.class",
+        "Hash":  "FC2773B88E29943ACAFD62A6563F3255E0A345D91D9824D5169F65574D072622"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\R$raw.class",
+        "Hash":  "7E39FC3FD0067DBB278DA14AAE84B3877CE0C5EE027604F27F4B57FCBC390FAA"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\R$string.class",
+        "Hash":  "3352D02CB3C343BB67D34B10F4EDAFA4B46F46763062F275957796765A0FC957"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\R$style.class",
+        "Hash":  "22C3F14D4120C90649021163AFFC21285DA48888A77EA3A8768A9880FA7733FA"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\R$xml.class",
+        "Hash":  "8277CA03CA503426640CE85116B31B72AE1DB724336AAC5F5E4272C187B65B37"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\R.class",
+        "Hash":  "CA1B929AB77063720BC240D795CAF256E18DE33C1E79B4D982604C645733EE0A"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\RecoveryScript.class",
+        "Hash":  "1B7EE9F77744B64E45C18470CBBF35B729B76A6A8C35AD4358E524397F20F312"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\Root.class",
+        "Hash":  "0DF71EE69A7836878AE61677718A13E610CD93CC83372516158DED735888BEEC"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "D5436476190AECBF4E6238E01AEB8F38BA54AA02945E65F5EDF5CA6FAAA3762E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\UsbInstall.class",
+        "Hash":  "41AB435040C893BC6B5558160A078DA571FF5A13E57B638C345328FDA07772F5"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\classes\\local\\usbcontrol\\WallpaperLoop.class",
+        "Hash":  "E763CBB5F64A87EC811D7301C13FA31FECE228A7157778EE74129C9745E34A3E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-baseline-tests\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "AD8F9E18D5B4B0DB0137DF07FF904116C97860A5E5FA441EA0C6B182A540BA19"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-baseline-tests\\local\\usbcontrol\\Logic.class",
+        "Hash":  "30DA17426C909A7292363C46F41B7789CC17AA92CBC40B166CCF864D4E8E6601"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-baseline-tests\\local\\usbcontrol\\LogicTest.class",
+        "Hash":  "BC81E46768F620AAA1D3F26EA1574C87CA91DB0713A1AFE198641439C83AC599"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-baseline-tests\\local\\usbcontrol\\Root.class",
+        "Hash":  "E7CE53DB4134C37DA7F002EABCB359F0DF46F5DDCFCBF9E9D38659C0574B9163"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-baseline-tests\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "3EC9545F34C119A61CF0098DEB735959F50D75B8C6E5E02450165E9C0F034FFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-baseline-tests\\local\\usbcontrol\\TransactionTest.class",
+        "Hash":  "7C9583C5174824318E7A9EA1F1366DF76C4D9F532120FE1054E7E426CDECE09E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-modified-tests\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "AD8F9E18D5B4B0DB0137DF07FF904116C97860A5E5FA441EA0C6B182A540BA19"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-modified-tests\\local\\usbcontrol\\Logic.class",
+        "Hash":  "79ECF655BA42411492311098B2F8D26EC96BC5D74F5FA919651AFE00BB531D8C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-modified-tests\\local\\usbcontrol\\LogicTest.class",
+        "Hash":  "95A03222276002A7A3D8AE9F61F3B1C5BD48D865B8F40C7F2524DFFBD37F5DA2"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-modified-tests\\local\\usbcontrol\\Root.class",
+        "Hash":  "E7CE53DB4134C37DA7F002EABCB359F0DF46F5DDCFCBF9E9D38659C0574B9163"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-modified-tests\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "3EC9545F34C119A61CF0098DEB735959F50D75B8C6E5E02450165E9C0F034FFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dark-modified-tests\\local\\usbcontrol\\TransactionTest.class",
+        "Hash":  "7C9583C5174824318E7A9EA1F1366DF76C4D9F532120FE1054E7E426CDECE09E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\aligned.apk",
+        "Hash":  "73E580A72E160C25C53C1E6D64AD231B5CD93905F5F3767DF720097E612C117F"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\audit-tests.apk",
+        "Hash":  "8D5AA83178F8CE23DAAE1ED3E7184A66BB721D70A137E4802C9E25EB74DAE9F3"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\audit-tests.apk.idsig",
+        "Hash":  "ED1C77F56AB2E5F5BA60A180DEBE11EC9CCA5A205C7F45EC9504F852024A3B44"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\base.apk",
+        "Hash":  "3EDABF63037DFB827C3E5A7A99BAD925F764EF1BD9FBAFF385D10C02C55BC463"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\classes.jar",
+        "Hash":  "FDB56621F6B7BEE75870452A74E8D541877A970487ED5BA2D03A0588F37CFA61"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\unsigned.apk",
+        "Hash":  "A0CBB6A95A9D213302EA9CA909C55F0D6AB1E3A21A15126599C6225304EE50B7"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\classes\\local\\usbcontrol\\audit\\AuditInstrumentation.class",
+        "Hash":  "E6B6D7BC98120B4015307BEAA2C0B567C3583723D118D0A8C95A39A06ACE28A8"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\device-tests\\dex\\classes.dex",
+        "Hash":  "47E03C6CA1577BD0F90E8174D23B78C3CBEE81E5BD88D494666B18B89E52BEC1"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\dex\\classes.dex",
+        "Hash":  "B9621FF5B53634C7B32607905FF9619D2B608028C2BE5DD5FED3CC3E8B1553F2"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\gen\\local\\usbcontrol\\R.java",
+        "Hash":  "C79C9FF137AE23529E2AEF8FBEBC332AF6EE94730E7AADC759A23B381E0540A0"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-adapter\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "AD8F9E18D5B4B0DB0137DF07FF904116C97860A5E5FA441EA0C6B182A540BA19"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-adapter\\local\\usbcontrol\\Logic.class",
+        "Hash":  "79ECF655BA42411492311098B2F8D26EC96BC5D74F5FA919651AFE00BB531D8C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-adapter\\local\\usbcontrol\\RecoveryScript.class",
+        "Hash":  "73BE01F6589B147D59696B43AF242CC64F96A20AD466357EC9A68EA16374E333"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-adapter\\local\\usbcontrol\\Root.class",
+        "Hash":  "837C80B69B1624C08AACBA2C7CB670653E9C78A49C75A700957C29DFB77F0CC8"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-adapter\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "3EC9545F34C119A61CF0098DEB735959F50D75B8C6E5E02450165E9C0F034FFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-adapter\\local\\usbcontrol\\UsbInstall.class",
+        "Hash":  "977F7C4B58B7C4C54E869B4C7CEC65DA8CC523BF731AC663FF8699B9B97FEDD4"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-adapter\\local\\usbcontrol\\UsbInstallTest.class",
+        "Hash":  "08080206BB29049D71E67C89374CC311F6CB1A5732D0AD76A2B723B45E416171"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-model\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "AD8F9E18D5B4B0DB0137DF07FF904116C97860A5E5FA441EA0C6B182A540BA19"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-model\\local\\usbcontrol\\Logic.class",
+        "Hash":  "79ECF655BA42411492311098B2F8D26EC96BC5D74F5FA919651AFE00BB531D8C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-model\\local\\usbcontrol\\LogicTest.class",
+        "Hash":  "95A03222276002A7A3D8AE9F61F3B1C5BD48D865B8F40C7F2524DFFBD37F5DA2"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-model\\local\\usbcontrol\\Root.class",
+        "Hash":  "E7CE53DB4134C37DA7F002EABCB359F0DF46F5DDCFCBF9E9D38659C0574B9163"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-model\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "3EC9545F34C119A61CF0098DEB735959F50D75B8C6E5E02450165E9C0F034FFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\latest-model\\local\\usbcontrol\\TransactionTest.class",
+        "Hash":  "7C9583C5174824318E7A9EA1F1366DF76C4D9F532120FE1054E7E426CDECE09E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\model-tests\\local\\usbcontrol\\DensitySession.class",
+        "Hash":  "AD8F9E18D5B4B0DB0137DF07FF904116C97860A5E5FA441EA0C6B182A540BA19"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\model-tests\\local\\usbcontrol\\Logic.class",
+        "Hash":  "30DA17426C909A7292363C46F41B7789CC17AA92CBC40B166CCF864D4E8E6601"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\model-tests\\local\\usbcontrol\\LogicTest.class",
+        "Hash":  "BC81E46768F620AAA1D3F26EA1574C87CA91DB0713A1AFE198641439C83AC599"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\model-tests\\local\\usbcontrol\\Root.class",
+        "Hash":  "E7CE53DB4134C37DA7F002EABCB359F0DF46F5DDCFCBF9E9D38659C0574B9163"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\model-tests\\local\\usbcontrol\\SafeFiles.class",
+        "Hash":  "3EC9545F34C119A61CF0098DEB735959F50D75B8C6E5E02450165E9C0F034FFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\model-tests\\local\\usbcontrol\\TransactionTest.class",
+        "Hash":  "7C9583C5174824318E7A9EA1F1366DF76C4D9F532120FE1054E7E426CDECE09E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\root-dex\\classes.dex",
+        "Hash":  "221A811EF4D14A5FF4314AF7ABFE9B06377A1443F939849DCF7FB1F380F0DD48"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\root-tests\\local\\usbcontrol\\Logic.class",
+        "Hash":  "874D5B9E583E9D2FC87F9ABE0EBE364AB413B8BA93DE1582981D9A1108BE9F3F"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\root-tests\\local\\usbcontrol\\Root.class",
+        "Hash":  "EAEF83A78838E16B4987DBE0FFC94BBA248AD8CBB570548713C4496E904D7A9C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\root-tests\\local\\usbcontrol\\RootBridgeTest.class",
+        "Hash":  "65487A5B2073C69A232BDAF6269A23DECD9D9B1D0D831A90819EAAB0D8A34BAD"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\tests\\local\\usbcontrol\\Logic.class",
+        "Hash":  "82BDDCB54FDAF7B265A5FB12EB3252942309168D0C6A856BD4D67D91502A166D"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\tests\\local\\usbcontrol\\LogicTest.class",
+        "Hash":  "EC0B7A99A867A5BF6D89CA4A62F2E00F2DAE78256EC5F1B43C0D7D8C413F3B29"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\aligned.apk",
+        "Hash":  "6DED14297A7ADEAB95DEBAE83A26AE43413ECE84B0EDB4F390838DE8A83ABF64"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\base.apk",
+        "Hash":  "582BEF129E2A25B6A9B486AC470BBF12C656AC768306E4917A589EAC8D91066E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\classes.jar",
+        "Hash":  "581E3F054844F9A340BFE92F6D8ABB09468F02DEA5C57D060890DC21760292EC"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\unsigned.apk",
+        "Hash":  "6DED14297A7ADEAB95DEBAE83A26AE43413ECE84B0EDB4F390838DE8A83ABF64"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\wallpaper-test.apk",
+        "Hash":  "C0783EAE96675E27DD6D1E311D2E5C91C6D781783BDAD1D8BA06A3032D12F087"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\wallpaper-test.apk.idsig",
+        "Hash":  "3B917755306A35C23F80B9FA51C4158C9530F1040E422609DEC0F5169ED78762"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\classes\\local\\usbcontrol\\wallpapertest\\WallpaperInstrumentation$1.class",
+        "Hash":  "2E5F80F73C88CAFC8CD72841E5C5DFD1C89719A21A4C3728E12D724F73A2C851"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\classes\\local\\usbcontrol\\wallpapertest\\WallpaperInstrumentation.class",
+        "Hash":  "EF10C452342F300C885F5F4B34BC28988B2EB8C1E17698E40942F0886876FDFF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\build\\wallpaper-test\\dex\\classes.dex",
+        "Hash":  "5BD21CA47DB1AB0550D80BE1351C8C8469762ABE2126E5883E1F9B393DC37799"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\drawable\\ic_usb_mono.xml",
+        "Hash":  "D26C32AF2AD9595A8D1E5E0442EC9CD39A275F5A92A1D360EF467ED6D94D7CF4"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\drawable-nodpi\\app_icon.png",
+        "Hash":  "CCDC7140E7C8A49D5468E26C65C1F3753FA06C1F88FC728642A1DEB8A6964F28"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\mipmap-anydpi\\ic_launcher.xml",
+        "Hash":  "323AFD97E3C1CA5A1BB57881CEAC53309978D076AD543ABAB73153FAC46EDED4"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\mipmap-anydpi-v33\\ic_launcher.xml",
+        "Hash":  "2A5C72591DD4C7E8D078DB167AD8A2F233D1425C918D5BF24A9C6C9E45F2036E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\raw\\wallpaper.sh",
+        "Hash":  "7B143A3DF4A33DDE69C206850BD2FD3F648A507DA390DC8E376043CD77E8C2BE"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\values\\strings.xml",
+        "Hash":  "E748601F953B2F25C3F241A835C01337DE5DC4755426754BCB0B7222721503C6"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\values\\styles.xml",
+        "Hash":  "703D032884BDFBA8650FFF10FAFC7C9A6E923DC53DFA91D804211D22E2C62616"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\values-night\\styles.xml",
+        "Hash":  "0D4994EC70D162E2FF741D85E3DF749395FA151717CC23E9ECBAE50390C39B99"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\values-v27\\styles.xml",
+        "Hash":  "C266EEBD361957ECE22D16AEB600C263F75E3A3B67C62308631BFB4DFC536E07"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\res\\xml\\data_extraction_rules.xml",
+        "Hash":  "CD84DDECEB22E2F9F5091F976173A1C8687E403838DC4565FA510BEA4DF9B79B"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\Backdrop.java",
+        "Hash":  "BE6917CE4918BAA6ED21495E0CEFA6B52FB72110C1017EA488BA821D838484FE"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\BackgroundStore.java",
+        "Hash":  "1F7BF5669215ADE4655B447149E28B3D30FE1BA1F3B43B43E337ABF3735F10BE"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\Baseline.java",
+        "Hash":  "8FBE86653C7581D9538C7E30D93B30C9B86FD5BA231D93B88BB476FE339E6FB9"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java",
+        "Hash":  "820C0966D23C5DF3EB9738EBD8D5A6757CFEE9F688F55D2CCED75C72DE3C2912"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\Logic.java",
+        "Hash":  "1CF8BF5827D9A9EEAC98895C934FE36A30EE6933CEA38F778391CB118B3F33B9"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\MainActivity.java",
+        "Hash":  "E0EEEED485C434CAA6806CED674DB8B46F82904C1B99E53FD4062DF906F9DA5F"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java",
+        "Hash":  "03FB3C582C15280406AC925F8AB5A9253C0E85B5B18F9A6F47943E215F9AFD48"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\Root.java",
+        "Hash":  "DA678D2A26678F04FCAE3708B08A0353A426AF13841BDA1FD11BA079A6428AE3"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java",
+        "Hash":  "F6EA279B9E91CB7C695E8B3D602FB183A6CCAE8884D645C479E7495E8A18944D"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java",
+        "Hash":  "01A3B4199E0EFF6F12870268418A31C8FA7C99485FD116D7D8261072E5CE4E0A"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\src\\local\\usbcontrol\\WallpaperLoop.java",
+        "Hash":  "B7CDDF4FCCA45CB749B673AFE8FFAC66EC4573D2A7B9E61C4CC4D7CB38FC5260"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\aosp-su.sh",
+        "Hash":  "B986B9C3CA51E336832E3644E6DED32BA5594E5ACDCAA699A790B1CB2C52A774"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\build-device-tests.ps1",
+        "Hash":  "08972CE897124270D9EDAEBD78438B0EB47D4D75312C4C268B516528E10995A5"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\build-wallpaper-test.ps1",
+        "Hash":  "4B6BCD2C4C93921B97F2FCDB67DF0E00A6E8043098B696F0A5C95F91A2F21BE7"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\cancel_old_audit_workers.py",
+        "Hash":  "7B47375302F75C24C3F6215F43CD14B2FA32B81185BE08FEC20B493BEE83C80A"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\dark_mode_ui.py",
+        "Hash":  "10408DC31FA2C7454C3033D9431498F5DFA7734F739CC18E29323C71D53250DD"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\fast_toggle_phone.py",
+        "Hash":  "E1655CB2BAF623109740B968E6D00888A8EE964877B43DECF27612151B8C93F3"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\LogicTest.java",
+        "Hash":  "BD7CFAE32807CB98CD6DE007B40DD038ECDB95E4404766815C7596FC1D7CE70E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\phone_audit.py",
+        "Hash":  "D54B514D8EEC425304126F99D644A563CCE38BE2F853F427AE0D798ECFA40EBF"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\phone_diagnostics.py",
+        "Hash":  "121945E5E52E95E9B0F11557C1F8FA46619EF0935FC3CC0AE8591AC7C5E401D7"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\phone_ui.py",
+        "Hash":  "3B05EBAE367F9F4DD31F9E486D6B1D62DBA462E2BD89D08B1B5F92D953523A78"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\review_artifacts.py",
+        "Hash":  "EA032EC15E65BFE76EB5D8F4B863C45631131ADF98A3462B50F3AAB2BAB0168C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\RootBridgeTest.java",
+        "Hash":  "4E7E2292EDC02EA1762A1F8B0E03CB8A5EDABD3491B14C6A9765AAD2E632FAE1"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\root_smoke.py",
+        "Hash":  "CB07F0AF4609F8F3519CC28628AF00C00913AE08DECEBA21B2A8C989A52CF31B"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\ui_smoke.py",
+        "Hash":  "528CC68F5335003D187D2DCF94BC95D0539B4B70FA1E887C90E9DF0914CC728F"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\UsbInstallTest.java",
+        "Hash":  "A44578A1B250165CDF5C3B67D4BA5C64BC1B28463DA07E931CE31F33272A64E2"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\verify_artifacts.py",
+        "Hash":  "0931C68BE0384812CB3FCCA195E4AB0F3B8121B72216F56D94BD98842BCA2B29"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\wallpaper_phone.py",
+        "Hash":  "C2BAAF2675A921862AFA1CC910AD1250931A11807067FC9C72F26B137E3FE226"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\wallpaper_regression.py",
+        "Hash":  "EE7ED1D0DD72D2C187D335E3AC80B1204C0A3EB8766CD7808DD7BD400A55670F"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\device\\AndroidManifest.xml",
+        "Hash":  "D94560809ECFCDCC863135A62157D3991DD2897838CA180B975FB56A838C3D6C"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\device\\AuditInstrumentation.java",
+        "Hash":  "B079D840E07304B03F6B585AA87C2A808E256137B83319E0A93E00C15F193845"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\model\\Root.java",
+        "Hash":  "397AC906B21537B342E981BC80C8648AC636D31EE016F5392A8CE981F69D6EE6"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\model\\TransactionTest.java",
+        "Hash":  "8F04EE5DE4F0522718E4D7A6CAD48C0C5C1F5BF4C8A51B9AB8F78E410236E6C6"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\wallpaper_device\\AndroidManifest.xml",
+        "Hash":  "2093542C6BBEB57031105934FD8A7E4345198AE4E78C9C488E81891BA727AF9E"
+    },
+    {
+        "Path":  "F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-baseline\\usb_control_app\\tests\\wallpaper_device\\WallpaperInstrumentation.java",
+        "Hash":  "888CA32A104E4876F0A270FD16E915EDB5E49D218C8EEEEE642375B3B7AECFBD"
+    }
+]

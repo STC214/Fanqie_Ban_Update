@@ -1,14 +1,25 @@
-# 轻控 1.0.5
+# 轻控 1.0.7
 
 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
 
 ## 安装
 
-安装 `../releases/usb-control-v1.0.5.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+安装 `../releases/usb-control-v1.0.7.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
 
 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
 
 ## 功能
+
+### 系统应用管理（1.0.7）
+
+- 在「05 / 系统应用管理」中勾选目标，再确认批量卸载；默认不勾选任何项。
+- 固定包名白名单：快应用 `com.miui.hybrid`、内容中心 `com.miui.newhome` / `com.miui.contentcenter`、浏览器 `com.android.browser`、系统广告 `com.miui.systemAdSolution`。
+- 仅展示本机包管理器确认的系统应用；未预装的包不展示。不把传送门 `com.miui.contentextension`、内容抓取或第三方浏览器归入目标。
+- 使用 `pm uninstall --user USER_ID PACKAGE`，不使用保留数据的 `-k` 参数；卸载轻控所在 Android 用户的应用并删除应用数据，不删除系统分区 APK。数据删除不可撤销，卸载浏览器可能影响网页打开。
+- 「恢复已卸载的系统应用」使用 `cmd package install-existing --user USER_ID PACKAGE` 恢复系统仍保留的预装包；不强制改变其启用状态，也不恢复卸载时删除的应用数据。
+- 执行前重新检查系统包身份和安装状态，每项执行后精确匹配包名读回，单项失败仍继续其他已勾选项。恢复入口也可恢复此前由其他工具卸载的白名单系统包。
+- 原「恢复首次使用前的系统设置」仅针对 USB / 显示，不恢复系统应用，请使用单独的应用恢复入口。
+- 当前连接设备未发现内容中心预装包。卸载/恢复行为已通过模拟包管理器测试；未为测试卸载手机上的实际系统应用。
 
 ### 连接控制
 

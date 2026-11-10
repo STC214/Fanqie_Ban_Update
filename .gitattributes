@@ -10,3 +10,5 @@
 /releases/usb-control-*.patch -text -whitespace
 /releases/usb-control-*.txt -text
 /docs/usb-control-wallpaper/*.patch -whitespace
+/docs/usb-control-system-apps/*.patch -whitespace
+/docs/usb-control-system-apps-delete-data/*.patch -whitespace

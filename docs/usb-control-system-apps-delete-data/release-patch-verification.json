@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "command": "git -c core.autocrlf=false apply F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.7.patch",
+  "exit": 0,
+  "stdout": "",
+  "stderr": "F:/Project/07_Androd/08_FanQie/releases/usb-control-v1.0.7.patch:8: trailing whitespace.\n/logs/** -text\r\nwarning: 1 line adds whitespace errors.\n",
+  "checks": [
+    "forward release patch applied to 1.0.5 source baseline",
+    "all patched files match current 1.0.7 bytes"
+  ]
+}

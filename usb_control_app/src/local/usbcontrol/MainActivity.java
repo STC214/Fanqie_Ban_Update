@@ -56,6 +56,9 @@ public class MainActivity extends Activity {
     private Button densityButton,restoreButton,defaultDensityButton,wallpaperLoopButton,wallpaperUndoButton;
     private String wallpaperResult="主题管理导入本地视频后，统一 LocalImport 后的分隔符为 _&_。仅改名，不自动切换壁纸。";
     private TextView wallpaperDetail;
+    private Button uninstallAppsButton,restoreAppsButton;
+    private TextView systemAppsDetail;
+    private String systemAppsResult="可勾选快应用、内容中心、浏览器、系统广告 adsolution。仅处理本机识别到的系统包。";
     private final java.util.ArrayList<Dialog> dialogs=new java.util.ArrayList<>();
     private DensitySession densitySession;
     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
@@ -100,7 +103,7 @@ public class MainActivity extends Activity {
         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
-        TextView version=text("1.0.5",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+        TextView version=text("1.0.7",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
         section("01  /  连接控制");
@@ -128,6 +131,12 @@ public class MainActivity extends Activity {
         wallpaperLoopButton=button("一键循环壁纸",()->processWallpapers(false),true);video.addView(wallpaperLoopButton);
         wallpaperUndoButton=button("撤销壁纸改名",()->processWallpapers(true),false);video.addView(wallpaperUndoButton);
         page.addView(video);gap(page,18);
+        section("05  /  系统应用管理");LinearLayout apps=card();apps.addView(text("一键卸载系统应用",17,INK));gap(apps,5);
+        systemAppsDetail=text(systemAppsResult,12,MUTED);apps.addView(systemAppsDetail);gap(apps,8);
+        apps.addView(text("卸载轻控所在用户的应用并删除其应用数据；系统安装包保留。恢复仅重新安装应用，不找回已删除的数据。卸载浏览器会影响网页打开方式。",12,MUTED));
+        uninstallAppsButton=button("勾选系统应用并卸载",()->chooseSystemApps(false),true);apps.addView(uninstallAppsButton);
+        restoreAppsButton=button("恢复已卸载的系统应用",()->chooseSystemApps(true),false);apps.addView(restoreAppsButton);
+        page.addView(apps);gap(page,18);
         restoreButton=button("恢复首次使用前的系统设置",()->confirmRestore(),false);page.addView(restoreButton);
         TextView footer=text("本地运行 · 无网络权限 · 不收集数据\n系统操作需 Root；图片留在本机。",11,MUTED);footer.setGravity(Gravity.CENTER);pad(footer,0,16,0,4);page.addView(footer);
         renderState();
@@ -182,10 +191,45 @@ public class MainActivity extends Activity {
         densityValue.setText(currentDpi>0?Math.round(shortPx*160f/currentDpi)+" dp  ·  "+currentDpi+" dpi":getResources().getConfiguration().smallestScreenWidthDp+" dp");
         densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));
         boolean wallpaperReady=rootReady&&!busy&&!densityInFlight&&!installVerificationPending;
+        uninstallAppsButton.setEnabled(wallpaperReady);restoreAppsButton.setEnabled(wallpaperReady);
+        uninstallAppsButton.setAlpha(wallpaperReady?1:.45f);restoreAppsButton.setAlpha(wallpaperReady?1:.45f);
         wallpaperLoopButton.setEnabled(wallpaperReady);wallpaperLoopButton.setAlpha(wallpaperReady?1:.45f);
         wallpaperLoopButton.setText(busy?"请稍候…":"一键循环壁纸");wallpaperUndoButton.setEnabled(wallpaperReady);wallpaperUndoButton.setAlpha(wallpaperReady?1:.45f);binding=false;
     }
     private void switchReady(){statusMessage="Root 已连接   ·   "+Build.MANUFACTURER+" "+Build.MODEL+"   ↻";renderState();}
+    private void chooseSystemApps(boolean restore){
+        if(!rootReady||busy||densityInFlight||installVerificationPending)return;
+        final int user=android.os.Process.myUid()/100000;
+        final java.util.List<SystemApps.Entry> choices=new java.util.ArrayList<>();
+        task("检查系统应用…",()->{
+            for(SystemApps.Entry e:SystemApps.scan(Root::run,user))if(e.installed!=restore)choices.add(e);
+            return "";
+        },()->{
+            switchReady();
+            if(choices.isEmpty()){
+                systemAppsResult=restore?"没有识别到可恢复的目标系统应用。":"没有识别到可卸载的目标系统应用（可能已卸载或此系统未预装）。";
+                systemAppsDetail.setText(systemAppsResult);note(systemAppsResult);return;
+            }
+            String[] labels=new String[choices.size()];boolean[] checked=new boolean[choices.size()];
+            for(int i=0;i<labels.length;i++)labels[i]=choices.get(i).label();
+            AlertDialog dialog=new ManagedDialogBuilder().setTitle(restore?"勾选要恢复的系统应用":"勾选要卸载的系统应用")
+                .setMultiChoiceItems(labels,checked,(d,index,on)->checked[index]=on)
+                .setNegativeButton("取消",null).setPositiveButton("下一步",null).create();
+            dialog.show();dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
+                java.util.List<SystemApps.Entry> selected=new java.util.ArrayList<>();StringBuilder names=new StringBuilder();
+                for(int i=0;i<checked.length;i++)if(checked[i]){selected.add(choices.get(i));names.append("\n• ").append(labels[i]);}
+                if(selected.isEmpty()){note("请先勾选应用");return;}
+                dialog.dismiss();
+                new ManagedDialogBuilder().setTitle(restore?"确认恢复？":"确认卸载？")
+                    .setMessage("用户 "+user+names+"\n\n"+(restore?"仅恢复系统预装应用，不恢复已删除的应用数据；不更改原有启用状态。":"将从当前用户卸载并删除应用数据，此数据删除不可撤销。系统分区安装包保留；恢复入口仅重新安装应用，不找回数据。部分关联功能会受影响。"))
+                    .setNegativeButton("取消",null).setPositiveButton(restore?"恢复所选":"卸载所选",(d,w)->task(restore?"恢复系统应用…":"卸载系统应用…",()->{
+                        try{systemAppsResult=SystemApps.apply(Root::run,user,selected,restore);}
+                        catch(Exception e){systemAppsResult="系统应用任务未完成："+e.getMessage();}
+                        return "";
+                    },()->{systemAppsDetail.setText(systemAppsResult);switchReady();new ManagedDialogBuilder().setTitle("系统应用处理结果").setMessage(systemAppsResult).setPositiveButton("知道了",null).show();})).show();
+            });
+        });
+    }
     private void processWallpapers(boolean undo){
         if(!rootReady||busy||densityInFlight||installVerificationPending)return;
         if(undo){new ManagedDialogBuilder().setTitle("撤销壁纸改名？").setMessage("还原轻控累计处理且尚未撤销的文件名。遇到重名或内容变化会跳过，不覆盖现有文件。").setNegativeButton("取消",null).setPositiveButton("撤销",(d,w)->runWallpaperTask(true)).show();}

@@ -1,0 +1,388 @@
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -5,8 +5,10 @@
+ /usb_control_app/** -text
+ /scripts/** -text
+ /analysis/** -text
+-/logs/** -text
++/logs/** -text
+ # Release patches are byte-sensitive data (including CRLF context and space markers).
+ /releases/usb-control-*.patch -text -whitespace
+ /releases/usb-control-*.txt -text
+ /docs/usb-control-wallpaper/*.patch -whitespace
++/docs/usb-control-system-apps/*.patch -whitespace
++/docs/usb-control-system-apps-delete-data/*.patch -whitespace
+--- a/README.md
++++ b/README.md
+@@ -10,10 +10,11 @@
+ 
+ ## 轻控 Android App
+ 
+-独立 App **轻控 1.0.5**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+-
+-- 安装包：[`releases/usb-control-v1.0.5.apk`](releases/usb-control-v1.0.5.apk)
++独立 App **轻控 1.0.7**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
++
++- 安装包：[`releases/usb-control-v1.0.7.apk`](releases/usb-control-v1.0.7.apk)
+ - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
++- 可勾选批量卸载系统应用：快应用、内容中心、浏览器、系统广告 adsolution；卸载时删除应用数据，独立恢复入口仅恢复应用，不找回已删除的数据。
+ - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+ - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+ - 源码、构建及兼容说明：[`usb_control_app/README.md`](usb_control_app/README.md)
+@@ -294,6 +295,6 @@
+ 验证记录：`docs/usb-control-fast-toggle/`。
+ 
+ ### 安装包保留策略
+-轻控仅保留最新版 `releases/usb-control-v1.0.5.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。
++轻控仅保留最新版 `releases/usb-control-v1.0.7.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。
+ 
+ 轻控 1.0.5 新增「一键循环壁纸」，目录、命名规则与撤销见 [轻控说明](usb_control_app/README.md)。
+--- a/usb_control_app/AndroidManifest.xml
++++ b/usb_control_app/AndroidManifest.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="105" android:versionName="1.0.5">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="107" android:versionName="1.0.7">
+     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+     <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+         <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:windowSoftInputMode="adjustResize">
+--- a/usb_control_app/README.md
++++ b/usb_control_app/README.md
+@@ -1,14 +1,25 @@
+-# 轻控 1.0.5
++# 轻控 1.0.7
+ 
+ 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
+ 
+ ## 安装
+ 
+-安装 `../releases/usb-control-v1.0.5.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
++安装 `../releases/usb-control-v1.0.7.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+ 
+ 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
+ 
+ ## 功能
++
++### 系统应用管理（1.0.7）
++
++- 在「05 / 系统应用管理」中勾选目标，再确认批量卸载；默认不勾选任何项。
++- 固定包名白名单：快应用 `com.miui.hybrid`、内容中心 `com.miui.newhome` / `com.miui.contentcenter`、浏览器 `com.android.browser`、系统广告 `com.miui.systemAdSolution`。
++- 仅展示本机包管理器确认的系统应用；未预装的包不展示。不把传送门 `com.miui.contentextension`、内容抓取或第三方浏览器归入目标。
++- 使用 `pm uninstall --user USER_ID PACKAGE`，不使用保留数据的 `-k` 参数；卸载轻控所在 Android 用户的应用并删除应用数据，不删除系统分区 APK。数据删除不可撤销，卸载浏览器可能影响网页打开。
++- 「恢复已卸载的系统应用」使用 `cmd package install-existing --user USER_ID PACKAGE` 恢复系统仍保留的预装包；不强制改变其启用状态，也不恢复卸载时删除的应用数据。
++- 执行前重新检查系统包身份和安装状态，每项执行后精确匹配包名读回，单项失败仍继续其他已勾选项。恢复入口也可恢复此前由其他工具卸载的白名单系统包。
++- 原「恢复首次使用前的系统设置」仅针对 USB / 显示，不恢复系统应用，请使用单独的应用恢复入口。
++- 当前连接设备未发现内容中心预装包。卸载/恢复行为已通过模拟包管理器测试；未为测试卸载手机上的实际系统应用。
+ 
+ ### 连接控制
+ 
+--- a/usb_control_app/build.ps1
++++ b/usb_control_app/build.ps1
+@@ -41,11 +41,11 @@
+     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
+     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
+ }
+-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.5.apk'
++$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.7.apk'
+ Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
+ Run "$tools/apksigner.bat" @('verify','--verbose',$release)
+ Run "$tools/zipalign.exe" @('-c','4',$release)
+ $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
+-"$hash  usb-control-v1.0.5.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
++"$hash  usb-control-v1.0.7.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+ Write-Output "APK: $release"
+ Write-Output "SHA256: $hash"
+--- a/usb_control_app/src/local/usbcontrol/MainActivity.java
++++ b/usb_control_app/src/local/usbcontrol/MainActivity.java
+@@ -56,6 +56,9 @@
+     private Button densityButton,restoreButton,defaultDensityButton,wallpaperLoopButton,wallpaperUndoButton;
+     private String wallpaperResult="主题管理导入本地视频后，统一 LocalImport 后的分隔符为 _&_。仅改名，不自动切换壁纸。";
+     private TextView wallpaperDetail;
++    private Button uninstallAppsButton,restoreAppsButton;
++    private TextView systemAppsDetail;
++    private String systemAppsResult="可勾选快应用、内容中心、浏览器、系统广告 adsolution。仅处理本机识别到的系统包。";
+     private final java.util.ArrayList<Dialog> dialogs=new java.util.ArrayList<>();
+     private DensitySession densitySession;
+     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
+@@ -100,7 +103,7 @@
+         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
+         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
+         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+-        TextView version=text("1.0.5",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
++        TextView version=text("1.0.7",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
+         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
+         section("01  /  连接控制");
+@@ -128,6 +131,12 @@
+         wallpaperLoopButton=button("一键循环壁纸",()->processWallpapers(false),true);video.addView(wallpaperLoopButton);
+         wallpaperUndoButton=button("撤销壁纸改名",()->processWallpapers(true),false);video.addView(wallpaperUndoButton);
+         page.addView(video);gap(page,18);
++        section("05  /  系统应用管理");LinearLayout apps=card();apps.addView(text("一键卸载系统应用",17,INK));gap(apps,5);
++        systemAppsDetail=text(systemAppsResult,12,MUTED);apps.addView(systemAppsDetail);gap(apps,8);
++        apps.addView(text("卸载轻控所在用户的应用并删除其应用数据；系统安装包保留。恢复仅重新安装应用，不找回已删除的数据。卸载浏览器会影响网页打开方式。",12,MUTED));
++        uninstallAppsButton=button("勾选系统应用并卸载",()->chooseSystemApps(false),true);apps.addView(uninstallAppsButton);
++        restoreAppsButton=button("恢复已卸载的系统应用",()->chooseSystemApps(true),false);apps.addView(restoreAppsButton);
++        page.addView(apps);gap(page,18);
+         restoreButton=button("恢复首次使用前的系统设置",()->confirmRestore(),false);page.addView(restoreButton);
+         TextView footer=text("本地运行 · 无网络权限 · 不收集数据\n系统操作需 Root；图片留在本机。",11,MUTED);footer.setGravity(Gravity.CENTER);pad(footer,0,16,0,4);page.addView(footer);
+         renderState();
+@@ -182,10 +191,45 @@
+         densityValue.setText(currentDpi>0?Math.round(shortPx*160f/currentDpi)+" dp  ·  "+currentDpi+" dpi":getResources().getConfiguration().smallestScreenWidthDp+" dp");
+         densityButton.setEnabled(rootReady&&!busy&&!densityInFlight&&currentDpi>0);densityButton.setAlpha(densityButton.isEnabled()?1:.45f);defaultDensityButton.setEnabled(densityButton.isEnabled());defaultDensityButton.setAlpha(densityButton.isEnabled()?1:.45f);restoreButton.setEnabled(rootReady&&!busy&&!densityInFlight&&prefs.contains("baseline_adb"));
+         boolean wallpaperReady=rootReady&&!busy&&!densityInFlight&&!installVerificationPending;
++        uninstallAppsButton.setEnabled(wallpaperReady);restoreAppsButton.setEnabled(wallpaperReady);
++        uninstallAppsButton.setAlpha(wallpaperReady?1:.45f);restoreAppsButton.setAlpha(wallpaperReady?1:.45f);
+         wallpaperLoopButton.setEnabled(wallpaperReady);wallpaperLoopButton.setAlpha(wallpaperReady?1:.45f);
+         wallpaperLoopButton.setText(busy?"请稍候…":"一键循环壁纸");wallpaperUndoButton.setEnabled(wallpaperReady);wallpaperUndoButton.setAlpha(wallpaperReady?1:.45f);binding=false;
+     }
+     private void switchReady(){statusMessage="Root 已连接   ·   "+Build.MANUFACTURER+" "+Build.MODEL+"   ↻";renderState();}
++    private void chooseSystemApps(boolean restore){
++        if(!rootReady||busy||densityInFlight||installVerificationPending)return;
++        final int user=android.os.Process.myUid()/100000;
++        final java.util.List<SystemApps.Entry> choices=new java.util.ArrayList<>();
++        task("检查系统应用…",()->{
++            for(SystemApps.Entry e:SystemApps.scan(Root::run,user))if(e.installed!=restore)choices.add(e);
++            return "";
++        },()->{
++            switchReady();
++            if(choices.isEmpty()){
++                systemAppsResult=restore?"没有识别到可恢复的目标系统应用。":"没有识别到可卸载的目标系统应用（可能已卸载或此系统未预装）。";
++                systemAppsDetail.setText(systemAppsResult);note(systemAppsResult);return;
++            }
++            String[] labels=new String[choices.size()];boolean[] checked=new boolean[choices.size()];
++            for(int i=0;i<labels.length;i++)labels[i]=choices.get(i).label();
++            AlertDialog dialog=new ManagedDialogBuilder().setTitle(restore?"勾选要恢复的系统应用":"勾选要卸载的系统应用")
++                .setMultiChoiceItems(labels,checked,(d,index,on)->checked[index]=on)
++                .setNegativeButton("取消",null).setPositiveButton("下一步",null).create();
++            dialog.show();dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
++                java.util.List<SystemApps.Entry> selected=new java.util.ArrayList<>();StringBuilder names=new StringBuilder();
++                for(int i=0;i<checked.length;i++)if(checked[i]){selected.add(choices.get(i));names.append("\n• ").append(labels[i]);}
++                if(selected.isEmpty()){note("请先勾选应用");return;}
++                dialog.dismiss();
++                new ManagedDialogBuilder().setTitle(restore?"确认恢复？":"确认卸载？")
++                    .setMessage("用户 "+user+names+"\n\n"+(restore?"仅恢复系统预装应用，不恢复已删除的应用数据；不更改原有启用状态。":"将从当前用户卸载并删除应用数据，此数据删除不可撤销。系统分区安装包保留；恢复入口仅重新安装应用，不找回数据。部分关联功能会受影响。"))
++                    .setNegativeButton("取消",null).setPositiveButton(restore?"恢复所选":"卸载所选",(d,w)->task(restore?"恢复系统应用…":"卸载系统应用…",()->{
++                        try{systemAppsResult=SystemApps.apply(Root::run,user,selected,restore);}
++                        catch(Exception e){systemAppsResult="系统应用任务未完成："+e.getMessage();}
++                        return "";
++                    },()->{systemAppsDetail.setText(systemAppsResult);switchReady();new ManagedDialogBuilder().setTitle("系统应用处理结果").setMessage(systemAppsResult).setPositiveButton("知道了",null).show();})).show();
++            });
++        });
++    }
+     private void processWallpapers(boolean undo){
+         if(!rootReady||busy||densityInFlight||installVerificationPending)return;
+         if(undo){new ManagedDialogBuilder().setTitle("撤销壁纸改名？").setMessage("还原轻控累计处理且尚未撤销的文件名。遇到重名或内容变化会跳过，不覆盖现有文件。").setNegativeButton("取消",null).setPositiveButton("撤销",(d,w)->runWallpaperTask(true)).show();}
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/SystemApps.java
+@@ -0,0 +1,65 @@
++package local.usbcontrol;
++
++import java.io.IOException;
++import java.util.*;
++
++/** Fixed allowlist; never accepts a package name from editable UI. */
++final class SystemApps {
++    interface Runner { String run(String command) throws Exception; }
++    static final class Entry {
++        final String name, pkg;
++        final boolean installed;
++        Entry(String name,String pkg,boolean installed){this.name=name;this.pkg=pkg;this.installed=installed;}
++        String label(){return name+"\n"+pkg;}
++    }
++    private static final String[][] TARGETS={
++        {"快应用","com.miui.hybrid"},
++        {"内容中心","com.miui.newhome"},
++        {"内容中心","com.miui.contentcenter"},
++        {"浏览器","com.android.browser"},
++        {"系统广告 adsolution","com.miui.systemAdSolution"}
++    };
++    private static String user(int user){if(user<0)throw new IllegalArgumentException("用户编号异常");return Integer.toString(user);}
++    private static Set<String> packages(String output)throws IOException {
++        Set<String> result=new HashSet<>();
++        for(String line:output.split("\\r?\\n")){
++            if(line.trim().isEmpty())continue;
++            if(!line.matches("package:[a-zA-Z0-9_.]+"))throw new IOException("应用列表读取异常："+line);
++            result.add(line.substring(8));
++        }
++        return result;
++    }
++    static List<Entry> scan(Runner runner,int user)throws Exception {
++        String uid=user(user);
++        Set<String> system=packages(runner.run("pm list packages -s -u --user "+uid));
++        Set<String> installed=packages(runner.run("pm list packages --user "+uid));
++        List<Entry> result=new ArrayList<>();
++        for(String[] target:TARGETS)if(system.contains(target[1]))result.add(new Entry(target[0],target[1],installed.contains(target[1])));
++        return result;
++    }
++    static String command(String pkg,int user,boolean restore){
++        boolean known=false;for(String[] t:TARGETS)if(t[1].equals(pkg))known=true;
++        if(!known)throw new IllegalArgumentException("未知应用");
++        return restore?"cmd package install-existing --user "+user(user)+" "+pkg:
++            "pm uninstall --user "+user(user)+" "+pkg;
++    }
++    static String apply(Runner runner,int user,List<Entry> selection,boolean restore)throws Exception {
++        if(selection.isEmpty())throw new IllegalArgumentException("请先勾选应用");
++        // Re-read before mutation: stale dialogs and caller-created entries confer no eligibility.
++        List<Entry> current=scan(runner,user);
++        StringBuilder report=new StringBuilder();Set<String> seen=new HashSet<>();
++        for(Entry selected:selection){
++            if(!seen.add(selected.pkg))continue;
++            Entry actual=null;for(Entry e:current)if(e.pkg.equals(selected.pkg))actual=e;
++            if(actual==null){report.append(selected.name).append("：跳过（未识别为受支持的系统应用）\n");continue;}
++            if(actual.installed==restore){report.append(actual.name).append(restore?"：已安装，跳过\n":"：已卸载，跳过\n");continue;}
++            try {
++                String output=runner.run(command(actual.pkg,user,restore));
++                boolean installed=packages(runner.run("pm list packages --user "+user(user)+" "+actual.pkg)).contains(actual.pkg);
++                if(installed!=restore)throw new IOException("状态读回未符合预期；"+output);
++                report.append(actual.name).append(restore?"：已恢复应用（不恢复已删除的数据）":"：已卸载（不保留应用数据）").append("\n");
++            }catch(Exception e){report.append(actual.name).append("：操作未完成，").append(e.getMessage()).append("\n");}
++        }
++        return report.toString().trim();
++    }
++}
+--- /dev/null
++++ b/usb_control_app/tests/SystemAppsTest.java
+@@ -0,0 +1,64 @@
++package local.usbcontrol;
++
++import java.util.*;
++import java.io.IOException;
++
++public final class SystemAppsTest {
++    static int checks;
++    static void check(boolean value,String name){checks++;if(!value)throw new AssertionError(name);}
++    static final class Fake implements SystemApps.Runner {
++        final Set<String> system=new LinkedHashSet<>(Arrays.asList("com.miui.hybrid","com.miui.newhome","com.android.browser","com.miui.systemAdSolution","com.miui.contentextension"));
++        final Set<String> installed=new LinkedHashSet<>(system);
++        final Set<String> data=new LinkedHashSet<>(system);
++        final List<String> calls=new ArrayList<>();
++        String fail="",lie="";
++        public String run(String cmd)throws Exception {
++            calls.add(cmd);
++            if(cmd.startsWith("pm list packages")){
++                Set<String> pkgs=cmd.contains(" -s -u ")?system:installed;
++                String filter=cmd.substring(cmd.lastIndexOf(' ')+1);boolean filtered=filter.contains(".");
++                StringBuilder s=new StringBuilder();for(String pkg:pkgs)if(!filtered||pkg.contains(filter))s.append("package:").append(pkg).append('\n');return s.toString();
++            }
++            String pkg=cmd.substring(cmd.lastIndexOf(' ')+1);
++            if(pkg.equals(fail))throw new IOException("fixture failure");
++            boolean restore=cmd.startsWith("cmd package install-existing");
++            if(!pkg.equals(lie)){if(restore)installed.add(pkg);else {installed.remove(pkg);if(!cmd.contains(" -k "))data.remove(pkg);}}
++            return "Success";
++        }
++    }
++    public static void main(String[] args)throws Exception {
++        Fake f=new Fake();List<SystemApps.Entry> entries=SystemApps.scan(f,10);
++        check(entries.size()==4,"only allowlisted system packages; no contentextension");
++        check(f.calls.get(0).equals("pm list packages -s -u --user 10"),"system membership includes removed packages for selected user");
++        check(SystemApps.command("com.miui.hybrid",10,false).equals("pm uninstall --user 10 com.miui.hybrid"),"user-scoped uninstall without keep-data flag");
++        check(SystemApps.command("com.miui.hybrid",10,true).equals("cmd package install-existing --user 10 com.miui.hybrid"),"restore command");
++        String result=SystemApps.apply(f,10,Arrays.asList(entries.get(0)),false);
++        check(result.contains("已卸载")&&!f.installed.contains("com.miui.hybrid"),"selected package removed");
++        check(!f.data.contains("com.miui.hybrid"),"selected app data deleted");
++        check(f.data.contains("com.android.browser"),"unselected app data intact");
++        check(f.installed.contains("com.android.browser"),"unselected package intact");
++        check(!SystemApps.scan(f,10).get(0).installed,"removed system package remains restorable");
++        check(SystemApps.apply(f,10,Arrays.asList(entries.get(0)),true).contains("已恢复"),"restore verification");
++        check(f.installed.contains("com.miui.hybrid"),"roundtrip restored");
++        check(!f.data.contains("com.miui.hybrid"),"restore does not resurrect deleted data");
++        check(SystemApps.apply(f,10,Arrays.asList(entries.get(0)),true).contains("跳过"),"stale restore skipped");
++        f.fail="com.miui.hybrid";
++        result=SystemApps.apply(f,10,Arrays.asList(entries.get(0),entries.get(2)),false);
++        check(result.contains("fixture failure")&&result.contains("浏览器：已卸载"),"partial failure continues per item");
++        f.fail="";f.lie="com.miui.newhome";
++        check(SystemApps.apply(f,10,Arrays.asList(entries.get(1)),false).contains("读回未符合预期"),"never trust success text without readback");
++        int before=f.calls.size();
++        check(SystemApps.apply(f,10,Arrays.asList(new SystemApps.Entry("unknown","evil.pkg; reboot",true)),false).contains("跳过"),"forged selection rejected after rescan");
++        check(f.calls.size()==before+2,"forged selection causes no mutation");
++        f.system.remove("com.miui.hybrid");
++        check(SystemApps.apply(f,10,Arrays.asList(entries.get(0)),false).contains("未识别"),"system membership revalidated before mutation");
++        Fake dedup=new Fake();SystemApps.apply(dedup,0,Arrays.asList(entries.get(0),entries.get(0)),false);
++        check(Collections.frequency(dedup.calls,"pm uninstall --user 0 com.miui.hybrid")==1,"duplicate selection only runs once");
++        boolean rejected=false;try{SystemApps.command("com.miui.hybrid; reboot",0,false);}catch(IllegalArgumentException e){rejected=true;}check(rejected,"unknown/injected package rejected");
++        rejected=false;try{SystemApps.command("com.miui.hybrid",-1,false);}catch(IllegalArgumentException e){rejected=true;}check(rejected,"all-users selector rejected");
++        rejected=false;try{SystemApps.apply(f,0,new ArrayList<>(),false);}catch(IllegalArgumentException e){rejected=true;}check(rejected,"empty selection rejected");
++        rejected=false;try{SystemApps.scan(c->"Failure [fixture]",0);}catch(IOException e){rejected=true;}check(rejected,"malformed inventory fails closed");
++        Fake nonSystem=new Fake();nonSystem.system.clear();check(SystemApps.scan(nonSystem,0).isEmpty(),"matching third-party package never eligible");
++        System.out.println("PASS: "+checks+" system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation");
++    }
++}
+--- a/scripts/verify-usb-control-latest.py
++++ b/scripts/verify-usb-control-latest.py
+@@ -35,6 +35,7 @@
+     ('model', ['src/local/usbcontrol/Logic.java', 'src/local/usbcontrol/SafeFiles.java',
+                'src/local/usbcontrol/DensitySession.java', 'tests/model/Root.java',
+                'tests/model/TransactionTest.java', 'tests/LogicTest.java'], ['LogicTest', 'TransactionTest']),
++    ('system-apps', ['src/local/usbcontrol/SystemApps.java', 'tests/SystemAppsTest.java'], ['SystemAppsTest']),
+     ('adapter', ['src/local/usbcontrol/Logic.java', 'src/local/usbcontrol/Root.java',
+                  'src/local/usbcontrol/UsbInstall.java', 'src/local/usbcontrol/SafeFiles.java',
+                  'src/local/usbcontrol/DensitySession.java', 'src/local/usbcontrol/RecoveryScript.java',
+--- /dev/null
++++ b/scripts/rollback-usb-control-system-apps.ps1
+@@ -0,0 +1,34 @@
++param([string]$TargetRoot = (Split-Path -Parent $PSScriptRoot))
++$ErrorActionPreference='Stop'
++Add-Type -AssemblyName System.IO.Compression.FileSystem
++$root=[IO.Path]::GetFullPath($TargetRoot).TrimEnd('\')+'\'
++$archive=Join-Path (Split-Path -Parent $PSScriptRoot) 'docs/usb-control-system-apps/rollback-originals.zip'
++$zip=[IO.Compression.ZipFile]::OpenRead($archive)
++try {
++    $reader=New-Object IO.StreamReader($zip.GetEntry('manifest.json').Open())
++    try {$manifest=$reader.ReadToEnd()|ConvertFrom-Json}finally{$reader.Dispose()}
++    # Check every destination and original before writing anything.
++    foreach($item in $manifest){
++        $dest=[IO.Path]::GetFullPath((Join-Path $root $item.path))
++        if(-not $dest.StartsWith($root,[StringComparison]::OrdinalIgnoreCase)){throw 'Rollback target leaves root'}
++        if(Test-Path -LiteralPath $dest){
++            $current=(Get-FileHash -LiteralPath $dest -Algorithm SHA256).Hash
++            if($current -ne $item.modified -and $current -ne $item.original){throw "File changed since release: $dest"}
++        }
++        if($item.original){
++            $stream=$zip.GetEntry($item.path).Open();$sha=[Security.Cryptography.SHA256]::Create()
++            try{$hash=([BitConverter]::ToString($sha.ComputeHash($stream))).Replace('-','')}finally{$stream.Dispose();$sha.Dispose()}
++            if($hash -ne $item.original){throw "Corrupt original: $($item.path)"}
++        }
++    }
++    foreach($item in $manifest){
++        $dest=[IO.Path]::GetFullPath((Join-Path $root $item.path))
++        if($item.original){
++            New-Item -ItemType Directory -Force (Split-Path -Parent $dest)|Out-Null
++            [IO.Compression.ZipFileExtensions]::ExtractToFile($zip.GetEntry($item.path),$dest,$true)
++            if((Get-FileHash -LiteralPath $dest -Algorithm SHA256).Hash -ne $item.original){throw 'Restored hash mismatch'}
++        }elseif(Test-Path -LiteralPath $dest){Remove-Item -LiteralPath $dest -Force}
++    }
++    Write-Output 'PASS: source and release rollback; all restored hashes verified'
++    Write-Output 'Phone downgrade (optional, preserves app data): adb install -r -d releases/usb-control-v1.0.5.apk'
++}finally{$zip.Dispose()}
+--- /dev/null
++++ b/scripts/rollback-usb-control-delete-data.py
+@@ -0,0 +1,29 @@
++"""Restore 1.0.6 source/release only; deleted Android app data is not recoverable here."""
++from pathlib import Path
++import argparse, hashlib, json, zipfile
++
++PROJECT = Path(__file__).resolve().parents[1]
++parser = argparse.ArgumentParser(description=__doc__)
++parser.add_argument('--target-root', type=Path, default=PROJECT)
++args = parser.parse_args()
++root = args.target_root.resolve()
++archive = PROJECT / 'docs/usb-control-system-apps-delete-data/rollback-originals.zip'
++def sha(data): return hashlib.sha256(data).hexdigest()
++with zipfile.ZipFile(archive) as z:
++    manifest = json.loads(z.read('manifest.json'))
++    for item in manifest:
++        target = (root / item['path']).resolve()
++        assert target.is_relative_to(root), 'Path leaves rollback root'
++        if target.exists():
++            assert sha(target.read_bytes()) in (item['original'], item['modified']), f'File changed: {target}'
++        if item['original']:
++            assert sha(z.read(item['path'])) == item['original'], 'Original checksum mismatch'
++    for item in manifest:
++        target = root / item['path']
++        if item['original']:
++            target.parent.mkdir(parents=True, exist_ok=True)
++            target.write_bytes(z.read(item['path']))
++            assert sha(target.read_bytes()) == item['original']
++        elif target.exists():
++            target.unlink()
++print('PASS: 1.0.6 source/release restored with checksum verification; Android app data not restored')
