@@ -1,0 +1,61 @@
+{
+  "result": "PASS",
+  "release_url": "https://github.com/STC214/Fanqie_Ban_Update/releases/tag/usb-control-v1.0.7",
+  "release_id": 440057420,
+  "tag": "usb-control-v1.0.7",
+  "commit": "f7725284cf679727da5d928d3a7313cbaeb35b4a",
+  "draft": false,
+  "assets": [
+    {
+      "name": "usb-control-v1.0.7.apk",
+      "bytes": 1004388,
+      "sha256": "3dc418800767885542a644d6e3dbf3aae49c673f4c9821e9c9110203b5298a55",
+      "asset_id": 730520276,
+      "download_url": "https://github.com/STC214/Fanqie_Ban_Update/releases/download/usb-control-v1.0.7/usb-control-v1.0.7.apk",
+      "uploaded_bytes_download_verified": true,
+      "public_download_sha256_verified": true
+    },
+    {
+      "name": "usb-control-v1.0.7.apk.sha256",
+      "bytes": 90,
+      "sha256": "cece6371027aaefb3b2f47249a78f34542b1d96745b331a835d0f796d21da1b4",
+      "asset_id": 730520465,
+      "download_url": "https://github.com/STC214/Fanqie_Ban_Update/releases/download/usb-control-v1.0.7/usb-control-v1.0.7.apk.sha256",
+      "uploaded_bytes_download_verified": true,
+      "public_download_sha256_verified": true
+    },
+    {
+      "name": "usb-control-v1.0.7.patch",
+      "bytes": 30159,
+      "sha256": "69d5c59ec8716926c7084e32b5f194c43c2bc69a70862a95cffc463aa5eaa0b8",
+      "asset_id": 730520507,
+      "download_url": "https://github.com/STC214/Fanqie_Ban_Update/releases/download/usb-control-v1.0.7/usb-control-v1.0.7.patch",
+      "uploaded_bytes_download_verified": true,
+      "public_download_sha256_verified": true
+    },
+    {
+      "name": "usb-control-v1.0.7-verification.zip",
+      "bytes": 4555374,
+      "sha256": "16eb6726aff98bc279e055fd59b3aafd6a3ff08a89e99fe79538af813fc93a2b",
+      "asset_id": 730520551,
+      "download_url": "https://github.com/STC214/Fanqie_Ban_Update/releases/download/usb-control-v1.0.7/usb-control-v1.0.7-verification.zip",
+      "uploaded_bytes_download_verified": true,
+      "public_download_sha256_verified": true
+    },
+    {
+      "name": "usb-control-v1.0.7-SHA256SUMS.txt",
+      "bytes": 378,
+      "sha256": "5726c8f2a617c28e16b48d34ff4677b20c053b16136193a1f47eb66bc95d05fd",
+      "asset_id": 730520698,
+      "download_url": "https://github.com/STC214/Fanqie_Ban_Update/releases/download/usb-control-v1.0.7/usb-control-v1.0.7-SHA256SUMS.txt",
+      "uploaded_bytes_download_verified": true,
+      "public_download_sha256_verified": true
+    }
+  ],
+  "checks": [
+    "remote annotated tag points to reviewed commit",
+    "draft uploaded and each asset downloaded/hashed before publication",
+    "release published",
+    "all public downloads SHA256 match local assets"
+  ]
+}
