@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol.dialogtest">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
+    <instrumentation android:name="local.usbcontrol.SystemAppsDialogInstrumentation" android:targetPackage="local.usbcontrol" android:label="System-app dialog presentation tests"/>
+    <application android:label="System-app dialog presentation tests" android:allowBackup="false"/>
+</manifest>

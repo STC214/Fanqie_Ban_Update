@@ -81,11 +81,12 @@ public class MainActivity extends Activity {
         imageWorker.execute(()->{File file=BackgroundStore.selected(getFilesDir(),prefs);if(!file.exists())return;try{Bitmap loaded=BackgroundStore.decode(getContentResolver(),Uri.fromFile(file));ui.post(()->{if(alive()){wallpaper=loaded;build();}});}catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive())note("背景损坏或内存不足，已使用默认底色；可重新选择图片");});}});
     }
     @Override protected void onResume(){super.onResume();if(installVerificationPending)ui.postDelayed(()->refreshInstallAfterVerification(),200);else if(!densityInFlight)refresh();}
-    @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);if(dialogs.isEmpty())applyAppearance();build();if(!busy)renderState();}
+    @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);if(dialogs.isEmpty())applyAppearance();build();for(Dialog d:dialogs)if(d instanceof SystemAppsDialog)((SystemAppsDialog)d).updateBounds();if(!busy)renderState();}
     private boolean alive(){return !isFinishing()&&!isDestroyed();}
+    private <T extends Dialog> T manageDialog(T dialog){dialogs.add(dialog);dialog.setOnDismissListener(x->{dialogs.remove(dialog);if(alive()&&dialogs.isEmpty()&&appearanceChanged()){applyAppearance();build();}});return dialog;}
     private final class ManagedDialogBuilder extends AlertDialog.Builder {
         ManagedDialogBuilder(){super(themed);}
-        @Override public AlertDialog create(){AlertDialog d=super.create();dialogs.add(d);d.setOnDismissListener(x->{dialogs.remove(d);if(alive()&&dialogs.isEmpty()&&appearanceChanged()){applyAppearance();build();}});return d;}
+        @Override public AlertDialog create(){return manageDialog(super.create());}
         @Override public AlertDialog show(){AlertDialog d=create();d.show();return d;}
     }
     @Override protected void onDestroy(){ui.removeCallbacksAndMessages(null);for(Dialog d:new java.util.ArrayList<>(dialogs))d.dismiss();dialogs.clear();super.onDestroy();}
@@ -103,7 +104,7 @@ public class MainActivity extends Activity {
         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
-        TextView version=text("1.0.7",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+        TextView version=text("1.0.8",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
         section("01  /  连接控制");
@@ -210,24 +211,16 @@ public class MainActivity extends Activity {
                 systemAppsResult=restore?"没有识别到可恢复的目标系统应用。":"没有识别到可卸载的目标系统应用（可能已卸载或此系统未预装）。";
                 systemAppsDetail.setText(systemAppsResult);note(systemAppsResult);return;
             }
-            String[] labels=new String[choices.size()];boolean[] checked=new boolean[choices.size()];
-            for(int i=0;i<labels.length;i++)labels[i]=choices.get(i).label();
-            AlertDialog dialog=new ManagedDialogBuilder().setTitle(restore?"勾选要恢复的系统应用":"勾选要卸载的系统应用")
-                .setMultiChoiceItems(labels,checked,(d,index,on)->checked[index]=on)
-                .setNegativeButton("取消",null).setPositiveButton("下一步",null).create();
-            dialog.show();dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
-                java.util.List<SystemApps.Entry> selected=new java.util.ArrayList<>();StringBuilder names=new StringBuilder();
-                for(int i=0;i<checked.length;i++)if(checked[i]){selected.add(choices.get(i));names.append("\n• ").append(labels[i]);}
-                if(selected.isEmpty()){note("请先勾选应用");return;}
-                dialog.dismiss();
-                new ManagedDialogBuilder().setTitle(restore?"确认恢复？":"确认卸载？")
-                    .setMessage("用户 "+user+names+"\n\n"+(restore?"仅恢复系统预装应用，不恢复已删除的应用数据；不更改原有启用状态。":"将从当前用户卸载并删除应用数据，此数据删除不可撤销。系统分区安装包保留；恢复入口仅重新安装应用，不找回数据。部分关联功能会受影响。"))
-                    .setNegativeButton("取消",null).setPositiveButton(restore?"恢复所选":"卸载所选",(d,w)->task(restore?"恢复系统应用…":"卸载系统应用…",()->{
+            SystemAppsDialog.Palette palette=new SystemAppsDialog.Palette(BLUE,INK,MUTED,CARD,SOFT,LINE,PRIMARY_TEXT,dark);
+            manageDialog(new SystemAppsDialog(themed,palette,choices,restore,user,selected->{
+                    if(!alive())return;
+                    if(!rootReady||busy||densityInFlight||installVerificationPending){note("系统状态正在变化，请稍候重新选择");return;}
+                    task(restore?"恢复系统应用…":"卸载系统应用…",()->{
                         try{systemAppsResult=SystemApps.apply(Root::run,user,selected,restore);}
                         catch(Exception e){systemAppsResult="系统应用任务未完成："+e.getMessage();}
                         return "";
-                    },()->{systemAppsDetail.setText(systemAppsResult);switchReady();new ManagedDialogBuilder().setTitle("系统应用处理结果").setMessage(systemAppsResult).setPositiveButton("知道了",null).show();})).show();
-            });
+                    },()->{systemAppsDetail.setText(systemAppsResult);switchReady();new ManagedDialogBuilder().setTitle("系统应用处理结果").setMessage(systemAppsResult).setPositiveButton("知道了",null).show();});
+            })).show();
         });
     }
     private void processWallpapers(boolean undo){

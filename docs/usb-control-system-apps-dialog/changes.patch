@@ -1,0 +1,492 @@
+--- a/README.md
++++ b/README.md
+@@ -10,11 +10,12 @@
+ 
+ ## 轻控 Android App
+ 
+-独立 App **轻控 1.0.7**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+-
+-- 安装包：[`releases/usb-control-v1.0.7.apk`](releases/usb-control-v1.0.7.apk)
++独立 App **轻控 1.0.8**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
++
++- 安装包：[`releases/usb-control-v1.0.8.apk`](releases/usb-control-v1.0.8.apk)
+ - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
+ - 可勾选批量卸载系统应用：快应用、内容中心、浏览器、系统广告 adsolution；卸载时删除应用数据，独立恢复入口仅恢复应用，不找回已删除的数据。
++- 系统应用选择与确认弹窗使用同一套圆角卡片、蓝色强调和浅/暗主题；支持已选计数、全选、返回保留勾选，空选择时禁用下一步。
+ - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+ - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+ - 源码、构建及兼容说明：[`usb_control_app/README.md`](usb_control_app/README.md)
+@@ -295,6 +296,6 @@
+ 验证记录：`docs/usb-control-fast-toggle/`。
+ 
+ ### 安装包保留策略
+-轻控仅保留最新版 `releases/usb-control-v1.0.7.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。
++轻控仅保留最新版 `releases/usb-control-v1.0.8.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。
+ 
+ 轻控 1.0.5 新增「一键循环壁纸」，目录、命名规则与撤销见 [轻控说明](usb_control_app/README.md)。
+--- a/usb_control_app/README.md
++++ b/usb_control_app/README.md
+@@ -1,14 +1,23 @@
+-# 轻控 1.0.7
++# 轻控 1.0.8
+ 
+ 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
+ 
+ ## 安装
+ 
+-安装 `../releases/usb-control-v1.0.7.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
++安装 `../releases/usb-control-v1.0.8.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+ 
+ 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
+ 
+ ## 功能
++
++### 系统应用弹窗外观（1.0.8）
++
++- 卸载、恢复共用自定义圆角弹窗，复用主页的蓝色、卡片和浅/暗主题；应用名称、分类标记与包名分层展示。
++- 支持整行点选、全选/取消全选、实时已选数量。默认不勾选，未选择时下一步置灰。
++- 选择和确认在同一弹窗内切换；返回选择保留勾选，取消和关闭不执行操作。
++- 卸载数据风险、恢复不找回数据的提示保留；底部操作固定，内容区域可滚动适应较小窗口和较大字体。
++- 仅修改呈现层，不改变系统包白名单、用户范围、无 `-k` 卸载命令、恢复方式和执行前后读回校验。
++- 详情与验证边界见 `../docs/usb-control-system-apps-dialog/README.md`。
+ 
+ ### 系统应用管理（1.0.7）
+ 
+--- a/usb_control_app/AndroidManifest.xml
++++ b/usb_control_app/AndroidManifest.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="107" android:versionName="1.0.7">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="108" android:versionName="1.0.8">
+     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+     <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+         <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:windowSoftInputMode="adjustResize">
+--- a/usb_control_app/build.ps1
++++ b/usb_control_app/build.ps1
+@@ -41,11 +41,11 @@
+     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
+     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
+ }
+-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.7.apk'
++$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.8.apk'
+ Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
+ Run "$tools/apksigner.bat" @('verify','--verbose',$release)
+ Run "$tools/zipalign.exe" @('-c','4',$release)
+ $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
+-"$hash  usb-control-v1.0.7.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
++"$hash  usb-control-v1.0.8.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+ Write-Output "APK: $release"
+ Write-Output "SHA256: $hash"
+--- a/usb_control_app/src/local/usbcontrol/MainActivity.java
++++ b/usb_control_app/src/local/usbcontrol/MainActivity.java
+@@ -81,11 +81,12 @@
+         imageWorker.execute(()->{File file=BackgroundStore.selected(getFilesDir(),prefs);if(!file.exists())return;try{Bitmap loaded=BackgroundStore.decode(getContentResolver(),Uri.fromFile(file));ui.post(()->{if(alive()){wallpaper=loaded;build();}});}catch(Exception|OutOfMemoryError e){ui.post(()->{if(alive())note("背景损坏或内存不足，已使用默认底色；可重新选择图片");});}});
+     }
+     @Override protected void onResume(){super.onResume();if(installVerificationPending)ui.postDelayed(()->refreshInstallAfterVerification(),200);else if(!densityInFlight)refresh();}
+-    @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);if(dialogs.isEmpty())applyAppearance();build();if(!busy)renderState();}
++    @Override public void onConfigurationChanged(Configuration c){super.onConfigurationChanged(c);if(dialogs.isEmpty())applyAppearance();build();for(Dialog d:dialogs)if(d instanceof SystemAppsDialog)((SystemAppsDialog)d).updateBounds();if(!busy)renderState();}
+     private boolean alive(){return !isFinishing()&&!isDestroyed();}
++    private <T extends Dialog> T manageDialog(T dialog){dialogs.add(dialog);dialog.setOnDismissListener(x->{dialogs.remove(dialog);if(alive()&&dialogs.isEmpty()&&appearanceChanged()){applyAppearance();build();}});return dialog;}
+     private final class ManagedDialogBuilder extends AlertDialog.Builder {
+         ManagedDialogBuilder(){super(themed);}
+-        @Override public AlertDialog create(){AlertDialog d=super.create();dialogs.add(d);d.setOnDismissListener(x->{dialogs.remove(d);if(alive()&&dialogs.isEmpty()&&appearanceChanged()){applyAppearance();build();}});return d;}
++        @Override public AlertDialog create(){return manageDialog(super.create());}
+         @Override public AlertDialog show(){AlertDialog d=create();d.show();return d;}
+     }
+     @Override protected void onDestroy(){ui.removeCallbacksAndMessages(null);for(Dialog d:new java.util.ArrayList<>(dialogs))d.dismiss();dialogs.clear();super.onDestroy();}
+@@ -103,7 +104,7 @@
+         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
+         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
+         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+-        TextView version=text("1.0.7",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
++        TextView version=text("1.0.8",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
+         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
+         section("01  /  连接控制");
+@@ -210,24 +211,16 @@
+                 systemAppsResult=restore?"没有识别到可恢复的目标系统应用。":"没有识别到可卸载的目标系统应用（可能已卸载或此系统未预装）。";
+                 systemAppsDetail.setText(systemAppsResult);note(systemAppsResult);return;
+             }
+-            String[] labels=new String[choices.size()];boolean[] checked=new boolean[choices.size()];
+-            for(int i=0;i<labels.length;i++)labels[i]=choices.get(i).label();
+-            AlertDialog dialog=new ManagedDialogBuilder().setTitle(restore?"勾选要恢复的系统应用":"勾选要卸载的系统应用")
+-                .setMultiChoiceItems(labels,checked,(d,index,on)->checked[index]=on)
+-                .setNegativeButton("取消",null).setPositiveButton("下一步",null).create();
+-            dialog.show();dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
+-                java.util.List<SystemApps.Entry> selected=new java.util.ArrayList<>();StringBuilder names=new StringBuilder();
+-                for(int i=0;i<checked.length;i++)if(checked[i]){selected.add(choices.get(i));names.append("\n• ").append(labels[i]);}
+-                if(selected.isEmpty()){note("请先勾选应用");return;}
+-                dialog.dismiss();
+-                new ManagedDialogBuilder().setTitle(restore?"确认恢复？":"确认卸载？")
+-                    .setMessage("用户 "+user+names+"\n\n"+(restore?"仅恢复系统预装应用，不恢复已删除的应用数据；不更改原有启用状态。":"将从当前用户卸载并删除应用数据，此数据删除不可撤销。系统分区安装包保留；恢复入口仅重新安装应用，不找回数据。部分关联功能会受影响。"))
+-                    .setNegativeButton("取消",null).setPositiveButton(restore?"恢复所选":"卸载所选",(d,w)->task(restore?"恢复系统应用…":"卸载系统应用…",()->{
++            SystemAppsDialog.Palette palette=new SystemAppsDialog.Palette(BLUE,INK,MUTED,CARD,SOFT,LINE,PRIMARY_TEXT,dark);
++            manageDialog(new SystemAppsDialog(themed,palette,choices,restore,user,selected->{
++                    if(!alive())return;
++                    if(!rootReady||busy||densityInFlight||installVerificationPending){note("系统状态正在变化，请稍候重新选择");return;}
++                    task(restore?"恢复系统应用…":"卸载系统应用…",()->{
+                         try{systemAppsResult=SystemApps.apply(Root::run,user,selected,restore);}
+                         catch(Exception e){systemAppsResult="系统应用任务未完成："+e.getMessage();}
+                         return "";
+-                    },()->{systemAppsDetail.setText(systemAppsResult);switchReady();new ManagedDialogBuilder().setTitle("系统应用处理结果").setMessage(systemAppsResult).setPositiveButton("知道了",null).show();})).show();
+-            });
++                    },()->{systemAppsDetail.setText(systemAppsResult);switchReady();new ManagedDialogBuilder().setTitle("系统应用处理结果").setMessage(systemAppsResult).setPositiveButton("知道了",null).show();});
++            })).show();
+         });
+     }
+     private void processWallpapers(boolean undo){
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -1,5 +1,6 @@
+ # Normalize ordinary text; preserve bytes for sealed audit/rollback artifacts.
+ * text=auto
++/.gitattributes text eol=lf
+ /README.md -text
+ /docs/** -text
+ /usb_control_app/** -text
+@@ -9,6 +10,8 @@
+ # Release patches are byte-sensitive data (including CRLF context and space markers).
+ /releases/usb-control-*.patch -text -whitespace
+ /releases/usb-control-*.txt -text
++/releases/usb-control-*.apk.sha256 -text
+ /docs/usb-control-wallpaper/*.patch -whitespace
+ /docs/usb-control-system-apps/*.patch -whitespace
+ /docs/usb-control-system-apps-delete-data/*.patch -whitespace
++/docs/usb-control-system-apps-dialog/*.patch -whitespace
+--- /dev/null
++++ b/usb_control_app/src/local/usbcontrol/SystemAppsDialog.java
+@@ -0,0 +1,146 @@
++package local.usbcontrol;
++
++import android.app.*;
++import android.content.*;
++import android.content.res.ColorStateList;
++import android.graphics.*;
++import android.graphics.drawable.*;
++import android.os.Bundle;
++import android.view.*;
++import android.view.accessibility.AccessibilityNodeInfo;
++import android.widget.*;
++import java.util.*;
++
++/** Presentation only. No Root, package-manager mutation or shell commands belong here. */
++final class SystemAppsDialog extends Dialog {
++    interface Submit { void accept(java.util.List<SystemApps.Entry> selected); }
++    static final class Palette {
++        final int blue,ink,muted,surface,soft,line,primaryText;
++        final boolean dark;
++        Palette(int blue,int ink,int muted,int surface,int soft,int line,int primaryText,boolean dark){
++            this.blue=blue;this.ink=ink;this.muted=muted;this.surface=surface;this.soft=soft;this.line=line;this.primaryText=primaryText;this.dark=dark;
++        }
++    }
++    private final Context context;
++    private final Palette colors;
++    private final java.util.List<SystemApps.Entry> entries;
++    private final boolean restore;
++    private final int user;
++    private final Submit submit;
++    private final boolean[] checked;
++    private boolean confirming=false,submitted=false;
++    private int renderGeneration;
++    private BoundedLayout panel;
++    private Button primaryButton,secondaryButton,selectAllButton;
++    private TextView selectionCount;
++    private final ArrayList<ChoiceRow> choiceRows=new ArrayList<>();
++
++    SystemAppsDialog(Context context,Palette colors,java.util.List<SystemApps.Entry> entries,boolean restore,int user,Submit submit){
++        super(context);this.context=context;this.colors=colors;this.entries=new ArrayList<>(entries);this.restore=restore;this.user=user;this.submit=submit;
++        if(this.entries.isEmpty())throw new IllegalArgumentException("应用列表为空");
++        checked=new boolean[this.entries.size()];
++    }
++    private int dp(float value){return Math.round(value*context.getResources().getDisplayMetrics().density);}
++    private void pad(View view,int left,int top,int right,int bottom){view.setPadding(dp(left),dp(top),dp(right),dp(bottom));}
++    private LinearLayout column(){LinearLayout view=new LinearLayout(context);view.setOrientation(LinearLayout.VERTICAL);return view;}
++    private TextView text(String value,int size,int color){TextView view=new TextView(context);view.setText(value);view.setTextSize(size);view.setTextColor(color);view.setLineSpacing(dp(3),1);view.setFontFeatureSettings("kern");return view;}
++    private GradientDrawable shape(int fill,int radius,int stroke){GradientDrawable value=new GradientDrawable();value.setColor(fill);value.setCornerRadius(dp(radius));if(stroke!=0)value.setStroke(dp(1),stroke);return value;}
++    private Drawable touch(int fill,int radius,int stroke){return new RippleDrawable(ColorStateList.valueOf(colors.dark?0x248ab4ff:0x182563eb),shape(fill,radius,stroke),null);}
++    private void gap(LinearLayout parent,int height){parent.addView(new View(context),new LinearLayout.LayoutParams(1,dp(height)));}
++    private Button action(String label,Runnable click,boolean primary){
++        Button view=new Button(context);view.setText(label);view.setAllCaps(false);view.setTextSize(14);view.setMinHeight(dp(50));view.setMinimumWidth(0);view.setMinWidth(0);pad(view,12,10,12,10);
++        view.setTextColor(primary?colors.primaryText:colors.blue);view.setBackground(touch(primary?colors.blue:colors.soft,14,0));view.setOnClickListener(v->click.run());return view;
++    }
++    @Override protected void onCreate(Bundle state){super.onCreate(state);requestWindowFeature(Window.FEATURE_NO_TITLE);setCanceledOnTouchOutside(true);render();}
++    @Override protected void onStart(){super.onStart();Window window=getWindow();if(window!=null){window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);WindowManager.LayoutParams p=window.getAttributes();p.dimAmount=.52f;window.setAttributes(p);}updateBounds();}
++    void updateBounds(){
++        if(panel==null)return;panel.requestLayout();Window window=getWindow();if(window==null)return;
++        Rect available=availableFrame();window.setLayout(Math.min(dp(420),Math.max(dp(180),available.width()-dp(32))),WindowManager.LayoutParams.WRAP_CONTENT);
++    }
++    private Rect availableFrame(){
++        Context c=context;while(c instanceof ContextWrapper&&!(c instanceof Activity)){Context next=((ContextWrapper)c).getBaseContext();if(next==c)break;c=next;}
++        Rect frame=new Rect();if(c instanceof Activity)((Activity)c).getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
++        if(frame.width()<=0||frame.height()<=0)frame.set(0,0,context.getResources().getDisplayMetrics().widthPixels,context.getResources().getDisplayMetrics().heightPixels);
++        return frame;
++    }
++    private final class BoundedLayout extends LinearLayout {
++        BoundedLayout(){super(context);setOrientation(VERTICAL);}
++        @Override protected void onMeasure(int width,int height){super.onMeasure(width,View.MeasureSpec.makeMeasureSpec(Math.max(dp(120),availableFrame().height()-dp(32)),View.MeasureSpec.AT_MOST));}
++    }
++    private int count(){int count=0;for(boolean value:checked)if(value)count++;return count;}
++    private java.util.List<SystemApps.Entry> selection(){ArrayList<SystemApps.Entry> result=new ArrayList<>();for(int i=0;i<checked.length;i++)if(checked[i])result.add(entries.get(i));return result;}
++    private boolean active(int generation){return isShowing()&&!submitted&&generation==renderGeneration;}
++    private void render(){
++        final int generation=++renderGeneration;
++        panel=new BoundedLayout();panel.setBackground(shape(colors.surface,26,0));panel.setClipToOutline(true);
++        ScrollView scroll=new ScrollView(context);scroll.setFillViewport(false);scroll.setVerticalScrollBarEnabled(false);scroll.setClipToPadding(false);
++        LinearLayout body=column();pad(body,22,22,22,18);scroll.addView(body,new ScrollView.LayoutParams(-1,-2));panel.addView(scroll,new LinearLayout.LayoutParams(-1,-2,1));
++
++        LinearLayout header=new LinearLayout(context);header.setGravity(Gravity.CENTER_VERTICAL);
++        TextView emblem=text(restore?"+":"−",25,colors.blue);emblem.setGravity(Gravity.CENTER);emblem.setBackground(shape(colors.soft,14,0));header.addView(emblem,new LinearLayout.LayoutParams(dp(44),dp(44)));
++        LinearLayout headings=column();pad(headings,12,0,6,0);
++        TextView eyebrow=text("SYSTEM APPS  /  "+(restore?"RESTORE":"REMOVE"),9,colors.muted);eyebrow.setLetterSpacing(.10f);headings.addView(eyebrow);
++        TextView title=text(confirming?(restore?"确认恢复应用":"确认卸载应用"):(restore?"恢复系统应用":"卸载系统应用"),21,colors.ink);title.setTypeface(null,android.graphics.Typeface.BOLD);headings.addView(title);header.addView(headings,new LinearLayout.LayoutParams(0,-2,1));
++        Button close=action("×",()->{if(active(generation))dismiss();},false);close.setTextSize(23);close.setMinHeight(0);pad(close,0,0,0,0);close.setContentDescription("关闭系统应用管理");header.addView(close,new LinearLayout.LayoutParams(dp(48),dp(48)));body.addView(header);gap(body,14);
++        body.addView(text(confirming?"请核对以下应用，再确认操作。":"选择需要"+(restore?"恢复":"卸载")+"的预装应用，未勾选的应用不受影响。",12,colors.muted));gap(body,16);
++
++        choiceRows.clear();selectAllButton=null;
++        if(!confirming){
++            LinearLayout controls=new LinearLayout(context);controls.setGravity(Gravity.CENTER_VERTICAL);
++            controls.addView(text("可"+(restore?"恢复":"卸载")+" · "+entries.size()+" 项",12,colors.muted),new LinearLayout.LayoutParams(0,-2,1));
++            selectAllButton=action("全选",()->{if(!active(generation)||confirming)return;boolean all=count()!=entries.size();for(int i=0;i<checked.length;i++)checked[i]=all;refreshSelection();},false);selectAllButton.setTextSize(12);selectAllButton.setMinHeight(dp(48));pad(selectAllButton,14,8,14,8);controls.addView(selectAllButton,new LinearLayout.LayoutParams(-2,-2));body.addView(controls);gap(body,8);
++            for(int i=0;i<entries.size();i++){ChoiceRow row=new ChoiceRow(i,generation);choiceRows.add(row);body.addView(row,new LinearLayout.LayoutParams(-1,-2));if(i<entries.size()-1)gap(body,9);}
++        }else{
++            for(SystemApps.Entry entry:selection()){body.addView(summaryRow(entry),new LinearLayout.LayoutParams(-1,-2));gap(body,8);}
++        }
++        gap(body,14);body.addView(notice(),new LinearLayout.LayoutParams(-1,-2));
++
++        View divider=new View(context);divider.setBackgroundColor(colors.line);panel.addView(divider,new LinearLayout.LayoutParams(-1,dp(1)));
++        LinearLayout footer=column();pad(footer,20,12,20,18);
++        LinearLayout meta=new LinearLayout(context);meta.setGravity(Gravity.CENTER_VERTICAL);
++        selectionCount=text("",12,colors.blue);selectionCount.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);meta.addView(selectionCount,new LinearLayout.LayoutParams(0,-2,1));
++        meta.addView(text("当前用户 · "+user,11,colors.muted));footer.addView(meta);gap(footer,8);
++        LinearLayout actions=new LinearLayout(context);actions.setGravity(Gravity.CENTER_VERTICAL);
++        secondaryButton=action(confirming?"返回选择":"取消",()->{if(!active(generation))return;if(confirming){confirming=false;render();updateBounds();}else dismiss();},false);
++        actions.addView(secondaryButton,new LinearLayout.LayoutParams(0,-2,1));View spacer=new View(context);actions.addView(spacer,new LinearLayout.LayoutParams(dp(10),1));
++        primaryButton=action("",()->{
++            if(!active(generation)||count()==0)return;
++            if(!confirming){confirming=true;render();updateBounds();return;}
++            submitted=true;java.util.List<SystemApps.Entry> selected=selection();dismiss();submit.accept(selected);
++        },true);actions.addView(primaryButton,new LinearLayout.LayoutParams(0,-2,1.55f));footer.addView(actions);panel.addView(footer,new LinearLayout.LayoutParams(-1,-2));
++        setContentView(panel);refreshSelection();
++    }
++    private View notice(){
++        int ink=restore?colors.blue:(colors.dark?0xffffc8a3:0xff955016);
++        int fill=restore?colors.soft:(colors.dark?0xff332c29:0xfffff4e8);
++        LinearLayout box=column();pad(box,13,11,13,11);box.setBackground(shape(fill,13,0));
++        TextView heading=text(restore?"恢复应用，不恢复数据":"卸载会删除应用数据",12,ink);heading.setTypeface(null,android.graphics.Typeface.BOLD);box.addView(heading);
++        box.addView(text(restore?"重新安装系统保留的预装包；不会找回已删除的数据，也不更改原有启用状态。":"数据删除不可撤销，系统安装包仍保留。浏览器卸载后可能影响网页打开。",11,ink));return box;
++    }
++    private String badge(SystemApps.Entry entry){if(entry.name.startsWith("快"))return "快";if(entry.name.startsWith("内"))return "内";if(entry.name.startsWith("浏"))return "浏";return "AD";}
++    private View summaryRow(SystemApps.Entry entry){
++        LinearLayout row=new LinearLayout(context);row.setGravity(Gravity.CENTER_VERTICAL);pad(row,13,12,13,12);row.setBackground(shape(colors.soft,15,0));addLabels(row,entry);return row;
++    }
++    private void addLabels(LinearLayout row,SystemApps.Entry entry){
++        TextView icon=text(badge(entry),14,colors.blue);icon.setTypeface(null,android.graphics.Typeface.BOLD);icon.setGravity(Gravity.CENTER);icon.setBackground(shape(colors.dark?0xff354963:0xffe1ebff,12,0));row.addView(icon,new LinearLayout.LayoutParams(dp(38),dp(38)));icon.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
++        LinearLayout labels=column();pad(labels,12,0,8,0);TextView name=text(entry.name,15,colors.ink);name.setTypeface(null,android.graphics.Typeface.BOLD);labels.addView(name);labels.addView(text(entry.pkg,10,colors.muted));row.addView(labels,new LinearLayout.LayoutParams(0,-2,1));
++    }
++    private final class ChoiceRow extends LinearLayout {
++        final int index;final CheckBox check;
++        ChoiceRow(int index,int generation){
++            super(context);this.index=index;setGravity(Gravity.CENTER_VERTICAL);setMinimumHeight(dp(78));pad(this,13,12,10,12);addLabels(this,entries.get(index));
++            check=new CheckBox(context);check.setClickable(false);check.setFocusable(false);check.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);check.setButtonTintList(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked},new int[]{}},new int[]{colors.blue,colors.muted}));
++            addView(check,new LinearLayout.LayoutParams(dp(34),dp(48)));getChildAt(1).setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);setFocusable(true);setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);if(android.os.Build.VERSION.SDK_INT>=28)setScreenReaderFocusable(true);setOnClickListener(v->{if(!active(generation)||confirming)return;checked[index]=!checked[index];refreshSelection();});
++        }
++        void bind(){boolean on=checked[index];check.setChecked(on);setSelected(on);setBackground(touch(on?(colors.dark?0xff263c58:0xffeaf1ff):colors.soft,16,on?colors.blue:colors.line));setContentDescription(entries.get(index).name+"，"+entries.get(index).pkg+"，"+(on?"已选择":"未选择"));}
++        @Override public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info){super.onInitializeAccessibilityNodeInfo(info);info.setClassName("android.widget.CheckBox");info.setCheckable(true);info.setChecked(checked[index]);}
++    }
++    private void refreshSelection(){
++        int count=count();selectionCount.setText("已选 "+count+" / "+entries.size()+" 项");
++        primaryButton.setEnabled(count>0&&!submitted);primaryButton.setAlpha(count>0?1:.4f);
++        primaryButton.setText(confirming?(restore?"确认恢复":"确认卸载")+" · "+count:"下一步"+(count>0?" · "+count:""));
++        if(selectAllButton!=null)selectAllButton.setText(count==entries.size()?"取消全选":"全选");
++        for(ChoiceRow row:choiceRows)row.bind();
++    }
++    @Override public void onBackPressed(){if(!isShowing())return;if(confirming){confirming=false;render();updateBounds();}else super.onBackPressed();}
++}
+--- /dev/null
++++ b/usb_control_app/tests/build-dialog-test.ps1
+@@ -0,0 +1,24 @@
++param([string]$Sdk='F:\Android\Sdk')
++$ErrorActionPreference='Stop'
++$root=Split-Path -Parent $PSScriptRoot
++$dir=Join-Path $root 'build/dialog-test'
++New-Item -ItemType Directory -Force $dir,"$dir/classes","$dir/dex" | Out-Null
++$tools=Join-Path $Sdk 'build-tools/35.0.0'
++$android=Join-Path $Sdk 'platforms/android-36/android.jar'
++function Run([string]$Tool,[string[]]$Arguments){
++    $old=$ErrorActionPreference
++    try{$ErrorActionPreference='Continue';& $Tool @Arguments;$code=$LASTEXITCODE}finally{$ErrorActionPreference=$old}
++    if($code -ne 0){throw "Dialog test build failed: $Tool ($code)"}
++}
++Run "$tools/aapt2.exe" @('link','-o',"$dir/base.apk",'-I',$android,'--manifest',"$PSScriptRoot/dialog_device/AndroidManifest.xml")
++Run 'javac' @('--release','8','-Xlint:-options','-encoding','UTF-8','-classpath',"$android;$root/build/classes.jar",'-d',"$dir/classes","$PSScriptRoot/dialog_device/SystemAppsDialogInstrumentation.java")
++Run 'jar' @('cf',"$dir/classes.jar",'-C',"$dir/classes",'.')
++Run "$tools/d8.bat" @('--min-api','26','--lib',$android,'--output',"$dir/dex","$dir/classes.jar")
++Copy-Item -LiteralPath "$dir/base.apk" -Destination "$dir/unsigned.apk" -Force
++Add-Type -AssemblyName System.IO.Compression
++Add-Type -AssemblyName System.IO.Compression.FileSystem
++$z=[IO.Compression.ZipFile]::Open("$dir/unsigned.apk",[IO.Compression.ZipArchiveMode]::Update)
++try{[void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($z,"$dir/dex/classes.dex",'classes.dex')}finally{$z.Dispose()}
++Run "$tools/zipalign.exe" @('-f','4',"$dir/unsigned.apk","$dir/aligned.apk")
++Run "$tools/apksigner.bat" @('sign','--ks',"$env:USERPROFILE/.android/usbcontrol-local.jks",'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',"$dir/dialog-test.apk","$dir/aligned.apk")
++Write-Output "$dir/dialog-test.apk"
+--- /dev/null
++++ b/usb_control_app/tests/dialog_device/AndroidManifest.xml
+@@ -0,0 +1,5 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol.dialogtest">
++    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
++    <instrumentation android:name="local.usbcontrol.SystemAppsDialogInstrumentation" android:targetPackage="local.usbcontrol" android:label="System-app dialog presentation tests"/>
++    <application android:label="System-app dialog presentation tests" android:allowBackup="false"/>
++</manifest>
+--- /dev/null
++++ b/usb_control_app/tests/dialog_device/SystemAppsDialogInstrumentation.java
+@@ -0,0 +1,124 @@
++package local.usbcontrol;
++
++import android.app.*;
++import android.content.*;
++import android.content.res.Configuration;
++import android.graphics.Bitmap;
++import android.os.Bundle;
++import android.view.*;
++import android.widget.*;
++import java.io.*;
++import java.lang.reflect.*;
++import java.util.*;
++import org.json.*;
++
++/** Fake entries and a counting callback only: never invokes SystemApps.apply or any shell mutation. */
++public final class SystemAppsDialogInstrumentation extends Instrumentation {
++    private final JSONArray checks=new JSONArray();
++    private final JSONArray skipped=new JSONArray();
++    private Activity activity;
++    private SystemAppsDialog dialog;
++    private int submissions;
++    private java.util.List<SystemApps.Entry> submitted;
++    private Object field(String name)throws Exception{Field f=SystemAppsDialog.class.getDeclaredField(name);f.setAccessible(true);return f.get(dialog);}
++    private void check(boolean value,String label)throws Exception{checks.put(new JSONObject().put("check",label).put("pass",value));Bundle progress=new Bundle();progress.putString("stream",label+": "+value);sendStatus(0,progress);if(!value)throw new AssertionError(label);}
++    private void main(Runnable job){runOnMainSync(job);}
++    private Button button(String name)throws Exception{return (Button)field(name);}
++    private void click(String name)throws Exception{Button button=button(name);main(()->button.performClick());}
++    private void row(int index)throws Exception{View view=(View)((java.util.List<?>)field("choiceRows")).get(index);main(()->view.performClick());}
++    private void show(boolean dark,boolean restore,float fontScale,int count)throws Exception{
++        main(()->{
++            Configuration configuration=new Configuration(activity.getResources().getConfiguration());configuration.fontScale=fontScale;
++            android.view.ContextThemeWrapper dialogContext=new android.view.ContextThemeWrapper(activity,dark?R.style.DarkTheme:R.style.LightTheme);
++            dialogContext.applyOverrideConfiguration(configuration);
++            java.util.List<SystemApps.Entry> entries=new ArrayList<>();
++            String[] names={"快应用","内容中心","浏览器","系统广告 adsolution","内容中心（备用包名）"};
++            for(int i=0;i<count;i++)entries.add(new SystemApps.Entry(names[i],"local.test.system.application"+i,!restore));
++            SystemAppsDialog.Palette p=new SystemAppsDialog.Palette(dark?0xff8ab4ff:0xff2563eb,dark?0xffe6edf8:0xff192b48,dark?0xffa9b7cb:0xff64748b,dark?0xff1c2736:0xffffffff,dark?0xff293951:0xffeef3fd,dark?0xff344257:0xffe9eef6,dark?0xff102039:0xffffffff,dark);
++            dialog=new SystemAppsDialog(dialogContext,p,entries,restore,0,selection->{submissions++;submitted=selection;});
++            entries.clear(); // The production dialog must retain its own immutable list snapshot.
++            dialog.show();
++            // A stopped/locked host can defer WindowManager traversal. Render this app's own
++            // decor with the same viewport constraints; never read or dismiss the keyguard.
++            View decor=dialog.getWindow().getDecorView();android.graphics.Rect frame=new android.graphics.Rect();
++            activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
++            int width=dialog.getWindow().getAttributes().width;
++            if(width<=0)width=activity.getResources().getDisplayMetrics().widthPixels;
++            int height=frame.height()>0?frame.height():activity.getResources().getDisplayMetrics().heightPixels;
++            decor.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(height,View.MeasureSpec.AT_MOST));
++            decor.layout(0,0,decor.getMeasuredWidth(),decor.getMeasuredHeight());
++        });
++    }
++    private void screenshot(String name)throws Exception{
++        Thread.sleep(350);final Bitmap[] captured=new Bitmap[1];
++        main(()->{View decor=dialog.getWindow().getDecorView();captured[0]=Bitmap.createBitmap(decor.getWidth(),decor.getHeight(),Bitmap.Config.ARGB_8888);decor.draw(new android.graphics.Canvas(captured[0]));});
++        Bitmap image=captured[0];
++        File dir=new File(getTargetContext().getFilesDir(),"dialog-review");dir.mkdirs();try(FileOutputStream out=new FileOutputStream(new File(dir,name+".png"))){image.compress(Bitmap.CompressFormat.PNG,100,out);}image.recycle();
++    }
++    private void withinWindow(String label)throws Exception{
++        main(()->{
++            View decor=dialog.getWindow().getDecorView();int width=dialog.getWindow().getAttributes().width;
++            if(width<=0)width=activity.getResources().getDisplayMetrics().widthPixels;
++            decor.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(activity.getResources().getDisplayMetrics().heightPixels,View.MeasureSpec.AT_MOST));
++            decor.layout(0,0,decor.getMeasuredWidth(),decor.getMeasuredHeight());
++        });
++        View panel=(View)field("panel");Button primary=button("primaryButton"),secondary=button("secondaryButton");
++        android.graphics.Rect frame=new android.graphics.Rect();activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
++        int[] location=new int[2];primary.getLocationOnScreen(location);
++        check(panel.getWidth()<=frame.width()&&panel.getHeight()<=frame.height(),label+" fits visible window");
++        check(location[1]+primary.getHeight()<=frame.bottom&&primary.getHeight()>0&&secondary.getHeight()>0,label+" footer actions remain visible");
++    }
++    @Override public void onCreate(Bundle args){super.onCreate(args);start();}
++    @Override public void onStart(){
++        JSONObject report=new JSONObject();Bundle status=new Bundle();boolean pass=false;
++        try{
++            ActivityMonitor monitor=addMonitor(MainActivity.class.getName(),null,false);
++            // Shell foreground launch avoids ROM background-start interception and an unbounded startActivitySync wait.
++            try(android.os.ParcelFileDescriptor fd=getUiAutomation().executeShellCommand("am start -n local.usbcontrol/.MainActivity");
++                InputStream in=new android.os.ParcelFileDescriptor.AutoCloseInputStream(fd)){
++                byte[] buffer=new byte[1024];while(in.read(buffer)!=-1){}
++            }
++            activity=monitor.waitForActivityWithTimeout(15000);removeMonitor(monitor);
++            if(activity==null)throw new IOException("Target activity did not start within 15 seconds");
++            main(()->activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON));
++            for(boolean dark:new boolean[]{false,true})for(boolean restore:new boolean[]{false,true}){
++                show(dark,restore,activity.getResources().getConfiguration().fontScale,4);withinWindow((dark?"dark":"light")+(restore?" restore":" uninstall"));
++                check(!button("primaryButton").isEnabled(),"none selected disables next");
++                screenshot((dark?"dark":"light")+(restore?"-restore":"-uninstall"));
++                row(1);check(button("primaryButton").isEnabled(),"row selection enables next");
++                View selectedRow=(View)((java.util.List<?>)field("choiceRows")).get(1);android.view.accessibility.AccessibilityNodeInfo node=selectedRow.createAccessibilityNodeInfo();check(node.isCheckable()&&node.isChecked(),"selected row exposes checkable/checked accessibility state");node.recycle();
++                click("selectAllButton");check(((TextView)field("selectionCount")).getText().toString().contains("4 / 4"),"select all updates count");
++                click("selectAllButton");check(!button("primaryButton").isEnabled(),"clear all disables next");
++                row(2);Button oldNext=button("primaryButton"),oldAll=button("selectAllButton");View oldRow=(View)((java.util.List<?>)field("choiceRows")).get(0);
++                click("primaryButton");check((Boolean)field("confirming"),"next opens confirmation within styled dialog");
++                main(()->oldNext.performClick());check(submissions==0,"queued old next click cannot become final confirmation");
++                main(()->{oldAll.performClick();oldRow.performClick();});check(((TextView)field("selectionCount")).getText().toString().contains("1 / 4"),"obsolete selection controls cannot change reviewed confirmation entries");
++                check(submissions==0,"confirmation step has no operation callback");
++                screenshot((dark?"dark":"light")+(restore?"-restore-confirm":"-uninstall-confirm"));
++                click("secondaryButton");check(!(Boolean)field("confirming"),"back returns to selection");
++                check(((TextView)field("selectionCount")).getText().toString().contains("1 / 4"),"back preserves selected entries");
++                click("primaryButton");Button submitButton=button("primaryButton");click("primaryButton");main(()->submitButton.performClick());
++                check(submissions==1&&submitted.size()==1&&submitted.get(0).pkg.endsWith("2"),"only final confirm submits exact selected entry once");
++                check(!dialog.isShowing(),"submit dismisses dialog");submissions=0;
++            }
++            show(true,false,activity.getResources().getConfiguration().fontScale,5);row(0);click("primaryButton");main(()->dialog.onBackPressed());check(!(Boolean)field("confirming"),"system back returns to selection without submission");main(()->dialog.dismiss());check(submissions==0,"cancel never submits operation");
++            show(false,false,activity.getResources().getConfiguration().fontScale,4);row(0);click("primaryButton");Button stale=button("primaryButton");main(()->dialog.dismiss());main(()->stale.performClick());check(submissions==0,"dismissed confirmation button cannot submit a stale action");
++            show(false,true,1.6f,5);withinWindow("large-font five-item list");screenshot("large-font-restore");
++            ScrollView scroll=(ScrollView)((android.view.ViewGroup)field("panel")).getChildAt(0);main(()->{scroll.setSmoothScrollingEnabled(false);scroll.fullScroll(View.FOCUS_DOWN);});check(scroll.getScrollY()>0,"large-font warning remains reachable by scrolling");main(()->dialog.dismiss());
++            int orientation=activity.getRequestedOrientation();
++            try{
++                main(()->activity.setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));Thread.sleep(1400);
++                android.graphics.Rect actualFrame=new android.graphics.Rect();activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(actualFrame);
++                if(activity.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE&&actualFrame.width()>actualFrame.height()){
++                    show(true,false,1.3f,5);withinWindow("landscape five-item list");screenshot("landscape-uninstall");main(()->dialog.dismiss());
++                }else skipped.put("Landscape request not applied by device (for example, while locked); no landscape coverage claimed.");
++            }finally{main(()->activity.setRequestedOrientation(orientation));Thread.sleep(800);}
++            pass=true;
++        }catch(Throwable e){try{report.put("error",android.util.Log.getStackTraceString(e));}catch(Exception ignored){}}
++        finally{try{main(()->{if(dialog!=null)dialog.dismiss();});}catch(Exception ignored){}}
++        try{report.put("passed",pass).put("checks",checks).put("skipped",skipped).put("shell_mutations",0);
++            File file=new File(getTargetContext().getFilesDir(),"dialog-review.json");try(FileOutputStream out=new FileOutputStream(file)){out.write(report.toString(2).getBytes("UTF-8"));}
++        }catch(Exception e){pass=false;}
++        status.putString("stream",report.toString());finish(pass?-1:0,status);
++    }
++}
+--- /dev/null
++++ b/scripts/rollback-usb-control-dialog.py
+@@ -0,0 +1,23 @@
++"""Restore the pre-dialog-UI source and release from checksummed originals."""
++from pathlib import Path
++import argparse,hashlib,json,zipfile
++PROJECT=Path(__file__).resolve().parents[1]
++parser=argparse.ArgumentParser(description=__doc__)
++parser.add_argument('--target-root',type=Path,default=PROJECT)
++args=parser.parse_args();root=args.target_root.resolve()
++sha=lambda data:hashlib.sha256(data).hexdigest()
++with zipfile.ZipFile(PROJECT/'docs/usb-control-system-apps-dialog/rollback-originals.zip') as z:
++    manifest=json.loads(z.read('manifest.json'))
++    for item in manifest:
++        target=(root/item['path']).resolve()
++        assert target.is_relative_to(root),'Rollback path leaves root'
++        if target.exists():assert sha(target.read_bytes()) in [item['original'],item['modified']],f'File changed: {target}'
++        if item['original']:assert sha(z.read(item['path']))==item['original'],'Original checksum mismatch'
++    for item in manifest:
++        target=root/item['path']
++        if item['original']:
++            target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(z.read(item['path']))
++            assert sha(target.read_bytes())==item['original']
++        elif target.exists():target.unlink()
++print('PASS: pre-dialog source/release restored and all original hashes verified')
++print('Phone rollback is separate: adb install -r -d releases/usb-control-v1.0.7.apk')

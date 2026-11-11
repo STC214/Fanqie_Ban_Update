@@ -1,0 +1,871 @@
+{
+  "result": "PASS_WITH_COVERAGE_LIMITS",
+  "version": "1.0.8",
+  "apk_sha256": "8fbad826eabeefef7439ee202da3773e94f5a3b01f419540f0857f45f3698745",
+  "baseline": [
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.7.apk",
+      "exit": 0,
+      "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.7.apk",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/aapt2.exe dump badging F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.7.apk",
+      "exit": 0,
+      "stdout": "package: name='local.usbcontrol' versionCode='107' versionName='1.0.7' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\r\nminSdkVersion:'26'\r\ntargetSdkVersion:'36'\r\napplication-label:'轻控'\r\napplication-icon-160:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65534:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65535:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication: label='轻控' icon='res/mipmap-anydpi-v33/ic_launcher.xml'\r\nlaunchable-activity: name='local.usbcontrol.MainActivity'  label='' icon=''\r\nfeature-group: label=''\r\n  uses-feature: name='android.hardware.faketouch'\r\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\r\nmain\r\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\r\nsupports-any-density: 'true'\r\nlocales: '--_--'\r\ndensities: '160' '65534' '65535'\r\n",
+      "stderr": ""
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\LogicTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.LogicTest",
+      "exit": 0,
+      "stdout": "PASS: 34 capability, density, crop and aspect-ratio assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.TransactionTest",
+      "exit": 0,
+      "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SystemApps.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\SystemAppsTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps local.usbcontrol.SystemAppsTest",
+      "exit": 0,
+      "stdout": "PASS: 24 system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\UsbInstallTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter local.usbcontrol.UsbInstallTest",
+      "exit": 0,
+      "stdout": "PASS: 23 USB-install adapter and recovery assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "result": "PASS",
+      "version": "1.0.7",
+      "apk_sha256": "3dc418800767885542a644d6e3dbf3aae49c673f4c9821e9c9110203b5298a55",
+      "archived_files": 17,
+      "checks": [
+        "latest signature/alignment/version/checksum/ZIP",
+        "current model and adapter tests",
+        "no historical USB Control packages in project"
+      ]
+    }
+  ],
+  "round2": [
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.8.apk",
+      "exit": 0,
+      "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.8.apk",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/aapt2.exe dump badging F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.8.apk",
+      "exit": 0,
+      "stdout": "package: name='local.usbcontrol' versionCode='108' versionName='1.0.8' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\r\nminSdkVersion:'26'\r\ntargetSdkVersion:'36'\r\napplication-label:'轻控'\r\napplication-icon-160:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65534:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65535:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication: label='轻控' icon='res/mipmap-anydpi-v33/ic_launcher.xml'\r\nlaunchable-activity: name='local.usbcontrol.MainActivity'  label='' icon=''\r\nfeature-group: label=''\r\n  uses-feature: name='android.hardware.faketouch'\r\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\r\nmain\r\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\r\nsupports-any-density: 'true'\r\nlocales: '--_--'\r\ndensities: '160' '65534' '65535'\r\n",
+      "stderr": ""
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\LogicTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.LogicTest",
+      "exit": 0,
+      "stdout": "PASS: 34 capability, density, crop and aspect-ratio assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.TransactionTest",
+      "exit": 0,
+      "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SystemApps.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\SystemAppsTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps local.usbcontrol.SystemAppsTest",
+      "exit": 0,
+      "stdout": "PASS: 24 system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\UsbInstallTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter local.usbcontrol.UsbInstallTest",
+      "exit": 0,
+      "stdout": "PASS: 23 USB-install adapter and recovery assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "result": "PASS",
+      "version": "1.0.8",
+      "apk_sha256": "8fbad826eabeefef7439ee202da3773e94f5a3b01f419540f0857f45f3698745",
+      "archived_files": 17,
+      "checks": [
+        "latest signature/alignment/version/checksum/ZIP",
+        "current model and adapter tests",
+        "no historical USB Control packages in project"
+      ]
+    }
+  ],
+  "round3": [
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.8.apk",
+      "exit": 0,
+      "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.8.apk",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/aapt2.exe dump badging F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.8.apk",
+      "exit": 0,
+      "stdout": "package: name='local.usbcontrol' versionCode='108' versionName='1.0.8' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\r\nminSdkVersion:'26'\r\ntargetSdkVersion:'36'\r\napplication-label:'轻控'\r\napplication-icon-160:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65534:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65535:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication: label='轻控' icon='res/mipmap-anydpi-v33/ic_launcher.xml'\r\nlaunchable-activity: name='local.usbcontrol.MainActivity'  label='' icon=''\r\nfeature-group: label=''\r\n  uses-feature: name='android.hardware.faketouch'\r\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\r\nmain\r\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\r\nsupports-any-density: 'true'\r\nlocales: '--_--'\r\ndensities: '160' '65534' '65535'\r\n",
+      "stderr": ""
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\LogicTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.LogicTest",
+      "exit": 0,
+      "stdout": "PASS: 34 capability, density, crop and aspect-ratio assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.TransactionTest",
+      "exit": 0,
+      "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SystemApps.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\SystemAppsTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps local.usbcontrol.SystemAppsTest",
+      "exit": 0,
+      "stdout": "PASS: 24 system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\UsbInstallTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter local.usbcontrol.UsbInstallTest",
+      "exit": 0,
+      "stdout": "PASS: 23 USB-install adapter and recovery assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "result": "PASS",
+      "version": "1.0.8",
+      "apk_sha256": "8fbad826eabeefef7439ee202da3773e94f5a3b01f419540f0857f45f3698745",
+      "archived_files": 17,
+      "checks": [
+        "latest signature/alignment/version/checksum/ZIP",
+        "current model and adapter tests",
+        "no historical USB Control packages in project"
+      ]
+    }
+  ],
+  "device_round2": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "light uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "light restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "system back returns to selection without submission",
+        "pass": true
+      },
+      {
+        "check": "cancel never submits operation",
+        "pass": true
+      },
+      {
+        "check": "dismissed confirmation button cannot submit a stale action",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "large-font warning remains reachable by scrolling",
+        "pass": true
+      },
+      {
+        "check": "landscape five-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape five-item list footer actions remain visible",
+        "pass": true
+      }
+    ],
+    "skipped": [],
+    "shell_mutations": 0
+  },
+  "device_round3": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "light uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "light restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "system back returns to selection without submission",
+        "pass": true
+      },
+      {
+        "check": "cancel never submits operation",
+        "pass": true
+      },
+      {
+        "check": "dismissed confirmation button cannot submit a stale action",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "large-font warning remains reachable by scrolling",
+        "pass": true
+      },
+      {
+        "check": "landscape five-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape five-item list footer actions remain visible",
+        "pass": true
+      }
+    ],
+    "skipped": [],
+    "shell_mutations": 0
+  },
+  "phone_integrity": {
+    "package_inventory_unchanged": true,
+    "installed_apk_matches_final_release": true,
+    "system_app_uninstall_restore_executed": false
+  },
+  "test_cleanup": {
+    "test_helper_removed": true,
+    "only_created_test_files_removed": true,
+    "all_other_installed_packages_unchanged": true
+  },
+  "checks": [
+    "uninstall/restore backend source bytes unchanged",
+    "full rollback executed on separate workspace copy; all original hashes verified",
+    "source patch executed forward and reverse with exact byte verification",
+    "final APK checksum/signature/version/alignment and regressions verified"
+  ],
+  "commands": [
+    {
+      "command": "git show HEAD:.gitattributes",
+      "exit": 0,
+      "stdout": "# Normalize ordinary text; preserve bytes for sealed audit/rollback artifacts.\n* text=auto\n/README.md -text\n/docs/** -text\n/usb_control_app/** -text\n/scripts/** -text\n/analysis/** -text\n/logs/** -text\n# Release patches are byte-sensitive data (including CRLF context and space markers).\n/releases/usb-control-*.patch -text -whitespace\n/releases/usb-control-*.txt -text\n/docs/usb-control-wallpaper/*.patch -whitespace\n/docs/usb-control-system-apps/*.patch -whitespace\n/docs/usb-control-system-apps-delete-data/*.patch -whitespace\n",
+      "stderr": ""
+    },
+    {
+      "command": "python scripts/rollback-usb-control-dialog.py --target-root F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-dialog-rollback-test",
+      "exit": 0,
+      "stdout": "PASS: pre-dialog source/release restored and all original hashes verified\r\nPhone rollback is separate: adb install -r -d releases/usb-control-v1.0.7.apk\r\n",
+      "stderr": ""
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-dialog-rollback-test\\releases\\usb-control-v1.0.7.apk",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "git init -q F:\\Project\\07_Androd\\08_FanQie\\.local\\system-apps-dialog-patch-test",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "git -c core.autocrlf=false -c core.eol=lf apply F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-system-apps-dialog\\changes.patch",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "git -c core.autocrlf=false -c core.eol=lf apply --reverse F:\\Project\\07_Androd\\08_FanQie\\docs\\usb-control-system-apps-dialog\\changes.patch",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "F:/Project/07_Androd/08_FanQie/docs/usb-control-system-apps-dialog/changes.patch:30: trailing whitespace.\n# 轻控 1.0.7\r\nwarning: 1 line adds whitespace errors.\n"
+    },
+    {
+      "command": "git show HEAD:usb_control_app/src/local/usbcontrol/SystemApps.java",
+      "exit": 0,
+      "stdout": "package local.usbcontrol;\n\nimport java.io.IOException;\nimport java.util.*;\n\n/** Fixed allowlist; never accepts a package name from editable UI. */\nfinal class SystemApps {\n    interface Runner { String run(String command) throws Exception; }\n    static final class Entry {\n        final String name, pkg;\n        final boolean installed;\n        Entry(String name,String pkg,boolean installed){this.name=name;this.pkg=pkg;this.installed=installed;}\n        String label(){return name+\"\\n\"+pkg;}\n    }\n    private static final String[][] TARGETS={\n        {\"快应用\",\"com.miui.hybrid\"},\n        {\"内容中心\",\"com.miui.newhome\"},\n        {\"内容中心\",\"com.miui.contentcenter\"},\n        {\"浏览器\",\"com.android.browser\"},\n        {\"系统广告 adsolution\",\"com.miui.systemAdSolution\"}\n    };\n    private static String user(int user){if(user<0)throw new IllegalArgumentException(\"用户编号异常\");return Integer.toString(user);}\n    private static Set<String> packages(String output)throws IOException {\n        Set<String> result=new HashSet<>();\n        for(String line:output.split(\"\\\\r?\\\\n\")){\n            if(line.trim().isEmpty())continue;\n            if(!line.matches(\"package:[a-zA-Z0-9_.]+\"))throw new IOException(\"应用列表读取异常：\"+line);\n            result.add(line.substring(8));\n        }\n        return result;\n    }\n    static List<Entry> scan(Runner runner,int user)throws Exception {\n        String uid=user(user);\n        Set<String> system=packages(runner.run(\"pm list packages -s -u --user \"+uid));\n        Set<String> installed=packages(runner.run(\"pm list packages --user \"+uid));\n        List<Entry> result=new ArrayList<>();\n        for(String[] target:TARGETS)if(system.contains(target[1]))result.add(new Entry(target[0],target[1],installed.contains(target[1])));\n        return result;\n    }\n    static String command(String pkg,int user,boolean restore){\n        boolean known=false;for(String[] t:TARGETS)if(t[1].equals(pkg))known=true;\n        if(!known)throw new IllegalArgumentException(\"未知应用\");\n        return restore?\"cmd package install-existing --user \"+user(user)+\" \"+pkg:\n            \"pm uninstall --user \"+user(user)+\" \"+pkg;\n    }\n    static String apply(Runner runner,int user,List<Entry> selection,boolean restore)throws Exception {\n        if(selection.isEmpty())throw new IllegalArgumentException(\"请先勾选应用\");\n        // Re-read before mutation: stale dialogs and caller-created entries confer no eligibility.\n        List<Entry> current=scan(runner,user);\n        StringBuilder report=new StringBuilder();Set<String> seen=new HashSet<>();\n        for(Entry selected:selection){\n            if(!seen.add(selected.pkg))continue;\n            Entry actual=null;for(Entry e:current)if(e.pkg.equals(selected.pkg))actual=e;\n            if(actual==null){report.append(selected.name).append(\"：跳过（未识别为受支持的系统应用）\\n\");continue;}\n            if(actual.installed==restore){report.append(actual.name).append(restore?\"：已安装，跳过\\n\":\"：已卸载，跳过\\n\");continue;}\n            try {\n                String output=runner.run(command(actual.pkg,user,restore));\n                boolean installed=packages(runner.run(\"pm list packages --user \"+user(user)+\" \"+actual.pkg)).contains(actual.pkg);\n                if(installed!=restore)throw new IOException(\"状态读回未符合预期；\"+output);\n                report.append(actual.name).append(restore?\"：已恢复应用（不恢复已删除的数据）\":\"：已卸载（不保留应用数据）\").append(\"\\n\");\n            }catch(Exception e){report.append(actual.name).append(\"：操作未完成，\").append(e.getMessage()).append(\"\\n\");}\n        }\n        return report.toString().trim();\n    }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "git show HEAD:usb_control_app/src/local/usbcontrol/Root.java",
+      "exit": 0,
+      "stdout": "package local.usbcontrol;\n\nimport java.io.*;\nimport java.util.concurrent.*;\n\nfinal class Root {\n    static String quote(String s) { return \"'\" + s.replace(\"'\", \"'\\\\''\") + \"'\"; }\n    static String run(String command) throws Exception {\n        return run(command,35);\n    }\n    static String run(String command,int timeoutSeconds) throws Exception {\n        // No shell input comes from editable UI: density is numeric; names are constants.\n        Process p;\n        try { p = new ProcessBuilder(\"su\", \"-c\", command).redirectErrorStream(true).start(); }\n        catch(IOException e) { throw new IOException(\"未检测到 Root，请安装并授权超级用户管理器\"); }\n        ByteArrayOutputStream out = new ByteArrayOutputStream();\n        java.util.concurrent.atomic.AtomicBoolean truncated=new java.util.concurrent.atomic.AtomicBoolean();\n        Thread reader = new Thread(() -> { try(InputStream in=p.getInputStream()) {\n            byte[] b = new byte[4096]; int n;\n            while((n=in.read(b))!=-1) synchronized(out) { if(out.size()+n<=262144) out.write(b,0,n); else truncated.set(true); }\n        } catch(IOException ignored) {} });\n        reader.setDaemon(true); reader.start();\n        try {\n        if(!p.waitFor(timeoutSeconds,TimeUnit.SECONDS)) { p.destroyForcibly(); throw new IOException(\"Root 请求超时，请检查超级用户授权\"); }\n        reader.join(1000);\n        if(reader.isAlive())throw new IOException(\"Root 输出流尚未结束，请重试\");\n        if(truncated.get())throw new IOException(\"Root 返回内容超限，已停止解析\");\n        String result;\n        synchronized(out){result=out.toString(\"UTF-8\");}\n        if(p.exitValue()!=0) throw new IOException(\"Root 命令失败 (\"+p.exitValue()+\")\\n\"+result);\n        return result.trim();\n        }finally{p.getInputStream().close();p.getOutputStream().close();p.getErrorStream().close();if(p.isAlive())p.destroyForcibly();}\n    }\n    static String section(String s,String tag) {\n        String token=\"__\"+tag+\"__\\n\";\n        int i=s.indexOf(token);\n        if(i<0) return \"\";\n        i+=token.length(); int end=s.indexOf(\"\\n__\",i);\n        return (end<0?s.substring(i):s.substring(i,end)).trim();\n    }\n    static final String SNAPSHOT = \"set -e; printf '__UID__\\\\n'; id -u; \" +\n        \"printf '__ADB__\\\\n'; settings get global adb_enabled; \" +\n        \"printf '__DEV__\\\\n'; settings get global development_settings_enabled; \" +\n        \"printf '__SIZE__\\\\n'; wm size; printf '__DENSITY__\\\\n'; wm density; \" +\n        \"printf '__GLOBAL__\\\\n'; v=$(settings get global adb_install_enabled); printf 'adb_install_enabled=%s\\\\n' \\\"$v\\\"; \"+\n        \"printf '__SECURE__\\\\n'; v=$(settings get secure adb_install_enabled); printf 'adb_install_enabled=%s\\\\n' \\\"$v\\\"; \"+\n        \"printf '__SYSTEM__\\\\n'; v=$(settings get system adb_install_enabled); printf 'adb_install_enabled=%s\\\\n' \\\"$v\\\"; \"+\n        \"printf '__MIUI__\\\\n'; \"+UsbInstall.PROBE;\n    static void validate(String s)throws IOException {\n        for(String tag:new String[]{\"UID\",\"ADB\",\"DEV\",\"SIZE\",\"DENSITY\",\"GLOBAL\",\"SECURE\",\"SYSTEM\"})\n            if(!s.contains(\"__\"+tag+\"__\\n\"))throw new IOException(\"系统状态返回不完整：\"+tag);\n        if(!\"0\".equals(section(s,\"UID\")))throw new IOException(\"请授予 Root 权限\");\n        for(String tag:new String[]{\"ADB\",\"DEV\"})if(!section(s,tag).matches(\"null|[0-9]{1,9}\"))throw new IOException(\"系统状态值异常：\"+tag);\n        int[] size=Logic.size(section(s,\"SIZE\"));if(size[0]<=0||size[1]<=0)throw new IOException(\"屏幕尺寸读取失败\");\n        DensitySession.previous(section(s,\"DENSITY\"));\n    }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "git show HEAD:usb_control_app/src/local/usbcontrol/UsbInstall.java",
+      "exit": 0,
+      "stdout": "package local.usbcontrol;\n\nimport java.io.IOException;\n\n/** Vendor adapters change only the existing USB-install setting, never verification policy. */\nfinal class UsbInstall {\n    static final String MIUI=\"miui\";\n    private static final String URI=\"content://com.miui.securitycenter.remoteprovider\";\n    private static final String KEY=\"security_adb_install_enable\";\n    private static final String CALL=\"content call --uri \"+URI+\" --method callPreference --arg \";\n    private static final String EXTRAS=\" --extra type:i:1 --extra key:s:\"+KEY;\n    static final String ENABLE=\"am start --user current -n com.miui.securitycenter/com.miui.permcenter.install.AdbInstallVerifyActivity -a com.miui.securitycenter.action.ADB_INSTALL_VERIFY\";\n    static final String PROBE=\"if [ -n \\\"$(getprop ro.miui.ui.version.name)\\\" ]; then \"+\n        CALL+\"CONTAIN_KEY\"+EXTRAS+\" 2>/dev/null || true; \"+\n        CALL+\"GET\"+EXTRAS+\" --extra default:b:false 2>/dev/null || true; \"+\n        \"cmd package resolve-activity --brief -a com.miui.securitycenter.action.ADB_INSTALL_VERIFY -p com.miui.securitycenter 2>/dev/null || true; fi\";\n\n    static boolean validBackend(String backend){return backend!=null&&backend.matches(\"global|secure|system|miui\");}\n    static String backend(String snapshot){\n        if(Logic.miuiInstallState(Root.section(snapshot,\"MIUI\"))!=null)return MIUI;\n        return Logic.installNamespace(Root.section(snapshot,\"GLOBAL\"),Root.section(snapshot,\"SECURE\"),Root.section(snapshot,\"SYSTEM\"));\n    }\n    static String state(String snapshot,String backend){\n        if(MIUI.equals(backend))return Logic.miuiInstallState(Root.section(snapshot,\"MIUI\"));\n        if(!validBackend(backend))return null;\n        java.util.regex.Matcher m=java.util.regex.Pattern.compile(\"(?m)^adb_install_enabled=([01])\\\\r?$\").matcher(Root.section(snapshot,backend.toUpperCase(java.util.Locale.ROOT)));\n        return m.find()?m.group(1):null;\n    }\n    static String read(String backend)throws Exception {\n        if(!validBackend(backend))throw new IOException(\"USB 安装接口未识别\");\n        String value=MIUI.equals(backend)?Logic.miuiInstallState(Root.run(PROBE)):Root.run(\"settings get \"+backend+\" adb_install_enabled\");\n        if(value==null||!value.matches(\"[01]\"))throw new IOException(\"USB 安装状态读取失败\");\n        return value;\n    }\n    static String writeCommand(String backend,boolean on){\n        if(!validBackend(backend))throw new IllegalArgumentException(\"USB 安装接口异常\");\n        if(MIUI.equals(backend))return on?ENABLE:CALL+\"SET\"+EXTRAS+\" --extra value:b:false\";\n        return \"settings put \"+backend+\" adb_install_enabled \"+(on?\"1\":\"0\");\n    }\n    static String readSnapshot(String snapshot,String backend)throws Exception {\n        if(!validBackend(backend))throw new IOException(\"USB 安装接口未识别\");\n        if(MIUI.equals(backend)){\n            String probe=Root.run(PROBE);\n            if(Logic.miuiInstallState(probe)==null)throw new IOException(\"USB 安装接口已变化，请刷新后重试\");\n            return Logic.replaceSection(snapshot,\"MIUI\",probe);\n        }\n        return Logic.replaceSection(snapshot,backend.toUpperCase(java.util.Locale.ROOT),\"adb_install_enabled=\"+read(backend));\n    }\n    static String toggleCommand(String backend,boolean on){\n        if(!validBackend(backend))throw new IllegalArgumentException(\"USB 安装接口异常\");\n        if(MIUI.equals(backend)){\n            String guard=\"[ \\\"$(\"+CALL+\"CONTAIN_KEY\"+EXTRAS+\")\\\" = 'Result: Bundle[{CONTAIN_KEY=true}]' ]\";\n            return \"set -e; \"+guard+\"; \"+writeCommand(backend,on)+(on?\"\":\"; \"+PROBE);\n        }\n        return \"set -e; old=$(settings get \"+backend+\" adb_install_enabled); case \\\"$old\\\" in 0|1) ;; *) exit 2;; esac; \"+\n            writeCommand(backend,on)+\"; settings get \"+backend+\" adb_install_enabled\";\n    }\n    static String toggleSnapshot(String snapshot,String backend,boolean on)throws Exception {\n        String output=Root.run(toggleCommand(backend,on));\n        if(MIUI.equals(backend)&&on){\n            if(output.contains(\"Error:\")||output.contains(\"Exception\"))throw new IOException(\"系统 USB 安装流程启动失败\");\n            return snapshot; // Await real provider readback on return, never assume enabled.\n        }\n        String value=MIUI.equals(backend)?Logic.miuiInstallState(output):output;\n        if(!(on?\"1\":\"0\").equals(value))throw new IOException(\"系统未接受 USB 安装变更\");\n        return Logic.replaceSection(snapshot,MIUI.equals(backend)?\"MIUI\":backend.toUpperCase(java.util.Locale.ROOT),\n            MIUI.equals(backend)?output:\"adb_install_enabled=\"+value);\n    }\n    static String verifyCommand(String backend,String value){\n        if(!validBackend(backend)||!value.matches(\"[01]\"))throw new IllegalArgumentException(\"USB 安装恢复记录异常\");\n        String get=MIUI.equals(backend)?CALL+\"GET\"+EXTRAS+\" --extra default:b:false\":\"settings get \"+backend+\" adb_install_enabled\";\n        String expected=MIUI.equals(backend)?\"Result: Bundle[{\"+KEY+\"=\"+(\"1\".equals(value)?\"true\":\"false\")+\"}]\":value;\n        return \"[ \\\"$(\"+get+\")\\\" = \"+Root.quote(expected)+\" ]\";\n    }\n    static String restoreCommand(String backend,String value){\n        String verify=verifyCommand(backend,value);\n        if(MIUI.equals(backend)&&\"1\".equals(value))return \"(\"+verify+\" || { \"+ENABLE+\"; printf '请完成系统 USB 安装确认后，再重试恢复\\\\n'; \"+verify+\"; })\";\n        return \"(\"+writeCommand(backend,\"1\".equals(value))+\" && \"+verify+\")\";\n    }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "git show HEAD:usb_control_app/src/local/usbcontrol/WallpaperLoop.java",
+      "exit": 0,
+      "stdout": "package local.usbcontrol;\n\nimport android.content.Context;\nimport java.io.*;\n\nfinal class WallpaperLoop {\n    static final String DIRECTORY=\"/sdcard/Android/data/com.android.thememanager/files/MIUI/.videowallpaper\";\n    static synchronized String run(Context context, boolean undo) throws Exception {\n        if(android.os.Process.myUid()/100000!=0)throw new IOException(\"此壁纸目录仅适配手机主用户，请在主用户中使用轻控\");\n        File dir=new File(context.getFilesDir(),\"wallpaper-loop\");\n        if(!dir.isDirectory()&&!dir.mkdir())throw new IOException(\"壁纸任务目录创建失败\");\n        File expected=new File(context.getFilesDir().getCanonicalFile(),\"wallpaper-loop\");\n        if(!dir.getCanonicalFile().equals(expected))throw new IOException(\"壁纸任务目录异常，请检查 App 私有目录\");\n        File script=new File(dir,\"wallpaper.sh\");\n        try(InputStream in=context.getResources().openRawResource(R.raw.wallpaper);\n            ByteArrayOutputStream out=new ByteArrayOutputStream()) {\n            byte[] b=new byte[4096];int n;\n            while((n=in.read(b))!=-1)out.write(b,0,n);\n            SafeFiles.write(script,out.toByteArray());\n        }\n        return Root.run(\"sh \"+Root.quote(script.getAbsolutePath())+\" \"+Root.quote(DIRECTORY)+\" \"+Root.quote(dir.getAbsolutePath())+\" \"+(undo?\"undo\":\"apply\"),600);\n    }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "git -c core.whitespace=cr-at-eol diff --check",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "limitations": [
+    "UI tests use fake package entries and a counting submit callback; real system app uninstall/restore not executed.",
+    "Dialog-only snapshots are rendered from app views, not the lock screen or other apps.",
+    "No claim of universal device/ROM compatibility."
+  ]
+}
