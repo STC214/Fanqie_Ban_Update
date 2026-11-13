@@ -4,6 +4,13 @@ import java.util.*;
 import java.io.IOException;
 
 public final class SystemAppsTest {
+    static final String[] CARRIER_PACKAGES={
+        "com.mobiletools.systemhelper","com.oppo.ctautoregist","com.coloros.regservice",
+        "com.xiaomi.registration","com.miui.dmregservice","com.vivo.devicereg",
+        "com.huawei.android.UEInfoCheck","com.huawei.android.AutoRegSms","com.huawei.regservice",
+        "com.hihonor.android.UEInfoCheck","com.hihonor.android.AutoRegSms","com.hihonor.regservice",
+        "com.meizu.regservice"
+    };
     static int checks;
     static void check(boolean value,String name){checks++;if(!value)throw new AssertionError(name);}
     static final class Fake implements SystemApps.Runner {
@@ -59,6 +66,28 @@ public final class SystemAppsTest {
         rejected=false;try{SystemApps.apply(f,0,new ArrayList<>(),false);}catch(IllegalArgumentException e){rejected=true;}check(rejected,"empty selection rejected");
         rejected=false;try{SystemApps.scan(c->"Failure [fixture]",0);}catch(IOException e){rejected=true;}check(rejected,"malformed inventory fails closed");
         Fake nonSystem=new Fake();nonSystem.system.clear();check(SystemApps.scan(nonSystem,0).isEmpty(),"matching third-party package never eligible");
+        for(int user:new int[]{0,999}){
+            Fake carrier=new Fake();
+            carrier.system.addAll(Arrays.asList(CARRIER_PACKAGES));
+            carrier.installed.addAll(carrier.system);carrier.data.addAll(carrier.system);
+            List<SystemApps.Entry> all=SystemApps.scan(carrier,user);
+            check(all.size()==17,"original and all 13 carrier packages detected, no unrelated package");
+            check(new HashSet<>(Arrays.asList(CARRIER_PACKAGES)).size()==13,"13 unique carrier identities");
+            for(String pkg:CARRIER_PACKAGES){
+                SystemApps.Entry entry=null;for(SystemApps.Entry e:all)if(e.pkg.equals(pkg))entry=e;
+                check(entry!=null&&entry.installed,"carrier package exact match "+pkg);
+                check(SystemApps.command(pkg,user,false).equals("pm uninstall --user "+user+" "+pkg),"carrier uninstall scoped without keep-data "+pkg);
+                check(SystemApps.command(pkg,user,true).equals("cmd package install-existing --user "+user+" "+pkg),"carrier restore scoped "+pkg);
+                SystemApps.apply(carrier,user,Arrays.asList(entry),false);
+                check(!carrier.installed.contains(pkg)&&!carrier.data.contains(pkg),"carrier uninstall deletes data "+pkg);
+                SystemApps.apply(carrier,user,Arrays.asList(entry),true);
+                check(carrier.installed.contains(pkg)&&!carrier.data.contains(pkg),"carrier restore excludes deleted data "+pkg);
+                check(carrier.installed.contains("com.miui.contentextension"),"unrelated app untouched "+pkg);
+                carrier.system.remove(pkg);
+                int start=carrier.calls.size();SystemApps.apply(carrier,user,Arrays.asList(entry),false);
+                check(carrier.calls.size()==start+2&&carrier.installed.contains(pkg),"carrier third-party identity excluded after rescan "+pkg);
+            }
+        }
         System.out.println("PASS: "+checks+" system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation");
     }
 }

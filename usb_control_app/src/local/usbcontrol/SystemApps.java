@@ -17,7 +17,22 @@ final class SystemApps {
         {"内容中心","com.miui.newhome"},
         {"内容中心","com.miui.contentcenter"},
         {"浏览器","com.android.browser"},
-        {"系统广告 adsolution","com.miui.systemAdSolution"}
+        {"系统广告 adsolution","com.miui.systemAdSolution"},
+        // Exact catalogue snapshot: TelemetryCleaner 3938158165a9332c9faa6c433b87c9c700c801f9.
+        // Upstream device-test claims are not local validation; keep unverified entries visible.
+        {"联通设备注册（跨厂商）","com.mobiletools.systemhelper"},
+        {"电信设备注册（OPPO / 一加 / realme）","com.oppo.ctautoregist"},
+        {"移动设备注册（OPPO / 一加 / realme）","com.coloros.regservice"},
+        {"电信设备注册（小米）","com.xiaomi.registration"},
+        {"移动设备注册（小米）","com.miui.dmregservice"},
+        {"移动 / 电信设备注册（vivo）","com.vivo.devicereg"},
+        {"电信数据注册（华为及旧荣耀，未验证）","com.huawei.android.UEInfoCheck"},
+        {"电信短信注册（华为及旧荣耀，未验证）","com.huawei.android.AutoRegSms"},
+        {"移动设备注册（华为，未验证）","com.huawei.regservice"},
+        {"电信数据注册（荣耀，未验证）","com.hihonor.android.UEInfoCheck"},
+        {"电信短信注册（荣耀，未验证）","com.hihonor.android.AutoRegSms"},
+        {"设备注册（荣耀，移动归属推断，未验证）","com.hihonor.regservice"},
+        {"设备注册（魅族，归属待核验，未验证）","com.meizu.regservice"}
     };
     private static String user(int user){if(user<0)throw new IllegalArgumentException("用户编号异常");return Integer.toString(user);}
     private static Set<String> packages(String output)throws IOException {

@@ -33,7 +33,11 @@ public final class SystemAppsDialogInstrumentation extends Instrumentation {
             dialogContext.applyOverrideConfiguration(configuration);
             java.util.List<SystemApps.Entry> entries=new ArrayList<>();
             String[] names={"快应用","内容中心","浏览器","系统广告 adsolution","内容中心（备用包名）"};
-            for(int i=0;i<count;i++)entries.add(new SystemApps.Entry(names[i],"local.test.system.application"+i,!restore));
+            try{
+                java.lang.reflect.Field targets=SystemApps.class.getDeclaredField("TARGETS");targets.setAccessible(true);
+                String[][] catalogue=(String[][])targets.get(null);
+                for(int i=0;i<count;i++)entries.add(count==18?new SystemApps.Entry(catalogue[i][0],catalogue[i][1],!restore):new SystemApps.Entry(names[i],"local.test.system.application"+i,!restore));
+            }catch(Exception e){throw new RuntimeException(e);}
             SystemAppsDialog.Palette p=new SystemAppsDialog.Palette(dark?0xff8ab4ff:0xff2563eb,dark?0xffe6edf8:0xff192b48,dark?0xffa9b7cb:0xff64748b,dark?0xff1c2736:0xffffffff,dark?0xff293951:0xffeef3fd,dark?0xff344257:0xffe9eef6,dark?0xff102039:0xffffffff,dark);
             dialog=new SystemAppsDialog(dialogContext,p,entries,restore,0,selection->{submissions++;submitted=selection;});
             entries.clear(); // The production dialog must retain its own immutable list snapshot.
@@ -81,6 +85,12 @@ public final class SystemAppsDialogInstrumentation extends Instrumentation {
             activity=monitor.waitForActivityWithTimeout(15000);removeMonitor(monitor);
             if(activity==null)throw new IOException("Target activity did not start within 15 seconds");
             main(()->activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON));
+            check(SystemAppsDialog.badge(new SystemApps.Entry("任意标签","com.miui.systemAdSolution",true)).equals("AD"),"only exact ad package gets AD badge");
+            check(SystemAppsDialog.badge(new SystemApps.Entry("任意标签","com.miui.hybrid",true)).equals("快"),"badge follows package identity not display name");
+            java.lang.reflect.Field catalogueField=SystemApps.class.getDeclaredField("TARGETS");catalogueField.setAccessible(true);
+            String[][] catalogue=(String[][])catalogueField.get(null);
+            check(catalogue.length==18,"production catalogue contains eighteen candidates");
+            for(int i=5;i<catalogue.length;i++)check(SystemAppsDialog.badge(new SystemApps.Entry(catalogue[i][0],catalogue[i][1],true)).equals("注"),"carrier package shows registration badge: "+catalogue[i][1]);
             for(boolean dark:new boolean[]{false,true})for(boolean restore:new boolean[]{false,true}){
                 show(dark,restore,activity.getResources().getConfiguration().fontScale,4);withinWindow((dark?"dark":"light")+(restore?" restore":" uninstall"));
                 check(!button("primaryButton").isEnabled(),"none selected disables next");
@@ -105,12 +115,26 @@ public final class SystemAppsDialogInstrumentation extends Instrumentation {
             show(false,false,activity.getResources().getConfiguration().fontScale,4);row(0);click("primaryButton");Button stale=button("primaryButton");main(()->dialog.dismiss());main(()->stale.performClick());check(submissions==0,"dismissed confirmation button cannot submit a stale action");
             show(false,true,1.6f,5);withinWindow("large-font five-item list");screenshot("large-font-restore");
             ScrollView scroll=(ScrollView)((android.view.ViewGroup)field("panel")).getChildAt(0);main(()->{scroll.setSmoothScrollingEnabled(false);scroll.fullScroll(View.FOCUS_DOWN);});check(scroll.getScrollY()>0,"large-font warning remains reachable by scrolling");main(()->dialog.dismiss());
+            for(boolean dark:new boolean[]{false,true})for(boolean restore:new boolean[]{false,true}){
+                show(dark,restore,1.6f,18);withinWindow("large-font eighteen-item list");
+                click("selectAllButton");check(((TextView)field("selectionCount")).getText().toString().contains("18 / 18"),"expanded catalogue selects all eighteen");
+                click("primaryButton");withinWindow("eighteen-item confirmation");
+                ScrollView longScroll=(ScrollView)((android.view.ViewGroup)field("panel")).getChildAt(0);
+                main(()->{longScroll.setSmoothScrollingEnabled(false);longScroll.fullScroll(View.FOCUS_DOWN);});
+                check(longScroll.getScrollY()>0,"eighteen-item confirmation is scrollable");
+                click("secondaryButton");check(((TextView)field("selectionCount")).getText().toString().contains("18 / 18"),"expanded selection survives confirmation back");
+                main(()->dialog.dismiss());check(submissions==0,"expanded catalogue cancellation never mutates packages");
+            }
             int orientation=activity.getRequestedOrientation();
             try{
                 main(()->activity.setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));Thread.sleep(1400);
                 android.graphics.Rect actualFrame=new android.graphics.Rect();activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(actualFrame);
                 if(activity.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE&&actualFrame.width()>actualFrame.height()){
-                    show(true,false,1.3f,5);withinWindow("landscape five-item list");screenshot("landscape-uninstall");main(()->dialog.dismiss());
+                    for(boolean restore:new boolean[]{false,true}){
+                        show(true,restore,1.3f,18);withinWindow("landscape eighteen-item list");
+                        click("selectAllButton");click("primaryButton");withinWindow("landscape eighteen-item confirmation");
+                        main(()->dialog.dismiss());check(submissions==0,"landscape cancellation never mutates packages");
+                    }
                 }else skipped.put("Landscape request not applied by device (for example, while locked); no landscape coverage claimed.");
             }finally{main(()->activity.setRequestedOrientation(orientation));Thread.sleep(800);}
             pass=true;

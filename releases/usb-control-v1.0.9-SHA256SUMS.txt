@@ -1,0 +1,4 @@
+c2a1fab81b9fddef1ac8c50dedc0a07dd0f6bf39654397b3300fe545f2b051e4  usb-control-v1.0.9.apk
+17c160829419b2280811f6e127135c458243350669b4c31ae2db04cfd7bd120f  usb-control-v1.0.9.apk.sha256
+132b93aa3f124f3cf137b07da9461f77706b86fd4bc67ffd570b2a67f4b00b21  usb-control-v1.0.9.patch
+7d148ccb95ae8dfbd411e1817a479ae99d4ad1c4d27758ebcbd2c783dcab2470  usb-control-v1.0.9-verification.zip

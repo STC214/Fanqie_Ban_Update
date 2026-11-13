@@ -1,0 +1,1311 @@
+{
+  "result": "PASS",
+  "date": "2026-11-13",
+  "apk_sha256": "c2a1fab81b9fddef1ac8c50dedc0a07dd0f6bf39654397b3300fe545f2b051e4",
+  "baseline_commit": "c942b1f69c0ee7f96ab86ad19ae5671f3f80a25e",
+  "upstream_commit": "3938158165a9332c9faa6c433b87c9c700c801f9",
+  "imported_packages": 13,
+  "total_candidates": 18,
+  "baseline_commands": [
+    {
+      "command": [
+        "javac",
+        "-encoding",
+        "UTF-8",
+        "-d",
+        "F:\\Project\\07_Androd\\08_FanQie\\.local\\telemetry-targets\\baseline-classes",
+        "usb_control_app/src/local/usbcontrol/SystemApps.java",
+        "usb_control_app/tests/SystemAppsTest.java"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": [
+        "java",
+        "-cp",
+        "F:\\Project\\07_Androd\\08_FanQie\\.local\\telemetry-targets\\baseline-classes",
+        "local.usbcontrol.SystemAppsTest"
+      ],
+      "exit": 0,
+      "stdout": "PASS: 24 system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    }
+  ],
+  "round1_host": [
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.apk",
+      "exit": 0,
+      "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.apk",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/aapt2.exe dump badging F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.apk",
+      "exit": 0,
+      "stdout": "package: name='local.usbcontrol' versionCode='109' versionName='1.0.9' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\r\nminSdkVersion:'26'\r\ntargetSdkVersion:'36'\r\napplication-label:'轻控'\r\napplication-icon-160:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65534:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65535:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication: label='轻控' icon='res/mipmap-anydpi-v33/ic_launcher.xml'\r\nlaunchable-activity: name='local.usbcontrol.MainActivity'  label='' icon=''\r\nfeature-group: label=''\r\n  uses-feature: name='android.hardware.faketouch'\r\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\r\nmain\r\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\r\nsupports-any-density: 'true'\r\nlocales: '--_--'\r\ndensities: '160' '65534' '65535'\r\n",
+      "stderr": ""
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\LogicTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.LogicTest",
+      "exit": 0,
+      "stdout": "PASS: 34 capability, density, crop and aspect-ratio assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.TransactionTest",
+      "exit": 0,
+      "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SystemApps.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\SystemAppsTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps local.usbcontrol.SystemAppsTest",
+      "exit": 0,
+      "stdout": "PASS: 210 system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\UsbInstallTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter local.usbcontrol.UsbInstallTest",
+      "exit": 0,
+      "stdout": "PASS: 23 USB-install adapter and recovery assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "result": "PASS",
+      "version": "1.0.9",
+      "apk_sha256": "c2a1fab81b9fddef1ac8c50dedc0a07dd0f6bf39654397b3300fe545f2b051e4",
+      "archived_files": 17,
+      "checks": [
+        "latest signature/alignment/version/checksum/ZIP",
+        "current model and adapter tests",
+        "only current release and explicit 1.0.8 rollback baseline in releases"
+      ]
+    }
+  ],
+  "round2_host": [
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat verify --print-certs F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.apk",
+      "exit": 0,
+      "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/zipalign.exe -c 4 F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.apk",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "F:/Android/Sdk/build-tools/35.0.0/aapt2.exe dump badging F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.apk",
+      "exit": 0,
+      "stdout": "package: name='local.usbcontrol' versionCode='109' versionName='1.0.9' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\r\nminSdkVersion:'26'\r\ntargetSdkVersion:'36'\r\napplication-label:'轻控'\r\napplication-icon-160:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65534:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication-icon-65535:'res/mipmap-anydpi-v33/ic_launcher.xml'\r\napplication: label='轻控' icon='res/mipmap-anydpi-v33/ic_launcher.xml'\r\nlaunchable-activity: name='local.usbcontrol.MainActivity'  label='' icon=''\r\nfeature-group: label=''\r\n  uses-feature: name='android.hardware.faketouch'\r\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\r\nmain\r\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\r\nsupports-any-density: 'true'\r\nlocales: '--_--'\r\ndensities: '160' '65534' '65535'\r\n",
+      "stderr": ""
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\model\\TransactionTest.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\LogicTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.LogicTest",
+      "exit": 0,
+      "stdout": "PASS: 34 capability, density, crop and aspect-ratio assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-model local.usbcontrol.TransactionTest",
+      "exit": 0,
+      "stdout": "PASS: 420 transaction assertions across 20 repeated model cycles\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SystemApps.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\SystemAppsTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-system-apps local.usbcontrol.SystemAppsTest",
+      "exit": 0,
+      "stdout": "PASS: 210 system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "javac -encoding UTF-8 -d F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Logic.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\Root.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\UsbInstall.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\SafeFiles.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\DensitySession.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\src\\local\\usbcontrol\\RecoveryScript.java F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\tests\\UsbInstallTest.java",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": "java -cp F:\\Project\\07_Androd\\08_FanQie\\usb_control_app\\build\\latest-adapter local.usbcontrol.UsbInstallTest",
+      "exit": 0,
+      "stdout": "PASS: 23 USB-install adapter and recovery assertions\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "result": "PASS",
+      "version": "1.0.9",
+      "apk_sha256": "c2a1fab81b9fddef1ac8c50dedc0a07dd0f6bf39654397b3300fe545f2b051e4",
+      "archived_files": 17,
+      "checks": [
+        "latest signature/alignment/version/checksum/ZIP",
+        "current model and adapter tests",
+        "only current release and explicit 1.0.8 rollback baseline in releases"
+      ]
+    }
+  ],
+  "emulator_round1": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "only exact ad package gets AD badge",
+        "pass": true
+      },
+      {
+        "check": "badge follows package identity not display name",
+        "pass": true
+      },
+      {
+        "check": "production catalogue contains eighteen candidates",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.mobiletools.systemhelper",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.oppo.ctautoregist",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.coloros.regservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.xiaomi.registration",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.miui.dmregservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.vivo.devicereg",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.huawei.android.UEInfoCheck",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.huawei.android.AutoRegSms",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.huawei.regservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.hihonor.android.UEInfoCheck",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.hihonor.android.AutoRegSms",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.hihonor.regservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.meizu.regservice",
+        "pass": true
+      },
+      {
+        "check": "light uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "light restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "system back returns to selection without submission",
+        "pass": true
+      },
+      {
+        "check": "cancel never submits operation",
+        "pass": true
+      },
+      {
+        "check": "dismissed confirmation button cannot submit a stale action",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "large-font warning remains reachable by scrolling",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape cancellation never mutates packages",
+        "pass": true
+      }
+    ],
+    "skipped": [],
+    "shell_mutations": 0
+  },
+  "emulator_round2": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "only exact ad package gets AD badge",
+        "pass": true
+      },
+      {
+        "check": "badge follows package identity not display name",
+        "pass": true
+      },
+      {
+        "check": "production catalogue contains eighteen candidates",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.mobiletools.systemhelper",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.oppo.ctautoregist",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.coloros.regservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.xiaomi.registration",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.miui.dmregservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.vivo.devicereg",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.huawei.android.UEInfoCheck",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.huawei.android.AutoRegSms",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.huawei.regservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.hihonor.android.UEInfoCheck",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.hihonor.android.AutoRegSms",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.hihonor.regservice",
+        "pass": true
+      },
+      {
+        "check": "carrier package shows registration badge: com.meizu.regservice",
+        "pass": true
+      },
+      {
+        "check": "light uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "light restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "light restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark uninstall footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "dark restore fits visible window",
+        "pass": true
+      },
+      {
+        "check": "dark restore footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "none selected disables next",
+        "pass": true
+      },
+      {
+        "check": "row selection enables next",
+        "pass": true
+      },
+      {
+        "check": "selected row exposes checkable/checked accessibility state",
+        "pass": true
+      },
+      {
+        "check": "select all updates count",
+        "pass": true
+      },
+      {
+        "check": "clear all disables next",
+        "pass": true
+      },
+      {
+        "check": "next opens confirmation within styled dialog",
+        "pass": true
+      },
+      {
+        "check": "queued old next click cannot become final confirmation",
+        "pass": true
+      },
+      {
+        "check": "obsolete selection controls cannot change reviewed confirmation entries",
+        "pass": true
+      },
+      {
+        "check": "confirmation step has no operation callback",
+        "pass": true
+      },
+      {
+        "check": "back returns to selection",
+        "pass": true
+      },
+      {
+        "check": "back preserves selected entries",
+        "pass": true
+      },
+      {
+        "check": "only final confirm submits exact selected entry once",
+        "pass": true
+      },
+      {
+        "check": "submit dismisses dialog",
+        "pass": true
+      },
+      {
+        "check": "system back returns to selection without submission",
+        "pass": true
+      },
+      {
+        "check": "cancel never submits operation",
+        "pass": true
+      },
+      {
+        "check": "dismissed confirmation button cannot submit a stale action",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font five-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "large-font warning remains reachable by scrolling",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "large-font eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue selects all eighteen",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "eighteen-item confirmation is scrollable",
+        "pass": true
+      },
+      {
+        "check": "expanded selection survives confirmation back",
+        "pass": true
+      },
+      {
+        "check": "expanded catalogue cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape cancellation never mutates packages",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item list footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation fits visible window",
+        "pass": true
+      },
+      {
+        "check": "landscape eighteen-item confirmation footer actions remain visible",
+        "pass": true
+      },
+      {
+        "check": "landscape cancellation never mutates packages",
+        "pass": true
+      }
+    ],
+    "skipped": [],
+    "shell_mutations": 0
+  },
+  "artifact_verification": [
+    {
+      "command": [
+        "git",
+        "apply",
+        "--reverse",
+        "--check",
+        "F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.patch"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "F:\\Project\\07_Androd\\08_FanQie\\scripts\\rollback-usb-control-telemetry.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "PASS: 16 source files; read-only preflight\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "F:\\Project\\07_Androd\\08_FanQie\\scripts\\rollback-usb-control-telemetry.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "stdout": "PASS: 16 source files restored in temporary tree; workspace and phone untouched\r\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "TelemetryCleaner/README.md"
+      ],
+      "exit": 0,
+      "stdout": "TelemetryCleaner/README.md\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        ".local/telemetry-targets/verification.json"
+      ],
+      "exit": 0,
+      "stdout": ".local/telemetry-targets/verification.json\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        ".vscode/settings.json"
+      ],
+      "exit": 0,
+      "stdout": ".vscode/settings.json\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "check-ignore",
+        "usb_control_app/build/classes.jar"
+      ],
+      "exit": 0,
+      "stdout": "usb_control_app/build/classes.jar\n",
+      "stderr": ""
+    },
+    {
+      "result": "PASS",
+      "check": "ignore rules exclude only local inputs; release outputs and docs remain eligible"
+    },
+    {
+      "command": [
+        "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat",
+        "verify",
+        "--print-certs",
+        "F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.8.apk"
+      ],
+      "exit": 0,
+      "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": [
+        "F:/Android/Sdk/build-tools/35.0.0/apksigner.bat",
+        "verify",
+        "--print-certs",
+        "F:\\Project\\07_Androd\\08_FanQie\\releases\\usb-control-v1.0.9.apk"
+      ],
+      "exit": 0,
+      "stdout": "Signer #1 certificate DN: CN=USB Control Local Build\r\nSigner #1 certificate SHA-256 digest: 6092d8b55e35651d4711e628d362a384773f85e5c69729abce9d26829e91b378\r\nSigner #1 certificate SHA-1 digest: 06beea6b3763f4022d8ed191238ec3f01a6535c8\r\nSigner #1 certificate MD5 digest: 8f057fffda6d513074768533bdcca427\r\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=F:\\Temp\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "c942b1f69c0ee7f96ab86ad19ae5671f3f80a25e\n",
+      "stderr": ""
+    }
+  ],
+  "physical_phone_connected": false,
+  "system_app_uninstalls": 0,
+  "signer_matches_baseline": true
+}

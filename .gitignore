@@ -19,3 +19,16 @@ local.properties
 /docs/usb-control-audit/phone-ui/
 /docs/usb-control-dark-mode/phone-install.json
 /.local/
+
+# Local upstream reference clone; package provenance is documented separately.
+/TelemetryCleaner/
+
+# IDE / Gradle machine state (do not hide release APKs, checksums or project docs).
+/.idea/
+/.vscode/
+**/.gradle/
+**/.cxx/
+*.iml
+*.hprof
+Thumbs.db
+.DS_Store

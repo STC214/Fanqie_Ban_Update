@@ -115,9 +115,15 @@ final class SystemAppsDialog extends Dialog {
         int fill=restore?colors.soft:(colors.dark?0xff332c29:0xfffff4e8);
         LinearLayout box=column();pad(box,13,11,13,11);box.setBackground(shape(fill,13,0));
         TextView heading=text(restore?"恢复应用，不恢复数据":"卸载会删除应用数据",12,ink);heading.setTypeface(null,android.graphics.Typeface.BOLD);box.addView(heading);
-        box.addView(text(restore?"重新安装系统保留的预装包；不会找回已删除的数据，也不更改原有启用状态。":"数据删除不可撤销，系统安装包仍保留。浏览器卸载后可能影响网页打开。",11,ink));return box;
+        box.addView(text(restore?"重新安装系统保留的预装包；不会找回已删除的数据，也不更改原有启用状态。":"数据删除不可撤销，系统安装包仍保留。卸载浏览器可能影响网页打开，卸载注册组件可能影响运营商注册功能；未验证项请谨慎选择。",11,ink));return box;
     }
-    private String badge(SystemApps.Entry entry){if(entry.name.startsWith("快"))return "快";if(entry.name.startsWith("内"))return "内";if(entry.name.startsWith("浏"))return "浏";return "AD";}
+    static String badge(SystemApps.Entry entry){
+        if(entry.pkg.equals("com.miui.hybrid"))return "快";
+        if(entry.pkg.equals("com.miui.newhome")||entry.pkg.equals("com.miui.contentcenter"))return "内";
+        if(entry.pkg.equals("com.android.browser"))return "浏";
+        if(entry.pkg.equals("com.miui.systemAdSolution"))return "AD";
+        return "注";
+    }
     private View summaryRow(SystemApps.Entry entry){
         LinearLayout row=new LinearLayout(context);row.setGravity(Gravity.CENTER_VERTICAL);pad(row,13,12,13,12);row.setBackground(shape(colors.soft,15,0));addLabels(row,entry);return row;
     }

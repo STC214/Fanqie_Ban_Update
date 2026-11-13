@@ -1,0 +1,489 @@
+--- a/usb_control_app/src/local/usbcontrol/SystemApps.java
++++ b/usb_control_app/src/local/usbcontrol/SystemApps.java
+@@ -17,7 +17,22 @@
+         {"内容中心","com.miui.newhome"},
+         {"内容中心","com.miui.contentcenter"},
+         {"浏览器","com.android.browser"},
+-        {"系统广告 adsolution","com.miui.systemAdSolution"}
++        {"系统广告 adsolution","com.miui.systemAdSolution"},
++        // Exact catalogue snapshot: TelemetryCleaner 3938158165a9332c9faa6c433b87c9c700c801f9.
++        // Upstream device-test claims are not local validation; keep unverified entries visible.
++        {"联通设备注册（跨厂商）","com.mobiletools.systemhelper"},
++        {"电信设备注册（OPPO / 一加 / realme）","com.oppo.ctautoregist"},
++        {"移动设备注册（OPPO / 一加 / realme）","com.coloros.regservice"},
++        {"电信设备注册（小米）","com.xiaomi.registration"},
++        {"移动设备注册（小米）","com.miui.dmregservice"},
++        {"移动 / 电信设备注册（vivo）","com.vivo.devicereg"},
++        {"电信数据注册（华为及旧荣耀，未验证）","com.huawei.android.UEInfoCheck"},
++        {"电信短信注册（华为及旧荣耀，未验证）","com.huawei.android.AutoRegSms"},
++        {"移动设备注册（华为，未验证）","com.huawei.regservice"},
++        {"电信数据注册（荣耀，未验证）","com.hihonor.android.UEInfoCheck"},
++        {"电信短信注册（荣耀，未验证）","com.hihonor.android.AutoRegSms"},
++        {"设备注册（荣耀，移动归属推断，未验证）","com.hihonor.regservice"},
++        {"设备注册（魅族，归属待核验，未验证）","com.meizu.regservice"}
+     };
+     private static String user(int user){if(user<0)throw new IllegalArgumentException("用户编号异常");return Integer.toString(user);}
+     private static Set<String> packages(String output)throws IOException {
+--- a/usb_control_app/src/local/usbcontrol/MainActivity.java
++++ b/usb_control_app/src/local/usbcontrol/MainActivity.java
+@@ -58,7 +58,7 @@
+     private TextView wallpaperDetail;
+     private Button uninstallAppsButton,restoreAppsButton;
+     private TextView systemAppsDetail;
+-    private String systemAppsResult="可勾选快应用、内容中心、浏览器、系统广告 adsolution。仅处理本机识别到的系统包。";
++    private String systemAppsResult="可勾选快应用、内容中心、浏览器、系统广告及运营商注册组件。仅处理本机识别到的系统包；标注未验证的组件请谨慎选择。";
+     private final java.util.ArrayList<Dialog> dialogs=new java.util.ArrayList<>();
+     private DensitySession densitySession;
+     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
+@@ -104,7 +104,7 @@
+         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
+         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
+         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
+-        TextView version=text("1.0.8",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
++        TextView version=text("1.0.9",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
+         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
+         section("01  /  连接控制");
+--- a/usb_control_app/tests/SystemAppsTest.java
++++ b/usb_control_app/tests/SystemAppsTest.java
+@@ -4,6 +4,13 @@
+ import java.io.IOException;
+ 
+ public final class SystemAppsTest {
++    static final String[] CARRIER_PACKAGES={
++        "com.mobiletools.systemhelper","com.oppo.ctautoregist","com.coloros.regservice",
++        "com.xiaomi.registration","com.miui.dmregservice","com.vivo.devicereg",
++        "com.huawei.android.UEInfoCheck","com.huawei.android.AutoRegSms","com.huawei.regservice",
++        "com.hihonor.android.UEInfoCheck","com.hihonor.android.AutoRegSms","com.hihonor.regservice",
++        "com.meizu.regservice"
++    };
+     static int checks;
+     static void check(boolean value,String name){checks++;if(!value)throw new AssertionError(name);}
+     static final class Fake implements SystemApps.Runner {
+@@ -59,6 +66,28 @@
+         rejected=false;try{SystemApps.apply(f,0,new ArrayList<>(),false);}catch(IllegalArgumentException e){rejected=true;}check(rejected,"empty selection rejected");
+         rejected=false;try{SystemApps.scan(c->"Failure [fixture]",0);}catch(IOException e){rejected=true;}check(rejected,"malformed inventory fails closed");
+         Fake nonSystem=new Fake();nonSystem.system.clear();check(SystemApps.scan(nonSystem,0).isEmpty(),"matching third-party package never eligible");
++        for(int user:new int[]{0,999}){
++            Fake carrier=new Fake();
++            carrier.system.addAll(Arrays.asList(CARRIER_PACKAGES));
++            carrier.installed.addAll(carrier.system);carrier.data.addAll(carrier.system);
++            List<SystemApps.Entry> all=SystemApps.scan(carrier,user);
++            check(all.size()==17,"original and all 13 carrier packages detected, no unrelated package");
++            check(new HashSet<>(Arrays.asList(CARRIER_PACKAGES)).size()==13,"13 unique carrier identities");
++            for(String pkg:CARRIER_PACKAGES){
++                SystemApps.Entry entry=null;for(SystemApps.Entry e:all)if(e.pkg.equals(pkg))entry=e;
++                check(entry!=null&&entry.installed,"carrier package exact match "+pkg);
++                check(SystemApps.command(pkg,user,false).equals("pm uninstall --user "+user+" "+pkg),"carrier uninstall scoped without keep-data "+pkg);
++                check(SystemApps.command(pkg,user,true).equals("cmd package install-existing --user "+user+" "+pkg),"carrier restore scoped "+pkg);
++                SystemApps.apply(carrier,user,Arrays.asList(entry),false);
++                check(!carrier.installed.contains(pkg)&&!carrier.data.contains(pkg),"carrier uninstall deletes data "+pkg);
++                SystemApps.apply(carrier,user,Arrays.asList(entry),true);
++                check(carrier.installed.contains(pkg)&&!carrier.data.contains(pkg),"carrier restore excludes deleted data "+pkg);
++                check(carrier.installed.contains("com.miui.contentextension"),"unrelated app untouched "+pkg);
++                carrier.system.remove(pkg);
++                int start=carrier.calls.size();SystemApps.apply(carrier,user,Arrays.asList(entry),false);
++                check(carrier.calls.size()==start+2&&carrier.installed.contains(pkg),"carrier third-party identity excluded after rescan "+pkg);
++            }
++        }
+         System.out.println("PASS: "+checks+" system-app assertions; uninstall/restore roundtrip, isolation, partial failures, readback and validation");
+     }
+ }
+--- a/usb_control_app/tests/dialog_device/SystemAppsDialogInstrumentation.java
++++ b/usb_control_app/tests/dialog_device/SystemAppsDialogInstrumentation.java
+@@ -33,7 +33,11 @@
+             dialogContext.applyOverrideConfiguration(configuration);
+             java.util.List<SystemApps.Entry> entries=new ArrayList<>();
+             String[] names={"快应用","内容中心","浏览器","系统广告 adsolution","内容中心（备用包名）"};
+-            for(int i=0;i<count;i++)entries.add(new SystemApps.Entry(names[i],"local.test.system.application"+i,!restore));
++            try{
++                java.lang.reflect.Field targets=SystemApps.class.getDeclaredField("TARGETS");targets.setAccessible(true);
++                String[][] catalogue=(String[][])targets.get(null);
++                for(int i=0;i<count;i++)entries.add(count==18?new SystemApps.Entry(catalogue[i][0],catalogue[i][1],!restore):new SystemApps.Entry(names[i],"local.test.system.application"+i,!restore));
++            }catch(Exception e){throw new RuntimeException(e);}
+             SystemAppsDialog.Palette p=new SystemAppsDialog.Palette(dark?0xff8ab4ff:0xff2563eb,dark?0xffe6edf8:0xff192b48,dark?0xffa9b7cb:0xff64748b,dark?0xff1c2736:0xffffffff,dark?0xff293951:0xffeef3fd,dark?0xff344257:0xffe9eef6,dark?0xff102039:0xffffffff,dark);
+             dialog=new SystemAppsDialog(dialogContext,p,entries,restore,0,selection->{submissions++;submitted=selection;});
+             entries.clear(); // The production dialog must retain its own immutable list snapshot.
+@@ -81,6 +85,12 @@
+             activity=monitor.waitForActivityWithTimeout(15000);removeMonitor(monitor);
+             if(activity==null)throw new IOException("Target activity did not start within 15 seconds");
+             main(()->activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON));
++            check(SystemAppsDialog.badge(new SystemApps.Entry("任意标签","com.miui.systemAdSolution",true)).equals("AD"),"only exact ad package gets AD badge");
++            check(SystemAppsDialog.badge(new SystemApps.Entry("任意标签","com.miui.hybrid",true)).equals("快"),"badge follows package identity not display name");
++            java.lang.reflect.Field catalogueField=SystemApps.class.getDeclaredField("TARGETS");catalogueField.setAccessible(true);
++            String[][] catalogue=(String[][])catalogueField.get(null);
++            check(catalogue.length==18,"production catalogue contains eighteen candidates");
++            for(int i=5;i<catalogue.length;i++)check(SystemAppsDialog.badge(new SystemApps.Entry(catalogue[i][0],catalogue[i][1],true)).equals("注"),"carrier package shows registration badge: "+catalogue[i][1]);
+             for(boolean dark:new boolean[]{false,true})for(boolean restore:new boolean[]{false,true}){
+                 show(dark,restore,activity.getResources().getConfiguration().fontScale,4);withinWindow((dark?"dark":"light")+(restore?" restore":" uninstall"));
+                 check(!button("primaryButton").isEnabled(),"none selected disables next");
+@@ -105,12 +115,26 @@
+             show(false,false,activity.getResources().getConfiguration().fontScale,4);row(0);click("primaryButton");Button stale=button("primaryButton");main(()->dialog.dismiss());main(()->stale.performClick());check(submissions==0,"dismissed confirmation button cannot submit a stale action");
+             show(false,true,1.6f,5);withinWindow("large-font five-item list");screenshot("large-font-restore");
+             ScrollView scroll=(ScrollView)((android.view.ViewGroup)field("panel")).getChildAt(0);main(()->{scroll.setSmoothScrollingEnabled(false);scroll.fullScroll(View.FOCUS_DOWN);});check(scroll.getScrollY()>0,"large-font warning remains reachable by scrolling");main(()->dialog.dismiss());
++            for(boolean dark:new boolean[]{false,true})for(boolean restore:new boolean[]{false,true}){
++                show(dark,restore,1.6f,18);withinWindow("large-font eighteen-item list");
++                click("selectAllButton");check(((TextView)field("selectionCount")).getText().toString().contains("18 / 18"),"expanded catalogue selects all eighteen");
++                click("primaryButton");withinWindow("eighteen-item confirmation");
++                ScrollView longScroll=(ScrollView)((android.view.ViewGroup)field("panel")).getChildAt(0);
++                main(()->{longScroll.setSmoothScrollingEnabled(false);longScroll.fullScroll(View.FOCUS_DOWN);});
++                check(longScroll.getScrollY()>0,"eighteen-item confirmation is scrollable");
++                click("secondaryButton");check(((TextView)field("selectionCount")).getText().toString().contains("18 / 18"),"expanded selection survives confirmation back");
++                main(()->dialog.dismiss());check(submissions==0,"expanded catalogue cancellation never mutates packages");
++            }
+             int orientation=activity.getRequestedOrientation();
+             try{
+                 main(()->activity.setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));Thread.sleep(1400);
+                 android.graphics.Rect actualFrame=new android.graphics.Rect();activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(actualFrame);
+                 if(activity.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE&&actualFrame.width()>actualFrame.height()){
+-                    show(true,false,1.3f,5);withinWindow("landscape five-item list");screenshot("landscape-uninstall");main(()->dialog.dismiss());
++                    for(boolean restore:new boolean[]{false,true}){
++                        show(true,restore,1.3f,18);withinWindow("landscape eighteen-item list");
++                        click("selectAllButton");click("primaryButton");withinWindow("landscape eighteen-item confirmation");
++                        main(()->dialog.dismiss());check(submissions==0,"landscape cancellation never mutates packages");
++                    }
+                 }else skipped.put("Landscape request not applied by device (for example, while locked); no landscape coverage claimed.");
+             }finally{main(()->activity.setRequestedOrientation(orientation));Thread.sleep(800);}
+             pass=true;
+--- a/usb_control_app/AndroidManifest.xml
++++ b/usb_control_app/AndroidManifest.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="108" android:versionName="1.0.8">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.usbcontrol" android:versionCode="109" android:versionName="1.0.9">
+     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+     <application android:label="轻控" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true">
+         <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:windowSoftInputMode="adjustResize">
+--- a/usb_control_app/build.ps1
++++ b/usb_control_app/build.ps1
+@@ -41,11 +41,11 @@
+     New-Item -ItemType Directory -Force (Split-Path -Parent $key) | Out-Null
+     Run "$javaBin/keytool.exe" @('-genkeypair','-keystore',$key,'-alias','usbcontrol','-storepass','android','-keypass','android','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=USB Control Local Build','-noprompt')
+ }
+-$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.8.apk'
++$release = Join-Path (Split-Path -Parent $root) 'releases/usb-control-v1.0.9.apk'
+ Run "$tools/apksigner.bat" @('sign','--ks',$key,'--ks-key-alias','usbcontrol','--ks-pass','pass:android','--key-pass','pass:android','--out',$release,"$build/aligned.apk")
+ Run "$tools/apksigner.bat" @('verify','--verbose',$release)
+ Run "$tools/zipalign.exe" @('-c','4',$release)
+ $hash=(Get-FileHash -LiteralPath $release -Algorithm SHA256).Hash
+-"$hash  usb-control-v1.0.8.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
++"$hash  usb-control-v1.0.9.apk" | Set-Content -LiteralPath "$release.sha256" -Encoding ASCII
+ Write-Output "APK: $release"
+ Write-Output "SHA256: $hash"
+--- a/usb_control_app/README.md
++++ b/usb_control_app/README.md
+@@ -1,14 +1,21 @@
+-# 轻控 1.0.8
++# 轻控 1.0.9
+ 
+ 一个轻量、离线、中文原生 Android 工具。Java + Android SDK，无第三方运行时、无 WebView、无广告或网络权限。最低 Android 8.0 / API 26，目标 API 36。
+ 
+ ## 安装
+ 
+-安装 `../releases/usb-control-v1.0.8.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
++安装 `../releases/usb-control-v1.0.9.apk`，打开「轻控」，在 SukiSU / KernelSU / Magisk 管理器中授予 Root。无需先安装原 USB 调试模块；已安装时仍可继续使用，切换后会刷新旧模块的状态描述。
+ 
+ 首次成功连接 Root 时将初始系统值原子保存到 `system-baseline.properties`，缓存写入或恢复脚本生成失败时停止启用系统操作，之后不把修改后的值覆盖成初始值。没有 Root 或读取失败时，系统开关置灰；选图、取景、透明度调整仍正常使用，且图片任务与 Root 队列相互独立。
+ 
+ ## 功能
++
++### 运营商注册组件清单（1.0.9）
++
++- 从本地 TelemetryCleaner 的完整目录导入 13 个精确包名（不是仅 4 项自动清理名单），加上原有 5 个包名共 18 个候选。
++- 卸载和恢复共用同一白名单及现有美化弹窗；未预装、非系统包不展示，默认不勾选。不增加后台自动清理或跨用户批量操作。
++- 保留上游 7 项「未验证」标记；上游实测标记不代表轻控已经在相应机型验证。卸载注册组件可能影响运营商注册相关功能，请按需选择。
++- 仍删除卸载目标的数据；恢复仅恢复应用，不找回数据。目标、来源提交及验证边界见 [`运营商组件清单`](../docs/usb-control-telemetry-targets.md)。
+ 
+ ### 系统应用弹窗外观（1.0.8）
+ 
+--- a/README.md
++++ b/README.md
+@@ -10,11 +10,11 @@
+ 
+ ## 轻控 Android App
+ 
+-独立 App **轻控 1.0.8**（Android 8.0+），不依赖安装 USB 开关模块，已完成多轮审查与修复：
+-
+-- 安装包：[`releases/usb-control-v1.0.8.apk`](releases/usb-control-v1.0.8.apk)
++独立 App **轻控 1.0.9**（Android 8.0+），不依赖安装 USB 开关模块：
++
++- 安装包：[`releases/usb-control-v1.0.9.apk`](releases/usb-control-v1.0.9.apk)
+ - USB 调试、按系统已存在的设置项适配 USB 安装、最小宽度快捷调整。
+-- 可勾选批量卸载系统应用：快应用、内容中心、浏览器、系统广告 adsolution；卸载时删除应用数据，独立恢复入口仅恢复应用，不找回已删除的数据。
++- 可勾选批量卸载系统应用：快应用、内容中心、浏览器、系统广告 adsolution，以及 TelemetryCleaner 目录中的 13 个运营商注册组件；仅展示本机系统包。卸载时删除应用数据，独立恢复入口仅恢复应用，不找回已删除的数据。新增清单及验证边界见 [`说明`](docs/usb-control-telemetry-targets.md)。
+ - 系统应用选择与确认弹窗使用同一套圆角卡片、蓝色强调和浅/暗主题；支持已选计数、全选、返回保留勾选，空选择时禁用下一步。
+ - 使用根目录提供的图片作为图标；可选本机图片作为背景，支持等比缩放、拖动取景及透明度实时预览。
+ - 系统操作需 Root 授权；背景功能不需 Root，无网络权限。
+@@ -296,6 +296,6 @@
+ 验证记录：`docs/usb-control-fast-toggle/`。
+ 
+ ### 安装包保留策略
+-轻控仅保留最新版 `releases/usb-control-v1.0.8.apk` 及其校验/签名配套文件。旧版安装包（含审查基线中的副本）已移出项目归档；其他模块不受影响。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`；清理记录见 `docs/release-cleanup/`。
++当前安装包为 `releases/usb-control-v1.0.9.apk`，保留 1.0.8 作为本次修改的回退基线。历史审查记录保留供查阅，其依赖旧包的复验需先还原归档。当前校验入口：`python scripts/verify-usb-control-latest.py`（默认结果写入 `.local/`）；本次清单见 `docs/usb-control-telemetry-targets.md`，审查及回退材料见 `docs/usb-control-telemetry-review/`。本地 `TelemetryCleaner/` 仅作为上游参考克隆，已排除提交；发布包、校验值和项目文档不受排除规则影响。
+ 
+ 轻控 1.0.5 新增「一键循环壁纸」，目录、命名规则与撤销见 [轻控说明](usb_control_app/README.md)。
+--- a/usb_control_app/src/local/usbcontrol/SystemAppsDialog.java
++++ b/usb_control_app/src/local/usbcontrol/SystemAppsDialog.java
+@@ -115,9 +115,15 @@
+         int fill=restore?colors.soft:(colors.dark?0xff332c29:0xfffff4e8);
+         LinearLayout box=column();pad(box,13,11,13,11);box.setBackground(shape(fill,13,0));
+         TextView heading=text(restore?"恢复应用，不恢复数据":"卸载会删除应用数据",12,ink);heading.setTypeface(null,android.graphics.Typeface.BOLD);box.addView(heading);
+-        box.addView(text(restore?"重新安装系统保留的预装包；不会找回已删除的数据，也不更改原有启用状态。":"数据删除不可撤销，系统安装包仍保留。浏览器卸载后可能影响网页打开。",11,ink));return box;
++        box.addView(text(restore?"重新安装系统保留的预装包；不会找回已删除的数据，也不更改原有启用状态。":"数据删除不可撤销，系统安装包仍保留。卸载浏览器可能影响网页打开，卸载注册组件可能影响运营商注册功能；未验证项请谨慎选择。",11,ink));return box;
+     }
+-    private String badge(SystemApps.Entry entry){if(entry.name.startsWith("快"))return "快";if(entry.name.startsWith("内"))return "内";if(entry.name.startsWith("浏"))return "浏";return "AD";}
++    static String badge(SystemApps.Entry entry){
++        if(entry.pkg.equals("com.miui.hybrid"))return "快";
++        if(entry.pkg.equals("com.miui.newhome")||entry.pkg.equals("com.miui.contentcenter"))return "内";
++        if(entry.pkg.equals("com.android.browser"))return "浏";
++        if(entry.pkg.equals("com.miui.systemAdSolution"))return "AD";
++        return "注";
++    }
+     private View summaryRow(SystemApps.Entry entry){
+         LinearLayout row=new LinearLayout(context);row.setGravity(Gravity.CENTER_VERTICAL);pad(row,13,12,13,12);row.setBackground(shape(colors.soft,15,0));addLabels(row,entry);return row;
+     }
+--- a/.gitignore
++++ b/.gitignore
+@@ -17,5 +17,18 @@
+ /docs/usb-control-audit/**/phone-*.xml
+ /docs/usb-control-audit/final-phone-identity.json
+ /docs/usb-control-audit/phone-ui/
+-/docs/usb-control-dark-mode/phone-install.json
+-/.local/
++/docs/usb-control-dark-mode/phone-install.json
++/.local/
++
++# Local upstream reference clone; package provenance is documented separately.
++/TelemetryCleaner/
++
++# IDE / Gradle machine state (do not hide release APKs, checksums or project docs).
++/.idea/
++/.vscode/
++**/.gradle/
++**/.cxx/
++*.iml
++*.hprof
++Thumbs.db
++.DS_Store
+--- a/scripts/verify-usb-control-latest.py
++++ b/scripts/verify-usb-control-latest.py
+@@ -4,7 +4,7 @@
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ parser = argparse.ArgumentParser()
+-parser.add_argument('--out', default='docs/release-cleanup')
++parser.add_argument('--out', default='.local/latest-release-verification')
+ args = parser.parse_args()
+ OUT = ROOT / args.out
+ OUT.mkdir(parents=True, exist_ok=True)
+@@ -45,14 +45,16 @@
+     run(['javac', '-encoding', 'UTF-8', '-d', dest, *[app / x for x in sources]])
+     for main in mains:
+         run(['java', '-cp', dest, 'local.usbcontrol.' + main])
+-old = [p.relative_to(ROOT).as_posix() for p in ROOT.rglob('usb-control-v*.apk*')
+-       if '.git' not in p.relative_to(ROOT).parts and '.local' not in p.relative_to(ROOT).parts
+-       and not p.name.startswith('usb-control-v' + version + '.apk')]
++# One explicit previous release is intentionally retained for this migration.
++allowed_names = {'usb-control-v' + v + '.apk' + suffix
++                 for v in (version, '1.0.8') for suffix in ('', '.sha256', '.idsig')}
++old = [p.relative_to(ROOT).as_posix() for p in (ROOT / 'releases').glob('usb-control-v*.apk*')
++       if p.name not in allowed_names]
+ assert not old, old
+ manifest = json.loads((ROOT / 'docs/release-cleanup/manifest.json').read_text(encoding='utf-8-sig'))
+ assert all(not (ROOT / e['path']).exists() for e in manifest['files'])
+ records.append(dict(result='PASS', version=version, apk_sha256=digest, archived_files=len(manifest['files']),
+                     checks=['latest signature/alignment/version/checksum/ZIP', 'current model and adapter tests',
+-                            'no historical USB Control packages in project']))
++                            'only current release and explicit 1.0.8 rollback baseline in releases']))
+ (OUT / 'verification.json').write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding='utf-8')
+ print('PASS: latest release, tests and historical-package cleanup')
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -1,16 +1,17 @@
+ # Normalize ordinary text; preserve bytes for sealed audit/rollback artifacts.
+ * text=auto
+ /.gitattributes text eol=lf
+-/README.md -text
+-/docs/** -text
+-/usb_control_app/** -text
+-/scripts/** -text
++/.gitignore text eol=lf
++/README.md -text whitespace=cr-at-eol
++/docs/** -text whitespace=cr-at-eol
++/usb_control_app/** -text whitespace=cr-at-eol
++/scripts/** -text whitespace=cr-at-eol
+ /analysis/** -text
+ /logs/** -text
+ # Release patches are byte-sensitive data (including CRLF context and space markers).
+ /releases/usb-control-*.patch -text -whitespace
+-/releases/usb-control-*.txt -text
+-/releases/usb-control-*.apk.sha256 -text
++/releases/usb-control-*.txt -text whitespace=cr-at-eol
++/releases/usb-control-*.apk.sha256 -text whitespace=cr-at-eol
+ /docs/usb-control-wallpaper/*.patch -whitespace
+ /docs/usb-control-system-apps/*.patch -whitespace
+ /docs/usb-control-system-apps-delete-data/*.patch -whitespace
+--- /dev/null
++++ b/docs/usb-control-telemetry-targets.md
+@@ -0,0 +1,46 @@
++# 轻控 1.0.9：运营商注册组件
++
++日期：2026-11-13。仅扩充现有系统应用卸载 / 恢复白名单，沿用轻控弹窗。
++
++来源：本地克隆的 [TelemetryCleaner](https://github.com/Eynnzerr/TelemetryCleaner)，提交 `3938158165a9332c9faa6c433b87c9c700c801f9`。
++核对文件：`app/src/main/java/com/eynnzerr/telemetrycleaner/data/PackageDirectory.kt` 的 `groups`，以及 `README.md` 的组件表。
++导入完整 13 项目录，不是 `autoCleanupNames` 的 4 项子集。只采用包名和描述，不引入其运行时代码或依赖。
++
++| 厂商 | 运营商 / 功能 | 精确包名 | 上游清单标记 |
++|---|---|---|---|
++| 跨厂商 | 联通设备注册 | `com.mobiletools.systemhelper` | 已实测 |
++| OPPO / 一加 / realme | 电信注册 | `com.oppo.ctautoregist` | 已实测 |
++| OPPO / 一加 / realme | 移动注册 | `com.coloros.regservice` | 已实测 |
++| 小米 / Redmi / POCO | 电信注册 | `com.xiaomi.registration` | 已实测 |
++| 小米 / Redmi / POCO | 移动注册 | `com.miui.dmregservice` | 已实测 |
++| vivo | 移动 / 电信注册 | `com.vivo.devicereg` | 已实测 |
++| 华为及旧荣耀 | 电信数据注册 | `com.huawei.android.UEInfoCheck` | 未验证 |
++| 华为及旧荣耀 | 电信短信注册 | `com.huawei.android.AutoRegSms` | 未验证 |
++| 华为 | 移动注册 | `com.huawei.regservice` | 未验证 |
++| 荣耀 | 电信数据注册 | `com.hihonor.android.UEInfoCheck` | 未验证 |
++| 荣耀 | 电信短信注册 | `com.hihonor.android.AutoRegSms` | 未验证 |
++| 荣耀 | 设备注册（移动归属推断） | `com.hihonor.regservice` | 未验证 |
++| 魅族 / Flyme | 设备注册（归属待核验） | `com.meizu.regservice` | 未验证 |
++
++上游表格的实测标记不代表轻控已经在各厂商设备实测，且上游正文还注明作者本人仅验证了 SystemHelper 和 OPPO 组件。轻控保留 7 项未验证提示，不承诺卸载后所有运营商功能正常。
++
++## 行为约束
++
++- 保留原有 5 个候选包名，共 18 个精确包名，无通配符；未预装或非系统包不会出现在弹窗中。
++- 默认不勾选，选择后再次确认；只操作轻控所在 Android 用户，不自动遍历双开空间。
++- 卸载：`pm uninstall --user USER_ID PACKAGE`，不带 `-k`，删除该用户的应用数据。
++- 恢复：`cmd package install-existing --user USER_ID PACKAGE`，仅使用系统保留的预装包，不恢复已删除数据。
++- 执行前重新确认系统包身份，每项操作后精确读回安装状态；其他包不受影响。
++- 不引入自动清理、定时后台任务、Shizuku 或网络权限。不把组件是否恶意作为导入前提。
++
++## 验证与回退
++
++本次公开验证记录：`usb-control-telemetry-review/verification.json`，包含修改前后命令、输出与退出码；临时诊断保留在忽略的 `.local/telemetry-targets/`。
++新增回归覆盖 13 个包在用户 0 / 999 的卸载、删除数据、恢复不找回数据、非系统包过滤及无关应用隔离。
++弹窗测试使用生产目录的 18 项真实名称 / 包名，覆盖浅暗色、大字体、选择 / 确认及横屏。使用独立 Android 15 模拟器运行；没有连接实体手机，本次不实际卸载 / 恢复手机系统应用，不将模拟结果称为各厂商实测。
++
++源码补丁：`../releases/usb-control-v1.0.9.patch`。
++原文件及 SHA-256：`usb-control-telemetry-review/rollback-originals.zip`。
++源码回退：`python scripts/rollback-usb-control-telemetry.py --check` 预检，`--apply` 执行，`--self-test` 在临时目录验证回退。
++回退只恢复本次修改的项目文件，不操作手机，也不恢复卸载数据；新增 1.0.9 安装包保留供核对。
++1.0.8 安装包保留为基线；本次不自动执行手机 APK 降级或安装。发布说明见 `usb-control-telemetry-review/RELEASE_NOTES.md`。
+--- /dev/null
++++ b/docs/usb-control-telemetry-review/RELEASE_NOTES.md
+@@ -0,0 +1,15 @@
++# 轻控 v1.0.9 · 运营商注册组件清单
++
++- 一键卸载 / 恢复增加 TelemetryCleaner 完整目录的 13 个精确包名，连同原有共 18 个候选；仅显示本机识别到的系统包。
++- 沿用轻控美化弹窗，默认不勾选。卸载删除应用数据，恢复仅重新安装系统保留的应用，不找回已删除数据。
++- 保留 7 项未验证提示，补充运营商注册功能风险说明；不增加后台自动清理、跨用户操作或网络权限。
++- 修复新增注册组件被误标为 AD 的图标问题，按精确包名区分分类。
++- 修复最新版验证脚本对保留回退基线的兼容；完善 Git 排除规则，排除本地上游克隆、IDE 和构建缓存，不排除发布产物。
++
++## 验证边界
++
++主机模型覆盖包名精确匹配、用户范围、卸载删除数据、恢复不找回数据、执行前重验、逐项失败继续、读回检查及无关应用隔离。
++独立 Android 15 模拟器覆盖浅暗色、大字体、18 项列表和确认页、横屏、重复点击隔离与取消不提交。
++最后两轮在覆盖范围内未发现新增问题；实体手机当前未连接，未为本次测试卸载任何手机系统应用，也不宣称所有厂商 ROM 均完成卸载实测。
++
++安装包签名与 1.0.8 一致，可覆盖更新同签名轻控。附件包含 APK、校验值、补丁及验证 / 源码回退材料，不包含签名私钥、手机日志、手机应用清单或上游完整克隆。
+--- /dev/null
++++ b/docs/usb-control-telemetry-review/REVIEW.md
+@@ -0,0 +1,34 @@
++# v1.0.9 审查记录
++
++日期：2026-11-13。
++
++## 第一轮：来源与后端
++
++- 对照本地上游提交 `3938158165a9332c9faa6c433b87c9c700c801f9` 的 `PackageDirectory.groups`，确认完整导入 13 项，而不是 4 项自动清理子集。
++- 保留原有 5 项，候选总计 18 个唯一精确包名；7 个未验证标记保留，华为 / 荣耀大小写不改写。
++- 核对当前用户限制、系统包过滤、执行前重新扫描及执行后精确读回；卸载不带 `-k`。
++
++## 第二轮：发现并修复
++
++- 注册组件沿用了原来的 AD 兜底图标：修复为按精确包名分类，新增组件显示「注」，并增加逐包界面断言。
++- 原最新版验证器禁止任何历史 APK，和本次保留 1.0.8 回退基线冲突：改为只允许当前版及明确的 1.0.8 配套文件，精确匹配文件名。
++- 增加运营商注册功能影响提示；扩充测试为生产目录 18 项真实长标签，覆盖浅暗色、1.6 倍字体、确认页滚动和横屏。
++- 排除本地参考克隆、IDE / Gradle 状态；验证安装包、校验文件和项目文档仍可提交。保留既有文本换行格式，避免无意义的整文件差异。
++
++## 最后两轮复验
++
++- 每轮主机回归 687 项断言：系统应用 210、逻辑 34、事务 420、USB 安装适配器 23；签名、对齐、APK 内容和版本检查通过。
++- 每轮模拟器弹窗 124 项断言，无跳过；包含全部 13 项注册图标、大字体 18 项列表与确认、横屏、取消及旧按钮隔离。
++- 第二轮无新增待修复问题。此结论限于已覆盖范围，不是对全部设备和所有路径无缺陷的保证。
++
++## 环境和数据边界
++
++模拟器为本次新建的独立 Android 15 / API 35 测试环境，测试使用计数回调，不调用卸载 / 恢复后端。实体手机未连接。
++原测试模拟器 ADB 离线，改用独立实例；读取测试报告时发布包禁用 `run-as`，改为解析 instrumentation 返回的同一份 JSON，不更改应用调试配置。
++重复检查没有重新备份手机、扫描手机私有数据或处理个人 M/N/K 清单。
++
++## 回退
++
++`python scripts/rollback-usb-control-telemetry.py --check` 只读预检；`--self-test` 在临时目录真正还原并验证哈希；`--apply` 恢复本次记录的原项目文件。
++补丁重放使用 `git -c core.autocrlf=false apply releases/usb-control-v1.0.9.patch`，在 1.0.8 基线上应用；关闭自动换行转换以保持封存文件逐字节一致。回退脚本直接写入校验过的原始字节，不依赖 Git 换行设置。
++回退脚本检测后续改动，不覆盖不匹配的文件。不操作手机，也不恢复已卸载应用的数据。手机 APK 降级是独立操作，系统是否接受由其安装器决定；不通过卸载绕过降级限制。
+--- /dev/null
++++ b/scripts/rollback-usb-control-telemetry.py
+@@ -0,0 +1,57 @@
++"""Restore checksummed pre-1.0.9 source files; no phone or APK mutations."""
++from pathlib import Path
++import argparse, hashlib, json, tempfile, zipfile, shutil
++
++PROJECT = Path(__file__).resolve().parents[1]
++BUNDLE = PROJECT / 'docs/usb-control-telemetry-review/rollback-originals.zip'
++
++def sha(data):
++    return hashlib.sha256(data).hexdigest()
++
++def restore(root, apply):
++    with zipfile.ZipFile(BUNDLE) as z:
++        assert z.testzip() is None
++        entries = json.loads(z.read('manifest.json'))
++        for e in entries:
++            target = (root/e['path']).resolve()
++            assert target.is_relative_to(root.resolve()), 'Path leaves target root'
++            if e.get('original'):
++                assert sha(z.read(e['path'])) == e['original'], 'Original hash mismatch'
++            current = sha(target.read_bytes()) if target.is_file() else None
++            assert current in (e.get('original'), e['modified']), f'Later edit detected: {target}'
++        if apply:
++            for e in entries:
++                target = root/e['path']
++                if e.get('original'):
++                    target.parent.mkdir(parents=True, exist_ok=True)
++                    target.write_bytes(z.read(e['path']))
++                    assert sha(target.read_bytes()) == e['original']
++                elif target.exists():
++                    target.unlink()
++                    assert not target.exists()
++    return len(entries)
++
++if __name__ == '__main__':
++    p = argparse.ArgumentParser(description=__doc__)
++    modes = p.add_mutually_exclusive_group()
++    modes.add_argument('--check', action='store_true')
++    modes.add_argument('--apply', action='store_true')
++    modes.add_argument('--self-test', action='store_true')
++    p.add_argument('--target-root', type=Path, default=PROJECT)
++    args = p.parse_args()
++    root = args.target_root.resolve()
++    if args.self_test:
++        with tempfile.TemporaryDirectory(prefix='qk-telemetry-rollback-') as d:
++            dest = Path(d)
++            with zipfile.ZipFile(BUNDLE) as z:
++                for e in json.loads(z.read('manifest.json')):
++                    source = root/e['path']
++                    if source.is_file():
++                        target = dest/e['path']
++                        target.parent.mkdir(parents=True, exist_ok=True)
++                        shutil.copy2(source, target)
++            count = restore(dest, True)
++        print(f'PASS: {count} source files restored in temporary tree; workspace and phone untouched')
++    else:
++        count = restore(root, args.apply)
++        print(f'PASS: {count} source files; '+('rollback applied' if args.apply else 'read-only preflight'))

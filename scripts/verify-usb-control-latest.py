@@ -4,7 +4,7 @@ import subprocess, hashlib, json, zipfile, xml.etree.ElementTree as ET, argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
-parser.add_argument('--out', default='docs/release-cleanup')
+parser.add_argument('--out', default='.local/latest-release-verification')
 args = parser.parse_args()
 OUT = ROOT / args.out
 OUT.mkdir(parents=True, exist_ok=True)
@@ -45,14 +45,16 @@ for label, sources, mains in [
     run(['javac', '-encoding', 'UTF-8', '-d', dest, *[app / x for x in sources]])
     for main in mains:
         run(['java', '-cp', dest, 'local.usbcontrol.' + main])
-old = [p.relative_to(ROOT).as_posix() for p in ROOT.rglob('usb-control-v*.apk*')
-       if '.git' not in p.relative_to(ROOT).parts and '.local' not in p.relative_to(ROOT).parts
-       and not p.name.startswith('usb-control-v' + version + '.apk')]
+# One explicit previous release is intentionally retained for this migration.
+allowed_names = {'usb-control-v' + v + '.apk' + suffix
+                 for v in (version, '1.0.8') for suffix in ('', '.sha256', '.idsig')}
+old = [p.relative_to(ROOT).as_posix() for p in (ROOT / 'releases').glob('usb-control-v*.apk*')
+       if p.name not in allowed_names]
 assert not old, old
 manifest = json.loads((ROOT / 'docs/release-cleanup/manifest.json').read_text(encoding='utf-8-sig'))
 assert all(not (ROOT / e['path']).exists() for e in manifest['files'])
 records.append(dict(result='PASS', version=version, apk_sha256=digest, archived_files=len(manifest['files']),
                     checks=['latest signature/alignment/version/checksum/ZIP', 'current model and adapter tests',
-                            'no historical USB Control packages in project']))
+                            'only current release and explicit 1.0.8 rollback baseline in releases']))
 (OUT / 'verification.json').write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding='utf-8')
 print('PASS: latest release, tests and historical-package cleanup')

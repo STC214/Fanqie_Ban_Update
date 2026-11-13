@@ -1,16 +1,17 @@
 # Normalize ordinary text; preserve bytes for sealed audit/rollback artifacts.
 * text=auto
 /.gitattributes text eol=lf
-/README.md -text
-/docs/** -text
-/usb_control_app/** -text
-/scripts/** -text
+/.gitignore text eol=lf
+/README.md -text whitespace=cr-at-eol
+/docs/** -text whitespace=cr-at-eol
+/usb_control_app/** -text whitespace=cr-at-eol
+/scripts/** -text whitespace=cr-at-eol
 /analysis/** -text
 /logs/** -text
 # Release patches are byte-sensitive data (including CRLF context and space markers).
 /releases/usb-control-*.patch -text -whitespace
-/releases/usb-control-*.txt -text
-/releases/usb-control-*.apk.sha256 -text
+/releases/usb-control-*.txt -text whitespace=cr-at-eol
+/releases/usb-control-*.apk.sha256 -text whitespace=cr-at-eol
 /docs/usb-control-wallpaper/*.patch -whitespace
 /docs/usb-control-system-apps/*.patch -whitespace
 /docs/usb-control-system-apps-delete-data/*.patch -whitespace

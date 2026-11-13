@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
     private TextView wallpaperDetail;
     private Button uninstallAppsButton,restoreAppsButton;
     private TextView systemAppsDetail;
-    private String systemAppsResult="可勾选快应用、内容中心、浏览器、系统广告 adsolution。仅处理本机识别到的系统包。";
+    private String systemAppsResult="可勾选快应用、内容中心、浏览器、系统广告及运营商注册组件。仅处理本机识别到的系统包；标注未验证的组件请谨慎选择。";
     private final java.util.ArrayList<Dialog> dialogs=new java.util.ArrayList<>();
     private DensitySession densitySession;
     private String installSpace, snapshot="", densityText="", statusMessage="正在检查 Root 权限…";
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
         ImageView icon=new ImageView(themed);icon.setImageResource(local.usbcontrol.R.drawable.app_icon);icon.setScaleType(ImageView.ScaleType.CENTER_CROP);icon.setBackground(shape(BLUE,16));icon.setClipToOutline(true);
         header.addView(icon,new LinearLayout.LayoutParams(dp(48),dp(48)));
         LinearLayout branding=vertical();pad(branding,14,0,0,0);branding.addView(text("轻控",25,INK));branding.addView(text("USB & DISPLAY 「BY STC214」",10,MUTED));header.addView(branding,new LinearLayout.LayoutParams(0,-2,1));
-        TextView version=text("1.0.8",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
+        TextView version=text("1.0.9",12,MUTED);pad(version,10,6,10,6);version.setBackground(shape(SOFT,10));header.addView(version);page.addView(header);gap(page,24);
         page.addView(text("刚刚好，掌控日常。",27,INK));gap(page,6);page.addView(text("连接、显示与外观，轻一点就好。",13,MUTED));gap(page,20);
         rootLabel=text("●  正在检查 Root 权限…",12,BLUE);pad(rootLabel,14,10,14,10);rootLabel.setBackground(shape(CHIP,14));rootLabel.setOnClickListener(v->refresh());page.addView(rootLabel);gap(page,22);
         section("01  /  连接控制");
